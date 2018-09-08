@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--common -->
-    <color name="app_color_blue">#2768F3</color>
+    <color name="app_color_blue">#36B3FF</color>
+    <color name="app_color_white">#FFFFFF</color>
     <color name="app_color_blue_disabled">#8000A8E1</color>
     <color name="app_color_blue_pressed">#c000A8E1</color>
 

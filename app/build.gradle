@@ -25,17 +25,41 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a','x86_64'
+            universalApk true
+        }
+    }
+    packagingOptions {
+        exclude 'lib/x86_64/darwin/libscrypt.dylib'
+        exclude 'com/google/thirdparty/publicsuffix/PublicSuffixPatterns.gwt.xml'
+        exclude 'com/google/thirdparty/publicsuffix/PublicSuffixType.gwt.xml'
+        exclude 'org/bitcoinj/crypto/mnemonic/wordlist/english.txt'
+        exclude 'org/bitcoinj/crypto/cacerts'
+    }
+
 }
+
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:recyclerview-v7:${supportVersion}"
     implementation "com.android.support:appcompat-v7:${supportVersion}"
     implementation "com.android.support:design:${supportVersion}"
-    implementation 'com.qmuiteam:qmui:1.1.6'
+    implementation 'com.qmuiteam:qmui:1.1.7'
     implementation 'com.qmuiteam:arch:0.1.3'
+    implementation 'org.slf4j:slf4j-api:1.7.20'
+    implementation group: 'org.bitcoinj', name: 'bitcoinj-core', version: '0.14.6'
+    implementation 'net.i2p.crypto:eddsa:0.1.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'homhomlin.lib:sldinglayout:0.9.0'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+    implementation 'com.alibaba:fastjson:1.2.9'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //leak
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'

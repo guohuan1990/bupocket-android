@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout
+<android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -8,7 +8,6 @@
             android:layout_width="match_parent"
             android:layout_height="130dp"
             android:gravity="center_horizontal"
-            android:layout_marginTop="60dp"
             android:orientation="vertical"
             android:background="@color/app_color_blue"
             android:fitsSystemWindows="true">
@@ -16,10 +15,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="30dp"
+                android:paddingStart="10dp" android:paddingTop="35dp"
                 android:paddingLeft="10dp">
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:clickable="false"
+                    android:layout_marginEnd="15dp" android:clickable="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -67,9 +66,4 @@
             android:ellipsize="end"
             android:text="@string/function_opening"/>
     </LinearLayout>
-    <com.qmuiteam.qmui.widget.QMUITopBarLayout
-            android:id="@+id/topbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"/>
-</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
+</android.support.design.widget.CoordinatorLayout>

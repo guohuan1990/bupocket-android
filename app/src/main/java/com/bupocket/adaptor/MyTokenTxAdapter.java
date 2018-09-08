@@ -11,11 +11,11 @@ import com.bupocket.model.TokenTxInfo;
 
 import java.util.List;
 
-public class MyTokenTxADapter extends BaseAdapter {
+public class MyTokenTxAdapter extends BaseAdapter {
     private List<TokenTxInfo> datas;
     private Context mContext;
 
-    public MyTokenTxADapter(List<TokenTxInfo> datas, Context mContext) {
+    public MyTokenTxAdapter(List<TokenTxInfo> datas, Context mContext) {
         this.datas = datas;
         this.mContext = mContext;
     }

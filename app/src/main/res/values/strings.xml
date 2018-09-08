@@ -18,9 +18,13 @@
     <string name="tabbar_profile_txt">我</string>
 
     <string name="fragment_title_tx_detail_txt" translatable="false">交易详情</string>
+    <string name="create_wallet_info_txt_1" translatable="false">请仔细抄写下方助记词，并存放在安全的地方</string>
+    <string name="create_wallet_txt" translatable="false">创建钱包</string>
 
-    <!-- mock -->
     <string name="function_opening" translatable="false">功能即将开放</string>
     <string name="tabbr_wallet_txt">钱包</string>
-    <string name="tabbr_c2c_txt">c2c</string>
+    <string name="tabbr_otc_txt">OTC</string>
+
+    <string name="otc_top_bar_buy_txt">购买</string>
+    <string name="otc_top_bar_sell_txt">出售</string>
 </resources>

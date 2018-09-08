@@ -9,7 +9,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bupocket.R;
-import com.bupocket.adaptor.MyTokenTxADapter;
+import com.bupocket.adaptor.MyTokenTxAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.model.TokenTxInfo;
 
@@ -23,16 +23,16 @@ public class BPAssetsFragment extends BaseFragment {
     TextView mUserBcAddressTextView;
 
     private List<TokenTxInfo> tokenTxInfoList;
-    private MyTokenTxADapter myTokenTxADapter;
+    private MyTokenTxAdapter myTokenTxAdapter;
     @BindView(R.id.my_token_tx_lv)
     ListView tokenTxsListView;
-
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets, null);
         ButterKnife.bind(this, root);
         mUserNickTextView.setText("阿木");
         mUserBcAddressTextView.setText("buQevL***WPng8P");
+
         initAssetsGroupListView();
         return root;
     }
@@ -51,14 +51,13 @@ public class BPAssetsFragment extends BaseFragment {
         tokenTxInfoList.add(new TokenTxInfo("buQYaQ***HkKH5Z", "10/07/2018","+1","成功"));
         tokenTxInfoList.add(new TokenTxInfo("buQYaQ***HkKH5Z", "03/07/2018","+5","成功"));
 
-        myTokenTxADapter = new MyTokenTxADapter(tokenTxInfoList, getContext());
-        tokenTxsListView.setAdapter(myTokenTxADapter);
-                tokenTxsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        myTokenTxAdapter = new MyTokenTxAdapter(tokenTxInfoList, getContext());
+        tokenTxsListView.setAdapter(myTokenTxAdapter);
+        tokenTxsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TokenTxInfo currentItem = (TokenTxInfo) myTokenTxADapter.getItem(position);
+                TokenTxInfo currentItem = (TokenTxInfo) myTokenTxAdapter.getItem(position);
                 Toast.makeText(getActivity(), currentItem.getTxAmount() + " is Clicked", Toast.LENGTH_SHORT).show();
-
                 startFragment(new BPAssetsTxDetailFragment());
             }
         });
