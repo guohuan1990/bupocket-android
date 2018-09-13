@@ -70,5 +70,9 @@
     <string name="create_wallet_fail">创建失败</string>
     <string name="checking_password_error">密码错误</string>
     <string name="geting_account_bu_balance">获取中</string>
+    <string name="qr_pocket_address_title">钱包地址</string>
+    <string name="qr_cancel_btn_des">取消</string>
+    <string name="qr_copy_btn_text">复制钱包地址</string>
+    <string name="qr_pic_name_text">钱包地址二维码</string>
 
 </resources>

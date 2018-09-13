@@ -1,5 +1,12 @@
 package com.bupocket.fragment;
 
+<<<<<<< HEAD
+=======
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.graphics.Bitmap;
+>>>>>>> e7ac771f0b9348ee63e1a50d0d94708d03d8b12c
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
@@ -15,9 +22,12 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.model.TokenTxInfo;
 import com.bupocket.utils.AddressUtil;
+import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TimeUtil;
 import com.bupocket.wallet.Wallet;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -65,7 +75,7 @@ public class BPAssetsFragment extends BaseFragment {
         loadMyTxList(pageSize, pageStart, "-1", currentAccAddress);
         initWalletInfoView();
         initMyTxListViews();
-        showMyAddress();
+        showMyAddress(currentAccAddress);
 
         mSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,13 +180,55 @@ public class BPAssetsFragment extends BaseFragment {
 
     }
 
-    private void showMyAddress(){
+    private void showMyAddress(final String currentAccAddress) {
         mShowMyaddressL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                createQMUIDialog(currentAccAddress);
             }
         });
+    }
+
+
+    private void createQMUIDialog(final String currentAccAddress){
+        final QMUIDialog dialog = new QMUIDialog.CustomDialogBuilder(getContext())
+                .setLayout(R.layout.fragment_show_qr)
+                .create();
+
+        TextView address_text = dialog.findViewById(R.id.qr_address_text);
+        address_text.setText(currentAccAddress);
+
+        Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(currentAccAddress, 356, 356);
+        ImageView mImageView = dialog.findViewById(R.id.qr_pocket_address_image);
+        mImageView.setImageBitmap(mBitmap);
+
+        dialog.findViewById(R.id.address_copy_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData mClipData = ClipData.newPlainText("Label", currentAccAddress);
+                cm.setPrimaryClip(mClipData);
+                final QMUITipDialog copySuccessDiglog = new QMUITipDialog.Builder(getContext())
+                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
+                        .setTipWord("已复制到剪切板")
+                        .create();
+                copySuccessDiglog.show();
+                getView().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        copySuccessDiglog.dismiss();
+                    }
+                }, 1500);
+            }
+        });
+
+        dialog.findViewById(R.id.cancel_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     private void go2SendTokenFragment(){
