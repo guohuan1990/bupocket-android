@@ -53,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@mipmap/icon_qrCode"/>
+                        android:src="@mipmap/icon_qrcode"/>
             </LinearLayout>
             <LinearLayout
                     android:layout_width="wrap_content"
