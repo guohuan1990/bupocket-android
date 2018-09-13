@@ -99,7 +99,7 @@
                         android:textColor="@color/app_color_font_blue"
                         android:textSize="@dimen/bp_btn_text_size"/>
                 <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                        android:id="@+id/wallet_send_btn"
+                        android:id="@+id/walletSendBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/bp_btn_hight"
                         android:layout_weight="1"

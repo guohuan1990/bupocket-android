@@ -26,7 +26,7 @@
     <dimen name="spanUtils_column_marginBottom">35dp</dimen>
     <dimen name="spanUtils_common_textSize">16sp</dimen>
 
-    <dimen name="bp_btn_hight">55dp</dimen>
+    <dimen name="bp_btn_hight">45dp</dimen>
     <dimen name="bp_btn_text_size">18sp</dimen>
     <dimen name="view_padding">10dp</dimen>
 </resources>

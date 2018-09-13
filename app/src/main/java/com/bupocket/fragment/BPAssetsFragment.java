@@ -1,7 +1,5 @@
 package com.bupocket.fragment;
 
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
@@ -57,6 +55,8 @@ public class BPAssetsFragment extends BaseFragment {
     QMUIRoundButton mWalletScanBtn;
     @BindView(R.id.showMyAddressLv)
     LinearLayout mShowMyaddressL;
+    @BindView(R.id.walletSendBtn)
+    QMUIRoundButton mSendBtn;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets, null);
@@ -66,6 +66,13 @@ public class BPAssetsFragment extends BaseFragment {
         initWalletInfoView();
         initMyTxListViews();
         showMyAddress();
+
+        mSendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                go2SendTokenFragment();
+            }
+        });
         return root;
     }
 
@@ -170,5 +177,9 @@ public class BPAssetsFragment extends BaseFragment {
 
             }
         });
+    }
+
+    private void go2SendTokenFragment(){
+        startFragment(new BPSendTokenFragment());
     }
 }
