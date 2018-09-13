@@ -4,10 +4,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
@@ -40,8 +37,6 @@ import java.util.Map;
 public class BPAssetsFragment extends BaseFragment {
     @BindView(R.id.user_nick)
     TextView mUserNickTextView;
-    @BindView(R.id.user_bc_address)
-    TextView mUserBcAddressTextView;
 
     private List<TokenTxInfo> tokenTxInfoList;
     private MyTokenTxAdapter myTokenTxAdapter;
@@ -60,6 +55,8 @@ public class BPAssetsFragment extends BaseFragment {
 
     @BindView(R.id.wallet_scan_btn)
     QMUIRoundButton mWalletScanBtn;
+    @BindView(R.id.showMyAddressLv)
+    LinearLayout mShowMyaddressL;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets, null);
@@ -68,18 +65,7 @@ public class BPAssetsFragment extends BaseFragment {
         loadMyTxList(pageSize, pageStart, "-1", currentAccAddress);
         initWalletInfoView();
         initMyTxListViews();
-
-
-
-        mUserBcAddressTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClipboardManager cm = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                // 将文本内容放到系统剪贴板里。
-                cm.setText(currentAccAddress);
-                Toast.makeText(getContext(), "地址复制成功", Toast.LENGTH_LONG).show();
-            }
-        });
+        showMyAddress();
         return root;
     }
 
@@ -103,7 +89,6 @@ public class BPAssetsFragment extends BaseFragment {
 
     private void initWalletInfoView(){
         mUserNickTextView.setText(currentAccNick);
-        mUserBcAddressTextView.setText(AddressUtil.anonymous(currentAccAddress));
     }
 
     private void initMyTxListViews(){
@@ -176,5 +161,14 @@ public class BPAssetsFragment extends BaseFragment {
             }
         });
 
+    }
+
+    private void showMyAddress(){
+        mShowMyaddressL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }

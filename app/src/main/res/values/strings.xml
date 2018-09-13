@@ -56,10 +56,14 @@
 
     <string name="view_title_wallet_sendBU">BU转账</string>
     <string name="send_address_title">对方账户（BU地址）</string>
-    <string name="send_amount_title">转账数量（BU）</string>
     <string name="send_note_title">备注</string>
     <string name="send_fee_title">预估最多支付费用（BU)</string>
-    
+    <string name="send_input_receiver_address_hint">请输入接收方地址</string>
+
+    <string name="send_amount_title">转账数量（BU）</string>
+    <string name="send_hint_txt1">单笔不可超过10000 BU</string>
+    <string name="send_hint_txt2">请输入备注</string>
+    <string name="send_hint_txt3">请输交易费用</string>
     <!-- 异常 -->
     <string name="create_wallet_fail">创建失败</string>
     <string name="checking_password_error">密码错误</string>
