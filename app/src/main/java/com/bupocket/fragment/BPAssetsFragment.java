@@ -1,5 +1,7 @@
 package com.bupocket.fragment;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,13 +10,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.adaptor.MyTokenTxAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.dto.resp.ApiResult;
+import com.bupocket.dto.resp.GetMyTxsRespDto;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.TxService;
 import com.bupocket.model.TokenTxInfo;
+import com.bupocket.utils.AddressUtil;
+import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.TimeUtil;
+import com.bupocket.wallet.Wallet;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BPAssetsFragment extends BaseFragment {
     @BindView(R.id.user_nick)
@@ -26,30 +47,98 @@ public class BPAssetsFragment extends BaseFragment {
     private MyTokenTxAdapter myTokenTxAdapter;
     @BindView(R.id.my_token_tx_lv)
     ListView tokenTxsListView;
+    @BindView(R.id.refreshLayout)
+    RefreshLayout refreshLayout;
+
+    @BindView(R.id.accountBUBalanceTv)
+    TextView mAccountBuBalanceTv;
+    private SharedPreferencesHelper sharedPreferencesHelper;
+    private String pageSize = "10";
+    private String pageStart = "1";
+    private String currentAccAddress;
+    private String currentAccNick;
+
+    @BindView(R.id.wallet_scan_btn)
+    QMUIRoundButton mWalletScanBtn;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets, null);
         ButterKnife.bind(this, root);
-        mUserNickTextView.setText("阿木");
-        mUserBcAddressTextView.setText("buQevL***WPng8P");
+        initData();
+        loadMyTxList(pageSize, pageStart, "-1", currentAccAddress);
+        initWalletInfoView();
+        initMyTxListViews();
 
-        initAssetsGroupListView();
+
+
+        mUserBcAddressTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager cm = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                // 将文本内容放到系统剪贴板里。
+                cm.setText(currentAccAddress);
+                Toast.makeText(getContext(), "地址复制成功", Toast.LENGTH_LONG).show();
+            }
+        });
         return root;
     }
-    private void initAssetsGroupListView(){
+
+    private void initData(){
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+        currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
+        currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
         tokenTxInfoList = new ArrayList<>();
-        tokenTxInfoList.add(new TokenTxInfo("buQYaQ***HkKH5Z", "1分前","+893,325.93828","成功"));
-        tokenTxInfoList.add(new TokenTxInfo("buQVsU***KDf2gL", "3天前","-1000","成功"));
-        tokenTxInfoList.add(new TokenTxInfo("buQhCP***KXRaYD", "28/08/2018","+0.0093","成功"));
-        tokenTxInfoList.add(new TokenTxInfo("buQYaQ***HkKH5Z", "17/08/2018","+800","成功"));
-        tokenTxInfoList.add(new TokenTxInfo("buQVsU***KDf2gL", "14/08/2018","+98,382","成功"));
-        tokenTxInfoList.add(new TokenTxInfo("buQYaQ***HkKH5Z", "09/08/2018","+30","成功"));
-        tokenTxInfoList.add(new TokenTxInfo("buQYaQ***HkKH5Z", "02/07/2018","+30","成功"));
-        tokenTxInfoList.add(new TokenTxInfo("buQYaQ***HkKH5Z", "28/07/2018","+56","成功"));
-        tokenTxInfoList.add(new TokenTxInfo("buQi27***Scb8oG", "23/07/2018","+24","成功"));
-        tokenTxInfoList.add(new TokenTxInfo("buQYaQ***HkKH5Z", "13/07/2018","+190","成功"));
-        tokenTxInfoList.add(new TokenTxInfo("buQYaQ***HkKH5Z", "10/07/2018","+1","成功"));
-        tokenTxInfoList.add(new TokenTxInfo("buQYaQ***HkKH5Z", "03/07/2018","+5","成功"));
+
+        mAccountBuBalanceTv.setText(getAccountBUBalance());
+
+    }
+
+    private String getAccountBUBalance(){
+        String buBalance = Wallet.getAccountBUBalance(currentAccAddress);
+        if(buBalance == null){
+            return "0";
+        }
+        return buBalance;
+    }
+
+    private void initWalletInfoView(){
+        mUserNickTextView.setText(currentAccNick);
+        mUserBcAddressTextView.setText(AddressUtil.anonymous(currentAccAddress));
+    }
+
+    private void initMyTxListViews(){
+        refreshLayout.setEnableAutoLoadMore(true);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                loadMyTxList(pageSize, pageStart, "-1", currentAccAddress);
+                refreshlayout.finishRefresh(500);
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                loadMyTxList(pageSize, (Integer.parseInt(pageStart)+1) + "", "-1", currentAccAddress);
+                refreshlayout.finishLoadMore(500);
+            }
+        });
+    }
+
+    private void initAssetsGroupListView(GetMyTxsRespDto getMyTxsRespDto){
+
+        if(getMyTxsRespDto != null){
+            for (GetMyTxsRespDto.TxRecordBean obj : getMyTxsRespDto.getTxRecord()) {
+
+                String txAccountAddress = AddressUtil.anonymous((obj.getOutinType() == 0) ? obj.getToAddress() : obj.getFromAddress());
+                String amountStr = (obj.getOutinType() == 0) ? "-" + obj.getAmount() : "+" + obj.getAmount();
+
+                DecimalFormat decimalFormat = new DecimalFormat("###,###.00000000");
+                amountStr = decimalFormat.format(Double.parseDouble(amountStr));
+                String txStartStr = (obj.getTxStatus() == 0) ? "成功" : "失败";
+                tokenTxInfoList.add(new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime()), amountStr, txStartStr));
+            }
+
+        }
 
         myTokenTxAdapter = new MyTokenTxAdapter(tokenTxInfoList, getContext());
         tokenTxsListView.setAdapter(myTokenTxAdapter);
@@ -61,5 +150,31 @@ public class BPAssetsFragment extends BaseFragment {
                 startFragment(new BPAssetsTxDetailFragment());
             }
         });
+    }
+
+
+
+    private void loadMyTxList(String pageSize,String pageStart,String pageTotal,String currentAccAddr) {
+        TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
+        Map<String, Object> parmasMap = new HashMap<>();
+        parmasMap.put("walletAddress",currentAccAddr);
+        parmasMap.put("startPage", pageStart);
+        parmasMap.put("pageSize", pageSize);
+        System.out.println(JSON.toJSONString(parmasMap));
+        Call<ApiResult<GetMyTxsRespDto>> call = txService.getMyTxs(parmasMap);
+        call.enqueue(new Callback<ApiResult<GetMyTxsRespDto>>() {
+            @Override
+            public void onResponse(Call<ApiResult<GetMyTxsRespDto>> call, Response<ApiResult<GetMyTxsRespDto>> response) {
+
+                ApiResult<GetMyTxsRespDto> respDto = response.body();
+                initAssetsGroupListView(respDto.getData());
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<GetMyTxsRespDto>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
     }
 }

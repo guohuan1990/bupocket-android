@@ -9,7 +9,7 @@
         <item name="android:listPreferredItemHeightSmall">?attr/qmui_list_item_height</item>
 
         <!-- 配置qmui提供的theme -->
-        <item name="qmui_config_color_blue">@color/app_color_blue</item>
+        <item name="qmui_config_color_blue">@color/app_color_white</item>
         <item name="qmui_round_btn_bg_color">@color/s_btn_blue_bg</item>
         <item name="qmui_round_btn_border_color">@color/s_btn_blue_border</item>
         <item name="qmui_round_btn_text_color">@color/s_btn_blue_text</item>
@@ -164,6 +164,30 @@
         <item name="qmui_dialog_menu_item_height">52dp</item>
         <item name="qmui_dialog_menu_container_padding_top_when_title_exist">23dp</item>
         <item name="qmui_dialog_menu_container_padding_bottom_when_action_exist">24dp</item>
+    </style>
+
+    <style name="BPEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/edit_text_color_control_normal</item>
+        <item name="colorControlActivated">@color/edit_text_color_control_activated</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:paddingBottom">15dp</item>
+    </style>
+
+    <style name="BPViewTitle" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">32sp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="BPMneonicCodeItem">
+        <item name="android:text">word</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">#F5F5F5</item>
+        <item name="android:textColor">#999999</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:textSize">16dp</item>
     </style>
 
 </resources>

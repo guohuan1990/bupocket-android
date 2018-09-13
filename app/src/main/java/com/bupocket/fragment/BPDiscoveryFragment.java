@@ -45,7 +45,7 @@ public class BPDiscoveryFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        startFragment(new BPCreateWalletStepOne());
+                        startFragment(new BPCreateWalletShowMneonicCodeFragment());
                         break;
                     case 1:
                         startFragment(new OtcMainFragment());

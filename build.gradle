@@ -3,6 +3,7 @@
 buildscript {
     
     repositories {
+
         google()
         jcenter()
     }
@@ -17,11 +18,12 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "http://maven.bumo.io/content/groups/public/"}
     }
 
     ext {
         buildToolsVersion = "28.0.2"
-        minSdkVersion = 14
+        minSdkVersion = 15
         targetSdkVersion = 28
         compileSdkVersion = 28
         supportVersion = "27.1.1"

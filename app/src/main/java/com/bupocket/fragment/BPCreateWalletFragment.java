@@ -1,0 +1,27 @@
+package com.bupocket.fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import com.bupocket.R;
+import com.bupocket.base.BaseFragment;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
+public class BPCreateWalletFragment extends BaseFragment {
+    @BindView(R.id.create_wallet_btn)
+    QMUIRoundButton mCreateWalletBtn;
+    @Override
+    protected View onCreateView() {
+        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_create_wallet, null);
+        ButterKnife.bind(this, root);
+
+        mCreateWalletBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPCreateWalletFormFragment());
+            }
+        });
+        return root;
+    }
+}

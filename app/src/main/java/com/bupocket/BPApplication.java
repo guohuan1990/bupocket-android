@@ -24,4 +24,5 @@ public class BPApplication extends Application {
 
 //        QDUpgradeManager.getInstance(this).check();
     }
+
 }

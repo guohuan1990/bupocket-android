@@ -57,6 +57,7 @@ public class HomeFragment extends BaseFragment {
         mTabSegment.addTab(assets);
         mTabSegment.addTab(discovery);
         mTabSegment.addTab(profile);
+        mTabSegment.setDefaultSelectedColor(0xFF36B3FF);
 
     }
 

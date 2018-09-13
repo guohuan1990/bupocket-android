@@ -24,7 +24,45 @@
     <string name="function_opening" translatable="false">功能即将开放</string>
     <string name="tabbr_wallet_txt">钱包</string>
     <string name="tabbr_otc_txt">OTC</string>
-
+    <string name="wallet_create_txt">创建数字身份</string>
+    <string name="wallet_create_create_btn_txt">立即创建</string>
+    <string name="wallet_create_recover_btn_txt">恢复身份</string>
+    <string name="hint_wallet_create_form_input_identity_name">请填写身份名</string>
+    <string name="hint_wallet_create_form_input_password">请设置密码</string>
+    <string name="hint_wallet_create_form_input_rePassword">请再次确认密码</string>
+    <string name="hint_wallet_create_form_create_btn_txt">创建</string>
     <string name="otc_top_bar_buy_txt">购买</string>
     <string name="otc_top_bar_sell_txt">出售</string>
+    <string name="view_title_backup_wallet">备份钱包</string>
+    <string name="view_title_create_wallet_identity">创建身份</string>
+    <string name="backup_wallet_txt1">没有妥善备份就无法保障资产安全，删除程序或钱包后，你需要备份文件来恢复钱包</string>
+    <string name="backup_wallet_txt2">请确保在四周无人，没有摄像头的安全环境下备份</string>
+    <string name="backup_wallet_btn_txt">备份助记词</string>
+    <string name="view_title_backup_mneonic_code">备份助记词</string>
+    <string name="backup_mneonic_code_txt1">请勿截图</string>
+    <string name="backup_mneonic_code_txt2">露助记词将导致资产丢失，请抄写下助记词并存放在安全的地方</string>
+    <string name="backup_mneonic_code_txt3">请按顺序记录每个词，并妥善保管</string>
+    <string name="backup_mneonic_code_btn_txt">我已抄好</string>
+    <string name="view_title_confirm_mneonic_code">确认助记词</string>
+    <string name="confirm_mneonic_code_txt">请按顺序点击助记词，以确认您正确备份</string>
+    <string name="confirm_mneonic_code_btn_txt">完成</string>
+    <string name="wallet_password_confirm_title">密码确认</string>
+    <string name="wallet_password_confirm_txt1">请填写钱包密码以确认备份</string>
+    <string name="hint_wallet_passwrod_confirm_txt1">8-20个字符，含数字、字母和符号</string>
+    <string name="hint_wallet_passwrod_confirm_submit_btn">确认</string>
+    <string name="wallet_send_txt">转账</string>
+    <string name="wallet_scan_txt">扫一扫</string>
+    <string name="recently_tx_txt">最近交易记录</string>
+
+    <string name="view_title_wallet_sendBU">BU转账</string>
+    <string name="send_address_title">对方账户（BU地址）</string>
+    <string name="send_amount_title">转账数量（BU）</string>
+    <string name="send_note_title">备注</string>
+    <string name="send_fee_title">预估最多支付费用（BU)</string>
+    
+    <!-- 异常 -->
+    <string name="create_wallet_fail">创建失败</string>
+    <string name="checking_password_error">密码错误</string>
+    <string name="geting_account_bu_balance">获取中</string>
+
 </resources>
