@@ -1,15 +1,24 @@
 package com.bupocket.dto.resp;
 
 public class ApiResult<T> {
-    Meta meta;
+    String errcode;
+    String msg;
     T data;
 
-    public Meta getMeta() {
-        return meta;
+    public String getErrcode() {
+        return errcode;
     }
 
-    public void setMeta(Meta meta) {
-        this.meta = meta;
+    public void setErrcode(String errcode) {
+        this.errcode = errcode;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public T getData() {

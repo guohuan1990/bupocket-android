@@ -1,12 +1,10 @@
 package com.bupocket.fragment;
 
-<<<<<<< HEAD
-=======
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
->>>>>>> e7ac771f0b9348ee63e1a50d0d94708d03d8b12c
+import android.support.design.widget.BottomNavigationView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
@@ -26,6 +24,8 @@ import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TimeUtil;
 import com.bupocket.wallet.Wallet;
+import com.qmuiteam.qmui.widget.QMUIEmptyView;
+import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -45,8 +45,8 @@ import java.util.Map;
 public class BPAssetsFragment extends BaseFragment {
     @BindView(R.id.user_nick)
     TextView mUserNickTextView;
-
-    private List<TokenTxInfo> tokenTxInfoList;
+    private Map<String, TokenTxInfo> tokenTxInfoMap = new HashMap<>();
+    private List<TokenTxInfo> tokenTxInfoList = new ArrayList<>();
     private MyTokenTxAdapter myTokenTxAdapter;
     @BindView(R.id.my_token_tx_lv)
     ListView tokenTxsListView;
@@ -55,9 +55,11 @@ public class BPAssetsFragment extends BaseFragment {
 
     @BindView(R.id.accountBUBalanceTv)
     TextView mAccountBuBalanceTv;
-    private SharedPreferencesHelper sharedPreferencesHelper;
+    protected SharedPreferencesHelper sharedPreferencesHelper;
     private String pageSize = "10";
     private String pageStart = "1";
+    private String pageTotal = "-1";
+    Integer queryTxSize = 0;
     private String currentAccAddress;
     private String currentAccNick;
 
@@ -67,15 +69,18 @@ public class BPAssetsFragment extends BaseFragment {
     LinearLayout mShowMyaddressL;
     @BindView(R.id.walletSendBtn)
     QMUIRoundButton mSendBtn;
+    @BindView(R.id.userBcAddress)
+    TextView mUserBcAddressTv;
+    @BindView(R.id.emptyView)
+    QMUIEmptyView mEmptyView;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets, null);
         ButterKnife.bind(this, root);
         initData();
-        loadMyTxList(pageSize, pageStart, "-1", currentAccAddress);
         initWalletInfoView();
         initMyTxListViews();
-        showMyAddress(currentAccAddress);
+        showMyAddress();
 
         mSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,9 +95,9 @@ public class BPAssetsFragment extends BaseFragment {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
         currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
-        tokenTxInfoList = new ArrayList<>();
 
         mAccountBuBalanceTv.setText(getAccountBUBalance());
+        mUserBcAddressTv.setText(AddressUtil.anonymous(currentAccAddress));
 
     }
 
@@ -112,18 +117,26 @@ public class BPAssetsFragment extends BaseFragment {
         refreshLayout.setEnableAutoLoadMore(true);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                loadMyTxList(pageSize, pageStart, "-1", currentAccAddress);
-                refreshlayout.finishRefresh(500);
+            public void onRefresh(final RefreshLayout refreshlayout) {
+                refreshlayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadMyTxList(pageSize, pageStart, pageTotal, currentAccAddress,queryTxSize);
+                        refreshlayout.finishRefresh();
+                        refreshLayout.setNoMoreData(false);
+                    }
+                }, 1000);
+
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                loadMyTxList(pageSize, (Integer.parseInt(pageStart)+1) + "", "-1", currentAccAddress);
+                loadMyTxList(pageSize, (Integer.parseInt(pageStart)+1) + "", pageTotal, currentAccAddress, queryTxSize);
                 refreshlayout.finishLoadMore(500);
             }
         });
+        refreshLayout.autoRefresh();
     }
 
     private void initAssetsGroupListView(GetMyTxsRespDto getMyTxsRespDto){
@@ -134,10 +147,14 @@ public class BPAssetsFragment extends BaseFragment {
                 String txAccountAddress = AddressUtil.anonymous((obj.getOutinType() == 0) ? obj.getToAddress() : obj.getFromAddress());
                 String amountStr = (obj.getOutinType() == 0) ? "-" + obj.getAmount() : "+" + obj.getAmount();
 
-                DecimalFormat decimalFormat = new DecimalFormat("###,###.00000000");
-                amountStr = decimalFormat.format(Double.parseDouble(amountStr));
+//                DecimalFormat decimalFormat = new DecimalFormat("###,###.00000000");
+//                amountStr = decimalFormat.format(Double.parseDouble(amountStr));
                 String txStartStr = (obj.getTxStatus() == 0) ? "成功" : "失败";
-                tokenTxInfoList.add(new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime()), amountStr, txStartStr));
+                if(!tokenTxInfoMap.containsKey(obj.getTxHash())){
+                    TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime()), amountStr, txStartStr);
+                    tokenTxInfoMap.put(obj.getTxHash(), tokenTxInfo);
+                    tokenTxInfoList.add(tokenTxInfo);
+                }
             }
 
         }
@@ -156,53 +173,55 @@ public class BPAssetsFragment extends BaseFragment {
 
 
 
-    private void loadMyTxList(String pageSize,String pageStart,String pageTotal,String currentAccAddr) {
+    private void loadMyTxList(String pageSize,String pageStart,String pageTotal,String currentAccAddr,Integer queryTxSize) {
         TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
         Map<String, Object> parmasMap = new HashMap<>();
         parmasMap.put("walletAddress",currentAccAddr);
         parmasMap.put("startPage", pageStart);
         parmasMap.put("pageSize", pageSize);
-        System.out.println(JSON.toJSONString(parmasMap));
         Call<ApiResult<GetMyTxsRespDto>> call = txService.getMyTxs(parmasMap);
         call.enqueue(new Callback<ApiResult<GetMyTxsRespDto>>() {
             @Override
             public void onResponse(Call<ApiResult<GetMyTxsRespDto>> call, Response<ApiResult<GetMyTxsRespDto>> response) {
 
                 ApiResult<GetMyTxsRespDto> respDto = response.body();
-                initAssetsGroupListView(respDto.getData());
+                List<GetMyTxsRespDto.TxRecordBean> mytxsData = respDto.getData().getTxRecord();
+
+                if(mytxsData != null && mytxsData.size() == 0){
+                }else if(mytxsData != null && mytxsData.size() > 0){
+                    initAssetsGroupListView(respDto.getData());
+                }
             }
 
             @Override
             public void onFailure(Call<ApiResult<GetMyTxsRespDto>> call, Throwable t) {
                 t.printStackTrace();
+                mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
             }
         });
 
     }
 
-    private void showMyAddress(final String currentAccAddress) {
+    private void showMyAddress() {
         mShowMyaddressL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createQMUIDialog(currentAccAddress);
+                showAccountAddressView();
             }
         });
     }
 
-
-    private void createQMUIDialog(final String currentAccAddress){
-        final QMUIDialog dialog = new QMUIDialog.CustomDialogBuilder(getContext())
-                .setLayout(R.layout.fragment_show_qr)
-                .create();
-
-        TextView address_text = dialog.findViewById(R.id.qr_address_text);
-        address_text.setText(currentAccAddress);
+    private void showAccountAddressView(){
+        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
+        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.show_address_layout,null));
+        TextView accountAddresTv = qmuiBottomSheet.findViewById(R.id.printAccAddressTv);
+        accountAddresTv.setText(currentAccAddress);
 
         Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(currentAccAddress, 356, 356);
-        ImageView mImageView = dialog.findViewById(R.id.qr_pocket_address_image);
+        ImageView mImageView = qmuiBottomSheet.findViewById(R.id.qr_pocket_address_image);
         mImageView.setImageBitmap(mBitmap);
 
-        dialog.findViewById(R.id.address_copy_btn).setOnClickListener(new View.OnClickListener() {
+        qmuiBottomSheet.findViewById(R.id.addressCopyBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -221,17 +240,25 @@ public class BPAssetsFragment extends BaseFragment {
                 }, 1500);
             }
         });
-
-        dialog.findViewById(R.id.cancel_btn).setOnClickListener(new View.OnClickListener() {
+        qmuiBottomSheet.findViewById(R.id.closeBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                qmuiBottomSheet.dismiss();
             }
         });
-        dialog.show();
+        qmuiBottomSheet.show();
+    }
+
+    public Integer getQueryTxSize() {
+        return queryTxSize;
+    }
+
+    public void setQueryTxSize(Integer queryTxSize) {
+        this.queryTxSize = queryTxSize;
     }
 
     private void go2SendTokenFragment(){
         startFragment(new BPSendTokenFragment());
     }
+
 }

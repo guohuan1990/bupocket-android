@@ -11,7 +11,6 @@ import io.bumo.model.request.AccountGetBalanceRequest;
 import io.bumo.model.response.AccountGetBalanceResponse;
 
 public class Wallet {
-    final static SDK sdk = SDK.getInstance(Constants.BUMO_NODE_URL);
     public static byte[] getSkey(String password, String ciphertextSkeyData) throws Exception {
         BaseKeyStoreEntity baseKeyStoreEntity = JSON.parseObject(ciphertextSkeyData, BaseKeyStoreEntity.class);
         String skeyHex = KeyStore.decodeMsg(password,baseKeyStoreEntity);
@@ -21,7 +20,7 @@ public class Wallet {
     public static String getAccountBUBalance(String accountAddress){
         AccountGetBalanceRequest request = new AccountGetBalanceRequest();
         request.setAddress(accountAddress);
-
+        SDK sdk = SDK.getInstance(Constants.BUMO_NODE_URL);
         AccountGetBalanceResponse response = sdk.getAccountService().getBalance(request);
 
         System.out.println(JSON.toJSONString(response, true));

@@ -4,8 +4,6 @@
     <!-- StatusBarHelper 状态栏工具 -->
     <string name="statusBarHelper_translucentActivity_desc" translatable="false">通过在 Activity 中调用 QMUIStatusBarHelper.translucent() 方法，即可实现沉浸式状态栏的效果</string>
     <string name="statusBarHelper_statusBar_height_result" translatable="false">状态栏实际高度为 %1$d</string>
-
-
     <!-- 关于我们 -->
     <string name="about_title" translatable="false">关于</string>
     <string name="about_item_homepage" translatable="false">访问官网</string>
@@ -75,4 +73,8 @@
     <string name="qr_copy_btn_text">复制钱包地址</string>
     <string name="qr_pic_name_text">钱包地址二维码</string>
 
+    <string name="emptyView_mode_desc_fail_title">加载失败</string>
+    <string name="emptyView_mode_desc_fail_desc">请检测网络是否能正常连接</string>
+    <string name="emptyView_mode_desc_retry">点击重试</string>
+    <string name="emptyView_mode_desc_no_data">暂无数据</string>
 </resources>

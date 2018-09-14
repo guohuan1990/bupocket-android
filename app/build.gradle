@@ -36,10 +36,10 @@ android {
     }
     packagingOptions {
         exclude 'lib/x86_64/darwin/libscrypt.dylib'
-        exclude 'com/google/thirdparty/publicsuffix/PublicSuffixPatterns.gwt.xml'
-        exclude 'com/google/thirdparty/publicsuffix/PublicSuffixType.gwt.xml'
-        exclude 'org/bitcoinj/crypto/mnemonic/wordlist/english.txt'
-        exclude 'org/bitcoinj/crypto/cacerts'
+//        exclude 'com/google/thirdparty/publicsuffix/PublicSuffixPatterns.gwt.xml'
+//        exclude 'com/google/thirdparty/publicsuffix/PublicSuffixType.gwt.xml'
+//        exclude 'org/bitcoinj/crypto/mnemonic/wordlist/english.txt'
+//        exclude 'org/bitcoinj/crypto/cacerts'
     }
 
 }
@@ -65,6 +65,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.1.0"
     implementation "com.squareup.retrofit2:converter-gson:2.1.0"
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
+//    implementation 'com.github.czy1121:loadinglayout:1.0.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //leak
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
@@ -74,6 +75,6 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation project(':lib')
-    annotationProcessor project(':compiler')
+//    implementation project(':library')
+//    annotationProcessor project(':compiler')
 }
