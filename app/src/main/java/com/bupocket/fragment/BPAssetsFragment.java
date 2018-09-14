@@ -1,15 +1,14 @@
 package com.bupocket.fragment;
 
-<<<<<<< HEAD
-=======
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
->>>>>>> e7ac771f0b9348ee63e1a50d0d94708d03d8b12c
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
+
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
@@ -67,6 +66,8 @@ public class BPAssetsFragment extends BaseFragment {
     LinearLayout mShowMyaddressL;
     @BindView(R.id.walletSendBtn)
     QMUIRoundButton mSendBtn;
+    @BindString(R.string.qr_copy_success_message)
+    String copySuccessMessage;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets, null);
@@ -210,7 +211,7 @@ public class BPAssetsFragment extends BaseFragment {
                 cm.setPrimaryClip(mClipData);
                 final QMUITipDialog copySuccessDiglog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
-                        .setTipWord("已复制到剪切板")
+                        .setTipWord(copySuccessMessage)
                         .create();
                 copySuccessDiglog.show();
                 getView().postDelayed(new Runnable() {
