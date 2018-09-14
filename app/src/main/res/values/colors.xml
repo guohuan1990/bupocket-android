@@ -31,6 +31,7 @@
     <color name="tab_panel_bg">#ffffff</color>
     <color name="tab_panel_divider">@color/bar_divider</color>
     <color name="app_color_font">#FFFFFF</color>
+    <color name="app_color_font_main">#36B3FF</color>
     <color name="app_color_font_blue">#5745C3</color>
     <color name="asset_top_bg_color">#2768F3</color>
 </resources>

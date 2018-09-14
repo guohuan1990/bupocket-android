@@ -29,18 +29,18 @@ public class TimeUtil {
             return result;
         }
         else if(dayC>=1){
-            result="发表于"+ Integer.parseInt(dayC+"") +"天前";
+            result = Integer.parseInt(dayC+"") +"天前";
             return result;
         }
         else if(hourC>=1){
-            result="发表于"+Integer.parseInt(hourC+"") +"个小时前";
+            result = Integer.parseInt(hourC+"") +"小时前";
             return result;
         }
         else if(minC>=1){
-            result="发表于"+ Integer.parseInt(minC+"") +"分钟前";
+            result =  Integer.parseInt(minC+"") +"分钟前";
             return result;
         }else{
-            result="刚刚发表";
+            result = "刚刚";
             return result;
         }
     }

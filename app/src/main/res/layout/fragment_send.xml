@@ -2,216 +2,273 @@
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                android:background="@color/qmui_config_color_white">
+                                                android:background="@color/qmui_config_color_white"
+                                                xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:scrollbars="none">
     <LinearLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_marginTop="?attr/qmui_topbar_height"
-            android:padding="10dp">
+            android:orientation="vertical">
         <TextView
+                android:padding="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/view_title_create_wallet_identity"
-                android:layout_marginTop="25dp"
+                android:text="@string/view_title_wallet_sendBU"
                 android:theme="@style/BPViewTitle"/>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#fff"
-                android:padding="15dp"
-                android:orientation="vertical">
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal">
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/send_address_title"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ff0000"
-                        android:text="*"/>
-            </LinearLayout>
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:layout_marginTop="10dp"
-                          android:orientation="horizontal">
-                <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="8"
-                        android:background="@null"
-                        android:hint="@string/send_input_receiver_address_hint"/>
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_gravity="center_vertical"
-                        android:src="@mipmap/icon_scan_blue"
+                android:orientation="vertical"
+                android:background="#F5F5F5"
+                android:padding="10dp">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFF"
+                    android:padding="15dp"
+                    android:orientation="vertical">
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_marginBottom="10dp"
+                              android:orientation="horizontal">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="@string/send_address_title"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ff0000"
+                            android:text="*"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_marginTop="10dp"
+                              android:orientation="horizontal">
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal"
+                                  android:layout_weight="8">
+                        <EditText
+                                android:id="@+id/destAccountAddressEt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:background="@null"
+                                android:hint="@string/send_input_receiver_address_hint"/>
+
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:gravity="right"
+                                  android:layout_gravity="center_vertical"
+                                  android:layout_weight="2">
+
+                        <ImageView
+                                android:id="@+id/sendFormScanIv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/icon_scan_blue"
                         />
+                    </LinearLayout>
 
+                </LinearLayout>
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.5dip"
+                        android:layout_marginTop="8dp"
+                        android:background="#E3E3E3"/>
+                />
             </LinearLayout>
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="0.5dip"
-                    android:layout_marginTop="5dp"
-                    android:background="#E3E3E3"/>
-            />
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:padding="15dp"
+                    android:orientation="vertical">
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_marginBottom="10dp"
+                              android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="@string/send_amount_title"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ff0000"
+                            android:text="*"/>
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal"
+                                  android:gravity="right"
+                    >
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/send_available_balance_txt"
+                        />
+                        <TextView
+                                android:id="@+id/accountAvailableBalanceTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/app_color_font_main"
+                                android:text="0"
+                        />
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="5dp"
+                                android:textColor="@color/app_color_font_main"
+                                android:text="BU"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal">
+                    <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:background="@null"
+                            android:hint="@string/send_hint_txt1"/>
+
+                </LinearLayout>
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.5dip"
+                        android:layout_marginTop="8dp"
+                        android:background="#E3E3E3"/>
+                />
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:padding="15dp"
+                    android:orientation="vertical">
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_marginBottom="10dp"
+                              android:orientation="horizontal">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="@string/send_note_title"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ff0000"
+                            android:text="*"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal">
+                    <EditText
+                            android:id="@+id/sendFormNoteEt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:textSize="14sp"
+                            android:hint="@string/send_hint_txt2"/>
+
+                </LinearLayout>
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.5dip"
+                        android:layout_marginTop="8dp"
+                        android:background="#E3E3E3"/>
+                />
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:padding="15dp"
+                    android:orientation="vertical">
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_marginBottom="10dp"
+                              android:orientation="horizontal">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="@string/send_fee_title"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ff0000"
+                            android:text="*"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal">
+                    <EditText
+                            android:id="@+id/sendFormTxFeeEt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:textSize="14sp"
+                            android:hint="@string/send_hint_txt3"/>
+
+                </LinearLayout>
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.5dip"
+                        android:layout_marginTop="8dp"
+                        android:background="#E3E3E3"/>
+                />
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#fff"
-                android:padding="15dp"
-                android:orientation="vertical">
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal">
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/send_amount_title"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ff0000"
-                        android:text="*"/>
-            </LinearLayout>
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal">
-                <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="8"
-                        android:background="@null"
-                        android:hint="@string/send_hint_txt1"/>
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_gravity="center_vertical"
-                        android:src="@mipmap/icon_scan_blue"
-                />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true">
 
-            </LinearLayout>
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="0.5dip"
-                    android:layout_marginTop="5dp"
-                    android:background="#E3E3E3"/>
-            />
-        </LinearLayout>
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#fff"
-                android:padding="15dp"
-                android:orientation="vertical">
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal">
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/send_note_title"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ff0000"
-                        android:text="*"/>
-            </LinearLayout>
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal">
-                <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="8"
-                        android:background="@null"
-                        android:hint="@string/send_hint_txt2"/>
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_gravity="center_vertical"
-                        android:src="@mipmap/icon_scan_blue"
-                />
+        <RelativeLayout style="@style/button_wrapper_style"
+                        android:padding="10dp"
+                        android:layout_gravity="bottom">
 
-            </LinearLayout>
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="0.5dip"
-                    android:layout_marginTop="5dp"
-                    android:background="#E3E3E3"/>
-            />
-        </LinearLayout>
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#fff"
-                android:padding="15dp"
-                android:orientation="vertical">
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal">
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/send_fee_title"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ff0000"
-                        android:text="*"/>
-            </LinearLayout>
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal">
-                <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="8"
-                        android:background="@null"
-                        android:hint="@string/send_hint_txt3"/>
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_gravity="center_vertical"
-                        android:src="@mipmap/icon_scan_blue"
-                />
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                    android:id="@+id/completeMnemonicCodeBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/bp_btn_hight"
+                    android:layout_centerInParent="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="@string/send_form_next_btn_txt"
+                    app:qmui_borderColor="@color/app_btn_color_blue"
+                    app:qmui_backgroundColor="@color/app_btn_color_blue"
+                    app:qmui_radius="5dp"
+                    android:textColor="@color/app_color_font"
+                    android:textSize="@dimen/bp_btn_text_size"/>
 
-            </LinearLayout>
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="0.5dip"
-                    android:layout_marginTop="5dp"
-                    android:background="#E3E3E3"/>
-            />
-        </LinearLayout>
-
+        </RelativeLayout>
     </LinearLayout>
-
+    </LinearLayout>
+    </ScrollView>
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
             android:id="@+id/topbar"
             android:layout_width="match_parent"

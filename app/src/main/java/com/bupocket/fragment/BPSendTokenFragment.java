@@ -6,6 +6,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 public class BPSendTokenFragment extends BaseFragment {
@@ -13,8 +14,9 @@ public class BPSendTokenFragment extends BaseFragment {
     QMUITopBarLayout mTopBar;
     @Override
     protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_create_wallet_confirm_mneonic_code, null);
+        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_send, null);
         ButterKnife.bind(this, root);
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
         return root;
     }

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:background="@color/app_color_white">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:padding="15dp">
+        <ImageView
+                android:id="@+id/closeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_horizontal"
+                android:src="@mipmap/icon_close"
+        />
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textColor="#999999"
+                  android:paddingTop="10dp"
+                  android:text="@string/qr_pocket_address_title"/>
+        <TextView
+                android:id="@+id/printAccAddressTv"
+                android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:paddingTop="10dp"
+                  android:paddingBottom="20dp"
+                android:textColor="#333333"
+                  android:text="buQs9npaCq9mNFZG18qu88ZcmXYqd6bqpTU3"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="60dp"
+                android:paddingRight="60dp"
+                android:orientation="vertical">
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                    android:id="@+id/addressCopyBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/qr_copy_btn_text"
+                    app:qmui_borderColor="@color/app_btn_color_blue"
+                    app:qmui_backgroundColor="@color/app_btn_color_blue"
+                    app:qmui_radius="5dp"
+                    android:textColor="@color/app_color_font"
+                    android:textSize="18sp"/>
+        </LinearLayout>
+        <View
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/bg_dash_line"
+                android:layerType="software" />
+        <ImageView
+                android:id="@+id/qr_pocket_address_image"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="178dp"
+                android:layout_height="178dp"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/qr_pic_name_text" />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/qr_pic_name_text"/>
+    </LinearLayout>
+</LinearLayout>

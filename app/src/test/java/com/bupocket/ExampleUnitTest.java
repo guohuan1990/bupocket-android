@@ -1,7 +1,11 @@
 package com.bupocket;
 
-import org.bupocket.wallet.model.resp.Wallet;
-import org.bupocket.wallet.service.WalletService;
+import com.alibaba.fastjson.JSON;
+import com.bupocket.common.Constants;
+import io.bumo.SDK;
+import io.bumo.common.ToBaseUnit;
+import io.bumo.model.request.AccountGetBalanceRequest;
+import io.bumo.model.response.AccountGetBalanceResponse;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -17,8 +21,28 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
     @Test
-    public void createWallet(){
-        Wallet wallet = new WalletService().createWallet(null);
-        System.out.println(wallet.getMnemonicCode());
+    public String createWallet(){
+        AccountGetBalanceRequest request = new AccountGetBalanceRequest();
+        request.setAddress("buQcWEfVBYzvUsT55NBmFnEB6iXTcNdPbAYz");
+        SDK sdk = SDK.getInstance(Constants.BUMO_NODE_URL);
+        AccountGetBalanceResponse response = sdk.getAccountService().getBalance(request);
+
+        System.out.println(JSON.toJSONString(response, true));
+        if (0 == response.getErrorCode()) {
+            return ToBaseUnit.MO2BU(response.getResult().getBalance().toString());
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        AccountGetBalanceRequest request = new AccountGetBalanceRequest();
+        request.setAddress("buQpWyVCxbRBLeKvkAt6kPEBnZKJ7ExiJ2X2");
+        SDK sdk = SDK.getInstance(Constants.BUMO_NODE_URL);
+        AccountGetBalanceResponse response = sdk.getAccountService().getBalance(request);
+
+        System.out.println(JSON.toJSONString(response, true));
+        if (0 == response.getErrorCode()) {
+            System.out.println(ToBaseUnit.MO2BU(response.getResult().getBalance().toString()));
+        }
     }
 }
