@@ -4,13 +4,13 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.design.widget.BottomNavigationView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
+
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.adaptor.MyTokenTxAdapter;
 import com.bupocket.base.BaseFragment;
@@ -26,7 +26,6 @@ import com.bupocket.utils.TimeUtil;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -36,7 +35,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -69,6 +67,8 @@ public class BPAssetsFragment extends BaseFragment {
     LinearLayout mShowMyaddressL;
     @BindView(R.id.walletSendBtn)
     QMUIRoundButton mSendBtn;
+    @BindString(R.string.qr_copy_success_message)
+    String copySuccessMessage;
     @BindView(R.id.userBcAddress)
     TextView mUserBcAddressTv;
     @BindView(R.id.emptyView)
@@ -230,7 +230,7 @@ public class BPAssetsFragment extends BaseFragment {
                 cm.setPrimaryClip(mClipData);
                 final QMUITipDialog copySuccessDiglog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
-                        .setTipWord("已复制到剪切板")
+                        .setTipWord(copySuccessMessage)
                         .create();
                 copySuccessDiglog.show();
                 getView().postDelayed(new Runnable() {

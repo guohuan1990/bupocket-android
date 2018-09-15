@@ -68,10 +68,26 @@
     <string name="create_wallet_fail">创建失败</string>
     <string name="checking_password_error">密码错误</string>
     <string name="geting_account_bu_balance">获取中</string>
+    <!-- 二维码页面 -->
     <string name="qr_pocket_address_title">钱包地址</string>
     <string name="qr_cancel_btn_des">取消</string>
     <string name="qr_copy_btn_text">复制钱包地址</string>
     <string name="qr_pic_name_text">钱包地址二维码</string>
+    <string name="qr_copy_success_message">已复制到剪切板</string>
+    <!-- 我的 -->
+    <string name="me_change_the_password_txt">修改密码</string>
+    <string name="me_export_keystore_txt">导出Keystore</string>
+    <string name="me_help_txt">帮助与反馈</string>
+    <string name="me_version_txt">版本号</string>
+    <string name="pocket_version">V2.0.1</string>
+    <!-- 确认转账 -->
+    <string name="send_confirm_title">确认转账</string>
+    <string name="send_confirm_txt">请确认转账信息是否有误</string>
+    <string name="send_confirm_target_address_txt">对方账户</string>
+    <string name="send_confirm_amount_txt">转出数量</string>
+    <string name="send_confirm_estimate_txt">预估最多支付费用</string>
+    <string name="send_confirm_remark_txt">备注</string>
+    <string name="send_confirm_submit_btn_txt">提交</string>
 
     <string name="emptyView_mode_desc_fail_title">加载失败</string>
     <string name="emptyView_mode_desc_fail_desc">请检测网络是否能正常连接</string>
