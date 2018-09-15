@@ -9,8 +9,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="?attr/qmui_topbar_height"
-
-    android:orientation="vertical">
+            android:orientation="vertical">
         <TextView
                 android:padding="10dp"
                 android:layout_marginTop="20dp"
@@ -23,13 +22,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="#F5F5F5"
-                android:padding="15dp"
-        >
+                android:padding="10dp">
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#FFF"
-                    android:padding="10dp"
+                    android:padding="15dp"
                     android:orientation="vertical">
                 <LinearLayout android:layout_width="match_parent"
                               android:layout_height="wrap_content"
@@ -190,6 +188,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"
+                            android:textSize="14sp"
                             android:hint="@string/send_hint_txt2"/>
 
                 </LinearLayout>
@@ -243,8 +242,8 @@
                         android:background="#E3E3E3"/>
                 />
             </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true">
