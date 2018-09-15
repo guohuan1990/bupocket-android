@@ -71,6 +71,15 @@ public class BPSendTokenFragment extends BaseFragment {
                 TextView remarkTxt = sheet.findViewById(R.id.sendRemark);
                 remarkTxt.setText(note);
 
+                sheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+//                        sheet.dismiss();
+                        startFragment(new BPSendStatusFragment());
+                    }
+                });
+
                 sheet.show();
             }
         });

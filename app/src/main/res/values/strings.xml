@@ -95,6 +95,10 @@
     <string name="send_confirm_estimate_txt">预估最多支付费用</string>
     <string name="send_confirm_remark_txt">备注</string>
     <string name="send_confirm_submit_btn_txt">提交</string>
+    <!-- 使用条款 -->
+    <string name="use_terms_title">使用条款</string>
+    <string name="use_terms_checkbox_agree">我已阅读并同意以上条款内容</string>
+    <string name="use_terms_next_btn">继续</string>
 
     <string name="emptyView_mode_desc_fail_title">加载失败</string>
     <string name="emptyView_mode_desc_fail_desc">请检测网络是否能正常连接</string>
