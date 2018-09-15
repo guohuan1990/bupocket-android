@@ -34,4 +34,6 @@
     <color name="app_color_font_main">#36B3FF</color>
     <color name="app_color_font_blue">#5745C3</color>
     <color name="asset_top_bg_color">#2768F3</color>
+    <color name="send_confirm_title_color">#333333</color>
+    <color name="send_confirm_info_color">#666666</color>
 </resources>
