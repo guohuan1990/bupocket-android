@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,9 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BPSendTokenFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -238,8 +242,9 @@ public class BPSendTokenFragment extends BaseFragment {
                                                 public void run() {
                                                     String password = text.toString();
                                                     String accountBPData = getAccountBPData();
+                                                    String destAddess = null;
                                                     try {
-                                                        String destAddess = getDestAccAddr();
+                                                        destAddess = getDestAccAddr();
                                                         Wallet.getInstance().sendBu(password,accountBPData, currentAccAddress, destAddess, sendAmount, note,txFee);
                                                     } catch (Exception e) {
                                                         Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
@@ -247,7 +252,18 @@ public class BPSendTokenFragment extends BaseFragment {
                                                         return;
                                                     }finally {
                                                         tipDialog.dismiss();
+                                                        Bundle argz = new Bundle();
+                                                        argz.putString("destAccAddr",destAddess);
+                                                        argz.putString("sendAmount",sendAmount);
+                                                        argz.putString("txFee",txFee);
+                                                        argz.putString("note",note);
+                                                        argz.putString("sendTime","2018-09-15 19:02");
+                                                        BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
+                                                        bpSendStatusFragment.setArguments(argz);
+                                                        startFragment(bpSendStatusFragment);
+                                                        sheet.dismiss();
                                                     }
+
                                                 }
                                             }).start();
                                             dialog.dismiss();
