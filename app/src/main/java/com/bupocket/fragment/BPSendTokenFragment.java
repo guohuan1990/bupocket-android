@@ -23,6 +23,14 @@ public class BPSendTokenFragment extends BaseFragment {
 
     private String currentAccAddress;
     protected SharedPreferencesHelper sharedPreferencesHelper;
+    @BindView(R.id.destAccountAddressEt)
+    EditText addressET;
+    @BindView(R.id.sendAmountEt)
+    EditText sendAmountET;
+    @BindView(R.id.sendFormNoteEt)
+    EditText sendFormNoteEt;
+    @BindView(R.id.sendFormTxFeeEt)
+    EditText sendFormTxFeeEt;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_send, null);
@@ -63,20 +71,16 @@ public class BPSendTokenFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                EditText addressET = getView().findViewById(R.id.destAccountAddressEt);
                 String address = addressET.getText().toString();
 
-                EditText sendAmountET = getView().findViewById(R.id.sendAmountEt);
                 String sendAmount = sendAmountET.getText().toString();
 
-                EditText sendFormNoteEt = getView().findViewById(R.id.sendFormNoteEt);
                 String note = sendFormNoteEt.getText().toString();
 
-                EditText sendFormTxFeeEt = getView().findViewById(R.id.sendFormTxFeeEt);
                 String txFee = sendFormTxFeeEt.getText().toString();
 
-                QMUIBottomSheet sheet = new QMUIBottomSheet(getContext());
-                sheet.setContentView(R.layout.fragment_send_confirm);
+                final QMUIBottomSheet sheet = new QMUIBottomSheet(getContext());
+                sheet.setContentView(R.layout.send_confirm_layout);
 
                 TextView addressTxt = sheet.findViewById(R.id.sendTargetAddress);
                 addressTxt.setText(address);
@@ -90,12 +94,12 @@ public class BPSendTokenFragment extends BaseFragment {
                 TextView remarkTxt = sheet.findViewById(R.id.sendRemark);
                 remarkTxt.setText(note);
 
-//                sheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-////                        startFragment();
-//                    }
-//                });
+                sheet.findViewById(R.id.sendConfirmCloseBtn).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sheet.dismiss();
+                    }
+                });
 
                 sheet.show();
             }
