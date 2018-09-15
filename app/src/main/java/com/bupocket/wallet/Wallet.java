@@ -44,11 +44,24 @@ public class Wallet {
         return null;
     }
 
+    public Boolean checkAccAddress(String address){
+        Boolean flag = false;
+        AccountCheckValidRequest accountCheckValidRequest = new AccountCheckValidRequest();
+        accountCheckValidRequest.setAddress(address);
+        AccountCheckValidResponse accountCheckValidResponse = sdk.getAccountService().checkValid(accountCheckValidRequest);
+        if (0 == accountCheckValidResponse.getErrorCode()) {
+            return accountCheckValidResponse.getResult().isValid();
+        } else {
+            System.out.println(JSON.toJSONString(accountCheckValidResponse, true));
+        }
+        return flag;
+    }
+
 
     public String sendBu(String password,String bPData, String fromAccAddr,String toAccAddr,String amount, String note, String fee) throws Exception {
 
         String senderPrivateKey = null;
-                WalletBPData walletBPData = JSON.parseObject(bPData, WalletBPData.class);
+        WalletBPData walletBPData = JSON.parseObject(bPData, WalletBPData.class);
 
         if(walletBPData.getAccounts().size()>0){
             for (WalletBPData.AccountsBean accountsBean:walletBPData.getAccounts()

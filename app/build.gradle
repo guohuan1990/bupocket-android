@@ -6,11 +6,20 @@ android {
     compileSdkVersion 26
     buildToolsVersion parent.ext.buildToolsVersion
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.bupocket"
         minSdkVersion parent.ext.minSdkVersion
         targetSdkVersion parent.ext.targetSdkVersion
         versionCode gitVersion
         versionName "1.0.0"
+    }
+    signingConfigs {
+        config {
+            storeFile file(KEY_PATH)
+            storePassword KEY_PASS
+            keyAlias ALIAS_NAME
+            keyPassword ALIAS_PASS
+        }
     }
     buildTypes {
         debug {
@@ -20,6 +29,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     lintOptions {
@@ -64,6 +74,7 @@ dependencies {
     implementation 'io.bumo:bumo-sdk:2.0.0'
     implementation "com.squareup.retrofit2:retrofit:2.1.0"
     implementation "com.squareup.retrofit2:converter-gson:2.1.0"
+    implementation 'commons-beanutils:commons-beanutils:1.9.3'
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
 //    implementation 'com.github.czy1121:loadinglayout:1.0.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
