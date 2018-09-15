@@ -59,7 +59,7 @@ public class BPBackupWalletFragment extends BaseFragment {
                                         String password = text.toString();
                                         String ciphertextSkeyData = getSkeyStr();
                                         try {
-                                            byte[] skeyByte = Wallet.getSkey(password,ciphertextSkeyData);
+                                            byte[] skeyByte = Wallet.getInstance().getSkey(password,ciphertextSkeyData);
                                             MnemonicCodeTool mnemonicCodeTool = new MnemonicCodeTool(getContext().getAssets().open("english.txt"));
                                             mnemonicCodeList = mnemonicCodeTool.toMnemonic(skeyByte);
                                             go2BPCreateWalletShowMneonicCodeFragment();
