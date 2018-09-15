@@ -57,49 +57,49 @@ public class BPMeFragment extends BaseFragment{
     }
 
     private void showMyAddress(final String currentAccAddress) {
-        mShowMyaddressL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final QMUIBottomSheet sheet = new QMUIBottomSheet(getContext());
-                sheet.setContentView(R.layout.fragment_show_qr);
-
-
-                TextView address_text = sheet.findViewById(R.id.qr_address_text);
-                address_text.setText(currentAccAddress);
-
-                Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(currentAccAddress, 356, 356);
-                ImageView mImageView = sheet.findViewById(R.id.qr_pocket_address_image);
-                mImageView.setImageBitmap(mBitmap);
-
-                sheet.findViewById(R.id.address_copy_btn).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                        ClipData mClipData = ClipData.newPlainText("Label", currentAccAddress);
-                        cm.setPrimaryClip(mClipData);
-                        final QMUITipDialog copySuccessDiglog = new QMUITipDialog.Builder(getContext())
-                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
-                                .setTipWord(copySuccessMessage)
-                                .create();
-                        copySuccessDiglog.show();
-                        getView().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                copySuccessDiglog.dismiss();
-                            }
-                        }, 1500);
-                    }
-                });
-
-                sheet.findViewById(R.id.cancel_btn).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        sheet.dismiss();
-                    }
-                });
-                sheet.show();
-
-            }
-        });
+//        mShowMyaddressL.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final QMUIBottomSheet sheet = new QMUIBottomSheet(getContext());
+//                sheet.setContentView(R.layout.fragment_show_qr);
+//
+//
+//                TextView address_text = sheet.findViewById(R.id.qr_address_text);
+//                address_text.setText(currentAccAddress);
+//
+//                Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(currentAccAddress, 356, 356);
+//                ImageView mImageView = sheet.findViewById(R.id.qr_pocket_address_image);
+//                mImageView.setImageBitmap(mBitmap);
+//
+//                sheet.findViewById(R.id.address_copy_btn).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+//                        ClipData mClipData = ClipData.newPlainText("Label", currentAccAddress);
+//                        cm.setPrimaryClip(mClipData);
+//                        final QMUITipDialog copySuccessDiglog = new QMUITipDialog.Builder(getContext())
+//                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
+//                                .setTipWord(copySuccessMessage)
+//                                .create();
+//                        copySuccessDiglog.show();
+//                        getView().postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                copySuccessDiglog.dismiss();
+//                            }
+//                        }, 1500);
+//                    }
+//                });
+//
+//                sheet.findViewById(R.id.cancel_btn).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        sheet.dismiss();
+//                    }
+//                });
+//                sheet.show();
+//
+//            }
+//        });
     }
 }
