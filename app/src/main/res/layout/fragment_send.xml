@@ -139,12 +139,14 @@
                 <LinearLayout android:layout_width="match_parent"
                               android:layout_height="wrap_content"
                               android:orientation="horizontal">
+
                     <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="14sp"
-                            android:background="@null"
-                            android:hint="@string/send_hint_txt1"/>
+                        android:id="@+id/sendAmountEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="@string/send_hint_txt1"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
                 <View
@@ -251,7 +253,7 @@
                         android:layout_gravity="bottom">
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                    android:id="@+id/sendBtn"
+                    android:id="@+id/completeMnemonicCodeBtn"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/bp_btn_hight"
                     android:layout_centerInParent="true"
