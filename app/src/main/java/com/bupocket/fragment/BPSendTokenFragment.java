@@ -18,6 +18,8 @@ import com.bupocket.wallet.MnemonicCodeTool;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+import com.bupocket.fragment.BPSendStatusFragment;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
@@ -51,6 +53,7 @@ public class BPSendTokenFragment extends BaseFragment {
         initData();
         confirmSendInfo();
         initTopBar();
+
         return root;
     }
     private void initData(){
@@ -194,7 +197,7 @@ public class BPSendTokenFragment extends BaseFragment {
 
                 TextView remarkTxt = sheet.findViewById(R.id.sendRemark);
                 remarkTxt.setText(note);
-
+                
                 sheet.findViewById(R.id.sendConfirmCloseBtn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

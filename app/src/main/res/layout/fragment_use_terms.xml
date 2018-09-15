@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/qmui_config_color_white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/use_terms_title"
+            android:theme="@style/BPViewTitle" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="393dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    tools:text="大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段大段文字大段文字"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    tools:text="大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段大段文字大段文字"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    tools:text="大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段大段文字大段文字"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    tools:text="大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段大段文字大段文字"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    tools:text="大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段大段文字大段文字"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    tools:text="大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段大段文字大段文字"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    tools:text="大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段大段文字大段文字最后一个字"/>
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="bottom">
+
+            <CheckBox
+                android:id="@+id/checkBox4"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:background="#F5F5F5"
+                android:text="@string/use_terms_checkbox_agree" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@color/app_btn_color_blue"
+                android:textColor="@color/app_btn_color_white"
+                android:text="@string/use_terms_next_btn">
+
+            </TextView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"/>
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
