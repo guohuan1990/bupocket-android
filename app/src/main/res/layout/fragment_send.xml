@@ -251,7 +251,7 @@
                         android:layout_gravity="bottom">
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                    android:id="@+id/completeMnemonicCodeBtn"
+                    android:id="@+id/sendBtn"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/bp_btn_hight"
                     android:layout_centerInParent="true"

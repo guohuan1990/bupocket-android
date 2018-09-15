@@ -16,7 +16,6 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.BPAssetsFragment;
 import com.bupocket.fragment.BPDiscoveryFragment;
 import com.bupocket.fragment.BPProfileFragment;
-import com.bupocket.fragment.BPSendStatusFragment;
 import com.bupocket.fragment.otc.OtcMainFragment;
 import com.qmuiteam.qmui.widget.QMUIPagerAdapter;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
@@ -99,8 +98,7 @@ public class HomeFragment extends BaseFragment {
                         return new OtcMainFragment();
                     case 2:
                     default:
-//                        return new BPProfileFragment();
-                        return new BPSendStatusFragment();
+                        return new BPProfileFragment();
                 }
             }
 
