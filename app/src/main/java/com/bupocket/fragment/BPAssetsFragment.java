@@ -99,10 +99,22 @@ public class BPAssetsFragment extends BaseFragment {
         mAccountBuBalanceTv.setText(getAccountBUBalance());
         mUserBcAddressTv.setText(AddressUtil.anonymous(currentAccAddress));
 
+        String BPData = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
+        System.out.println("BPData:" + BPData);
+
+        /// 测试
+
+//        try {
+//            String hash = Wallet.getInstance().sendBu("44",BPData, currentAccAddress, "buQkiqJ64znC4pT7jDdj8y8ADiBnfqdKYdB3", "0.02", "","0.01");
+//            System.out.println("BPAssetsFragment.initData sendBu:" + hash);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
     }
 
     private String getAccountBUBalance(){
-        String buBalance = Wallet.getAccountBUBalance(currentAccAddress);
+        String buBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
         if(buBalance == null){
             return "0";
         }

@@ -9,6 +9,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -18,6 +20,11 @@ import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 public class BPSendTokenFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
+    @BindView(R.id.accountAvailableBalanceTv)
+    TextView mAccountAvailableBalanceTv;
+
+    private String currentAccAddress;
+    protected SharedPreferencesHelper sharedPreferencesHelper;
     @BindView(R.id.destAccountAddressEt)
     EditText addressET;
     @BindView(R.id.sendAmountEt)
@@ -26,18 +33,24 @@ public class BPSendTokenFragment extends BaseFragment {
     EditText sendFormNoteEt;
     @BindView(R.id.sendFormTxFeeEt)
     EditText sendFormTxFeeEt;
-
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_send, null);
         ButterKnife.bind(this, root);
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
+
+        initData();
         confirmSendInfo(root);
         initTopBar();
 
         return root;
     }
+    private void initData(){
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+        currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
+        mAccountAvailableBalanceTv.setText(getAccountBUBalance());
 
+    }
     private void initTopBar() {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +58,14 @@ public class BPSendTokenFragment extends BaseFragment {
                 popBackStack();
             }
         });
+    }
+
+    private String getAccountBUBalance(){
+        String buBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
+        if(buBalance == null){
+            return "0";
+        }
+        return buBalance;
     }
 
     private void confirmSendInfo(View view){
@@ -75,16 +96,7 @@ public class BPSendTokenFragment extends BaseFragment {
 
                 TextView remarkTxt = sheet.findViewById(R.id.sendRemark);
                 remarkTxt.setText(note);
-
-                sheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-//                        sheet.dismiss();
-                        startFragment(new BPSendStatusFragment());
-                    }
-                });
-
+                
                 sheet.findViewById(R.id.sendConfirmCloseBtn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
