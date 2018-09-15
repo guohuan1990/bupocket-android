@@ -187,7 +187,8 @@ public class BPAssetsFragment extends BaseFragment {
                 ApiResult<GetMyTxsRespDto> respDto = response.body();
                 List<GetMyTxsRespDto.TxRecordBean> mytxsData = respDto.getData().getTxRecord();
 
-                if(mytxsData != null && mytxsData.size() == 0){
+                if(respDto.getData() != null && respDto.getData().getPage().getTotal() == 0){
+                    mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
                 }else if(mytxsData != null && mytxsData.size() > 0){
                     initAssetsGroupListView(respDto.getData());
                 }
