@@ -1,19 +1,28 @@
 package com.bupocket.fragment;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.wallet.Constants;
+import com.bupocket.wallet.MnemonicCodeTool;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 public class BPSendTokenFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -24,13 +33,15 @@ public class BPSendTokenFragment extends BaseFragment {
     private String currentAccAddress;
     protected SharedPreferencesHelper sharedPreferencesHelper;
     @BindView(R.id.destAccountAddressEt)
-    EditText addressET;
+    EditText destAccountAddressEt;
     @BindView(R.id.sendAmountEt)
     EditText sendAmountET;
     @BindView(R.id.sendFormNoteEt)
     EditText sendFormNoteEt;
     @BindView(R.id.sendFormTxFeeEt)
     EditText sendFormTxFeeEt;
+    @BindView(R.id.completeMnemonicCodeBtn)
+    QMUIRoundButton mCompleteMnemonicCodeBtn;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_send, null);
@@ -38,7 +49,7 @@ public class BPSendTokenFragment extends BaseFragment {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
 
         initData();
-        confirmSendInfo(root);
+        confirmSendInfo();
         initTopBar();
         return root;
     }
@@ -57,6 +68,11 @@ public class BPSendTokenFragment extends BaseFragment {
         });
     }
 
+    private String getAccountBPData(){
+        String data = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
+        return data;
+    }
+
     private String getAccountBUBalance(){
         String buBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
         if(buBalance == null){
@@ -65,24 +81,109 @@ public class BPSendTokenFragment extends BaseFragment {
         return buBalance;
     }
 
-    private void confirmSendInfo(View view){
+    private String getDestAccAddr(){
+        return destAccountAddressEt.getText().toString().trim();
+    }
 
-        view.findViewById(R.id.completeMnemonicCodeBtn).setOnClickListener(new View.OnClickListener() {
+    private void confirmSendInfo(){
+
+        mCompleteMnemonicCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final QMUITipDialog tipDialog;
 
-                String address = addressET.getText().toString();
+                String address = destAccountAddressEt.getText().toString().trim();
+                Boolean flag = Wallet.getInstance().checkAccAddress(address);
+                if(!flag || CommonUtil.isNull(address)){
+                    tipDialog = new QMUITipDialog.Builder(getContext())
+                            .setTipWord(getResources().getString(R.string.invalid_address))
+                            .create();
+                    tipDialog.show();
+                    destAccountAddressEt.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            tipDialog.dismiss();
+                        }
+                    }, 1500);
 
-                String sendAmount = sendAmountET.getText().toString();
+                    return;
+                }
 
-                String note = sendFormNoteEt.getText().toString();
 
-                String txFee = sendFormTxFeeEt.getText().toString();
+
+                final String sendAmount = sendAmountET.getText().toString().trim();
+                if(!CommonUtil.isBU(sendAmount) || CommonUtil.isNull(sendAmount)){
+                    tipDialog = new QMUITipDialog.Builder(getContext())
+                            .setTipWord(getResources().getString(R.string.invalid_amount))
+                            .create();
+                    tipDialog.show();
+                    sendAmountET.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            tipDialog.dismiss();
+                        }
+                    }, 1500);
+                    return;
+                }
+                if(Double.parseDouble(mAccountAvailableBalanceTv.getText().toString()) < Double.parseDouble(sendAmount)){
+                    tipDialog = new QMUITipDialog.Builder(getContext())
+                            .setTipWord(getResources().getString(R.string.balance_not_enough))
+                            .create();
+                    tipDialog.show();
+                    mAccountAvailableBalanceTv.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            tipDialog.dismiss();
+                        }
+                    }, 1500);
+                    return;
+                }
+
+                // TODO 最大转出金额
+
+
+
+
+                final String note = sendFormNoteEt.getText().toString();
+
+                if(!CommonUtil.isNull(note) && note.length() > com.bupocket.common.Constants.SEND_TOKEN_NOTE_MAX_LENGTH){
+                    tipDialog = new QMUITipDialog.Builder(getContext())
+                            .setTipWord(getResources().getString(R.string.send_token_note_too_long))
+                            .create();
+                    tipDialog.show();
+                    sendFormNoteEt.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            tipDialog.dismiss();
+                        }
+                    }, 1500);
+                    return;
+                }
+
+                final String txFee = sendFormTxFeeEt.getText().toString();
+
+                if(!CommonUtil.isBU(txFee) || CommonUtil.isNull(txFee)){
+                    tipDialog = new QMUITipDialog.Builder(getContext())
+                            .setTipWord(getResources().getString(R.string.invalid_tx_fee))
+                            .create();
+                    tipDialog.show();
+                    sendFormTxFeeEt.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            tipDialog.dismiss();
+                        }
+                    }, 1500);
+                    return;
+                }
+
+
+
 
                 final QMUIBottomSheet sheet = new QMUIBottomSheet(getContext());
+
                 sheet.setContentView(R.layout.send_confirm_layout);
 
-                TextView addressTxt = sheet.findViewById(R.id.sendTargetAddress);
+                final TextView addressTxt = sheet.findViewById(R.id.sendTargetAddress);
                 addressTxt.setText(address);
 
                 TextView amountTxt = sheet.findViewById(R.id.sendAmount);
@@ -102,6 +203,60 @@ public class BPSendTokenFragment extends BaseFragment {
                 });
 
                 sheet.show();
+
+                sheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        final QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(getActivity());
+                        builder.setTitle(R.string.wallet_password_confirm_title)
+                                .setPlaceholder(R.string.hint_wallet_passwrod_confirm_txt1)
+                                .setInputType(InputType.TYPE_CLASS_TEXT)
+                                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                                    @Override
+                                    public void onClick(QMUIDialog dialog, int index) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .addAction("确定", new QMUIDialogAction.ActionListener() {
+                                    @Override
+                                    public void onClick(QMUIDialog dialog, int index) {
+                                        final CharSequence text = builder.getEditText().getText();
+                                        if (text != null && text.length() > 0) {
+                                            final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                                                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                                    .setTipWord("处理中...")
+                                                    .create();
+                                            tipDialog.show();
+
+
+                                            new Thread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    String password = text.toString();
+                                                    String accountBPData = getAccountBPData();
+                                                    try {
+                                                        String destAddess = getDestAccAddr();
+                                                        Wallet.getInstance().sendBu(password,accountBPData, currentAccAddress, destAddess, sendAmount, note,txFee);
+                                                    } catch (Exception e) {
+                                                        Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                                                        e.printStackTrace();
+                                                        return;
+                                                    }finally {
+                                                        tipDialog.dismiss();
+                                                    }
+                                                }
+                                            }).start();
+                                            dialog.dismiss();
+                                        } else {
+                                            Toast.makeText(getActivity(), R.string.wallet_password_confirm_txt1, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                })
+                                .create()
+                                .show();
+                    }
+                });
             }
         });
     }

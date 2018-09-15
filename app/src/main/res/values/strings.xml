@@ -51,6 +51,8 @@
     <string name="wallet_send_txt">转账</string>
     <string name="wallet_scan_txt">扫一扫</string>
     <string name="recently_tx_txt">最近交易记录</string>
+    <string name="tx_status_success_txt">成功</string>
+    <string name="tx_status_fail_txt">失败</string>
 
     <string name="view_title_wallet_sendBU">BU转账</string>
     <string name="send_address_title">对方账户（BU地址）</string>
@@ -89,8 +91,14 @@
     <string name="send_confirm_remark_txt">备注</string>
     <string name="send_confirm_submit_btn_txt">提交</string>
 
+
     <string name="emptyView_mode_desc_fail_title">加载失败</string>
     <string name="emptyView_mode_desc_fail_desc">请检测网络是否能正常连接</string>
     <string name="emptyView_mode_desc_retry">点击重试</string>
     <string name="emptyView_mode_desc_no_data">暂无数据</string>
+    <string name="invalid_address">无效的账户地址</string>
+    <string name="invalid_amount">无效的数量</string>
+    <string name="invalid_tx_fee">无效的交易费</string>
+    <string name="balance_not_enough">余额不足</string>
+    <string name="send_token_note_too_long">备注太长</string>
 </resources>

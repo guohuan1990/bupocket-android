@@ -98,19 +98,6 @@ public class BPAssetsFragment extends BaseFragment {
 
         mAccountBuBalanceTv.setText(getAccountBUBalance());
         mUserBcAddressTv.setText(AddressUtil.anonymous(currentAccAddress));
-
-        String BPData = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
-        System.out.println("BPData:" + BPData);
-
-        /// 测试
-
-//        try {
-//            String hash = Wallet.getInstance().sendBu("44",BPData, currentAccAddress, "buQkiqJ64znC4pT7jDdj8y8ADiBnfqdKYdB3", "0.02", "","0.01");
-//            System.out.println("BPAssetsFragment.initData sendBu:" + hash);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
     }
 
     private String getAccountBUBalance(){
@@ -136,8 +123,9 @@ public class BPAssetsFragment extends BaseFragment {
                         loadMyTxList(pageSize, pageStart, pageTotal, currentAccAddress,queryTxSize);
                         refreshlayout.finishRefresh();
                         refreshLayout.setNoMoreData(false);
+                        initData();
                     }
-                }, 1000);
+                }, 500);
 
             }
         });
@@ -158,10 +146,7 @@ public class BPAssetsFragment extends BaseFragment {
 
                 String txAccountAddress = AddressUtil.anonymous((obj.getOutinType() == 0) ? obj.getToAddress() : obj.getFromAddress());
                 String amountStr = (obj.getOutinType() == 0) ? "-" + obj.getAmount() : "+" + obj.getAmount();
-
-//                DecimalFormat decimalFormat = new DecimalFormat("###,###.00000000");
-//                amountStr = decimalFormat.format(Double.parseDouble(amountStr));
-                String txStartStr = (obj.getTxStatus() == 0) ? "成功" : "失败";
+                String txStartStr = (obj.getTxStatus() == 0) ? getResources().getString(R.string.tx_status_success_txt) : getResources().getString(R.string.tx_status_fail_txt);
                 if(!tokenTxInfoMap.containsKey(obj.getTxHash())){
                     TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime()), amountStr, txStartStr);
                     tokenTxInfoMap.put(obj.getTxHash(), tokenTxInfo);
