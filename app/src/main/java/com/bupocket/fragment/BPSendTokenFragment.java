@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -40,6 +41,7 @@ public class BPSendTokenFragment extends BaseFragment {
         initData();
         confirmSendInfo(root);
         initTopBar();
+        setDestAddress();
         return root;
     }
     private void initData(){
@@ -104,5 +106,11 @@ public class BPSendTokenFragment extends BaseFragment {
                 sheet.show();
             }
         });
+    }
+
+    private void setDestAddress(){
+        Bundle bundle = new Bundle();
+        String destAddress = bundle.getString("destAddress");
+        addressET.setText(destAddress);
     }
 }
