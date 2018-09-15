@@ -3,7 +3,9 @@ package com.bupocket.fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
@@ -24,6 +26,8 @@ import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TimeUtil;
 import com.bupocket.wallet.Wallet;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
@@ -61,7 +65,7 @@ public class BPAssetsFragment extends BaseFragment {
     private String currentAccAddress;
     private String currentAccNick;
 
-    @BindView(R.id.wallet_scan_btn)
+    @BindView(R.id.walletScanBtn)
     QMUIRoundButton mWalletScanBtn;
     @BindView(R.id.showMyAddressLv)
     LinearLayout mShowMyaddressL;
@@ -81,7 +85,17 @@ public class BPAssetsFragment extends BaseFragment {
         initWalletInfoView();
         initMyTxListViews();
         showMyAddress();
-
+        mWalletScanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
+                intentIntegrator.setBeepEnabled(true);
+                intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                intentIntegrator.setPrompt("请将二维码置于取景框内扫描");
+                // 开始扫描
+                intentIntegrator.initiateScan();
+            }
+        });
         mSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -257,6 +271,27 @@ public class BPAssetsFragment extends BaseFragment {
 
     private void go2SendTokenFragment(){
         startFragment(new BPSendTokenFragment());
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // 获取解析结果
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(getActivity(), "取消扫描", Toast.LENGTH_LONG).show();
+            } else {
+//                Toast.makeText(getActivity(), "扫描内容:" + result.getContents(), Toast.LENGTH_LONG).show();
+                Bundle argz = new Bundle();
+                argz.putString("destAddress",currentAccAddress);
+                BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
+                sendTokenFragment.setArguments(argz);
+                startFragment(sendTokenFragment);
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+
+        }
     }
 
 }

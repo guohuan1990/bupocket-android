@@ -86,7 +86,7 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/view_padding">
                 <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                        android:id="@+id/wallet_scan_btn"
+                        android:id="@+id/walletScanBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/bp_btn_hight"
                         android:layout_weight="1"

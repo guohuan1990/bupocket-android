@@ -14,18 +14,14 @@ import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.wallet.Constants;
-import com.bupocket.wallet.MnemonicCodeTool;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-import com.bupocket.fragment.BPSendStatusFragment;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
-import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +53,7 @@ public class BPSendTokenFragment extends BaseFragment {
         initData();
         confirmSendInfo();
         initTopBar();
-
+        setDestAddress();
         return root;
     }
     private void initData(){
@@ -278,5 +274,11 @@ public class BPSendTokenFragment extends BaseFragment {
                 });
             }
         });
+    }
+
+    private void setDestAddress(){
+        Bundle bundle = new Bundle();
+        String destAddress = bundle.getString("destAddress");
+        destAccountAddressEt.setText(destAddress);
     }
 }
