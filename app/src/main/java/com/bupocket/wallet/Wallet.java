@@ -19,6 +19,7 @@ import io.bumo.model.response.*;
 import io.bumo.model.response.result.TransactionBuildBlobResult;
 import org.bitcoinj.crypto.MnemonicCode;
 
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,8 +92,8 @@ public class Wallet {
     }
 
 
-    public WalletBPData importMnemonicCode(List<String> mnemonicCodes,String password) throws WalletException {
-        byte[] sKeyByte = MnemonicCode.toSeed(mnemonicCodes, null);
+    public WalletBPData importMnemonicCode(List<String> mnemonicCodes,String password) throws Exception {
+        byte[] sKeyByte = new MnemonicCode().toEntropy(mnemonicCodes);
         String sKey = HexFormat.byteToHex(sKeyByte);
         return create(password, sKey);
     }
