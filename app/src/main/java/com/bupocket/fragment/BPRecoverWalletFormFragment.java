@@ -89,6 +89,19 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
         return true;
     }
 
+    private boolean mneonicFlag () {
+        String mneonic = mMneonicCodeEt.getText().toString().trim();
+        String regex = "[a-zA-Z\\s]";
+        if ("".equals(mneonic)) {
+            Toast.makeText(getActivity(), R.string.recover_edit_mneonic_code_hint,Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!mneonic.matches(regex)) {
+            Toast.makeText(getActivity(), R.string.recover_mneonic_input_error,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    };
+
     private void eventListeners() {
         mPwdShow.setOnClickListener(new View.OnClickListener() {
             @Override

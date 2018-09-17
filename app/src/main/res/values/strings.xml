@@ -63,6 +63,7 @@
     <!-- 恢复身份 -->
     <string name="recover_wallet_title">恢复身份</string>
     <string name="recover_edit_mneonic_code_hint">请输入助记词，用空格分割</string>
+    <string name="recover_mneonic_input_error">助记词输入有误，请重新输入</string>
     <string name="recover_edit_new_wallet_name_hint">请输入新钱包名</string>
     <string name="recover_set_pwd_hint">请设置密码</string>
     <string name="recover_confirm_pwd_hint">请再次确认密码</string>
