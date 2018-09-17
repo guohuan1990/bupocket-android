@@ -76,7 +76,7 @@
             android:gravity="bottom">
 
             <CheckBox
-                android:id="@+id/checkBox4"
+                android:id="@+id/agreeUserTermsCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:paddingRight="10dp"
@@ -85,6 +85,7 @@
                 android:text="@string/use_terms_checkbox_agree" />
 
             <TextView
+                android:id="@+id/userTermsNextBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"

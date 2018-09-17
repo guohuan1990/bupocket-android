@@ -97,10 +97,10 @@
     <string name="qr_pic_name_text">钱包地址二维码</string>
     <string name="qr_copy_success_message">已复制到剪切板</string>
     <!-- 我的 -->
-    <string name="me_change_the_password_txt">修改密码</string>
-    <string name="me_export_keystore_txt">导出Keystore</string>
-    <string name="me_help_txt">帮助与反馈</string>
-    <string name="me_version_txt">版本号</string>
+    <string name="change_the_password_txt">修改密码</string>
+    <string name="export_keystore_txt">导出Keystore</string>
+    <string name="help_txt">帮助与反馈</string>
+    <string name="version_txt">版本号</string>
     <string name="pocket_version">V2.0.1</string>
     <!-- 确认转账 -->
     <string name="send_confirm_title">确认转账</string>
@@ -127,4 +127,16 @@
     <string name="send_token_note_too_long">备注太长</string>
     <string name="splash_txt1">泛在价值流通区块链网络</string>
     <string name="splash_txt2">小布口袋，把你的BU装入这里</string>
-</resources>
+
+    <string name="change_pwd_old_pwd">旧密码</string>
+    <string name="change_pwd_new_pwd">新密码</string>
+    <string name="change_pwd_new_pwd_confirm">确认密码</string>
+    <string name="change_pwd_old_pwd_hint">请输入旧密码</string>
+    <string name="change_pwd_new_pwd_hint">请输入新密码</string>
+    <string name="change_pwd_new_pwd_confirm_hint">请确认新密码</string>
+
+    <string name="help_title_txt">您遇到的问题或建议</string>
+    <string name="contact_title_txt">您的联系方式</string>
+    <string name="help_hint">请输入您的问题或建议</string>
+    <string name="contact_hint">请输入您的联系方式</string>
+</resources> 
