@@ -23,13 +23,11 @@ import com.bupocket.dto.resp.GetMyTxsRespDto;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.model.TokenTxInfo;
-import com.bupocket.utils.AddressUtil;
-import com.bupocket.utils.QRCodeUtil;
-import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.utils.TimeUtil;
+import com.bupocket.utils.*;
 import com.bupocket.wallet.Wallet;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
@@ -62,8 +60,6 @@ public class BPAssetsFragment extends BaseFragment {
     protected SharedPreferencesHelper sharedPreferencesHelper;
     private String pageSize = "5";
     private Integer pageStart = 1;
-    private String pageTotal = "-1";
-    Integer queryTxSize = 0;
     private String currentAccAddress;
     private String currentAccNick;
 
@@ -116,7 +112,7 @@ public class BPAssetsFragment extends BaseFragment {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
         currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
-
+        QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
         mAccountBuBalanceTv.setText(getAccountBUBalance());
         mUserBcAddressTv.setText(AddressUtil.anonymous(currentAccAddress));
         refreshData();
@@ -135,7 +131,7 @@ public class BPAssetsFragment extends BaseFragment {
     }
 
     private void initMyTxListViews(){
-        refreshLayout.setEnableAutoLoadMore(true);
+        refreshLayout.setEnableLoadMore(false);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(final RefreshLayout refreshlayout) {
@@ -153,31 +149,46 @@ public class BPAssetsFragment extends BaseFragment {
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-            if(pageStart == myTokenTxAdapter.getPage().getStart()){
-                loadMoreData();
-                refreshlayout.finishLoadMore(500);
-            }else{
-                refreshLayout.finishLoadMoreWithNoMoreData();
-            }
+            public void onLoadMore(final RefreshLayout refreshlayout) {
+                refreshlayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(myTokenTxAdapter == null){
+                            refreshlayout.finishRefresh();
+                            return;
+                        }
+                        if(pageStart == myTokenTxAdapter.getPage().getStart()){
+                            loadMoreData();
+                            refreshlayout.finishLoadMore(500);
+                        }else{
+                            refreshLayout.finishLoadMoreWithNoMoreData();
+                        }
+                    }
+                }, 500);
             }
         });
-//        refreshLayout.autoRefresh();
     }
 
 
     private void refreshData(){
-        loadMyTxList(pageSize, pageStart, pageTotal, currentAccAddress,queryTxSize);
+        pageStart = 1;
+        loadMyTxList();
     }
 
     private void loadMoreData(){
         pageStart ++;
-        loadMyTxList(pageSize, pageStart++, pageTotal, currentAccAddress, queryTxSize);
+        loadMyTxList();
     }
 
     private void handleMyTxs(GetMyTxsRespDto getMyTxsRespDto){
 
         if(getMyTxsRespDto != null){
+            if(getMyTxsRespDto.getPage().getTotal() == 0){
+                mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
+                return;
+            }
+
+            refreshLayout.setEnableLoadMore(true);
             for (GetMyTxsRespDto.TxRecordBean obj : getMyTxsRespDto.getTxRecord()) {
 
                 String txAccountAddress = AddressUtil.anonymous((obj.getOutinType() == 0) ? obj.getToAddress() : obj.getFromAddress());
@@ -211,10 +222,10 @@ public class BPAssetsFragment extends BaseFragment {
 
 
 
-    private void loadMyTxList(String pageSize,Integer pageStart,String pageTotal,String currentAccAddr,Integer queryTxSize) {
+    private void loadMyTxList() {
         TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
         Map<String, Object> parmasMap = new HashMap<>();
-        parmasMap.put("walletAddress",currentAccAddr);
+        parmasMap.put("walletAddress",currentAccAddress);
         parmasMap.put("startPage", pageStart);
         parmasMap.put("pageSize", pageSize);
         Call<ApiResult<GetMyTxsRespDto>> call = txService.getMyTxs(parmasMap);
@@ -283,27 +294,17 @@ public class BPAssetsFragment extends BaseFragment {
         qmuiBottomSheet.show();
     }
 
-    public Integer getQueryTxSize() {
-        return queryTxSize;
-    }
-
-    public void setQueryTxSize(Integer queryTxSize) {
-        this.queryTxSize = queryTxSize;
-    }
-
     private void go2SendTokenFragment(){
         startFragment(new BPSendTokenFragment());
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // 获取解析结果
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(getActivity(), "取消扫描", Toast.LENGTH_LONG).show();
             } else {
-//                Toast.makeText(getActivity(), "扫描内容:" + result.getContents(), Toast.LENGTH_LONG).show();
                 Bundle argz = new Bundle();
                 argz.putString("destAddress",currentAccAddress);
                 BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();

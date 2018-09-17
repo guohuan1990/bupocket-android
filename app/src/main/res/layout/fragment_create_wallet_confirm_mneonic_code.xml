@@ -23,13 +23,16 @@
                 android:text="@string/confirm_mneonic_code_txt"/>
 
         <LinearLayout
-                android:id="@+id/columns_linear"
                 android:layout_width="match_parent"
-                android:layout_height="213dp"
+                android:layout_height="80dp"
                 android:orientation="vertical"
                 android:layout_marginTop="28dp"
                 android:background="#F5F5F5"
                 android:padding="15dp">
+            <TextView
+                    android:id="@+id/mnemonicCodeListSelected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
         </LinearLayout>
         <View
                 android:id="@+id/dotted_line"

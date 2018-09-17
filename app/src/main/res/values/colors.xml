@@ -38,4 +38,5 @@
     <color name="send_confirm_info_color">#666666</color>
     <color name="send_confirm_gray_color">#999999</color>
     <color name="multiline_edit_hint_color">#b2b2b2</color>
+    <color name="help_feedback_et_background_color">#F5F5F5</color>
 </resources>
