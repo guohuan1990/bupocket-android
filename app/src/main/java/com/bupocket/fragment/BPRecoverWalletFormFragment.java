@@ -1,6 +1,5 @@
 package com.bupocket.fragment;
 
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
@@ -16,8 +15,14 @@ import butterknife.ButterKnife;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
+import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class BPRecoverWalletFormFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -30,13 +35,13 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
     ImageView mConfirmPwdShow;
 
     @BindView(R.id.recoverMneonicCodeEt)
-    EditText mMneonicCode;
+    EditText mMneonicCodeEt;
 
     @BindView(R.id.recoverWalletNameEt)
     EditText mWalletName;
 
     @BindView(R.id.recoverPwdEt)
-    EditText mPwd;
+    EditText mPwdEt;
 
     @BindView(R.id.recoverConfirmPwdEt)
     EditText mConfirmPwd;
@@ -68,13 +73,13 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
     }
 
     private boolean validateData(){
-        if ("".equals(mMneonicCode.getText().toString().trim())) {
+        if ("".equals(mMneonicCodeEt.getText().toString().trim())) {
             Toast.makeText(getActivity(), R.string.recover_edit_mneonic_code_hint,Toast.LENGTH_SHORT).show();
             return false;
         } else if ("".equals(mWalletName.getText().toString().trim())){
             Toast.makeText(getActivity(), R.string.recover_edit_new_wallet_name_hint,Toast.LENGTH_SHORT).show();
             return false;
-        }else if("".equals(mPwd.getText().toString().trim())){
+        }else if("".equals(mPwdEt.getText().toString().trim())){
             Toast.makeText(getActivity(), R.string.recover_set_pwd_hint,Toast.LENGTH_SHORT).show();
             return false;
         }else if("".equals(mConfirmPwd.getText().toString().trim())){
@@ -90,13 +95,13 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
             public void onClick(View view) {
                 if (!isPwdHideFirst) {
                     mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
-                    mPwd.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
+                    mPwdEt.setInputType(InputType.TYPE_CLASS_TEXT);
+                    mPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
                     isPwdHideFirst = true;
                 } else {
                     mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
-                    mPwd.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mPwd.setTransformationMethod(PasswordTransformationMethod.getInstance ());
+                    mPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    mPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance ());
                     isPwdHideFirst = false;
                 }
             }
@@ -125,9 +130,24 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
                 if(!flag){
                     return;
                 }
-                validateData();
+//                validateData();
+                String password = mPwdEt.getText().toString().trim();
+                List<String> mnemonicCodes = getMnemonicCode();
+                try {
+                    Wallet.getInstance().importMnemonicCode(mnemonicCodes,password);
+                } catch (WalletException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(),"导入失败",Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    private List<String> getMnemonicCode(){
+        String inputMneonicCodeStr =  mMneonicCodeEt.getText().toString().trim();
+        String regex = "\\s+";
+        String []mneonicCodeArr = inputMneonicCodeStr.replaceAll(regex," ").split(" ");
+        return Arrays.asList(mneonicCodeArr);
 
     }
 
