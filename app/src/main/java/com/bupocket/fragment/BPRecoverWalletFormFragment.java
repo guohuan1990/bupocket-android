@@ -12,16 +12,19 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
+import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.enums.CreateWalletStepEnum;
 import com.bupocket.wallet.exception.WalletException;
+import com.bupocket.wallet.model.WalletBPData;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class BPRecoverWalletFormFragment extends BaseFragment {
@@ -38,7 +41,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
     EditText mMneonicCodeEt;
 
     @BindView(R.id.recoverWalletNameEt)
-    EditText mWalletName;
+    EditText mWalletNameEt;
 
     @BindView(R.id.recoverPwdEt)
     EditText mPwdEt;
@@ -51,16 +54,21 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
 
     private boolean isPwdHideFirst = true;
     private boolean isConfirmPwdHideFirst = true;
+    private SharedPreferencesHelper sharedPreferencesHelper;
     @Override
     protected View onCreateView() {
 
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_recover_wallet_form, null);
         ButterKnife.bind(this, root);
         initTopBar();
+        initData();
         eventListeners();
         return root;
     }
 
+    private void initData(){
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+    }
 
     private void initTopBar() {
 
@@ -76,7 +84,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
         if ("".equals(mMneonicCodeEt.getText().toString().trim())) {
             Toast.makeText(getActivity(), R.string.recover_edit_mneonic_code_hint,Toast.LENGTH_SHORT).show();
             return false;
-        } else if ("".equals(mWalletName.getText().toString().trim())){
+        } else if ("".equals(mWalletNameEt.getText().toString().trim())){
             Toast.makeText(getActivity(), R.string.recover_edit_new_wallet_name_hint,Toast.LENGTH_SHORT).show();
             return false;
         }else if("".equals(mPwdEt.getText().toString().trim())){
@@ -147,8 +155,15 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
                 String password = mPwdEt.getText().toString().trim();
                 List<String> mnemonicCodes = getMnemonicCode();
                 try {
-                    Wallet.getInstance().importMnemonicCode(mnemonicCodes,password);
-                } catch (WalletException e) {
+                    WalletBPData walletBPData = Wallet.getInstance().importMnemonicCode(mnemonicCodes,password);
+                    sharedPreferencesHelper.put("skey", walletBPData.getSkey());
+                    sharedPreferencesHelper.put("currentAccNick", mWalletNameEt.getText().toString());
+                    sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
+                    sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
+                    sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode());
+
+                    startFragment(new HomeFragment());
+                } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(getActivity(),"导入失败",Toast.LENGTH_SHORT).show();
                 }
