@@ -41,7 +41,7 @@ public class BPProfileFragment extends BaseFragment{
 
     @Override
     protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_me, null);
+        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_profile, null);
         ButterKnife.bind(this, root);
         initData(root);
         showMyAddress(currentAccAddress);

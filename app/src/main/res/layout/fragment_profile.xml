@@ -75,12 +75,12 @@
 
                 <ImageView
                     android:id="@+id/mePwdicon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:background="@mipmap/icon_pwd"/>
+                    android:background="@mipmap/icon_profile_item_pwd"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -107,12 +107,12 @@
 
                 <ImageView
                     android:id="@+id/meExportIcon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:background="@mipmap/icon_export_keystore" />
+                    android:background="@mipmap/icon_profile_item_export_keystore" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -139,12 +139,12 @@
 
                 <ImageView
                     android:id="@+id/meHelpIcon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:background="@mipmap/icon_help"/>
+                    android:background="@mipmap/icon_profile_item_help"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -171,12 +171,12 @@
 
                 <ImageView
                     android:id="@+id/meVersionIcon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:background="@mipmap/icon_version"/>
+                    android:background="@mipmap/icon_profile_item_version"/>
 
                 <TextView
                     android:layout_width="wrap_content"

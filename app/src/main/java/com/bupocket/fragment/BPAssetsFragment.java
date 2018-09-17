@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
@@ -13,6 +14,7 @@ import android.widget.*;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.adaptor.MyTokenTxAdapter;
 import com.bupocket.base.BaseFragment;
@@ -58,8 +60,8 @@ public class BPAssetsFragment extends BaseFragment {
     @BindView(R.id.accountBUBalanceTv)
     TextView mAccountBuBalanceTv;
     protected SharedPreferencesHelper sharedPreferencesHelper;
-    private String pageSize = "10";
-    private String pageStart = "1";
+    private String pageSize = "5";
+    private Integer pageStart = 1;
     private String pageTotal = "-1";
     Integer queryTxSize = 0;
     private String currentAccAddress;
@@ -77,6 +79,9 @@ public class BPAssetsFragment extends BaseFragment {
     TextView mUserBcAddressTv;
     @BindView(R.id.emptyView)
     QMUIEmptyView mEmptyView;
+
+
+
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets, null);
@@ -88,12 +93,14 @@ public class BPAssetsFragment extends BaseFragment {
         mWalletScanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
+                IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(getParentFragment());
                 intentIntegrator.setBeepEnabled(true);
                 intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
                 intentIntegrator.setPrompt("请将二维码置于取景框内扫描");
                 // 开始扫描
                 intentIntegrator.initiateScan();
+
+
             }
         });
         mSendBtn.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +119,7 @@ public class BPAssetsFragment extends BaseFragment {
 
         mAccountBuBalanceTv.setText(getAccountBUBalance());
         mUserBcAddressTv.setText(AddressUtil.anonymous(currentAccAddress));
+        refreshData();
     }
 
     private String getAccountBUBalance(){
@@ -134,7 +142,7 @@ public class BPAssetsFragment extends BaseFragment {
                 refreshlayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        loadMyTxList(pageSize, pageStart, pageTotal, currentAccAddress,queryTxSize);
+                        refreshData();
                         refreshlayout.finishRefresh();
                         refreshLayout.setNoMoreData(false);
                         initData();
@@ -146,14 +154,28 @@ public class BPAssetsFragment extends BaseFragment {
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                loadMyTxList(pageSize, (Integer.parseInt(pageStart)+1) + "", pageTotal, currentAccAddress, queryTxSize);
+            if(pageStart == myTokenTxAdapter.getPage().getStart()){
+                loadMoreData();
                 refreshlayout.finishLoadMore(500);
+            }else{
+                refreshLayout.finishLoadMoreWithNoMoreData();
+            }
             }
         });
-        refreshLayout.autoRefresh();
+//        refreshLayout.autoRefresh();
     }
 
-    private void initAssetsGroupListView(GetMyTxsRespDto getMyTxsRespDto){
+
+    private void refreshData(){
+        loadMyTxList(pageSize, pageStart, pageTotal, currentAccAddress,queryTxSize);
+    }
+
+    private void loadMoreData(){
+        pageStart ++;
+        loadMyTxList(pageSize, pageStart++, pageTotal, currentAccAddress, queryTxSize);
+    }
+
+    private void handleMyTxs(GetMyTxsRespDto getMyTxsRespDto){
 
         if(getMyTxsRespDto != null){
             for (GetMyTxsRespDto.TxRecordBean obj : getMyTxsRespDto.getTxRecord()) {
@@ -163,6 +185,7 @@ public class BPAssetsFragment extends BaseFragment {
                 String txStartStr = (obj.getTxStatus() == 0) ? getResources().getString(R.string.tx_status_success_txt) : getResources().getString(R.string.tx_status_fail_txt);
                 if(!tokenTxInfoMap.containsKey(obj.getTxHash())){
                     TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime()), amountStr, txStartStr);
+                    tokenTxInfo.setTxHash(obj.getTxHash());
                     tokenTxInfoMap.put(obj.getTxHash(), tokenTxInfo);
                     tokenTxInfoList.add(tokenTxInfo);
                 }
@@ -171,20 +194,24 @@ public class BPAssetsFragment extends BaseFragment {
         }
 
         myTokenTxAdapter = new MyTokenTxAdapter(tokenTxInfoList, getContext());
+        myTokenTxAdapter.setPage(getMyTxsRespDto.getPage());
         tokenTxsListView.setAdapter(myTokenTxAdapter);
         tokenTxsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TokenTxInfo currentItem = (TokenTxInfo) myTokenTxAdapter.getItem(position);
-                Toast.makeText(getActivity(), currentItem.getTxAmount() + " is Clicked", Toast.LENGTH_SHORT).show();
-                startFragment(new BPAssetsTxDetailFragment());
+                Bundle argz = new Bundle();
+                argz.putString("txHash", currentItem.getTxHash());
+                BPAssetsTxDetailFragment bpAssetsTxDetailFragment = new BPAssetsTxDetailFragment();
+                bpAssetsTxDetailFragment.setArguments(argz);
+                startFragment(bpAssetsTxDetailFragment);
             }
         });
     }
 
 
 
-    private void loadMyTxList(String pageSize,String pageStart,String pageTotal,String currentAccAddr,Integer queryTxSize) {
+    private void loadMyTxList(String pageSize,Integer pageStart,String pageTotal,String currentAccAddr,Integer queryTxSize) {
         TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
         Map<String, Object> parmasMap = new HashMap<>();
         parmasMap.put("walletAddress",currentAccAddr);
@@ -196,13 +223,8 @@ public class BPAssetsFragment extends BaseFragment {
             public void onResponse(Call<ApiResult<GetMyTxsRespDto>> call, Response<ApiResult<GetMyTxsRespDto>> response) {
 
                 ApiResult<GetMyTxsRespDto> respDto = response.body();
-                List<GetMyTxsRespDto.TxRecordBean> mytxsData = respDto.getData().getTxRecord();
-
-                if(respDto.getData() != null && respDto.getData().getPage().getTotal() == 0){
-                    mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
-                }else if(mytxsData != null && mytxsData.size() > 0){
-                    initAssetsGroupListView(respDto.getData());
-                }
+                Log.d("GetMyTxsRespDto:", JSON.toJSONString(respDto));
+                handleMyTxs(respDto.getData());
             }
 
             @Override
@@ -293,5 +315,4 @@ public class BPAssetsFragment extends BaseFragment {
 
         }
     }
-
 }

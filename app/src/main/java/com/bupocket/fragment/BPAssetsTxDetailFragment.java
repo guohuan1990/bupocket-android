@@ -2,87 +2,141 @@ package com.bupocket.fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.Toast;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.qmuiteam.qmui.widget.QMUILoadingView;
+import com.bupocket.dto.resp.ApiResult;
+import com.bupocket.dto.resp.TxDetailRespDto;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.TxService;
+import com.bupocket.utils.TimeUtil;
+import com.qmuiteam.qmui.widget.QMUIEmptyView;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
-import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BPAssetsTxDetailFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
-    @BindView(R.id.txDetailGroupListView)
-    QMUIGroupListView mGroupListView;
+
+    @BindView(R.id.txStatusIcon)
+    QMUIRadiusImageView mTxStatusIcon;
+    @BindView(R.id.sendAmountTv)
+    TextView mSendAmountTv;
+    @BindView(R.id.txStatusTv)
+    TextView mTxStatusTv;
+    @BindView(R.id.txFromAccAddrTv)
+    TextView mTxFromAccAddrTv;
+    @BindView(R.id.txToAccAddrTv)
+    TextView mTxToAccAddrTv;
+    @BindView(R.id.txDetailFeeTv)
+    TextView mTxDetailFeeTv;
+    @BindView(R.id.txDetailSendDateTv)
+    TextView mTxDetailSendDateTv;
+    @BindView(R.id.txDetailNoteTv)
+    TextView mTxDetailNoteTv;
+    @BindView(R.id.txDetailTXHashTv)
+    TextView mTxDetailTXHashTv;
+    @BindView(R.id.txDetailTxInfoSourceAddressTv)
+    TextView mTxDetailTxInfoSourceAddressTv;
+    @BindView(R.id.txDetailTxInfoDestAddressTv)
+    TextView mTxDetailTxInfoDestAddressTv;
+    @BindView(R.id.txDetailTxInfoAmountTv)
+    TextView mTxDetailTxInfoAmountTv;
+    @BindView(R.id.txDetailTxInfoTXFeeTv)
+    TextView mTxDetailTxInfoTXFeeTv;
+    @BindView(R.id.txDetailTxInfoNonceTv)
+    TextView mTxDetailTxInfoNonceTv;
+    @BindView(R.id.txDetailTxInfoLedgerSeqTv)
+    TextView mTxDetailTxInfoLedgerSeqTv;
+    @BindView(R.id.txDetailTxInfoTxSignaturePkTv)
+    TextView mTxDetailTxInfoTxSignaturePkTv;
+    @BindView(R.id.txDetailTxInfoTxSignatureSdTv)
+    TextView mTxDetailTxInfoTxSignatureSdTv;
+    @BindView(R.id.emptyView)
+    QMUIEmptyView mEmptyView;
+
+    private String txHash;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_tx_detail, null);
         ButterKnife.bind(this, root);
         initTopBar();
-        initGroupListView();
+        initData();
+        initTxDetailView();
         return root;
     }
 
-    private void initGroupListView() {
-        QMUICommonListItemView normalItem = mGroupListView.createItemView("Item 1");
-        normalItem.setOrientation(QMUICommonListItemView.VERTICAL);
+    private void initData(){
+        mEmptyView.show(true);
+        txHash = getTxHash();
+    }
 
-        QMUICommonListItemView itemWithDetail = mGroupListView.createItemView("Item 2");
-        itemWithDetail.setDetailText("在右方的详细信息");
 
-        QMUICommonListItemView itemWithDetailBelow = mGroupListView.createItemView("Item 3");
-        itemWithDetailBelow.setOrientation(QMUICommonListItemView.VERTICAL);
-        itemWithDetailBelow.setDetailText("在标题下方的详细信息");
+    private String getTxHash(){
+        return getArguments().getString("txHash");
+    }
 
-        QMUICommonListItemView itemWithChevron = mGroupListView.createItemView("Item 4");
-        itemWithChevron.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-
-        QMUICommonListItemView itemWithSwitch = mGroupListView.createItemView("Item 5");
-        itemWithSwitch.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
-        itemWithSwitch.getSwitch().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    private void initTxDetailView() {
+        TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
+        Map<String, Object> parmasMap = new HashMap<>();
+        parmasMap.put("hash",txHash);
+        Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetail(parmasMap);
+        call.enqueue(new Callback<ApiResult<TxDetailRespDto>>() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(getActivity(), "checked = " + isChecked, Toast.LENGTH_SHORT).show();
-            }
-        });
+            public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
 
-        QMUICommonListItemView itemWithCustom = mGroupListView.createItemView("Item 6");
-        itemWithCustom.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
-        QMUILoadingView loadingView = new QMUILoadingView(getActivity());
-        itemWithCustom.addAccessoryCustomView(loadingView);
+                ApiResult<TxDetailRespDto> respDto = response.body();
 
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v instanceof QMUICommonListItemView) {
-                    CharSequence text = ((QMUICommonListItemView) v).getText();
-                    Toast.makeText(getActivity(), text + " is Clicked", Toast.LENGTH_SHORT).show();
+                if(respDto.getData() != null){
+//                    mEmptyView.show(false);
+                    TxDetailRespDto.TxInfoRespBoBean txInfoRespBoBean = respDto.getData().getTxInfoRespBo();
+                    TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean = respDto.getData().getTxDeatilRespBo();
+                    TxDetailRespDto.BlockInfoRespBoBean blockInfoRespBoBean = respDto.getData().getBlockInfoRespBo();
+                    mSendAmountTv.setText((txInfoRespBoBean.getAmount()));
+                    mTxFromAccAddrTv.setText(txDeatilRespBoBean.getSourceAddress());
+                    mTxToAccAddrTv.setText(txDeatilRespBoBean.getDestAddress());
+                    mTxDetailFeeTv.setText(txDeatilRespBoBean.getFee());
+                    mTxDetailSendDateTv.setText(TimeUtil.timeStamp2Date(txDeatilRespBoBean.getApplyTimeDate().toString().substring(0,10),"yyyy.MM.dd HH:mm:ss"));
+                    mTxDetailTXHashTv.setText(txInfoRespBoBean.getHash());
+
+                    mTxDetailTxInfoSourceAddressTv.setText(txInfoRespBoBean.getSourceAddress());
+                    mTxDetailTxInfoDestAddressTv.setText(txInfoRespBoBean.getDestAddress());
+                    mTxDetailTxInfoAmountTv.setText(txInfoRespBoBean.getAmount());
+                    mTxDetailTxInfoTXFeeTv.setText(txInfoRespBoBean.getFee());
+                    mTxDetailTxInfoNonceTv.setText(txInfoRespBoBean.getNonce() + "");
+                    mTxDetailTxInfoLedgerSeqTv.setText(txInfoRespBoBean.getLedgerSeq() + "");
+
+                    String signatureStr = txInfoRespBoBean.getSignatureStr();
+                    JSONArray signatureArr = JSON.parseArray(signatureStr);
+                    JSONObject signatureObj = JSON.parseObject(signatureArr.getString(0));
+
+                    mTxDetailTxInfoTxSignaturePkTv.setText(signatureObj.getString("publicKey"));
+                    mTxDetailTxInfoTxSignatureSdTv.setText(signatureObj.getString("signData"));
+                    mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
                 }
             }
-        };
 
-        QMUIGroupListView.newSection(getContext())
-                .setTitle("Section 1: 默认提供的样式")
-                .setDescription("Section 1 的描述")
-                .addItemView(normalItem, onClickListener)
-                .addItemView(itemWithDetail, onClickListener)
-                .addItemView(itemWithDetailBelow, onClickListener)
-                .addItemView(itemWithChevron, onClickListener)
-                .addItemView(itemWithSwitch, onClickListener)
-                .addTo(mGroupListView);
-
-        QMUIGroupListView.newSection(getContext())
-                .setTitle("Section 2: 自定义右侧 View")
-                .addItemView(itemWithCustom, onClickListener)
-                .addTo(mGroupListView);
+            @Override
+            public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
+                t.printStackTrace();
+                mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
+            }
+        });
     }
 
     private void initTopBar() {
-        mTopBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
+        mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popBackStack();

@@ -58,7 +58,7 @@
 
     <style name="QDTopBar" parent="QMUI.TopBar">
         <item name="qmui_topbar_bg_color">?attr/app_primary_color</item>
-        <item name="qmui_topbar_title_color">@color/qmui_config_color_white</item>
+        <item name="qmui_topbar_title_color">@color/qmui_config_color_gray_1</item>
         <item name="qmui_topbar_subtitle_color">@color/qmui_config_color_white</item>
         <item name="qmui_topbar_text_btn_color_state_list">@color/s_topbar_btn_color</item>
         <item name="qmui_topbar_height">48dp</item>

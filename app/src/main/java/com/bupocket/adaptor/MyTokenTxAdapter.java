@@ -7,12 +7,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.bupocket.R;
+import com.bupocket.dto.resp.GetMyTxsRespDto;
 import com.bupocket.model.TokenTxInfo;
 
+import java.util.Collection;
 import java.util.List;
 
 public class MyTokenTxAdapter extends BaseAdapter {
     private List<TokenTxInfo> datas;
+    private GetMyTxsRespDto.PageBean page;
     private Context mContext;
 
     public MyTokenTxAdapter(List<TokenTxInfo> datas, Context mContext) {
@@ -62,5 +65,13 @@ public class MyTokenTxAdapter extends BaseAdapter {
         private TextView txDateTV;
         private TextView txAmountTV;
         private TextView txStatusTV;
+    }
+
+    public GetMyTxsRespDto.PageBean getPage() {
+        return page;
+    }
+
+    public void setPage(GetMyTxsRespDto.PageBean page) {
+        this.page = page;
     }
 }

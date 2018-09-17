@@ -72,6 +72,11 @@
     <string name="send_status_time">转账时间</string>
     <string name="send_available_balance_txt">可用余额</string>
     <string name="send_form_next_btn_txt">下一步</string>
+    <string name="tx_dettail_from_acc_addr_label">发送方地址</string>
+    <string name="tx_dettail_to_acc_addr_label">接收方地址</string>
+    <string name="tx_detail_fee_label">交易费（BU）</string>
+    <string name="tx_detail_send_date_label">发送时间</string>
+    <string name="tx_detail_note_label">备注</string>
 
     <!-- 异常 -->
     <string name="create_wallet_fail">创建失败</string>
