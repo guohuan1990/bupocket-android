@@ -69,12 +69,13 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/changePwdItem"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="16dp">
 
                 <ImageView
-                    android:id="@+id/mePwdicon"
+                    android:id="@+id/pwdicon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -87,8 +88,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="13dp"
-                    android:layout_toRightOf="@id/mePwdicon"
-                    android:text="@string/me_change_the_password_txt"
+                    android:layout_toRightOf="@id/pwdicon"
+                    android:text="@string/change_the_password_txt"
                     android:textSize="15sp" />
 
                 <ImageView
@@ -101,12 +102,13 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/exportKeystoreItem"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="16dp">
 
                 <ImageView
-                    android:id="@+id/meExportIcon"
+                    android:id="@+id/exportIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -119,8 +121,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="13dp"
-                    android:layout_toRightOf="@id/meExportIcon"
-                    android:text="@string/me_export_keystore_txt"
+                    android:layout_toRightOf="@id/exportIcon"
+                    android:text="@string/export_keystore_txt"
                     android:textSize="15sp" />
 
                 <ImageView
@@ -133,12 +135,13 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/mehelpItem"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="16dp">
 
                 <ImageView
-                    android:id="@+id/meHelpIcon"
+                    android:id="@+id/helpIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -151,8 +154,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="13dp"
-                    android:layout_toRightOf="@id/meHelpIcon"
-                    android:text="@string/me_help_txt"
+                    android:layout_toRightOf="@id/helpIcon"
+                    android:text="@string/help_txt"
                     android:textSize="15sp" />
 
                 <ImageView
@@ -165,12 +168,13 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/versionItem"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="16dp">
 
                 <ImageView
-                    android:id="@+id/meVersionIcon"
+                    android:id="@+id/versionIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -183,8 +187,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="13dp"
-                    android:layout_toRightOf="@id/meVersionIcon"
-                    android:text="@string/me_version_txt"
+                    android:layout_toRightOf="@id/versionIcon"
+                    android:text="@string/version_txt"
                     android:textSize="15sp" />
 
                 <TextView

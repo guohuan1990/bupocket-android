@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bupocket.R;
@@ -38,6 +39,8 @@ public class BPProfileFragment extends BaseFragment{
     TextView userNickTx;
     @BindView(R.id.userBcAddress)
     TextView addressTv;
+    @BindView(R.id.changePwdItem)
+    RelativeLayout mChangePwdItem;
 
     @Override
     protected View onCreateView() {
@@ -45,6 +48,12 @@ public class BPProfileFragment extends BaseFragment{
         ButterKnife.bind(this, root);
         initData(root);
         showMyAddress(currentAccAddress);
+        mChangePwdItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoChangePwdFragment();
+            }
+        });
         return root;
     }
 
@@ -104,5 +113,9 @@ public class BPProfileFragment extends BaseFragment{
 
             }
         });
+    }
+
+    private void gotoChangePwdFragment(){
+        startFragment(new BPChangePwdFragment());
     }
 }
