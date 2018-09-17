@@ -37,4 +37,5 @@
     <color name="send_confirm_title_color">#333333</color>
     <color name="send_confirm_info_color">#666666</color>
     <color name="send_confirm_gray_color">#999999</color>
+    <color name="help_feedback_et_background_color">#F5F5F5</color>
 </resources>

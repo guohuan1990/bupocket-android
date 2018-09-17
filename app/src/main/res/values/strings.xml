@@ -121,7 +121,12 @@
     <string name="change_pwd_old_pwd">旧密码</string>
     <string name="change_pwd_new_pwd">新密码</string>
     <string name="change_pwd_new_pwd_confirm">确认密码</string>
-    <string name="change_pwd_old_pwd_tip">请输入旧密码</string>
-    <string name="change_pwd_new_pwd_tip">请输入新密码</string>
-    <string name="change_pwd_new_pwd_confirm_tip">请确认新密码</string>
+    <string name="change_pwd_old_pwd_hint">请输入旧密码</string>
+    <string name="change_pwd_new_pwd_hint">请输入新密码</string>
+    <string name="change_pwd_new_pwd_confirm_hint">请确认新密码</string>
+
+    <string name="help_title_txt">您遇到的问题或建议</string>
+    <string name="contact_title_txt">您的联系方式</string>
+    <string name="help_hint">请输入您的问题或建议</string>
+    <string name="contact_hint">请输入您的联系方式</string>
 </resources>

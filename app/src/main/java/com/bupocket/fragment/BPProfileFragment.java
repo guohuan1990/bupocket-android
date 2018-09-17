@@ -39,8 +39,10 @@ public class BPProfileFragment extends BaseFragment{
     TextView userNickTx;
     @BindView(R.id.userBcAddress)
     TextView addressTv;
-    @BindView(R.id.changePwdItem)
-    RelativeLayout mChangePwdItem;
+    @BindView(R.id.changePwdRL)
+    RelativeLayout mChangePwdRL;
+    @BindView(R.id.helpFeedbackRL)
+    RelativeLayout mHelpRL;
 
     @Override
     protected View onCreateView() {
@@ -48,10 +50,16 @@ public class BPProfileFragment extends BaseFragment{
         ButterKnife.bind(this, root);
         initData(root);
         showMyAddress(currentAccAddress);
-        mChangePwdItem.setOnClickListener(new View.OnClickListener() {
+        mChangePwdRL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gotoChangePwdFragment();
+            }
+        });
+        mHelpRL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoHelpFeedbackFragment();
             }
         });
         return root;
@@ -117,5 +125,9 @@ public class BPProfileFragment extends BaseFragment{
 
     private void gotoChangePwdFragment(){
         startFragment(new BPChangePwdFragment());
+    }
+
+    private void gotoHelpFeedbackFragment(){
+        startFragment(new BPHelpFeedbackFragment());
     }
 }
