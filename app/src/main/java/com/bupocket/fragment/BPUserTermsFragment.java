@@ -28,7 +28,7 @@ public class BPUserTermsFragment extends BaseFragment {
 
     @Override
     protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_send_status, null);
+        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_use_terms, null);
         ButterKnife.bind(this, root);
         initTopBar();
         eventListeners();

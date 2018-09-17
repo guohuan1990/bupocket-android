@@ -45,11 +45,12 @@
                     android:textColor="@color/app_color_font"
                     android:textSize="@dimen/bp_btn_text_size"/>
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                    android:id="@+id/toRecoverWalletBtn"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/bp_btn_hight"
                     android:layout_marginTop="35dp"
                     android:gravity="center"
-                    android:text="@string/wallet_create_recover_btn_txt"
+                    android:text="@string/recover_wallet_title"
                     app:qmui_borderColor="@color/app_btn_color_white"
                     app:qmui_backgroundColor="@color/app_btn_color_white"
                     app:qmui_radius="5dp"

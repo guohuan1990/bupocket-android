@@ -11,6 +11,10 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 public class BPCreateWalletFragment extends BaseFragment {
     @BindView(R.id.create_wallet_btn)
     QMUIRoundButton mCreateWalletBtn;
+
+    @BindView(R.id.toRecoverWalletBtn)
+    QMUIRoundButton mToRecoverWalletBtn;
+
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_create_wallet, null);
@@ -20,6 +24,13 @@ public class BPCreateWalletFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 startFragment(new BPCreateWalletFormFragment());
+            }
+        });
+
+        mToRecoverWalletBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPRecoverWalletFormFragment());
             }
         });
         return root;
