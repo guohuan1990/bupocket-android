@@ -28,6 +28,13 @@
     <string name="hint_wallet_create_form_input_identity_name">请填写身份名</string>
     <string name="hint_wallet_create_form_input_password">请设置密码</string>
     <string name="hint_wallet_create_form_input_rePassword">请再次确认密码</string>
+
+    <string name="wallet_create_form_error1">密码和确认密码输入不一致，请重新输入</string>
+    <string name="wallet_create_form_error2">密码长度最多20个字符</string>
+    <string name="wallet_create_form_error3">密码长度至少8个字符</string>
+    <string name="wallet_create_form_error4">身份名格式不对</string>
+    <string name="wallet_create_form_error5">密码格式不对</string>
+
     <string name="hint_wallet_create_form_create_btn_txt">创建</string>
     <string name="otc_top_bar_buy_txt">购买</string>
     <string name="otc_top_bar_sell_txt">出售</string>
@@ -82,6 +89,7 @@
     <string name="create_wallet_fail">创建失败</string>
     <string name="checking_password_error">密码错误</string>
     <string name="geting_account_bu_balance">获取中</string>
+    <string name="check_mneonic_code_err1">助记词顺序有误，请您核对后更正</string>
     <!-- 二维码页面 -->
     <string name="qr_pocket_address_title">钱包地址</string>
     <string name="qr_cancel_btn_des">取消</string>
@@ -117,4 +125,6 @@
     <string name="invalid_tx_fee">无效的交易费</string>
     <string name="balance_not_enough">余额不足</string>
     <string name="send_token_note_too_long">备注太长</string>
+    <string name="splash_txt1">泛在价值流通区块链网络</string>
+    <string name="splash_txt2">小布口袋，把你的BU装入这里</string>
 </resources>

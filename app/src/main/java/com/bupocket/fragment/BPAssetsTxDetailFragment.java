@@ -15,6 +15,7 @@ import com.bupocket.dto.resp.TxDetailRespDto;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.utils.TimeUtil;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -63,6 +64,16 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
     TextView mTxDetailTxInfoTxSignaturePkTv;
     @BindView(R.id.txDetailTxInfoTxSignatureSdTv)
     TextView mTxDetailTxInfoTxSignatureSdTv;
+    @BindView(R.id.txDetailBlockInfoBlockHeightTv)
+    TextView mTxDetailBlockInfoBlockHeightTv;
+    @BindView(R.id.txDetailBlockInfoBlockHashTv)
+    TextView mTxDetailBlockInfoBlockHashTv;
+    @BindView(R.id.txDetailBlockInfoPrevBlockHashTv)
+    TextView mTxDetailBlockInfoPrevBlockHashTv;
+    @BindView(R.id.txDetailBlockInfoTXCountTv)
+    TextView mTxDetailBlockInfoTXCountTv;
+    @BindView(R.id.txDetailBlockInfoConsensusTimeTv)
+    TextView mTxDetailBlockInfoConsensusTimeTv;
     @BindView(R.id.emptyView)
     QMUIEmptyView mEmptyView;
 
@@ -78,6 +89,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
     }
 
     private void initData(){
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         mEmptyView.show(true);
         txHash = getTxHash();
     }
@@ -99,7 +111,6 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                 ApiResult<TxDetailRespDto> respDto = response.body();
 
                 if(respDto.getData() != null){
-//                    mEmptyView.show(false);
                     TxDetailRespDto.TxInfoRespBoBean txInfoRespBoBean = respDto.getData().getTxInfoRespBo();
                     TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean = respDto.getData().getTxDeatilRespBo();
                     TxDetailRespDto.BlockInfoRespBoBean blockInfoRespBoBean = respDto.getData().getBlockInfoRespBo();
@@ -123,6 +134,12 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
 
                     mTxDetailTxInfoTxSignaturePkTv.setText(signatureObj.getString("publicKey"));
                     mTxDetailTxInfoTxSignatureSdTv.setText(signatureObj.getString("signData"));
+
+                    mTxDetailBlockInfoBlockHeightTv.setText(blockInfoRespBoBean.getSeq() + "");
+                    mTxDetailBlockInfoBlockHashTv.setText(blockInfoRespBoBean.getHash());
+                    mTxDetailBlockInfoPrevBlockHashTv.setText(blockInfoRespBoBean.getPreviousHash());
+                    mTxDetailBlockInfoTXCountTv.setText(blockInfoRespBoBean.getTxCount() + "");
+                    mTxDetailBlockInfoConsensusTimeTv.setText(TimeUtil.timeStamp2Date(blockInfoRespBoBean.getCloseTimeDate().toString().substring(0,10),"yyyy.MM.dd HH:mm:ss"));
                     mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
                 }
             }

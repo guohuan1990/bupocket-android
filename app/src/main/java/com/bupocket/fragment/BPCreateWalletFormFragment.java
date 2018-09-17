@@ -11,13 +11,13 @@ import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SecureRandomUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.wallet.Account;
-import com.bupocket.wallet.BPData;
-import com.bupocket.wallet.Constants;
-import com.bupocket.wallet.MnemonicCodeTool;
+import com.bupocket.wallet.*;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
+import com.bupocket.wallet.exception.WalletException;
+import com.bupocket.wallet.model.WalletBPData;
 import com.bupocket.wallet.utils.KeyStore;
 import com.bupocket.wallet.utils.keystore.BaseKeyStoreEntity;
 import com.bupocket.wallet.utils.keystore.KeyStoreEntity;
@@ -59,16 +59,54 @@ public class BPCreateWalletFormFragment extends BaseFragment {
 
 
     private boolean validateData(){
-        if("".equals(mSetIdentityNameEt.getText().toString().trim())){
+        String indntityName = mSetIdentityNameEt.getText().toString().trim();
+        if("".equals(indntityName)){
             Toast.makeText(getActivity(), R.string.hint_wallet_create_form_input_identity_name,Toast.LENGTH_SHORT).show();
             return false;
-        }else if("".equals(mSetPwdEt.getText().toString().trim())){
+        }
+
+        if(!CommonUtil.validateNickname(indntityName)){
+            Toast.makeText(getActivity(), R.string.wallet_create_form_error4,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        String password = mSetPwdEt.getText().toString().trim();
+
+        if("".equals(password)){
             Toast.makeText(getActivity(), R.string.hint_wallet_create_form_input_password,Toast.LENGTH_SHORT).show();
             return false;
-        }else if("".equals(mRepeatPwdEt.getText().toString().trim())){
+        }
+        if(password.length() < 8){
+            Toast.makeText(getActivity(), R.string.wallet_create_form_error3,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(password.length() > 20){
+            Toast.makeText(getActivity(), R.string.wallet_create_form_error2,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(!CommonUtil.validatePassword(password)){
+            Toast.makeText(getActivity(), R.string.wallet_create_form_error5,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        String repeatPassword = mRepeatPwdEt.getText().toString().trim();
+
+        if("".equals(repeatPassword)){
             Toast.makeText(getActivity(), R.string.hint_wallet_create_form_input_rePassword,Toast.LENGTH_SHORT).show();
             return false;
         }
+        if(!repeatPassword.equals(password)){
+            Toast.makeText(getActivity(), R.string.wallet_create_form_error1,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+
+
+
+
+
+
+
         return true;
     }
 
@@ -96,62 +134,27 @@ public class BPCreateWalletFormFragment extends BaseFragment {
                     @Override
                     public void run() {
                         String accountPwd = mSetPwdEt.getText().toString().trim();
-                        // build mnumonic code
-                        MnemonicCodeTool mnemonicCodeTool = null;
-                        List<String> mnemonicCodeList = null;
+
+                        WalletBPData walletBPData = null;
                         try {
-                            mnemonicCodeTool = new MnemonicCodeTool(getContext().getAssets().open("english.txt"));
-                            mnemonicCodeList = mnemonicCodeTool.toMnemonic(randomEntropy());
-                        } catch (Exception e) {
-                            Toast.makeText(getActivity(), R.string.create_wallet_fail,Toast.LENGTH_SHORT).show();
+                            walletBPData = Wallet.getInstance().create(accountPwd);
+                            sharedPreferencesHelper.put("skey", walletBPData.getSkey());
+                            sharedPreferencesHelper.put("currentAccNick", mSetIdentityNameEt.getText().toString());
+                            sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
+                            sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
+                            sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode());
+                            BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
+                            Bundle argz = new Bundle();
+                            argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) walletBPData.getMnemonicCodes());
+                            backupWalletFragment.setArguments(argz);
+
+                            startFragment(backupWalletFragment);
+                            tipDialog.dismiss();
+                        } catch (WalletException e) {
                             e.printStackTrace();
-                        }
-
-                        // 存储钱包信息
-                        String skey = HexFormat.byteToHex(randomEntropy());
-                        try {
-                            BaseKeyStoreEntity baseKeyStoreEntity =  KeyStore.encryptMsg(accountPwd, skey,Constants.WALLET_STORE_N, Constants.WALLET_STORE_R,Constants.WALLET_STORE_P, 1);
-                            sharedPreferencesHelper.put("skey", JSON.toJSONString(baseKeyStoreEntity));
-                        } catch (Exception e) {
                             Toast.makeText(getActivity(), R.string.create_wallet_fail,Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
+                            return;
                         }
-
-                        sharedPreferencesHelper.put("currentAccNick", mSetIdentityNameEt.getText().toString());
-
-                        BPData bpData = new BPData();
-                        try {
-                            List<String> hdPaths = new ArrayList<>();
-                            hdPaths.add("M/44/80/0/0/0");
-                            hdPaths.add("M/44/80/0/0/1");
-                            List<Account> accounts = mnemonicCodeTool.toPKs(mnemonicCodeList,hdPaths);
-
-                            List<BPData.AccountsBean> accountsBeans = new ArrayList<>();
-                            BPData.AccountsBean account = null;
-                            for (Account acc:accounts) {
-                                account = new BPData.AccountsBean();
-                                account.setAddress(acc.getAddress());
-                                KeyStoreEntity keyStoreEntity = KeyStore.generateKeyStore(accountPwd, acc.getPrivateKey(), Constants.WALLET_STORE_N, Constants.WALLET_STORE_R,Constants.WALLET_STORE_P, 1);
-                                account.setSecret(JSON.toJSONString(keyStoreEntity));
-                                accountsBeans.add(account);
-                            }
-                            bpData.setAccounts(accountsBeans);
-                            System.out.println(JSON.toJSONString(bpData));
-                            sharedPreferencesHelper.put("BPData", JSON.toJSONString(bpData));
-                        } catch (Exception e) {
-                            Toast.makeText(getActivity(), R.string.create_wallet_fail,Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
-
-                        }
-                        sharedPreferencesHelper.put("currentAccAddr", bpData.getAccounts().get(1).getAddress());
-                        sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode());
-                        BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
-                        Bundle argz = new Bundle();
-                        argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) mnemonicCodeList);
-                        backupWalletFragment.setArguments(argz);
-
-                        startFragment(backupWalletFragment);
-                        tipDialog.dismiss();
                     }
                 }).start();
 
