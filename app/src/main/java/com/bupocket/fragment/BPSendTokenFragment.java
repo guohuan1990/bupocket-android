@@ -1,10 +1,12 @@
 package com.bupocket.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import android.widget.Toast;
@@ -15,6 +17,8 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -44,6 +48,8 @@ public class BPSendTokenFragment extends BaseFragment {
     EditText sendFormTxFeeEt;
     @BindView(R.id.completeMnemonicCodeBtn)
     QMUIRoundButton mCompleteMnemonicCodeBtn;
+    @BindView(R.id.sendFormScanIv)
+    ImageView mSendFormScanIv;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_send, null);
@@ -54,7 +60,15 @@ public class BPSendTokenFragment extends BaseFragment {
         confirmSendInfo();
         initTopBar();
         setDestAddress();
+
+        mSendFormScanIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startScan();
+            }
+        });
         return root;
+
     }
     private void initData(){
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
@@ -277,7 +291,35 @@ public class BPSendTokenFragment extends BaseFragment {
     }
 
     private void setDestAddress(){
-        String destAddress = getArguments().getString("destAddress");
-        destAccountAddressEt.setText(destAddress);
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            String destAddress = getArguments().getString("destAddress");
+            destAccountAddressEt.setText(destAddress);
+        }
+    }
+
+    private void startScan(){
+        IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(this);
+        intentIntegrator.setBeepEnabled(true);
+        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        intentIntegrator.setPrompt("请将二维码置于取景框内扫描");
+        // 开始扫描
+        intentIntegrator.initiateScan();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(getActivity(), "取消扫描", Toast.LENGTH_LONG).show();
+            } else {
+                String destAddress = result.getContents();
+                destAccountAddressEt.setText(destAddress);
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+
+        }
     }
 }

@@ -9,17 +9,28 @@
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
                   android:padding="15dp">
-        <ImageView
+        <LinearLayout
                 android:id="@+id/closeBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center_horizontal"
-                android:src="@mipmap/icon_close"
-        />
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:orientation="horizontal"
+        >
+            <ImageView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_horizontal"
+                    android:src="@mipmap/icon_close"
+            />
+        </LinearLayout>
+
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:textColor="#999999"
                   android:paddingTop="10dp"
+                  android:textSize="14sp"
                   android:text="@string/qr_pocket_address_title"/>
         <TextView
                 android:id="@+id/printAccAddressTv"
@@ -49,7 +60,7 @@
                     app:qmui_backgroundColor="@color/app_btn_color_blue"
                     app:qmui_radius="5dp"
                     android:textColor="@color/app_color_font"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
         </LinearLayout>
         <View
                 android:layout_marginTop="20dp"

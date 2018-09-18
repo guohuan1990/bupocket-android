@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.base.BaseFragmentActivity;
+import com.bupocket.fragment.BPAssetsFragment;
 import com.bupocket.fragment.BPBackupWalletFragment;
 import com.bupocket.fragment.BPCreateWalletFragment;
 import com.bupocket.fragment.home.HomeFragment;
@@ -56,12 +57,12 @@ public class BPMainActivity extends BaseFragmentActivity {
             if(CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode().equals(createWalletStep)){
                 fragment = new BPBackupWalletFragment();
             } else if(CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode().equals(createWalletStep)){
-                fragment = new HomeFragment();
+                fragment = new BPAssetsFragment();
             }else{
                 fragment = new BPCreateWalletFragment();
             }
         }else {
-            fragment = new HomeFragment();
+            fragment = new BPAssetsFragment();
         }
 
         return fragment;
