@@ -1,6 +1,7 @@
 package com.bupocket.fragment;
 
 import android.annotation.SuppressLint;
+import android.os.Looper;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
@@ -21,8 +22,12 @@ import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
 import com.bupocket.wallet.model.WalletBPData;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
+import org.bitcoinj.crypto.MnemonicCode;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,8 +60,8 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
     @BindView(R.id.recoverWalletSubmitBtn)
     QMUIRoundButton recoverSubmit;
 
-    private boolean isPwdHideFirst = true;
-    private boolean isConfirmPwdHideFirst = true;
+    private boolean isPwdHideFirst = false;
+    private boolean isConfirmPwdHideFirst = false;
     private SharedPreferencesHelper sharedPreferencesHelper;
     @Override
     protected View onCreateView() {
@@ -66,6 +71,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
         initTopBar();
         initData();
         eventListeners();
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         return root;
     }
 
@@ -78,7 +84,9 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFragmentAndDestroyCurrent(new HomeFragment());
+//
+                QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
+                startFragmentAndDestroyCurrent(new BPCreateWalletFragment());
             }
         });
     }
@@ -152,7 +160,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
         String confirmPwd = mConfirmPwdEt.getText().toString().trim();
         String regex = ".{8,20}";
         if ("".equals(confirmPwd)) {
-            Toast.makeText(getActivity(), R.string.recover_set_pwd_hint,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.recover_confirm_pwd_hint,Toast.LENGTH_SHORT).show();
             return false;
         } else if (!confirmPwd.matches(regex)) {
             Toast.makeText(getActivity(), R.string.recover_set_pwd_error,Toast.LENGTH_SHORT).show();
@@ -211,57 +219,37 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
                } else if (!confirmPwdFlag()) {
                    return;
                }
-                String password = mPwdEt.getText().toString().trim();
-                List<String> mnemonicCodes = getMnemonicCode();
-                try {
-                    WalletBPData walletBPData = Wallet.getInstance().importMnemonicCode(mnemonicCodes,password);
-                    sharedPreferencesHelper.put("skey", walletBPData.getSkey());
-                    sharedPreferencesHelper.put("currentAccNick", mWalletNameEt.getText().toString());
-                    sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
-                    sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
-                    sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode());
+                final String password = mPwdEt.getText().toString().trim();
+                final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                        .setTipWord(getResources().getString(R.string.recover_wallet_reloading))
+                        .create();
+                tipDialog.show();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            List<String> mnemonicCodes = getMnemonicCode();
+                            WalletBPData walletBPData = Wallet.getInstance().importMnemonicCode(mnemonicCodes,password);
+                            sharedPreferencesHelper.put("skey", walletBPData.getSkey());
+                            sharedPreferencesHelper.put("currentAccNick", mWalletNameEt.getText().toString());
+                            sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
+                            sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
+                            sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode());
+                            tipDialog.dismiss();
+                            startFragment(new HomeFragment());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Looper.prepare();
+                            Toast.makeText(getActivity(),R.string.recover_wallet_error_tip,Toast.LENGTH_SHORT).show();
+                            tipDialog.dismiss();
+                            Looper.loop();
+                            return;
+                        }
+                    }
+                }).start();
 
-                    startFragment(new HomeFragment());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(),"导入失败",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
-        mMneonicCodeEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (!b) {
-                    mneonicFlag();
-                }
-            }
-        });
-
-        mWalletNameEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (!b) {
-                    walletNameFlag();
-                }
-            }
-        });
-
-        mPwdEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (!b) {
-                    pwdFlag();
-                }
-            }
-        });
-
-        mConfirmPwdEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (!b) {
-                    confirmPwdFlag();
-                }
             }
         });
     }

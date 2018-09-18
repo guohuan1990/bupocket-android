@@ -22,6 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/recover_wallet_title"
                 android:theme="@style/BPViewTitle" />
 
@@ -70,8 +71,9 @@
                 <ImageView
                     android:id="@+id/recoverShowPwdIv"
                     android:layout_width="20dp"
-                    android:layout_height="30dp"
+                    android:layout_height="50dp"
                     android:paddingBottom="20dp"
+                    android:paddingTop="20dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
                     android:src="@mipmap/icon_close_eye"
@@ -98,8 +100,9 @@
                 <ImageView
                     android:id="@+id/recoverShowConfirmPwdIv"
                     android:layout_width="20dp"
-                    android:layout_height="30dp"
+                    android:layout_height="50dp"
                     android:paddingBottom="20dp"
+                    android:paddingTop="20dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
                     android:src="@mipmap/icon_close_eye"
@@ -115,8 +118,8 @@
                 android:text="@string/recover_wallet_next_btn"
                 android:textColor="@color/app_btn_color_white"
                 android:textSize="18sp"
-                app:qmui_backgroundColor="@color/recover_btn_grey"
-                app:qmui_borderColor="@color/recover_btn_grey"
+                app:qmui_backgroundColor="@color/app_btn_color_blue"
+                app:qmui_borderColor="@color/app_btn_color_blue"
                 app:qmui_radius="5dp" />
         </LinearLayout>
     </ScrollView>

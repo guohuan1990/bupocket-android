@@ -1,14 +1,21 @@
 package com.bupocket.fragment;
 
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,6 +24,9 @@ public class BPUserTermsFragment extends BaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
+
+    @BindView(R.id.userTermsContentTv)
+    TextView mUserTermsContentTv;
 
     @BindView(R.id.agreeUserTermsCheckbox)
     CheckBox mAgreeUserTerms;
@@ -32,22 +42,34 @@ public class BPUserTermsFragment extends BaseFragment {
         ButterKnife.bind(this, root);
         initTopBar();
         eventListeners();
+
+        try {
+            Resources res = getResources();
+            InputStream in_s = res.openRawResource(R.raw.user_terms);
+            byte[] b = new byte[in_s.available()];
+            in_s.read(b);
+            mUserTermsContentTv.setText(new String(b));
+        }catch (IOException e) {
+            mUserTermsContentTv.setText(new String("loading"));
+        }
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         return root;
     }
 
     private void eventListeners() {
-        mAgreeUserTerms.setOnClickListener(new View.OnClickListener() {
+        mAgreeUserTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-//
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                isAgreeTerms = isChecked;
             }
         });
         mUserTermsNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isAgreeTerms) {
-//                    继续
+                    Toast.makeText(getActivity(), "选中的", Toast.LENGTH_SHORT).show();
                 } else {
+                    Toast.makeText(getActivity(), "未选中的", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -59,6 +81,7 @@ public class BPUserTermsFragment extends BaseFragment {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
                 startFragmentAndDestroyCurrent(new HomeFragment());
             }
         });
