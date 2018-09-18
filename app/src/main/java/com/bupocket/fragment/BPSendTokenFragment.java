@@ -277,8 +277,7 @@ public class BPSendTokenFragment extends BaseFragment {
     }
 
     private void setDestAddress(){
-        Bundle bundle = new Bundle();
-        String destAddress = bundle.getString("destAddress");
+        String destAddress = getArguments().getString("destAddress");
         destAccountAddressEt.setText(destAddress);
     }
 }
