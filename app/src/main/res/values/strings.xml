@@ -76,10 +76,16 @@
     <!-- 恢复身份 -->
     <string name="recover_wallet_title">恢复身份</string>
     <string name="recover_edit_mneonic_code_hint">请输入助记词，用空格分割</string>
+    <string name="recover_mneonic_input_error">助记词输入有误，请重新输入</string>
     <string name="recover_edit_new_wallet_name_hint">请输入新钱包名</string>
+    <string name="recover_input_wallet_name_error">只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
     <string name="recover_set_pwd_hint">请设置密码</string>
+    <string name="recover_set_pwd_error">密码为8-20个字符</string>
     <string name="recover_confirm_pwd_hint">请再次确认密码</string>
+    <string name="recover_confirm_pwd_error">密码和确认密码输入不一致，请重新输入</string>
     <string name="recover_wallet_next_btn">恢复</string>
+    <string name="recover_wallet_reloading">恢复中</string>
+    <string name="recover_wallet_error_tip">导入失败</string>
 
     <string name="view_title_wallet_sendBU">BU转账</string>
     <string name="send_address_title">对方账户（BU地址）</string>
@@ -174,4 +180,6 @@
     <string name="contact_title_txt">您的联系方式</string>
     <string name="help_hint">请输入您的问题或建议</string>
     <string name="contact_hint">请输入您的联系方式</string>
+
+    <string name="user_terms_content">文本过长</string>
 </resources> 

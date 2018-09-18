@@ -16,58 +16,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:layout_marginTop="20dp"
             android:text="@string/use_terms_title"
             android:theme="@style/BPViewTitle" />
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="393dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
+                    android:id="@+id/userTermsContentTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    tools:text="大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段大段文字大段文字"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    tools:text="大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段大段文字大段文字"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    tools:text="大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段大段文字大段文字"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    tools:text="大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段大段文字大段文字"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    tools:text="大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段大段文字大段文字"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    tools:text="大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段大段文字大段文字"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    tools:text="大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段文字大段大段文字大段文字最后一个字"/>
+                    android:lineSpacingMultiplier="1.2"
+                    android:padding="10dp" />
+
             </LinearLayout>
 
 
         </ScrollView>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,6 +55,7 @@
                 android:layout_height="50dp"
                 android:paddingRight="10dp"
                 android:paddingLeft="10dp"
+                android:checked="false"
                 android:background="#F5F5F5"
                 android:text="@string/use_terms_checkbox_agree" />
 
