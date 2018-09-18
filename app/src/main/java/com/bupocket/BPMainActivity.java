@@ -55,6 +55,8 @@ public class BPMainActivity extends BaseFragmentActivity {
             String createWalletStep = sharedPreferencesHelper.getSharedPreference("createWalletStep","").toString();
             if(CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode().equals(createWalletStep)){
                 fragment = new BPBackupWalletFragment();
+            } else if(CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode().equals(createWalletStep)){
+                fragment = new HomeFragment();
             }else{
                 fragment = new BPCreateWalletFragment();
             }
