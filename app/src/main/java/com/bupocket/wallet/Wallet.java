@@ -133,10 +133,10 @@ public class Wallet {
     public String sendBu(String password,String bPData, String fromAccAddr,String toAccAddr,String amount, String note, String fee) throws Exception {
 
         String senderPrivateKey = null;
-        WalletBPData walletBPData = JSON.parseObject(bPData, WalletBPData.class);
+        List<WalletBPData.AccountsBean> accountsBeans = JSON.parseArray(bPData, WalletBPData.AccountsBean.class);
 
-        if(walletBPData.getAccounts().size()>0){
-            for (WalletBPData.AccountsBean accountsBean:walletBPData.getAccounts()
+        if(accountsBeans.size()>0){
+            for (WalletBPData.AccountsBean accountsBean:accountsBeans
                  ) {
                 if(fromAccAddr.equals(accountsBean.getAddress())){
                     senderPrivateKey = KeyStore.decodeMsg(password,JSON.parseObject(accountsBean.getSecret().toString(),BaseKeyStoreEntity.class));

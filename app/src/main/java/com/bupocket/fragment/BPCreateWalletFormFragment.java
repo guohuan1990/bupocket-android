@@ -135,7 +135,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
                }
                 final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                        .setTipWord("创建中")
+                        .setTipWord(getResources().getString(R.string.wallet_create_creating_txt))
                         .create();
                 tipDialog.show();
                 new Thread(new Runnable() {

@@ -1,30 +1,234 @@
 package com.bupocket.fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import android.widget.EditText;
+import android.widget.Toast;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
+import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 public class BPChangePwdFragment extends BaseFragment{
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
+    @BindView(R.id.oldPasswordET)
+    EditText mOldPasswordET;
+    @BindView(R.id.newPasswordET)
+    EditText mNewPasswordET;
+    @BindView(R.id.newPasswordConfirmET)
+    EditText mNewPasswordConfirmET;
+    @BindView(R.id.nextChangePwdBtn)
+    QMUIRoundButton mNextChangePwdBtn;
+    private SharedPreferencesHelper sharedPreferencesHelper;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_change_pwd, null);
         ButterKnife.bind(this, root);
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
+        initData();
+
+
+        mNextChangePwdBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(validateData()){
+                    final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                            .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                            .setTipWord(getResources().getString(R.string.change_pwd_changing_txt))
+                            .create();
+                    tipDialog.show();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String oldPwd = mOldPasswordET.getText().toString().trim();
+                            String newPwd = mNewPasswordET.getText().toString().trim();
+                            try {
+                                Wallet.getInstance().updateAccountPassword(oldPwd,newPwd,sharedPreferencesHelper.getSharedPreference("skey", "").toString());
+                                tipDialog.dismiss();
+
+                                startFragmentAndDestroyCurrent(new HomeFragment());
+
+//                                final Runnable runnable = new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        try {
+//
+//                                            QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+//                                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
+//                                                .setTipWord(getResources().getString(R.string.change_pwd_change_success_txt))
+//                                                .create();
+//
+//                                            Thread.sleep(1000L);
+//                                            startFragmentAndDestroyCurrent(new BPChangePwdFragment());
+//                                            tipDialog.dismiss();
+//
+//                                        } catch (InterruptedException e) {
+//                                            e.printStackTrace();
+//                                        }finally {
+//                                            tipDialog.dismiss();
+//                                        }
+//                                        tipDialog.show();
+//                                    }
+//                                };
+//
+//
+//                                new Thread(){
+//                                    public void run(){
+//                                        Looper.prepare();
+//                                        new Handler(Looper.getMainLooper()).post(runnable);
+//                                        Looper.loop();
+//                                    }
+//                                }.start();
+
+
+
+
+                            } catch (WalletException e) {
+                                e.printStackTrace();
+                                Looper.prepare();
+                                Toast.makeText(getActivity(), R.string.change_pwd_form_error6,Toast.LENGTH_SHORT).show();
+                                tipDialog.dismiss();
+                                Looper.loop();
+                            }finally {
+                                tipDialog.dismiss();
+                            }
+                        }
+                    }).start();
+
+                }
+            }
+        });
+
         return root;
     }
 
+    private void initData(){
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+    }
+
+    private boolean validateData(){
+        final QMUITipDialog tipDialog;
+
+        String oldPwd = mOldPasswordET.getText().toString().trim();
+        String newPwd = mNewPasswordET.getText().toString().trim();
+        String newPasswordConfirm = mNewPasswordConfirmET.getText().toString().trim();
+
+
+        if(CommonUtil.isNull(oldPwd)){
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setTipWord(getResources().getString(R.string.change_pwd_err1))
+                    .create();
+            tipDialog.show();
+            mOldPasswordET.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tipDialog.dismiss();
+                }
+            }, 1500);
+            return false;
+        }
+
+        if(CommonUtil.isNull(newPwd)){
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setTipWord(getResources().getString(R.string.change_pwd_err2))
+                    .create();
+            tipDialog.show();
+            mNewPasswordET.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tipDialog.dismiss();
+                }
+            }, 1500);
+            return false;
+        }
+
+        if(newPwd.length() < 8){
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setTipWord(getResources().getString(R.string.change_pwd_form_error3))
+                    .create();
+            tipDialog.show();
+            mNewPasswordET.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tipDialog.dismiss();
+                }
+            }, 1500);
+            return false;
+        }
+        if(newPwd.length() > 20){
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setTipWord(getResources().getString(R.string.change_pwd_form_error2))
+                    .create();
+            tipDialog.show();
+            mNewPasswordET.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tipDialog.dismiss();
+                }
+            }, 1500);
+            return false;
+        }
+        if(!CommonUtil.validatePassword(newPwd)){
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setTipWord(getResources().getString(R.string.change_pwd_form_error5))
+                    .create();
+            tipDialog.show();
+            mNewPasswordET.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tipDialog.dismiss();
+                }
+            }, 1500);
+            return false;
+        }
+
+
+        if(CommonUtil.isNull(newPasswordConfirm)){
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setTipWord(getResources().getString(R.string.change_pwd_err3))
+                    .create();
+            tipDialog.show();
+            mNewPasswordConfirmET.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tipDialog.dismiss();
+                }
+            }, 1500);
+            return false;
+        }
+        if(!newPasswordConfirm.equals(newPwd)){
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setTipWord(getResources().getString(R.string.change_pwd_form_error1))
+                    .create();
+            tipDialog.show();
+            mNewPasswordConfirmET.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tipDialog.dismiss();
+                }
+            }, 1500);
+            return false;
+        }
+        return true;
+    }
+
     private void initTopBar() {
+        mTopBar.setBackgroundDividerEnabled(false);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
