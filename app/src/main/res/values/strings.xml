@@ -35,6 +35,10 @@
     <string name="wallet_create_form_error4">身份名格式不对</string>
     <string name="wallet_create_form_error5">密码格式不对</string>
 
+    <string name="wallet_create_creating_txt">创建中</string>
+    <string name="wallet_create_created_txt">创建成功</string>
+    <string name="wallet_create_ok_btn">确认</string>
+
     <string name="hint_wallet_create_form_create_btn_txt">创建</string>
     <string name="otc_top_bar_buy_txt">购买</string>
     <string name="otc_top_bar_sell_txt">出售</string>
@@ -60,6 +64,9 @@
     <string name="recently_tx_txt">最近交易记录</string>
     <string name="tx_status_success_txt">成功</string>
     <string name="tx_status_fail_txt">失败</string>
+
+    <string name="password_comfirm_dialog_title">密码确认</string>
+    <string name="password_comfirm_dialog_sub_txt">请填写钱包密码以确认转出</string>
     <!-- 恢复身份 -->
     <string name="recover_wallet_title">恢复身份</string>
     <string name="recover_edit_mneonic_code_hint">请输入助记词，用空格分割</string>

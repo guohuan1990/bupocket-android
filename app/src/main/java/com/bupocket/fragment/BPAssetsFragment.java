@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,9 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
+import com.bupocket.BPMainActivity;
 import com.bupocket.R;
+import com.bupocket.activity.TranslucentActivity;
 import com.bupocket.adaptor.MyTokenTxAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.dto.resp.ApiResult;
@@ -86,17 +89,11 @@ public class BPAssetsFragment extends BaseFragment {
         initWalletInfoView();
         initMyTxListViews();
         showMyAddress();
+
         mWalletScanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(getParentFragment());
-                intentIntegrator.setBeepEnabled(true);
-                intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                intentIntegrator.setPrompt("请将二维码置于取景框内扫描");
-                // 开始扫描
-                intentIntegrator.initiateScan();
-
-
+                startScan();
             }
         });
         mSendBtn.setOnClickListener(new View.OnClickListener() {
@@ -298,6 +295,15 @@ public class BPAssetsFragment extends BaseFragment {
         startFragment(new BPSendTokenFragment());
     }
 
+    private void startScan(){
+        IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(this);
+        intentIntegrator.setBeepEnabled(true);
+        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        intentIntegrator.setPrompt("请将二维码置于取景框内扫描");
+        // 开始扫描
+        intentIntegrator.initiateScan();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -305,8 +311,9 @@ public class BPAssetsFragment extends BaseFragment {
             if (result.getContents() == null) {
                 Toast.makeText(getActivity(), "取消扫描", Toast.LENGTH_LONG).show();
             } else {
+//                Toast.makeText(getActivity(), "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                 Bundle argz = new Bundle();
-                argz.putString("destAddress",currentAccAddress);
+                argz.putString("destAddress",result.getContents());
                 BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
                 sendTokenFragment.setArguments(argz);
                 startFragment(sendTokenFragment);

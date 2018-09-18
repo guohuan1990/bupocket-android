@@ -166,7 +166,7 @@
         <item name="qmui_dialog_menu_container_padding_bottom_when_action_exist">24dp</item>
     </style>
 
-    <style name="BPEditText" parent="Theme.AppCompat.Light">
+    <style name="BPEditText">
         <item name="colorControlNormal">@color/edit_text_color_control_normal</item>
         <item name="colorControlActivated">@color/edit_text_color_control_activated</item>
         <item name="android:layout_height">50dp</item>
@@ -174,9 +174,17 @@
         <item name="android:paddingBottom">15dp</item>
     </style>
 
-    <style name="BPViewTitle" parent="Theme.AppCompat.Light">
-        <item name="android:textSize">32sp</item>
+    <style name="BPEditTextBorder">
+        <item name="colorControlNormal">@color/edit_text_color_control_normal</item>
+        <item name="colorControlActivated">@color/edit_text_color_control_activated</item>
         <item name="android:layout_height">50dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingBottom">15dp</item>
+    </style>
+
+    <style name="BPViewTitle">
+        <item name="android:textSize">32sp</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
