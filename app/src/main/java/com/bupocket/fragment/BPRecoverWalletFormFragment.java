@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.annotation.SuppressLint;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
@@ -19,13 +20,15 @@ import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
-import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static com.bupocket.R.color.qmui_btn_blue_bg;
+import static com.bupocket.R.color.recover_btn_grey;
 
 public class BPRecoverWalletFormFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -47,7 +50,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
     EditText mPwdEt;
 
     @BindView(R.id.recoverConfirmPwdEt)
-    EditText mConfirmPwd;
+    EditText mConfirmPwdEt;
 
     @BindView(R.id.recoverWalletSubmitBtn)
     QMUIRoundButton recoverSubmit;
@@ -80,26 +83,33 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
         });
     }
 
+    @SuppressLint("ResourceAsColor")
     private boolean validateData(){
         if ("".equals(mMneonicCodeEt.getText().toString().trim())) {
             Toast.makeText(getActivity(), R.string.recover_edit_mneonic_code_hint,Toast.LENGTH_SHORT).show();
+            recoverSubmit.setBackgroundColor(recover_btn_grey);
+//            recoverSubmit.setStroke
             return false;
         } else if ("".equals(mWalletNameEt.getText().toString().trim())){
             Toast.makeText(getActivity(), R.string.recover_edit_new_wallet_name_hint,Toast.LENGTH_SHORT).show();
+            recoverSubmit.setBackgroundColor(recover_btn_grey);
             return false;
         }else if("".equals(mPwdEt.getText().toString().trim())){
             Toast.makeText(getActivity(), R.string.recover_set_pwd_hint,Toast.LENGTH_SHORT).show();
+            recoverSubmit.setBackgroundColor(recover_btn_grey);
             return false;
-        }else if("".equals(mConfirmPwd.getText().toString().trim())){
+        }else if("".equals(mConfirmPwdEt.getText().toString().trim())){
             Toast.makeText(getActivity(), R.string.recover_confirm_pwd_hint,Toast.LENGTH_SHORT).show();
+            recoverSubmit.setBackgroundColor(recover_btn_grey);
             return false;
         }
+        recoverSubmit.setBackgroundColor(qmui_btn_blue_bg);
         return true;
     }
 
     private boolean mneonicFlag () {
         String mneonic = mMneonicCodeEt.getText().toString().trim();
-        String regex = "[a-zA-Z\\s]";
+        String regex = "[a-zA-Z\\s]+";
         if ("".equals(mneonic)) {
             Toast.makeText(getActivity(), R.string.recover_edit_mneonic_code_hint,Toast.LENGTH_SHORT).show();
             return false;
@@ -108,7 +118,51 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
             return false;
         }
         return true;
-    };
+    }
+
+    private boolean walletNameFlag () {
+        String walletName = mWalletNameEt.getText().toString().trim();
+//        ^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$ 不以下划线开头
+        String regex = "[a-zA-Z0-9_\\u4e00-\\u9fa5]{1,20}";
+        if ("".equals(walletName)) {
+            Toast.makeText(getActivity(), R.string.recover_edit_new_wallet_name_hint,Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!walletName.matches(regex)) {
+            Toast.makeText(getActivity(), R.string.recover_input_wallet_name_error,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean pwdFlag () {
+        String pwd = mPwdEt.getText().toString().trim();
+        String regex = ".{8,20}";
+        if ("".equals(pwd)) {
+            Toast.makeText(getActivity(), R.string.recover_set_pwd_hint,Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!pwd.matches(regex)) {
+            Toast.makeText(getActivity(), R.string.recover_set_pwd_error,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean confirmPwdFlag () {
+        String pwd = mPwdEt.getText().toString().trim();
+        String confirmPwd = mConfirmPwdEt.getText().toString().trim();
+        String regex = ".{8,20}";
+        if ("".equals(confirmPwd)) {
+            Toast.makeText(getActivity(), R.string.recover_set_pwd_hint,Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!confirmPwd.matches(regex)) {
+            Toast.makeText(getActivity(), R.string.recover_set_pwd_error,Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!confirmPwd.equals(pwd)) {
+            Toast.makeText(getActivity(), R.string.recover_confirm_pwd_error,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
 
     private void eventListeners() {
         mPwdShow.setOnClickListener(new View.OnClickListener() {
@@ -132,26 +186,31 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
             public void onClick(View view) {
                 if (!isConfirmPwdHideFirst) {
                     mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
-                    mConfirmPwd.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mConfirmPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
+                    mConfirmPwdEt.setInputType(InputType.TYPE_CLASS_TEXT);
+                    mConfirmPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
                     isConfirmPwdHideFirst = true;
                 } else {
                     mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
-                    mConfirmPwd.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mConfirmPwd.setTransformationMethod(PasswordTransformationMethod.getInstance ());
+                    mConfirmPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    mConfirmPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance ());
                     isConfirmPwdHideFirst = false;
                 }
             }
         });
 
+//        提交
         recoverSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Boolean flag = validateData();
-                if(!flag){
-                    return;
-                }
-//                validateData();
+               if (!mneonicFlag()) {
+                   return;
+               } else if (!walletNameFlag()) {
+                   return;
+               } else if (!pwdFlag()) {
+                   return;
+               } else if (!confirmPwdFlag()) {
+                   return;
+               }
                 String password = mPwdEt.getText().toString().trim();
                 List<String> mnemonicCodes = getMnemonicCode();
                 try {
@@ -166,6 +225,42 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(getActivity(),"导入失败",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        mMneonicCodeEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    mneonicFlag();
+                }
+            }
+        });
+
+        mWalletNameEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    walletNameFlag();
+                }
+            }
+        });
+
+        mPwdEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    pwdFlag();
+                }
+            }
+        });
+
+        mConfirmPwdEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    confirmPwdFlag();
                 }
             }
         });
