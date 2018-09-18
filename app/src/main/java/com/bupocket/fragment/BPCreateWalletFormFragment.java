@@ -23,6 +23,7 @@ import com.bupocket.wallet.utils.keystore.BaseKeyStoreEntity;
 import com.bupocket.wallet.utils.keystore.KeyStoreEntity;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import io.bumo.encryption.utils.hex.HexFormat;
@@ -49,12 +50,19 @@ public class BPCreateWalletFormFragment extends BaseFragment {
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_create_wallet_form, null);
         ButterKnife.bind(this, root);
+
+        initData();
+        onSubmitBtnListener();
+        return root;
+    }
+
+    private void initData(){
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+
+        initCreateWalletPromptView();
         initTopBar();
-        onSubmitBtnListener();
-        return root;
     }
 
 
@@ -176,6 +184,21 @@ public class BPCreateWalletFormFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 popBackStack();
+            }
+        });
+    }
+
+    private void initCreateWalletPromptView(){
+        final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
+        qmuiDialog.setCanceledOnTouchOutside(false);
+        qmuiDialog.setContentView(R.layout.create_wallet_prompt_layout);
+        qmuiDialog.show();
+        QMUIRoundButton mreateWalletPromptConfirmBtn = qmuiDialog.findViewById(R.id.createWalletPromptConfirmBtn);
+
+        mreateWalletPromptConfirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
             }
         });
     }

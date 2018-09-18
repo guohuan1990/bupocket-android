@@ -46,6 +46,7 @@ public class BPBackupWalletFragment extends BaseFragment {
                 if(mnemonicCodeList == null){
 
                     final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
+                    qmuiDialog.setCanceledOnTouchOutside(false);
                     qmuiDialog.setContentView(R.layout.password_comfirm_layout);
                     qmuiDialog.show();
                     QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
@@ -94,59 +95,6 @@ public class BPBackupWalletFragment extends BaseFragment {
 
                         }
                     });
-
-//                    final QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(getActivity());
-//
-//                    builder.setTitle(R.string.wallet_password_confirm_title)
-//                            .setPlaceholder(R.string.hint_wallet_passwrod_confirm_txt1)
-//                            .setInputType(InputType.TYPE_CLASS_TEXT)
-//                            .addAction("取消", new QMUIDialogAction.ActionListener() {
-//                                @Override
-//                                public void onClick(QMUIDialog dialog, int index) {
-//                                    dialog.dismiss();
-//                                }
-//                            })
-//                            .addAction("确定", new QMUIDialogAction.ActionListener() {
-//                                @Override
-//                                public void onClick(QMUIDialog dialog, int index) {
-//                                    CharSequence text = builder.getEditText().getText();
-//                                    if (text != null && text.length() > 0) {
-//                                        // TODO 校验密码是否匹配
-//                                        final String password = text.toString();
-//
-//                                        final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
-//                                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-//                                                .setTipWord(getResources().getString(R.string.wallet_create_creating_txt))
-//                                                .create();
-//                                        tipDialog.show();
-//                                        new Thread(new Runnable() {
-//                                            @Override
-//                                            public void run() {
-//                                                String ciphertextSkeyData = getSkeyStr();
-//                                                try {
-//                                                    byte[] skeyByte = Wallet.getInstance().getSkey(password,ciphertextSkeyData);
-//                                                    mnemonicCodeList = new MnemonicCode().toMnemonic(skeyByte);
-//                                                    tipDialog.dismiss();
-//
-//                                                    go2BPCreateWalletShowMneonicCodeFragment();
-//                                                } catch (Exception e) {
-//                                                    e.printStackTrace();
-//                                                    Looper.prepare();
-//                                                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
-//                                                    tipDialog.dismiss();
-//                                                    Looper.loop();
-//                                                    return;
-//                                                }
-//                                            }
-//                                        }).start();
-//                                        dialog.dismiss();
-//                                    } else {
-//                                        Toast.makeText(getActivity(), R.string.wallet_password_confirm_txt1, Toast.LENGTH_SHORT).show();
-//                                    }
-//                                }
-//                            })
-//                            .create()
-//                            .show();
                 }else{
                     go2BPCreateWalletShowMneonicCodeFragment();
                 }
