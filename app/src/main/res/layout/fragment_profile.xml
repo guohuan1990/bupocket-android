@@ -40,28 +40,6 @@
                 android:textColor="@color/app_color_font"
                 android:textSize="16sp" />
 
-            <LinearLayout
-                android:id="@+id/showMyAddressLv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/userBcAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/app_color_font"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingLeft="5dp"
-                    android:src="@mipmap/icon_qrcode" />
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
