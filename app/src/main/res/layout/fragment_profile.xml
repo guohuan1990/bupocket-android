@@ -19,6 +19,7 @@
             android:orientation="vertical">
 
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/profileAvatarIv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"

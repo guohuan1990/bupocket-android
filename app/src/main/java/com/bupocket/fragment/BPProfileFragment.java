@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
@@ -18,6 +19,7 @@ import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
@@ -48,6 +50,8 @@ public class BPProfileFragment extends BaseFragment{
 
     @BindView(R.id.versionNameTv)
     TextView mVersionNameTv;
+    @BindView(R.id.profileAvatarIv)
+    QMUIRadiusImageView mProfileAvatarIv;
 
     @Override
     protected View onCreateView() {
@@ -65,6 +69,12 @@ public class BPProfileFragment extends BaseFragment{
             @Override
             public void onClick(View v) {
                 gotoHelpFeedbackFragment();
+            }
+        });
+        mProfileAvatarIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPUserInfoFragment());
             }
         });
         return root;
