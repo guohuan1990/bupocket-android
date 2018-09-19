@@ -147,6 +147,7 @@
     <string name="emptyView_mode_desc_retry">点击重试</string>
     <string name="emptyView_mode_desc_no_data">暂无数据</string>
     <string name="invalid_address">无效的账户地址</string>
+    <string name="send_err1">不能给自己转账</string>
     <string name="invalid_amount">无效的数量</string>
     <string name="invalid_tx_fee">无效的交易费</string>
     <string name="balance_not_enough">余额不足</string>

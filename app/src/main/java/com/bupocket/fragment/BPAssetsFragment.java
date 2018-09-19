@@ -199,11 +199,15 @@ public class BPAssetsFragment extends BaseFragment {
                 if(!tokenTxInfoMap.containsKey(obj.getTxHash())){
                     TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime()), amountStr, txStartStr);
                     tokenTxInfo.setTxHash(obj.getTxHash());
+                    tokenTxInfo.setOutinType(obj.getOutinType());
                     tokenTxInfoMap.put(obj.getTxHash(), tokenTxInfo);
                     tokenTxInfoList.add(tokenTxInfo);
                 }
             }
 
+        }else{
+            mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
+            return;
         }
 
         myTokenTxAdapter = new MyTokenTxAdapter(tokenTxInfoList, getContext());
@@ -212,12 +216,13 @@ public class BPAssetsFragment extends BaseFragment {
         tokenTxsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TokenTxInfo currentItem = (TokenTxInfo) myTokenTxAdapter.getItem(position);
-                Bundle argz = new Bundle();
-                argz.putString("txHash", currentItem.getTxHash());
-                BPAssetsTxDetailFragment bpAssetsTxDetailFragment = new BPAssetsTxDetailFragment();
-                bpAssetsTxDetailFragment.setArguments(argz);
-                startFragment(bpAssetsTxDetailFragment);
+            TokenTxInfo currentItem = (TokenTxInfo) myTokenTxAdapter.getItem(position);
+            Bundle argz = new Bundle();
+            argz.putString("txHash", currentItem.getTxHash());
+            argz.putInt("outinType",currentItem.getOutinType());
+            BPAssetsTxDetailFragment bpAssetsTxDetailFragment = new BPAssetsTxDetailFragment();
+            bpAssetsTxDetailFragment.setArguments(argz);
+            startFragment(bpAssetsTxDetailFragment);
             }
         });
     }

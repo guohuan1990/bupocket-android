@@ -7,6 +7,7 @@ import android.view.View;
 
 import android.widget.EditText;
 import android.widget.Toast;
+import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
@@ -14,6 +15,7 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
+import com.bupocket.wallet.model.WalletBPData;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
@@ -58,45 +60,14 @@ public class BPChangePwdFragment extends BaseFragment{
                             String oldPwd = mOldPasswordET.getText().toString().trim();
                             String newPwd = mNewPasswordET.getText().toString().trim();
                             try {
-                                Wallet.getInstance().updateAccountPassword(oldPwd,newPwd,sharedPreferencesHelper.getSharedPreference("skey", "").toString());
+                                WalletBPData walletBPData = Wallet.getInstance().updateAccountPassword(oldPwd,newPwd,sharedPreferencesHelper.getSharedPreference("skey", "").toString());
+
+                                sharedPreferencesHelper.put("skey", walletBPData.getSkey());
+                                sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
+
                                 tipDialog.dismiss();
 
                                 startFragmentAndDestroyCurrent(new HomeFragment());
-
-//                                final Runnable runnable = new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        try {
-//
-//                                            QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
-//                                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
-//                                                .setTipWord(getResources().getString(R.string.change_pwd_change_success_txt))
-//                                                .create();
-//
-//                                            Thread.sleep(1000L);
-//                                            startFragmentAndDestroyCurrent(new BPChangePwdFragment());
-//                                            tipDialog.dismiss();
-//
-//                                        } catch (InterruptedException e) {
-//                                            e.printStackTrace();
-//                                        }finally {
-//                                            tipDialog.dismiss();
-//                                        }
-//                                        tipDialog.show();
-//                                    }
-//                                };
-//
-//
-//                                new Thread(){
-//                                    public void run(){
-//                                        Looper.prepare();
-//                                        new Handler(Looper.getMainLooper()).post(runnable);
-//                                        Looper.loop();
-//                                    }
-//                                }.start();
-
-
-
 
                             } catch (WalletException e) {
                                 e.printStackTrace();

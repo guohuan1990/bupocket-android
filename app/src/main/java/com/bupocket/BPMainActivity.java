@@ -65,6 +65,7 @@ public class BPMainActivity extends BaseFragmentActivity {
             fragment = new HomeFragment();
         }
 
+
         return fragment;
     }
 

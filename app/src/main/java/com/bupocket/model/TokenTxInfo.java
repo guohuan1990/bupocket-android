@@ -5,6 +5,7 @@ public class TokenTxInfo {
     private String txDate;
     private String txAmount;
     private String txStatus;
+    private Integer outinType;
     private String txHash;
 
     public TokenTxInfo(String txAccountAddress, String txDate, String txAmount, String txStatus) {
@@ -52,5 +53,13 @@ public class TokenTxInfo {
 
     public void setTxHash(String txHash) {
         this.txHash = txHash;
+    }
+
+    public Integer getOutinType() {
+        return outinType;
+    }
+
+    public void setOutinType(Integer outinType) {
+        this.outinType = outinType;
     }
 }

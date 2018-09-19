@@ -51,6 +51,7 @@ android {
 //        exclude 'org/bitcoinj/crypto/mnemonic/wordlist/english.txt'
 //        exclude 'org/bitcoinj/crypto/cacerts'
     }
+    configurations {all {exclude module: 'httpclient'exclude module: 'commons-logging'}}
 
 }
 
