@@ -98,6 +98,10 @@ public class Wallet {
         return create(password, sKey);
     }
 
+    public void checkPwd(String password,String ciphertextSkeyData) throws Exception {
+        getSkey(password, ciphertextSkeyData);
+    }
+
     public byte[] getSkey(String password, String ciphertextSkeyData) throws Exception {
         BaseKeyStoreEntity baseKeyStoreEntity = JSON.parseObject(ciphertextSkeyData, BaseKeyStoreEntity.class);
         String skeyHex = KeyStore.decodeMsg(password,baseKeyStoreEntity);
