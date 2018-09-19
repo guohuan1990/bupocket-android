@@ -53,7 +53,7 @@
     <string name="backup_wallet_btn_txt">备份助记词</string>
     <string name="view_title_backup_mneonic_code">备份助记词</string>
     <string name="backup_mneonic_code_txt1">请勿截图</string>
-    <string name="backup_mneonic_code_txt2">露助记词将导致资产丢失，请抄写下助记词并存放在安全的地方</string>
+    <string name="backup_mneonic_code_txt2">泄露助记词将导致资产丢失，请抄写下助记词并存放在安全的地方</string>
     <string name="backup_mneonic_code_txt3">请按顺序记录每个词，并妥善保管</string>
     <string name="backup_mneonic_code_btn_txt">我已抄好</string>
     <string name="view_title_confirm_mneonic_code">确认助记词</string>
@@ -90,7 +90,7 @@
     <string name="view_title_wallet_sendBU">BU转账</string>
     <string name="send_address_title">对方账户（BU地址）</string>
     <string name="send_note_title">备注</string>
-    <string name="send_fee_title">预估最多支付费用（BU)</string>
+    <string name="send_fee_title">最多支付交易费用（BU)</string>
     <string name="send_input_receiver_address_hint">请输入接收方地址</string>
 
     <string name="send_amount_title">转账数量（BU）</string>
@@ -183,11 +183,15 @@
     <string name="contact_hint">请输入您的联系方式</string>
 
     <string name="user_info_title">我的身份</string>
-    <string name="user_info_avatar">头像</string>
     <string name="user_info_wallet_name">身份名</string>
     <string name="user_info_wallet_id">身份 ID</string>
-    <string name="user_info_email">邮箱</string>
-    <string name="user_info_follow">订阅</string>
     <string name="user_info_backup_current_wallet">备份身份</string>
     <string name="user_info_logout">退出当前身份</string>
+    <string name="user_info_logout_loading">退出中</string>
+    <string name="user_info_logout_notice">即将移除身份及导入的钱包，请确保钱包已备份</string>
+    <string name="user_info_logout_warning">警告：若未妥善备份，退出后将无法找回钱包，请慎重处理该操作</string>
+
+    <string name="common_dialog_cancel">取消</string>
+    <string name="common_dialog_confirm">确认</string>
+    <string name="common_dialog_input_pwd">请输入密码</string>
 </resources>

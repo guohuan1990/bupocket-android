@@ -149,6 +149,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
                             sharedPreferencesHelper.put("skey", walletBPData.getSkey());
                             sharedPreferencesHelper.put("currentAccNick", mSetIdentityNameEt.getText().toString());
                             sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
+                            sharedPreferencesHelper.put("identityId", walletBPData.getAccounts().get(0).getAddress());
                             sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
                             sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode());
                             BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();

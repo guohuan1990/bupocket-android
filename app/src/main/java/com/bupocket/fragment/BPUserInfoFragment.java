@@ -1,20 +1,36 @@
 package com.bupocket.fragment;
 
+import android.os.Bundle;
+import android.os.Looper;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.QMUIWindowInsetLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
+import org.bitcoinj.crypto.MnemonicCode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.bupocket.R.string.user_info_logout_notice;
 
 public class BPUserInfoFragment extends BaseFragment {
 
@@ -30,13 +46,17 @@ public class BPUserInfoFragment extends BaseFragment {
     @BindView(R.id.userInfoAccNameTv)
     TextView mUserInfoAccNameTv;
 
-    @BindView(R.id.userInfoAccAddressTv)
-    TextView mUserInfoAccAddressTv;
+    @BindView(R.id.identityIdTv)
+    TextView mIdentityIdTv;
 
     @BindView(R.id.testLayout)
     QMUIWindowInsetLayout mTestLayout;
 
     private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
+    private SharedPreferencesHelper sharedPreferencesHelper;
+    private List<String> mnemonicCodeList;
+//    SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+//    private String identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
 
     @Override
     protected View onCreateView() {
@@ -50,29 +70,96 @@ public class BPUserInfoFragment extends BaseFragment {
     }
 
     private void initData() {
-        String accAddress = getArguments().getString("accAddress");
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+        String identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
         String accName = getArguments().getString("accName");
         mUserInfoAccNameTv.setText(accName);
-        mUserInfoAccAddressTv.setText(accAddress);
+        mIdentityIdTv.setText(identityId);
     }
 
     private void eventListeners() {
         mUserInfoBackupWalletTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startFragment(new BPBackupWalletFragment());
+//                startFragment(new BPBackupWalletFragment());
+                final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
+                qmuiDialog.setCanceledOnTouchOutside(false);
+                qmuiDialog.setContentView(R.layout.password_comfirm_layout);
+                qmuiDialog.show();
+                QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
+
+                ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
+                TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
+                mPasswordConfirmNotice.setText(R.string.user_info_logout_warning);
+
+                mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        qmuiDialog.dismiss();
+                    }
+                });
+
+                mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // 检查合法性
+                        EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
+                        final String password = mPasswordConfirmEt.getText().toString().trim();
+                        final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                .setTipWord(getResources().getString(R.string.wallet_create_creating_txt))
+                                .create();
+                        tipDialog.show();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String ciphertextSkeyData = getSkeyStr();
+                                try {
+                                    byte[] skeyByte = Wallet.getInstance().getSkey(password,ciphertextSkeyData);
+                                    mnemonicCodeList = new MnemonicCode().toMnemonic(skeyByte);
+                                    tipDialog.dismiss();
+
+                                    go2BPCreateWalletShowMneonicCodeFragment();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Looper.prepare();
+                                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                                    tipDialog.dismiss();
+                                    Looper.loop();
+                                    return;
+                                }
+                            }
+                        }).start();
+                        qmuiDialog.dismiss();
+
+                    }
+                });
             }
         });
 
         mUserInfoLogoutWalletTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "点击退出身份",Toast.LENGTH_SHORT).show();
+                showMessagePositiveDialog();
             }
         });
     }
 
+    private void go2BPCreateWalletShowMneonicCodeFragment(){
+        BPCreateWalletShowMneonicCodeFragment createWalletShowMneonicCodeFragment = new BPCreateWalletShowMneonicCodeFragment();
+        Bundle argz = new Bundle();
+        argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) mnemonicCodeList);
+        createWalletShowMneonicCodeFragment.setArguments(argz);
+        startFragment(createWalletShowMneonicCodeFragment);
+
+    }
+
+    private String getSkeyStr(){
+        return sharedPreferencesHelper.getSharedPreference("skey","").toString();
+    }
+
     private void initTopBar() {
+        mTopBar.setBackgroundDividerEnabled(false);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,26 +167,75 @@ public class BPUserInfoFragment extends BaseFragment {
                 popBackStack();
             }
         });
-        mTopBar.setTitle(R.string.user_info_title);
     }
 
     private void showMessagePositiveDialog() {
         new QMUIDialog.MessageDialogBuilder(getActivity())
-                .setTitle("标题")
-                .setMessage("确定要发送吗？")
-                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                .setTitle(R.string.user_info_logout)
+                .setMessage(user_info_logout_notice)
+                .addAction(R.string.common_dialog_cancel, new QMUIDialogAction.ActionListener() {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
                         dialog.dismiss();
                     }
                 })
-                .addAction("确定", new QMUIDialogAction.ActionListener() {
+                .addAction(R.string.common_dialog_confirm, new QMUIDialogAction.ActionListener() {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
                         dialog.dismiss();
-                        Toast.makeText(getActivity(), "发送成功", Toast.LENGTH_SHORT).show();
+                        showEditTextDialog();
                     }
                 })
                 .create(mCurrentDialogStyle).show();
+    }
+
+    private void showEditTextDialog() {
+        final QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(getActivity());
+        final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
+        qmuiDialog.setCanceledOnTouchOutside(false);
+        qmuiDialog.setContentView(R.layout.password_comfirm_layout);
+        qmuiDialog.show();
+        QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
+        ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
+
+        mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+            }
+        });
+        mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
+                final String password = mPasswordConfirmEt.getText().toString().trim();
+                final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                        .setTipWord(getResources().getString(R.string.user_info_logout_loading))
+                        .create();
+                tipDialog.show();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+//                        String ciphertextSkeyData = getSkeyStr();
+                        try {
+//                            byte[] skeyByte = Wallet.getInstance().getSkey(password,ciphertextSkeyData);
+//                            mnemonicCodeList = new MnemonicCode().toMnemonic(skeyByte);
+//                            tipDialog.dismiss();
+
+                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                            Looper.prepare();
+//                            Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+//                            tipDialog.dismiss();
+//                            Looper.loop();
+//                            return;
+                        }
+                    }
+                }).start();
+                qmuiDialog.dismiss();
+            }
+        });
+
     }
 }
