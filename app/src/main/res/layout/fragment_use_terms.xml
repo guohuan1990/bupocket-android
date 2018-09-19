@@ -64,7 +64,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:background="@color/app_btn_color_blue"
+                android:enabled="false"
+                android:background="@color/terms_unagree_btn_grey"
                 android:textColor="@color/app_btn_color_white"
                 android:text="@string/use_terms_next_btn">
 
