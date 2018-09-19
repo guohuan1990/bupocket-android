@@ -79,7 +79,8 @@ public class BPAssetsFragment extends BaseFragment {
     @BindView(R.id.emptyView)
     QMUIEmptyView mEmptyView;
 
-
+//    @BindView(R.id.assetsAvatarIv)
+//    QMUIRoundButton mAssetsAvatarIv;
 
     @Override
     protected View onCreateView() {
@@ -102,6 +103,13 @@ public class BPAssetsFragment extends BaseFragment {
                 go2SendTokenFragment();
             }
         });
+//        mAssetsAvatarIv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startFragment(new BPUserInfoFragment());
+//            }
+//        });
+
         return root;
     }
 

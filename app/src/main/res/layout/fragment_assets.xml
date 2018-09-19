@@ -16,6 +16,7 @@
                 android:background="@mipmap/ic_asset_header_bg"
                 android:fitsSystemWindows="true">
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                    android:id="@+id/assetsAvatarIv"
                     android:clickable="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
