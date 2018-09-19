@@ -3,13 +3,11 @@ package com.bupocket.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,15 +20,10 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
-import org.bitcoinj.crypto.MnemonicCode;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 public class BPSendTokenFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -126,6 +119,20 @@ public class BPSendTokenFragment extends BaseFragment {
                         }
                     }, 1500);
 
+                    return;
+                }
+
+                if(address.equals(currentAccAddress)){
+                    tipDialog = new QMUITipDialog.Builder(getContext())
+                            .setTipWord(getResources().getString(R.string.send_err1))
+                            .create();
+                    tipDialog.show();
+                    destAccountAddressEt.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            tipDialog.dismiss();
+                        }
+                    }, 1500);
                     return;
                 }
 

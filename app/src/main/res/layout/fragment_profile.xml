@@ -101,38 +101,6 @@
                     android:background="@mipmap/icon_right_arrow" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/exportKeystoreRL"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="16dp">
-
-                <ImageView
-                    android:id="@+id/exportIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:background="@mipmap/icon_profile_item_export_keystore" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="13dp"
-                    android:layout_toRightOf="@id/exportIcon"
-                    android:text="@string/export_keystore_txt"
-                    android:textSize="15sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="17.5dp"
-                    android:background="@mipmap/icon_right_arrow" />
-            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/helpFeedbackRL"
@@ -192,12 +160,13 @@
                     android:textSize="15sp" />
 
                 <TextView
+                        android:id="@+id/versionNameTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="17.5dp"
-                    android:text="@string/pocket_version"/>
+                    android:text=""/>
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

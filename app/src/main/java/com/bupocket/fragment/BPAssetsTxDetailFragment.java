@@ -1,9 +1,11 @@
 package com.bupocket.fragment;
 
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -14,6 +16,7 @@ import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.dto.resp.ApiResult;
 import com.bupocket.dto.resp.TxDetailRespDto;
+import com.bupocket.enums.OutinTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
@@ -80,14 +83,24 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
     @BindView(R.id.emptyView)
     QMUIEmptyView mEmptyView;
 
+    @BindView(R.id.txDetailLl)
+    LinearLayout mTxDetailLl;
+
     private String txHash;
+    private Integer outinType;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_tx_detail, null);
         ButterKnife.bind(this, root);
         initTopBar();
         initData();
-        initTxDetailView();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initTxDetailView();
+            }
+        },10);
+
         return root;
     }
 
@@ -95,6 +108,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         mEmptyView.show(true);
         txHash = getTxHash();
+        outinType = getArguments().getInt("outinType");
     }
 
 
@@ -114,6 +128,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                 ApiResult<TxDetailRespDto> respDto = response.body();
 
                 if(respDto.getData() != null){
+                    mTxDetailLl.setVisibility(View.VISIBLE);
                     TxDetailRespDto.TxInfoRespBoBean txInfoRespBoBean = respDto.getData().getTxInfoRespBo();
                     TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean = respDto.getData().getTxDeatilRespBo();
                     TxDetailRespDto.BlockInfoRespBoBean blockInfoRespBoBean = respDto.getData().getBlockInfoRespBo();
@@ -124,14 +139,14 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                         txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_send_success);
                         txStatusStr = getResources().getString(R.string.tx_status_success_txt1);
                     }else{
-                        txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_send_success);
+                        txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_send_fail);
                         txStatusStr = getResources().getString(R.string.tx_status_fail_txt1);
                     }
 
 
                     mTxStatusIcon.setImageDrawable(txStatusIconDrawable);
                     mTxStatusTv.setText(txStatusStr);
-                    mSendAmountTv.setText((txInfoRespBoBean.getAmount()));
+                    mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? "+" : "-") + txInfoRespBoBean.getAmount());
                     mTxFromAccAddrTv.setText(txDeatilRespBoBean.getSourceAddress());
                     mTxToAccAddrTv.setText(txDeatilRespBoBean.getDestAddress());
                     mTxDetailFeeTv.setText(txDeatilRespBoBean.getFee());

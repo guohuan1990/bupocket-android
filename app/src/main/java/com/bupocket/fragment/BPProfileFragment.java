@@ -3,6 +3,7 @@ package com.bupocket.fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.AddressUtil;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
@@ -43,6 +45,9 @@ public class BPProfileFragment extends BaseFragment{
     RelativeLayout mChangePwdRL;
     @BindView(R.id.helpFeedbackRL)
     RelativeLayout mHelpRL;
+
+    @BindView(R.id.versionNameTv)
+    TextView mVersionNameTv;
 
     @Override
     protected View onCreateView() {
@@ -74,6 +79,7 @@ public class BPProfileFragment extends BaseFragment{
 
         String hideCurrentAccAddress = AddressUtil.anonymous(currentAccAddress);
         addressTv.setText(hideCurrentAccAddress);
+        mVersionNameTv.setText(CommonUtil.packageName(getContext()));
     }
 
     private void showMyAddress(final String currentAccAddress) {
