@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -70,7 +71,12 @@ public class BPProfileFragment extends BaseFragment{
         mProfileAvatarIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFragment(new BPUserInfoFragment());
+                Bundle argz = new Bundle();
+                argz.putString("accName",currentAccNick);
+                argz.putString("accAddress",currentAccAddress);
+                BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
+                bpUserInfoFragment.setArguments(argz);
+                startFragment(bpUserInfoFragment);
             }
         });
         return root;

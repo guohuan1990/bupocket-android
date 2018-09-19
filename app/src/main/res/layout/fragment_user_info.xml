@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/testLayout"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/qmui_config_color_white"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="30dp"
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:background="#F5F5F5"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:padding="10dp"
-            android:background="@color/qmui_config_color_white"
-            android:text="@string/user_info_title"
-            android:theme="@style/BPViewTitle" />
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="0.5dip"
-            android:background="#E3E3E3"/>
-        />
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:padding="10dp"-->
+            <!--android:background="@color/qmui_config_color_white"-->
+            <!--android:text="@string/user_info_title"-->
+            <!--android:theme="@style/BPViewTitle" />-->
+        <!--<View-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="0.5dip"-->
+            <!--android:background="#E3E3E3"/>-->
+        <!--/>-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -85,13 +88,14 @@
             </TextView>
 
             <TextView
+                android:id="@+id/userInfoAccNameTv"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="left"
                 android:textColor="@color/app_btn_color_blue"
-                android:text="xxx">
+                android:text="">
             </TextView>
         </RelativeLayout>
 
@@ -119,11 +123,12 @@
             </TextView>
 
             <TextView
+                android:id="@+id/userInfoAccAddressTv"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical"
-                android:text="buQcVrPgUUtWTUNLN3C98efWmjytpMtX4AJX"
+                android:text=""
                 android:textAlignment="textEnd"
                 tools:ignore="RtlCompat" />
         </RelativeLayout>
