@@ -1,4 +1,4 @@
-package com.bupocket.dto.resp;
+package com.bupocket.http.api.dto.resp;
 
 public class Meta {
     private Integer code;

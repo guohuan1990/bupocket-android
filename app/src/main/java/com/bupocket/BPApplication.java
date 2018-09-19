@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import com.squareup.leakcanary.LeakCanary;
+import com.vector.update_app.UpdateAppManager;
 
 public class BPApplication extends Application {
     @SuppressLint("StaticFieldLeak")
@@ -22,7 +23,9 @@ public class BPApplication extends Application {
         }
         LeakCanary.install(this);
 
-//        QDUpgradeManager.getInstance(this).check();
+//        BPUpgradeManager.getInstance(this).check();
+
+
     }
 
 }

@@ -19,6 +19,7 @@ allprojects {
         google()
         jcenter()
         maven { url "http://maven.bumo.io/content/groups/public/"}
+        maven { url "https://jitpack.io" }
     }
 
     ext {
