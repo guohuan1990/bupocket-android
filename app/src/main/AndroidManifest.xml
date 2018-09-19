@@ -44,13 +44,6 @@ xmlns:tools="http://schemas.android.com/tools">
     </activity>
 
     <activity
-            android:name=".activity.TranslucentActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
-    </activity>
-
-    <activity
         android:name="com.journeyapps.barcodescanner.CaptureActivity"
         android:screenOrientation="portrait"
         tools:replace="screenOrientation" />

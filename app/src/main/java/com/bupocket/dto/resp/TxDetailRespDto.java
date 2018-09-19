@@ -110,6 +110,7 @@ public class TxDetailRespDto {
         private String destAddress;
         private String fee;
         private String sourceAddress;
+        private Integer status;
 
         public String getAmount() {
             return amount;
@@ -149,6 +150,14 @@ public class TxDetailRespDto {
 
         public void setSourceAddress(String sourceAddress) {
             this.sourceAddress = sourceAddress;
+        }
+
+        public Integer getStatus() {
+            return status;
+        }
+
+        public void setStatus(Integer status) {
+            this.status = status;
         }
     }
 

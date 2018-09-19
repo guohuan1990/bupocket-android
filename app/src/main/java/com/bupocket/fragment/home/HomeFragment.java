@@ -21,7 +21,6 @@ import com.qmuiteam.qmui.widget.QMUITabSegment;
 
 
 public class HomeFragment extends BaseFragment {
-    private final static String TAG = HomeFragment.class.getSimpleName();
 
     @BindView(R.id.pager)
     ViewPager mViewPager;
@@ -42,19 +41,12 @@ public class HomeFragment extends BaseFragment {
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_wallet_selected),
                 getResources().getString(R.string.tabbar_assets_txt), false
         );
-
-        QMUITabSegment.Tab discovery = new QMUITabSegment.Tab(
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_otc),
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_otc_selected),
-                getResources().getString(R.string.tabbr_otc_txt), false
-        );
         QMUITabSegment.Tab profile = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_profile),
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_profile_selected),
                 getResources().getString(R.string.tabbar_profile_txt), false
         );
         mTabSegment.addTab(assets);
-        mTabSegment.addTab(discovery);
         mTabSegment.addTab(profile);
         mTabSegment.setDefaultSelectedColor(0xFF36B3FF);
 
@@ -72,7 +64,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public int getCount() {
-                return 3;
+                return 2;
             }
 
             @Override
@@ -81,8 +73,6 @@ public class HomeFragment extends BaseFragment {
                     case 0:
                         return getResources().getString(R.string.tabbr_wallet_txt);
                     case 1:
-                        return getResources().getString(R.string.tabbr_otc_txt);
-                    case 2:
                     default:
                         return getResources().getString(R.string.tabbar_profile_txt);
                 }
@@ -94,8 +84,6 @@ public class HomeFragment extends BaseFragment {
                     case 0:
                         return new BPAssetsFragment();
                     case 1:
-                        return new OtcMainFragment();
-                    case 2:
                     default:
                         return new BPProfileFragment();
                 }

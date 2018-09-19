@@ -36,21 +36,16 @@
                         android:orientation="vertical">
                     <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                             android:id="@+id/txStatusIcon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="30dp"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:layout_marginTop="10dp"
                             android:clickable="false"
                             android:src="@mipmap/icon_send_success"
-                            app:qmui_border_color="?attr/qmui_config_color_gray_6"
-                            app:qmui_border_width="1px"
-                            app:qmui_is_circle="true"
-                            app:qmui_selected_border_color="?attr/qmui_config_color_gray_4"
-                            app:qmui_selected_border_width="1px"
-                            app:qmui_selected_mask_color="?attr/qmui_config_color_gray_8" />
+                            app:qmui_is_circle="true" />
                     <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="23dp"
+                            android:layout_marginTop="13dp"
                             android:gravity="center"
                             android:orientation="horizontal">
                         <TextView
@@ -73,15 +68,15 @@
                             android:id="@+id/txStatusTv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="5dp"
                             android:text="@string/send_status_success_txt"
                             android:textAlignment="center"
                             android:textColor="#999999"
                             android:textSize="16sp" />
 
                     <View
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:layout_marginLeft="15dp"

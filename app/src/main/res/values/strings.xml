@@ -13,7 +13,7 @@
 
     <string name="tabbar_assets_txt">资产</string>
     <string name="tabbar_discovery_txt">发现</string>
-    <string name="tabbar_profile_txt">我</string>
+    <string name="tabbar_profile_txt">我的</string>
 
     <string name="fragment_title_tx_detail_txt" translatable="false">交易详情</string>
     <string name="create_wallet_info_txt_1" translatable="false">请仔细抄写下方助记词，并存放在安全的地方</string>
@@ -68,6 +68,8 @@
     <string name="recently_tx_txt">最近交易记录</string>
     <string name="tx_status_success_txt">成功</string>
     <string name="tx_status_fail_txt">失败</string>
+    <string name="tx_status_success_txt1">转账成功</string>
+    <string name="tx_status_fail_txt1">转账失败</string>
 
     <string name="password_comfirm_dialog_title">密码确认</string>
     <string name="password_comfirm_dialog_sub_txt">请填写钱包密码以确认转出</string>
@@ -101,7 +103,7 @@
     <string name="send_status_fee">预估最多支付费用</string>
     <string name="send_status_note">备注</string>
     <string name="send_status_time">转账时间</string>
-    <string name="send_available_balance_txt">可用余额</string>
+    <string name="send_available_balance_txt">余额</string>
     <string name="send_form_next_btn_txt">下一步</string>
     <string name="tx_dettail_from_acc_addr_label">发送方地址</string>
     <string name="tx_dettail_to_acc_addr_label">接收方地址</string>
@@ -158,6 +160,21 @@
     <string name="change_pwd_old_pwd_hint">请输入旧密码</string>
     <string name="change_pwd_new_pwd_hint">请输入新密码</string>
     <string name="change_pwd_new_pwd_confirm_hint">请确认新密码</string>
+
+    <string name="change_pwd_err1">请输入旧密码</string>
+    <string name="change_pwd_err2">请输入新密码</string>
+    <string name="change_pwd_err3">请确认新密码</string>
+    <string name="change_pwd_err4">请输入旧密码</string>
+    <string name="change_pwd_err5">请输入旧密码</string>
+    <string name="change_pwd_form_error1">密码和确认密码输入不一致，请重新输入</string>
+    <string name="change_pwd_form_error2">密码长度最多20个字符</string>
+    <string name="change_pwd_form_error3">密码长度至少8个字符</string>
+    <string name="change_pwd_form_error4">身份名格式不对</string>
+    <string name="change_pwd_form_error5">密码格式不对</string>
+    <string name="change_pwd_form_error6">旧密码错误</string>
+    <string name="change_pwd_changing_txt">密码修改中...</string>
+    <string name="change_pwd_change_success_txt">密码修改成功</string>
+
 
     <string name="help_title_txt">您遇到的问题或建议</string>
     <string name="contact_title_txt">您的联系方式</string>

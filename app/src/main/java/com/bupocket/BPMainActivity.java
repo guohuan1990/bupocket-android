@@ -57,12 +57,12 @@ public class BPMainActivity extends BaseFragmentActivity {
             if(CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode().equals(createWalletStep)){
                 fragment = new BPBackupWalletFragment();
             } else if(CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode().equals(createWalletStep)){
-                fragment = new BPAssetsFragment();
+                fragment = new HomeFragment();
             }else{
                 fragment = new BPCreateWalletFragment();
             }
         }else {
-            fragment = new BPAssetsFragment();
+            fragment = new HomeFragment();
         }
 
         return fragment;

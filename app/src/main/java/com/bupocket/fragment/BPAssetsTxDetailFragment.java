@@ -1,5 +1,7 @@
 package com.bupocket.fragment;
 
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.dto.resp.ApiResult;
 import com.bupocket.dto.resp.TxDetailRespDto;
+import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.utils.TimeUtil;
@@ -114,6 +117,20 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     TxDetailRespDto.TxInfoRespBoBean txInfoRespBoBean = respDto.getData().getTxInfoRespBo();
                     TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean = respDto.getData().getTxDeatilRespBo();
                     TxDetailRespDto.BlockInfoRespBoBean blockInfoRespBoBean = respDto.getData().getBlockInfoRespBo();
+
+                    Drawable txStatusIconDrawable;
+                    String txStatusStr;
+                    if(txDeatilRespBoBean.getStatus().equals(TxStatusEnum.SUCCESS.getCode())){
+                        txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_send_success);
+                        txStatusStr = getResources().getString(R.string.tx_status_success_txt1);
+                    }else{
+                        txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_send_success);
+                        txStatusStr = getResources().getString(R.string.tx_status_fail_txt1);
+                    }
+
+
+                    mTxStatusIcon.setImageDrawable(txStatusIconDrawable);
+                    mTxStatusTv.setText(txStatusStr);
                     mSendAmountTv.setText((txInfoRespBoBean.getAmount()));
                     mTxFromAccAddrTv.setText(txDeatilRespBoBean.getSourceAddress());
                     mTxToAccAddrTv.setText(txDeatilRespBoBean.getDestAddress());
