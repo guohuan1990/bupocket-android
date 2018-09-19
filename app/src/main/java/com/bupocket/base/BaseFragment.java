@@ -20,6 +20,6 @@ public abstract class BaseFragment extends QMUIFragment {
     public void onResume() {
         super.onResume();
 
-//        QDUpgradeManager.getInstance(getContext()).runUpgradeTipTaskIfExist(getActivity());
+//        BPUpgradeManager.getInstance(getContext()).runUpgradeTipTaskIfExist(getActivity());
     }
 }

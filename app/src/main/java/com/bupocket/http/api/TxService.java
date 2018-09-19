@@ -1,10 +1,11 @@
 package com.bupocket.http.api;
 
-import com.bupocket.dto.resp.ApiResult;
-import com.bupocket.dto.resp.GetMyTxsRespDto;
-import com.bupocket.dto.resp.TxDetailRespDto;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.http.api.dto.resp.GetMyTxsRespDto;
+import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import retrofit2.Call;
-import retrofit2.http.*;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
 
 import java.util.Map;
 

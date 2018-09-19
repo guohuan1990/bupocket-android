@@ -7,10 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.bupocket.R;
-import com.bupocket.dto.resp.GetMyTxsRespDto;
+import com.bupocket.http.api.dto.resp.GetMyTxsRespDto;
 import com.bupocket.model.TokenTxInfo;
 
-import java.util.Collection;
 import java.util.List;
 
 public class MyTokenTxAdapter extends BaseAdapter {
