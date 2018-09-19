@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -198,7 +199,9 @@ public class BPUserInfoFragment extends BaseFragment {
         QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
         ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
         TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
+        TextView mPpasswordConfirmTitle = qmuiDialog.findViewById(R.id.passwordConfirmTitle);
         mPasswordConfirmNotice.setText(R.string.user_info_logout_warning);
+        mPpasswordConfirmTitle.setText(R.string.common_dialog_input_pwd);
 
         mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,14 +214,44 @@ public class BPUserInfoFragment extends BaseFragment {
             public void onClick(View view) {
                 EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
                 final String password = mPasswordConfirmEt.getText().toString().trim();
+                if(CommonUtil.isNull(password)){
+                    final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                            .setTipWord(getResources().getString(R.string.common_dialog_input_pwd))
+                            .create();
+                    tipDialog.show();
+                    mPasswordConfirmEt.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            tipDialog.dismiss();
+                        }
+                    }, 1500);
+                    return;
+                }
                 final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                         .setTipWord(getResources().getString(R.string.user_info_logout_loading))
                         .create();
                 tipDialog.show();
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        String ciphertextSkeyData = getSkeyStr();
+                        try {
+                            Wallet.getInstance().checkPwd(password,ciphertextSkeyData);
+                            sharedPreferencesHelper.put("isFirstCreateWallet","");
+                            sharedPreferencesHelper.put("createWalletStep","");
+                            tipDialog.dismiss();
+
+                            startFragment(new BPCreateWalletFragment());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Looper.prepare();
+                            Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                            tipDialog.dismiss();
+                            Looper.loop();
+                            return;
+                        }
 //                        String ciphertextSkeyData = getSkeyStr();
                         try {
 //                            byte[] skeyByte = Wallet.getInstance().getSkey(password,ciphertextSkeyData);

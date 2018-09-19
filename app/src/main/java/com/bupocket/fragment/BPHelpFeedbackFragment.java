@@ -9,11 +9,10 @@ import android.widget.EditText;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.bupocket.dto.resp.ApiResult;
-import com.bupocket.dto.resp.GetMyTxsRespDto;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.UserService;
+import com.bupocket.http.api.dto.resp.ApiResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
@@ -93,7 +92,7 @@ public class BPHelpFeedbackFragment extends BaseFragment{
             parmasMap.put("content",content);
             parmasMap.put("contact",contact);
 
-            Call<ApiResult> call = userService.SubmitFeedback(parmasMap);
+            Call<ApiResult> call = userService.submitFeedback(parmasMap);
             call.enqueue(new Callback<ApiResult>() {
 
                 @Override
