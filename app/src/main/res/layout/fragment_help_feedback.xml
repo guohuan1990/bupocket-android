@@ -29,6 +29,7 @@
             android:text="@string/help_title_txt"/>
         
         <EditText
+            android:id="@+id/feedbackContentET"
             android:layout_width="match_parent"
             android:layout_height="125.5dp"
             android:hint="@string/help_hint"
@@ -47,6 +48,7 @@
             android:text="@string/contact_title_txt"/>
         
         <EditText
+            android:id="@+id/contactET"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:hint="@string/contact_hint"
@@ -73,7 +75,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center"
-                    android:text="@string/send_form_next_btn_txt"
+                    android:text="@string/submit_feedback_btn_txt"
                     android:textColor="@color/app_color_font"
                     android:textSize="@dimen/bp_btn_text_size"
                     app:qmui_backgroundColor="@color/app_btn_color_blue"

@@ -184,7 +184,7 @@ public class BPAssetsFragment extends BaseFragment {
 
     private void handleMyTxs(GetMyTxsRespDto getMyTxsRespDto){
 
-        if(getMyTxsRespDto != null){
+        if(getMyTxsRespDto != null || getMyTxsRespDto.getTxRecord() != null){
             if(getMyTxsRespDto.getPage().getTotal() == 0){
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
                 return;

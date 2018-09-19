@@ -181,6 +181,7 @@
     <string name="contact_title_txt">您的联系方式</string>
     <string name="help_hint">请输入您的问题或建议</string>
     <string name="contact_hint">请输入您的联系方式</string>
+    <string name="submit_feedback_btn_txt">提交</string>
 
     <string name="user_info_title">我的身份</string>
     <string name="user_info_avatar">头像</string>
@@ -190,4 +191,9 @@
     <string name="user_info_follow">订阅</string>
     <string name="user_info_backup_current_wallet">备份身份</string>
     <string name="user_info_logout">退出当前身份</string>
+
+    <string name="help_feedback_submit_success_msg">提交成功</string>
+    <string name="help_feedback_submit_failed_msg">提交失败</string>
+    <string name="content_empty_msg">请输入您的问题或反馈</string>
+    <string name="contact_empty_msg">请输入您的联系方式</string>
 </resources>

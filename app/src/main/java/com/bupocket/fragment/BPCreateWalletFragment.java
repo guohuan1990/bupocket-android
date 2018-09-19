@@ -23,7 +23,7 @@ public class BPCreateWalletFragment extends BaseFragment {
         mCreateWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFragment(new BPCreateWalletFormFragment());
+                startFragment(new BPUserTermsFragment());
             }
         });
 
