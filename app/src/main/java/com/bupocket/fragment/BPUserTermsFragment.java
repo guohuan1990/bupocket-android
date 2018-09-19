@@ -1,6 +1,7 @@
 package com.bupocket.fragment;
 
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -61,17 +62,19 @@ public class BPUserTermsFragment extends BaseFragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 isAgreeTerms = isChecked;
+                if (isAgreeTerms) {
+                    mUserTermsNext.setEnabled(true);
+                    mUserTermsNext.setBackgroundColor(Color.rgb(54, 179, 255) );
+                } else {
+                    mUserTermsNext.setEnabled(false);
+                    mUserTermsNext.setBackgroundColor(Color.rgb(201, 201, 201) );
+                }
             }
         });
         mUserTermsNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isAgreeTerms) {
-                    Toast.makeText(getActivity(), "选中的", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "未选中的", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                startFragment(new BPCreateWalletFormFragment());
             }
         });
 
