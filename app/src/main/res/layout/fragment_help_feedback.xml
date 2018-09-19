@@ -29,6 +29,7 @@
             android:text="@string/help_title_txt"/>
         
         <EditText
+            android:id="@+id/feedbackContentET"
             android:layout_width="match_parent"
             android:layout_height="125.5dp"
             android:hint="@string/help_hint"
@@ -47,6 +48,7 @@
             android:text="@string/contact_title_txt"/>
         
         <EditText
+            android:id="@+id/contactET"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:hint="@string/contact_hint"
