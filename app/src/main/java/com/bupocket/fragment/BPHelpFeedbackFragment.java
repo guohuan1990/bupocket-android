@@ -100,7 +100,7 @@ public class BPHelpFeedbackFragment extends BaseFragment{
                 public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
                     ApiResult respDto = response.body();
                     final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
-                            .setTipWord(respDto.getMsg())
+                            .setTipWord(getResources().getString(R.string.help_feedback_submit_success_msg))
                             .create();
                     tipDialog.show();
                     mNextHelpFeedbackBtn.postDelayed(new Runnable() {
@@ -109,6 +109,8 @@ public class BPHelpFeedbackFragment extends BaseFragment{
                             tipDialog.dismiss();
                         }
                     }, 1500);
+                    mFeedbackContentET.setText("");
+                    mContactET.setText("");
                 }
 
                 @Override
