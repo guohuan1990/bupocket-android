@@ -33,6 +33,7 @@ public class BPCreateWalletFragment extends BaseFragment {
                 startFragment(new BPRecoverWalletFormFragment());
             }
         });
+        
         return root;
     }
 }

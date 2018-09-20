@@ -29,6 +29,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -76,8 +77,8 @@ public class BPAssetsFragment extends BaseFragment {
     @BindView(R.id.emptyView)
     QMUIEmptyView mEmptyView;
 
-//    @BindView(R.id.assetsAvatarIv)
-//    QMUIRoundButton mAssetsAvatarIv;
+    @BindView(R.id.assetsAvatarIv)
+    QMUIRadiusImageView mAssetsAvatarIv;
 
     @Override
     protected View onCreateView() {
@@ -100,12 +101,16 @@ public class BPAssetsFragment extends BaseFragment {
                 go2SendTokenFragment();
             }
         });
-//        mAssetsAvatarIv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startFragment(new BPUserInfoFragment());
-//            }
-//        });
+        mAssetsAvatarIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle argz = new Bundle();
+                argz.putString("accName",currentAccNick);
+                BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
+                bpUserInfoFragment.setArguments(argz);
+                startFragment(bpUserInfoFragment);
+            }
+        });
 
         return root;
     }
