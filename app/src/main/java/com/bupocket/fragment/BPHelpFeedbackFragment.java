@@ -1,5 +1,8 @@
 package com.bupocket.fragment;
 
+import android.graphics.Color;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +45,7 @@ public class BPHelpFeedbackFragment extends BaseFragment{
         ButterKnife.bind(this, root);
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
+        buildWatcher();
         mNextHelpFeedbackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +53,31 @@ public class BPHelpFeedbackFragment extends BaseFragment{
             }
         });
         return root;
+    }
+
+    private void buildWatcher() {
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                mNextHelpFeedbackBtn.setEnabled(false);
+                mNextHelpFeedbackBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mNextHelpFeedbackBtn.setEnabled(true);
+                mNextHelpFeedbackBtn.setBackgroundColor(Color.rgb(54, 178, 255));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length()==0){
+                    mNextHelpFeedbackBtn.setEnabled(false);
+                    mNextHelpFeedbackBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+                }
+            }
+        };
+        mNextHelpFeedbackBtn.addTextChangedListener(watcher);
     }
 
     private void initTopBar() {
