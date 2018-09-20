@@ -34,6 +34,7 @@
             android:gravity="left|top"
             android:inputType="" android:textSize="15sp"
             android:layout_marginTop="15dp"
+            android:padding="10dp"
             android:layout_marginHorizontal="12.5dp"
             android:background="@color/help_feedback_et_background_color" />
         
@@ -53,6 +54,7 @@
             android:inputType="" android:textSize="15sp"
             android:layout_marginTop="15dp"
             android:layout_marginHorizontal="12.5dp"
+            android:paddingHorizontal="10dp"
             android:background="@color/help_feedback_et_background_color" />
 
         <LinearLayout
