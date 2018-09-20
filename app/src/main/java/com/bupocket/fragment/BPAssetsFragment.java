@@ -31,6 +31,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -78,6 +79,8 @@ public class BPAssetsFragment extends BaseFragment {
     @BindView(R.id.emptyView)
     QMUIEmptyView mEmptyView;
 
+    @BindView(R.id.assetsAvatarIv)
+    QMUIRadiusImageView mAssetsAvatarIv;
     private String buBalance = "-";
 
     @Override
@@ -99,6 +102,16 @@ public class BPAssetsFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 go2SendTokenFragment();
+            }
+        });
+        mAssetsAvatarIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle argz = new Bundle();
+                argz.putString("accName",currentAccNick);
+                BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
+                bpUserInfoFragment.setArguments(argz);
+                startFragment(bpUserInfoFragment);
             }
         });
 

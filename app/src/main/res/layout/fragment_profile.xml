@@ -55,29 +55,35 @@
 
                 <ImageView
                     android:id="@+id/pwdicon"
-                    android:layout_width="wrap_content" android:contentDescription="TODO" 
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginStart="15dp" android:layout_alignParentStart="true" android:background="@mipmap/icon_profile_item_pwd"/>
+                    android:layout_marginStart="15dp"
+                    android:background="@mipmap/icon_profile_item_pwd" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="13dp"
-                    android:layout_toEndOf="@id/pwdicon" android:layout_marginStart="13dp" android:layout_toRightOf="@id/pwdicon"
+                    android:layout_marginStart="13dp"
+                    android:layout_toEndOf="@id/pwdicon"
+                    android:layout_toRightOf="@id/pwdicon"
                     android:text="@string/change_the_password_txt"
                     android:textSize="15sp" />
 
                 <ImageView
-                    android:layout_width="wrap_content" android:contentDescription="TODO" 
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="17.5dp"
                     android:layout_marginRight="17.5dp"
-                    android:layout_marginEnd="17.5dp" android:layout_alignParentEnd="true" android:background="@mipmap/icon_right_arrow" />
+                    android:background="@mipmap/icon_right_arrow" />
             </RelativeLayout>
 
 
@@ -89,29 +95,74 @@
 
                 <ImageView
                     android:id="@+id/helpIcon"
-                    android:layout_width="wrap_content" android:contentDescription="TODO" 
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginStart="15dp" android:layout_alignParentStart="true" android:background="@mipmap/icon_profile_item_help"/>
+                    android:layout_marginStart="15dp"
+                    android:background="@mipmap/icon_profile_item_help" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="13dp"
-                    android:layout_toEndOf="@id/helpIcon" android:layout_marginStart="13dp" android:layout_toRightOf="@id/helpIcon"
+                    android:layout_marginStart="13dp"
+                    android:layout_toEndOf="@id/helpIcon"
+                    android:layout_toRightOf="@id/helpIcon"
                     android:text="@string/help_txt"
                     android:textSize="15sp" />
 
                 <ImageView
-                    android:layout_width="wrap_content" android:contentDescription="TODO" 
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="17.5dp"
                     android:layout_marginRight="17.5dp"
-                    android:layout_marginEnd="17.5dp" android:layout_alignParentEnd="true" android:background="@mipmap/icon_right_arrow" />
+                    android:background="@mipmap/icon_right_arrow" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/languageRL"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:id="@+id/languageIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
+                    android:background="@mipmap/icon_profile_item_language" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginStart="13dp"
+                    android:layout_toEndOf="@id/languageIcon"
+                    android:layout_toRightOf="@id/languageIcon"
+                    android:text="@string/language_txt"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="17.5dp"
+                    android:layout_marginRight="17.5dp"
+                    android:background="@mipmap/icon_right_arrow" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -122,30 +173,36 @@
 
                 <ImageView
                     android:id="@+id/versionIcon"
-                    android:layout_width="wrap_content" android:contentDescription="TODO" 
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginStart="15dp" android:layout_alignParentStart="true" android:background="@mipmap/icon_profile_item_version"/>
+                    android:layout_marginStart="15dp"
+                    android:background="@mipmap/icon_profile_item_version" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="13dp"
-                    android:layout_toEndOf="@id/versionIcon" android:layout_marginStart="13dp" android:layout_toRightOf="@id/versionIcon"
+                    android:layout_marginStart="13dp"
+                    android:layout_toEndOf="@id/versionIcon"
+                    android:layout_toRightOf="@id/versionIcon"
                     android:text="@string/version_txt"
                     android:textSize="15sp" />
 
                 <TextView
-                        android:id="@+id/versionNameTv"
+                    android:id="@+id/versionNameTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="17.5dp" android:layout_marginRight="17.5dp"
-                    android:text=""/>
+                    android:layout_marginEnd="17.5dp"
+                    android:layout_marginRight="17.5dp"
+                    android:text="" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

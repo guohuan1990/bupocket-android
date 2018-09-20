@@ -1,13 +1,11 @@
 package com.bupocket.fragment;
 
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
@@ -43,18 +41,44 @@ public class BPUserTermsFragment extends BaseFragment {
         ButterKnife.bind(this, root);
         initTopBar();
         eventListeners();
+        changeLang("en");
+//        try {
+//            Resources res = getResources();
+//            InputStream in_s = res.openRawResource(R.raw.use_terms_cn);
+//            byte[] b = new byte[in_s.available()];
+//            in_s.read(b);
+//            mUserTermsContentTv.setText(new String(b));
+//        }catch (IOException e) {
+//            mUserTermsContentTv.setText(new String("loading"));
+//        }
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
+        return root;
+    }
 
+    private void changeLang(String lang) {
         try {
             Resources res = getResources();
-            InputStream in_s = res.openRawResource(R.raw.user_terms);
+            InputStream in_s;
+            switch (lang) {
+                case "cn": {
+                    in_s = res.openRawResource(R.raw.use_terms_cn);
+                    break;
+                }
+                case "en": {
+                    in_s = res.openRawResource(R.raw.use_terms_en);
+                    break;
+                }
+                default: {
+                    in_s = res.openRawResource(R.raw.use_terms_cn);
+                }
+            }
+//            InputStream in_s = res.openRawResource(R.raw.use_terms_cn);
             byte[] b = new byte[in_s.available()];
             in_s.read(b);
             mUserTermsContentTv.setText(new String(b));
         }catch (IOException e) {
             mUserTermsContentTv.setText(new String("loading"));
         }
-        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
-        return root;
     }
 
     private void eventListeners() {

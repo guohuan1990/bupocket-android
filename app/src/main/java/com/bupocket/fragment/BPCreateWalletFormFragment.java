@@ -4,13 +4,18 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,9 +54,18 @@ public class BPCreateWalletFormFragment extends BaseFragment {
     @BindView(R.id.create_wallet_repeat_pwd_et)
     EditText mRepeatPwdEt;
 
+    @BindView(R.id.recoverShowPwdIv)
+    ImageView mPwdShow;
+
+    @BindView(R.id.recoverShowConfirmPwdIv)
+    ImageView mConfirmPwdShow;
+
     @BindView(R.id.createWalletSubmitBtn)
     QMUIRoundButton mCreateWalletSubmitBtn;
+    private boolean isPwdHideFirst = false;
+    private boolean isConfirmPwdHideFirst = false;
     private SharedPreferencesHelper sharedPreferencesHelper;
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_create_wallet_form, null);
@@ -60,7 +74,43 @@ public class BPCreateWalletFormFragment extends BaseFragment {
         initData();
         onSubmitBtnListener();
         buildWatcher();
+        eventListeners();
         return root;
+    }
+
+    private void eventListeners() {
+        mPwdShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isPwdHideFirst) {
+                    mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
+                    mSetPwdEt.setInputType(InputType.TYPE_CLASS_TEXT);
+                    mSetPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
+                    isPwdHideFirst = true;
+                } else {
+                    mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
+                    mSetPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    mSetPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance ());
+                    isPwdHideFirst = false;
+                }
+            }
+        });
+        mConfirmPwdShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isConfirmPwdHideFirst) {
+                    mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
+                    mRepeatPwdEt.setInputType(InputType.TYPE_CLASS_TEXT);
+                    mRepeatPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
+                    isConfirmPwdHideFirst = true;
+                } else {
+                    mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
+                    mRepeatPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    mRepeatPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance ());
+                    isConfirmPwdHideFirst = false;
+                }
+            }
+        });
     }
 
     private void initData(){

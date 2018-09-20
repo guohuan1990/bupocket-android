@@ -3,59 +3,99 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:background="@color/qmui_config_color_white">
-    <LinearLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="?attr/qmui_topbar_height"
-            android:padding="10dp">
+
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:orientation="vertical"
+        android:padding="10dp">
+
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/view_title_create_wallet_identity"
-                android:layout_marginTop="5dp"
-                android:theme="@style/BPViewTitle"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/view_title_create_wallet_identity"
+            android:theme="@style/BPViewTitle" />
 
         <EditText
-                android:id="@+id/create_wallet_identity_name_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:inputType="" android:theme="@style/BPEditText"
-                android:hint="@string/hint_wallet_create_form_input_identity_name"/>
+            android:id="@+id/create_wallet_identity_name_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:hint="@string/hint_wallet_create_form_input_identity_name"
+            android:inputType=""
+            android:theme="@style/BPEditText" />
 
-        <EditText
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp">
+
+            <EditText
                 android:id="@+id/create_wallet_set_pwd_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/BPEditText"
-                android:inputType="textPassword"
                 android:layout_marginTop="30dp"
-                android:hint="@string/hint_wallet_create_form_input_password"/>
+                android:gravity="left"
+                android:hint="@string/hint_wallet_create_form_input_password"
+                android:inputType="textPassword"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:theme="@style/BPEditText" />
 
-        <EditText
+            <ImageView
+                android:id="@+id/recoverShowPwdIv"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="TODO"
+                android:src="@mipmap/icon_close_eye"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp">
+
+            <EditText
                 android:id="@+id/create_wallet_repeat_pwd_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/BPEditText"
-                android:inputType="textPassword"
                 android:layout_marginTop="30dp"
-                android:hint="@string/hint_wallet_create_form_input_rePassword"/>
+                android:gravity="left"
+                android:hint="@string/hint_wallet_create_form_input_rePassword"
+                android:inputType="textPassword"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:theme="@style/BPEditText" />
+
+            <ImageView
+                android:id="@+id/recoverShowConfirmPwdIv"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="TODO"
+                android:src="@mipmap/icon_close_eye"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
 
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                android:id="@+id/createWalletSubmitBtn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/bp_btn_hight"
-                android:layout_marginTop="55dp"
-                android:enabled="false"
-                android:gravity="center"
-                android:text="@string/hint_wallet_create_form_create_btn_txt"
-                app:qmui_borderColor="@color/disabled_btn_color"
-                app:qmui_backgroundColor="@color/disabled_btn_color"
-                app:qmui_radius="5dp"
-                android:textColor="@color/app_btn_color_white"
-                android:textSize="18sp"/>
+            android:id="@+id/createWalletSubmitBtn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bp_btn_hight"
+            android:layout_marginTop="55dp"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="@string/hint_wallet_create_form_create_btn_txt"
+            android:textColor="@color/app_btn_color_white"
+            android:textSize="18sp"
+            app:qmui_backgroundColor="@color/disabled_btn_color"
+            app:qmui_borderColor="@color/disabled_btn_color"
+            app:qmui_radius="5dp" />
     </LinearLayout>
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout

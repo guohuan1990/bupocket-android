@@ -25,11 +25,11 @@
     <string name="wallet_create_txt" translatable="false">创建数字身份</string>
     <string name="wallet_create_create_btn_txt" translatable="false">立即创建</string>
     <string name="wallet_create_recover_btn_txt" translatable="false">恢复身份</string>
-    <string name="hint_wallet_create_form_input_identity_name" translatable="false">请填写身份名</string>
-    <string name="hint_wallet_create_form_input_password" translatable="false">请设置密码</string>
-    <string name="hint_wallet_create_form_input_rePassword" translatable="false">请再次确认密码</string>
+    <string name="hint_wallet_create_form_input_identity_name" translatable="false">身份名</string>
+    <string name="hint_wallet_create_form_input_password" translatable="false">密码</string>
+    <string name="hint_wallet_create_form_input_rePassword" translatable="false">确认密码</string>
 
-    <string name="wallet_create_form_error1" translatable="false">密码和确认密码输入不一致，请重新输入</string>
+    <string name="wallet_create_form_error1" translatable="false">密码和确认密码输入不一致</string>
     <string name="wallet_create_form_error2" translatable="false">密码长度最多20个字符</string>
     <string name="wallet_create_form_error3" translatable="false">密码长度至少8个字符</string>
     <string name="wallet_create_form_error4" translatable="false">身份名格式不对</string>
@@ -73,6 +73,7 @@
 
     <string name="password_comfirm_dialog_title" translatable="false">密码确认</string>
     <string name="password_comfirm_dialog_sub_txt" translatable="false">请填写钱包密码以确认转出</string>
+    <string name="password_comfirm_dialog_to_backup" translatable="false">请填写钱包密码以确认备份</string>
     <!-- 恢复身份 -->
     <string name="recover_wallet_title" translatable="false">恢复身份</string>
     <string name="recover_edit_mneonic_code_hint" translatable="false">请输入助记词，用空格分割</string>
@@ -127,6 +128,7 @@
     <string name="export_keystore_txt" translatable="false">导出Keystore</string>
     <string name="help_txt" translatable="false">帮助与反馈</string>
     <string name="version_txt" translatable="false">版本号</string>
+    <string name="language_txt" translatable="false">多语言</string>
     <string name="pocket_version" translatable="false">V2.0.1</string>
     <!-- 确认转账 -->
     <string name="send_confirm_title" translatable="false">确认转账</string>

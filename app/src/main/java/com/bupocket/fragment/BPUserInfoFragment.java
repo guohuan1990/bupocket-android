@@ -11,7 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bupocket.R;
+import com.bupocket.base.ActivityManage;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.base.BaseFragmentActivity;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
@@ -244,6 +246,8 @@ public class BPUserInfoFragment extends BaseFragment {
                             tipDialog.dismiss();
 
                             startFragment(new BPCreateWalletFragment());
+//                            ActivityManage.finishAll();
+
                         } catch (Exception e) {
                             e.printStackTrace();
                             Looper.prepare();
