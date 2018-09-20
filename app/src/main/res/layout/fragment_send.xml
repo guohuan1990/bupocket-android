@@ -37,6 +37,8 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:background="@drawable/text_view_left_borer_bg"
                             android:textColor="#999999"
                             android:textStyle="bold"
                             android:textSize="16sp"
@@ -104,6 +106,8 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:background="@drawable/text_view_left_borer_bg"
                             android:textColor="#999999"
                             android:textStyle="bold"
                             android:textSize="16sp"
@@ -176,6 +180,8 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:background="@drawable/text_view_left_borer_bg"
                             android:textColor="#999999"
                             android:textStyle="bold"
                             android:textSize="16sp"
@@ -217,9 +223,11 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:background="@drawable/text_view_left_borer_bg"
                             android:textColor="#999999"
                             android:textStyle="bold"
                             android:textSize="16sp"
+                            android:paddingLeft="10dp"
                             android:text="@string/send_fee_title"/>
                     <TextView
                             android:layout_width="wrap_content"
