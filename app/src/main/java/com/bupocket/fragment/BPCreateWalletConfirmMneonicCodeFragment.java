@@ -144,10 +144,10 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
 
             if(mnemonicCodeListSelected.size() == 12 && mnemonicCodeListSelected.equals(srcMnemonicCodeList)){
                 mCompleteMnemonicCodeBtn.setEnabled(true);
-                mCompleteMnemonicCodeBtn.setBackgroundColor(Color.rgb(54, 179, 255));
+                mCompleteMnemonicCodeBtn.setBackgroundColor(getResources().getColor(R.color.app_btn_color_blue));
             }else{
                 mCompleteMnemonicCodeBtn.setEnabled(false);
-                mCompleteMnemonicCodeBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+                mCompleteMnemonicCodeBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
             }
             System.out.println("ssss:" + textView.getText());
         }

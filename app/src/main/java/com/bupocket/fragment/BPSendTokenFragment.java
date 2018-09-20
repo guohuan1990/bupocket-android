@@ -1,8 +1,11 @@
 package com.bupocket.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -62,9 +65,45 @@ public class BPSendTokenFragment extends BaseFragment {
                 startScan();
             }
         });
+        buildWatcher();
         return root;
 
     }
+
+    private void buildWatcher() {
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                mCompleteMnemonicCodeBtn.setEnabled(false);
+                mCompleteMnemonicCodeBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mCompleteMnemonicCodeBtn.setEnabled(false);
+                mCompleteMnemonicCodeBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                boolean signAccountAddress = destAccountAddressEt.getText().length() > 0;
+                boolean signAmount = sendAmountET.getText().length() > 0;
+                boolean signTxFee = sendFormTxFeeEt.getText().length() > 0;
+                if(signAccountAddress && signAmount && signTxFee){
+                    mCompleteMnemonicCodeBtn.setEnabled(true);
+                    mCompleteMnemonicCodeBtn.setBackgroundColor(getResources().getColor(R.color.app_btn_color_blue));
+                }else {
+                    mCompleteMnemonicCodeBtn.setEnabled(false);
+                    mCompleteMnemonicCodeBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+                }
+            }
+        };
+        destAccountAddressEt.addTextChangedListener(watcher);
+        sendAmountET.addTextChangedListener(watcher);
+        sendFormTxFeeEt.addTextChangedListener(watcher);
+
+    }
+
     private void initData(){
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();

@@ -33,7 +33,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.bupocket.R.color.qmui_btn_blue_bg;
-import static com.bupocket.R.color.recover_btn_grey;
 
 public class BPRecoverWalletFormFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -91,29 +90,6 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
         });
     }
 
-    @SuppressLint("ResourceAsColor")
-    private boolean validateData(){
-        if ("".equals(mMneonicCodeEt.getText().toString().trim())) {
-            Toast.makeText(getActivity(), R.string.recover_edit_mneonic_code_hint,Toast.LENGTH_SHORT).show();
-            recoverSubmit.setBackgroundColor(recover_btn_grey);
-//            recoverSubmit.setStroke
-            return false;
-        } else if ("".equals(mWalletNameEt.getText().toString().trim())){
-            Toast.makeText(getActivity(), R.string.recover_edit_new_wallet_name_hint,Toast.LENGTH_SHORT).show();
-            recoverSubmit.setBackgroundColor(recover_btn_grey);
-            return false;
-        }else if("".equals(mPwdEt.getText().toString().trim())){
-            Toast.makeText(getActivity(), R.string.recover_set_pwd_hint,Toast.LENGTH_SHORT).show();
-            recoverSubmit.setBackgroundColor(recover_btn_grey);
-            return false;
-        }else if("".equals(mConfirmPwdEt.getText().toString().trim())){
-            Toast.makeText(getActivity(), R.string.recover_confirm_pwd_hint,Toast.LENGTH_SHORT).show();
-            recoverSubmit.setBackgroundColor(recover_btn_grey);
-            return false;
-        }
-        recoverSubmit.setBackgroundColor(qmui_btn_blue_bg);
-        return true;
-    }
 
     private boolean mneonicFlag () {
         String mneonic = mMneonicCodeEt.getText().toString().trim();

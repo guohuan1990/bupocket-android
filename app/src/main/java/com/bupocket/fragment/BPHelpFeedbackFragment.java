@@ -60,13 +60,13 @@ public class BPHelpFeedbackFragment extends BaseFragment{
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 mNextHelpFeedbackBtn.setEnabled(false);
-                mNextHelpFeedbackBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+                mNextHelpFeedbackBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mNextHelpFeedbackBtn.setEnabled(false);
-                mNextHelpFeedbackBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+                mNextHelpFeedbackBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
             }
 
             @Override
@@ -75,10 +75,10 @@ public class BPHelpFeedbackFragment extends BaseFragment{
                 boolean signContact = mContactET.getText().length() > 0;
                 if(signContent && signContact){
                     mNextHelpFeedbackBtn.setEnabled(true);
-                    mNextHelpFeedbackBtn.setBackgroundColor(Color.rgb(54, 178, 255));
+                    mNextHelpFeedbackBtn.setBackgroundColor(getResources().getColor(R.color.app_btn_color_blue));
                 }else {
                     mNextHelpFeedbackBtn.setEnabled(false);
-                    mNextHelpFeedbackBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+                    mNextHelpFeedbackBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
                 }
             }
         };
