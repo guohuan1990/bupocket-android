@@ -123,12 +123,6 @@ public class BPCreateWalletFormFragment extends BaseFragment {
     }
 
 
-    private void handleCreateWalletSubmitBtnStatus(){
-        if(mSetIdentityNameEt.getText() != null && mSetPwdEt.getText() != null && mRepeatPwdEt.getText() != null){
-            mCreateWalletSubmitBtn.setBackgroundColor(0x36B3FF);
-        }
-    }
-
     private void onSubmitBtnListener(){
         mCreateWalletSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,15 +170,9 @@ public class BPCreateWalletFormFragment extends BaseFragment {
         });
     }
 
-    private byte[] randomEntropy(){
-        SecureRandom secureRandom = SecureRandomUtils.secureRandom();
-        byte[] initialEntropy = new byte[16];
-        secureRandom.nextBytes(initialEntropy);
-        return initialEntropy;
-    }
 
     private void initTopBar() {
-//        QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
+        mTopBar.setBackgroundDividerEnabled(false);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
