@@ -24,10 +24,14 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             minifyEnabled false
+//            zipAlignEnabled true
+            shrinkResources false
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
@@ -35,12 +39,11 @@ android {
     lintOptions {
         abortOnError false
     }
-
     splits {
         abi {
             enable true
             reset()
-            include 'x86', 'armeabi-v7a','x86_64'
+            include 'x86', 'armeabi-v7a', 'x86_64'
             universalApk true
         }
     }
@@ -51,14 +54,15 @@ android {
 //        exclude 'org/bitcoinj/crypto/mnemonic/wordlist/english.txt'
 //        exclude 'org/bitcoinj/crypto/cacerts'
     }
-    configurations {all {exclude module: 'httpclient'exclude module: 'commons-logging'}}
-
+    configurations { all { exclude module: 'httpclient' exclude module: 'commons-logging' } }
+    productFlavors {
+    }
 }
 
 
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:recyclerview-v7:${supportVersion}"
     implementation "com.android.support:appcompat-v7:${supportVersion}"
     implementation "com.android.support:design:${supportVersion}"
@@ -73,8 +77,8 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
     implementation 'com.alibaba:fastjson:1.2.32'
     implementation 'io.bumo:bumo-sdk:2.0.0'
-    implementation "com.squareup.retrofit2:retrofit:2.3.0"
-    implementation "com.squareup.retrofit2:converter-gson:2.3.0"
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'commons-beanutils:commons-beanutils:1.9.3'
     implementation 'com.qianwen:update-app:3.5.2'
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
@@ -88,6 +92,6 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-//    implementation project(':library')
-//    annotationProcessor project(':compiler')
+    //    implementation project(':library')
+    //    annotationProcessor project(':compiler')
 }

@@ -38,7 +38,7 @@ public class BPMainActivity extends BaseFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setStrictMode();
+//        setStrictMode();
         sharedPreferencesHelper = new SharedPreferencesHelper(BPMainActivity.this, "buPocket");
         if(savedInstanceState == null){
             BaseFragment baseFragment = getFirstFragment();
