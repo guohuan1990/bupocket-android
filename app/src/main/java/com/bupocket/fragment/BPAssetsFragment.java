@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,23 +124,32 @@ public class BPAssetsFragment extends BaseFragment {
         currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
         QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
         getAccountBUBalance();
+        mAccountBuBalanceTv.setText(buBalance);
         mUserBcAddressTv.setText(AddressUtil.anonymous(currentAccAddress));
         refreshData();
     }
 
-    private String getAccountBUBalance(){
-        new Handler().postDelayed(new Runnable() {
+    private Handler handler = new Handler(){
+        public void handleMessage(Message msg) {
+            mAccountBuBalanceTv.setText(msg.getData().get("buBalance").toString());
+        };
+    };
+
+    private void getAccountBUBalance(){
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 buBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
                 if(buBalance == null){
                     buBalance = "0";
                 }
-                mAccountBuBalanceTv.setText(buBalance);
+                Message msg = Message.obtain();
+                Bundle data = new Bundle();
+                data.putString("buBalance", buBalance);
+                msg.setData(data);
+                handler.sendMessage(msg);
             }
-        },100);
-
-        return buBalance;
+        }).start();
     }
 
     private void initWalletInfoView(){
