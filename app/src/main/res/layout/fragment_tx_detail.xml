@@ -62,7 +62,7 @@
                                     android:textSize="23sp"
                                     android:textColor="#bababa"
                                     android:paddingLeft="5dp"
-                                    android:text="BU"/>
+                                    android:paddingStart="5dp" android:text="BU"/>
                         </LinearLayout>
 
                         <TextView
@@ -197,7 +197,7 @@
                                     android:layout_marginBottom="10dp"
                                     android:background="@drawable/text_view_left_borer_bg"
                                     android:textStyle="bold"
-                                    android:text="TX Info"/>
+                                    android:paddingStart="5dp" android:text="TX Info"/>
                             <LinearLayout android:layout_width="match_parent"
                                           android:layout_height="wrap_content"
                                           android:padding="@dimen/view_padding"
@@ -407,7 +407,7 @@
                                     android:layout_marginBottom="10dp"
                                     android:background="@drawable/text_view_left_borer_bg"
                                     android:textStyle="bold"
-                                    android:text="Block Info"/>
+                                    android:paddingStart="5dp" android:text="Block Info"/>
                             <LinearLayout android:layout_width="match_parent"
                                           android:layout_height="wrap_content"
                                           android:padding="@dimen/view_padding"

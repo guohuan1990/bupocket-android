@@ -52,9 +52,9 @@
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="5dp"
+                        android:contentDescription="TODO" android:paddingLeft="5dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@mipmap/icon_qrcode"/>
+                        android:paddingStart="5dp" android:src="@mipmap/icon_qrcode"/>
             </LinearLayout>
             <LinearLayout
                     android:layout_width="wrap_content"
@@ -77,7 +77,7 @@
                         android:layout_marginTop="5dp"
                         android:paddingLeft="5dp"
                         android:textColor="@color/app_color_font"
-                        android:text="BU"
+                        android:paddingStart="5dp" android:text="BU"
                         android:textStyle="bold"
                         android:textSize="26sp"/>
             </LinearLayout>
@@ -91,7 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/bp_btn_hight"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:layout_marginEnd="5dp" android:gravity="center"
                         android:layout_marginRight="5dp"
                         android:text="@string/wallet_scan_txt"
                         app:qmui_borderColor="@color/app_btn_color_white"

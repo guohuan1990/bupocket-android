@@ -50,7 +50,7 @@
                 <LinearLayout android:layout_width="match_parent"
                               android:layout_height="wrap_content"
                               android:layout_marginTop="10dp"
-                              android:orientation="horizontal">
+                              android:baselineAligned="false" android:orientation="horizontal">
                     <LinearLayout android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
                                   android:orientation="horizontal"
@@ -59,7 +59,7 @@
                                 android:id="@+id/destAccountAddressEt"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textColor="#333333"
+                                android:inputType="" android:textColor="#333333"
                                 android:textSize="14sp"
                                 android:background="@null"
                                 android:hint="@string/send_input_receiver_address_hint"/>
@@ -75,7 +75,7 @@
                                 android:id="@+id/sendFormScanIv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@mipmap/icon_scan_blue"
+                                android:contentDescription="TODO" android:src="@mipmap/icon_scan_blue"
                         />
                     </LinearLayout>
 
@@ -135,7 +135,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="5dp"
                                 android:textColor="@color/app_color_font_main"
-                                android:text="BU"/>
+                                android:paddingStart="5dp" android:text="BU"/>
 
                     </LinearLayout>
                 </LinearLayout>
@@ -149,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:hint="@string/send_hint_txt1"
-                        android:textColor="#333333"
+                        android:inputType="" android:textColor="#333333"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -190,7 +190,7 @@
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:textSize="14sp"
-                            android:textColor="#333333"
+                            android:inputType="" android:textColor="#333333"
                             android:hint="@string/send_hint_txt2"/>
 
                 </LinearLayout>
@@ -236,7 +236,7 @@
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:textSize="14sp"
-                            android:text="0.01"
+                            android:inputType="" android:text="0.01"
                             android:textColor="#333333"
                             android:hint="@string/send_hint_txt3"/>
 

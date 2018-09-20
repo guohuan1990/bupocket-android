@@ -37,7 +37,7 @@
                         android:layout_width="120dp"
                         android:layout_height="30dp"
                         android:layout_marginLeft="120dp"
-                        android:gravity="center"
+                        android:layout_marginStart="120dp" android:gravity="center"
                         android:textColor="@color/app_color_white"
                         android:text="@string/otc_top_bar_sell_txt"
                         app:qmui_borderColor="@color/app_color_white"

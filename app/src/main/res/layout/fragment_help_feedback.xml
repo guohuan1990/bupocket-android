@@ -34,7 +34,7 @@
             android:layout_height="125.5dp"
             android:hint="@string/help_hint"
             android:gravity="left|top"
-            android:textSize="15sp"
+            android:inputType="" android:textSize="15sp"
             android:layout_marginTop="15dp"
             android:layout_marginHorizontal="12.5dp"
             android:background="@color/help_feedback_et_background_color" />
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:hint="@string/contact_hint"
-            android:textSize="15sp"
+            android:inputType="" android:textSize="15sp"
             android:layout_marginTop="15dp"
             android:layout_marginHorizontal="12.5dp"
             android:background="@color/help_feedback_et_background_color" />

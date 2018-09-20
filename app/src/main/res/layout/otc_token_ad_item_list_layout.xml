@@ -14,7 +14,7 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="28dp"
-                android:gravity="center_vertical"
+                android:baselineAligned="false" android:gravity="center_vertical"
                 android:orientation="horizontal">
             <LinearLayout
                     android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
                         android:layout_width="16dp"
                         android:layout_height="14dp"
                         android:layout_marginLeft="6dp"
-                        android:background="@mipmap/icon_otc_merchant_icon"/>
+                        android:layout_marginStart="6dp" android:background="@mipmap/icon_otc_merchant_icon"/>
             </LinearLayout>
 
             <LinearLayout
@@ -53,14 +53,14 @@
                         android:layout_height="wrap_content"
                         android:textColor="#FF999999"
                         android:paddingLeft="10dp"
-                        android:text="|"
+                        android:paddingStart="10dp" android:text="|"
 
                 />
                 <TextView
                         android:id="@+id/otc_ad_sold_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#FF999999"
+                        android:paddingStart="10dp" android:textColor="#FF999999"
                         android:paddingLeft="10dp"
 
                 />
@@ -100,14 +100,14 @@
                         android:layout_height="17dp"
                         android:layout_marginLeft="6dp"
                         android:visibility="gone"
-                        android:background="@mipmap/icon_otc_payment_type_alipay"/>
+                        android:layout_marginStart="6dp" android:background="@mipmap/icon_otc_payment_type_alipay"/>
                 <TextView
                         android:id="@+id/otc_payment_type_bankcard"
                         android:layout_width="17dp"
                         android:layout_height="17dp"
                         android:layout_marginLeft="6dp"
                         android:visibility="gone"
-                        android:background="@mipmap/icon_otc_payment_type_bankcard"/>
+                        android:layout_marginStart="6dp" android:background="@mipmap/icon_otc_payment_type_bankcard"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#FF999999"
                     android:paddingLeft="10dp"
-                    android:text="￥"/>
+                    android:paddingStart="10dp" android:text="￥"/>
             <TextView
                     android:id="@+id/otc_ad_min_value"
                     android:layout_width="wrap_content"
@@ -136,12 +136,12 @@
                     android:layout_height="wrap_content"
                     android:textColor="#FF999999"
                     android:paddingLeft="10dp"
-                    android:text="-"/>
+                    android:paddingStart="10dp" android:text="-"/>
             <TextView
                     android:id="@+id/otc_ad_max_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FF999999"
+                    android:paddingStart="10dp" android:textColor="#FF999999"
                     android:paddingLeft="10dp"/>
         </LinearLayout>
         <LinearLayout
@@ -161,13 +161,13 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:textColor="#FF999999"
-                android:text="68,000"/>
+                android:paddingStart="10dp" android:text="68,000"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:textColor="#838282"
-                    android:text="BU"/>
+                    android:paddingStart="5dp" android:text="BU"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
