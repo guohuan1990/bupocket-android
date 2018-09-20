@@ -1,7 +1,12 @@
 package com.bupocket.fragment;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.RequiresApi;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -36,6 +41,7 @@ public class BPChangePwdFragment extends BaseFragment{
     @BindView(R.id.nextChangePwdBtn)
     QMUIRoundButton mNextChangePwdBtn;
     private SharedPreferencesHelper sharedPreferencesHelper;
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_change_pwd, null);
@@ -43,6 +49,7 @@ public class BPChangePwdFragment extends BaseFragment{
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
         initData();
+        buildWatcher();
 
 
         mNextChangePwdBtn.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +93,40 @@ public class BPChangePwdFragment extends BaseFragment{
         });
 
         return root;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void buildWatcher() {
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                mNextChangePwdBtn.setEnabled(false);
+                mNextChangePwdBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mNextChangePwdBtn.setEnabled(false);
+                mNextChangePwdBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                boolean signOldPassword = mOldPasswordET.getText().length() > 0;
+                boolean signNewPassword = mNewPasswordET.getText().length() > 0;
+                boolean signNewPasswordConfirm = mNewPasswordConfirmET.getText().length() > 0;
+                if(signOldPassword && signNewPassword && signNewPasswordConfirm){
+                    mNextChangePwdBtn.setEnabled(true);
+                    mNextChangePwdBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
+                }else {
+                    mNextChangePwdBtn.setEnabled(false);
+                    mNextChangePwdBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
+                }
+            }
+        };
+        mOldPasswordET.addTextChangedListener(watcher);
+        mNewPasswordET.addTextChangedListener(watcher);
+        mNewPasswordConfirmET.addTextChangedListener(watcher);
     }
 
     private void initData(){

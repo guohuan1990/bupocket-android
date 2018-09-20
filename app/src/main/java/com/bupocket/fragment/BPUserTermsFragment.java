@@ -64,10 +64,10 @@ public class BPUserTermsFragment extends BaseFragment {
                 isAgreeTerms = isChecked;
                 if (isAgreeTerms) {
                     mUserTermsNext.setEnabled(true);
-                    mUserTermsNext.setBackgroundColor(Color.rgb(54, 179, 255) );
+                    mUserTermsNext.setBackgroundColor(getResources().getColor(R.color.app_btn_color_blue));
                 } else {
                     mUserTermsNext.setEnabled(false);
-                    mUserTermsNext.setBackgroundColor(Color.rgb(201, 201, 201) );
+                    mUserTermsNext.setBackgroundColor(getResources().getColor(R.color.terms_unagree_btn_grey));
                 }
             }
         });
