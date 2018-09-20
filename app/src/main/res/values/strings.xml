@@ -127,6 +127,7 @@
     <string name="export_keystore_txt" translatable="false">导出Keystore</string>
     <string name="help_txt" translatable="false">帮助与反馈</string>
     <string name="version_txt" translatable="false">版本号</string>
+    <string name="language_txt" translatable="false">多语言</string>
     <string name="pocket_version" translatable="false">V2.0.1</string>
     <!-- 确认转账 -->
     <string name="send_confirm_title" translatable="false">确认转账</string>
