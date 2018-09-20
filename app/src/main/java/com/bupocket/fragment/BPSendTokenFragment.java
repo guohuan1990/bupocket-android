@@ -1,8 +1,14 @@
 package com.bupocket.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.RequiresApi;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -45,6 +51,8 @@ public class BPSendTokenFragment extends BaseFragment {
     QMUIRoundButton mCompleteMnemonicCodeBtn;
     @BindView(R.id.sendFormScanIv)
     ImageView mSendFormScanIv;
+
+    private String buBalance = "-";
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_send, null);
@@ -62,13 +70,50 @@ public class BPSendTokenFragment extends BaseFragment {
                 startScan();
             }
         });
+        buildWatcher();
         return root;
 
     }
+
+    private void buildWatcher() {
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                mCompleteMnemonicCodeBtn.setEnabled(false);
+                mCompleteMnemonicCodeBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mCompleteMnemonicCodeBtn.setEnabled(false);
+                mCompleteMnemonicCodeBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void afterTextChanged(Editable s) {
+                boolean signAccountAddress = destAccountAddressEt.getText().length() > 0;
+                boolean signAmount = sendAmountET.getText().length() > 0;
+                boolean signTxFee = sendFormTxFeeEt.getText().length() > 0;
+                if(signAccountAddress && signAmount && signTxFee){
+                    mCompleteMnemonicCodeBtn.setEnabled(true);
+                    mCompleteMnemonicCodeBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
+                }else {
+                    mCompleteMnemonicCodeBtn.setEnabled(false);
+                    mCompleteMnemonicCodeBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
+                }
+            }
+        };
+        destAccountAddressEt.addTextChangedListener(watcher);
+        sendAmountET.addTextChangedListener(watcher);
+        sendFormTxFeeEt.addTextChangedListener(watcher);
+
+    }
+
     private void initData(){
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
-        mAccountAvailableBalanceTv.setText(getAccountBUBalance());
+        getAccountBUBalance();
 
     }
     private void initTopBar() {
@@ -80,19 +125,26 @@ public class BPSendTokenFragment extends BaseFragment {
             }
         });
     }
+    private String getAccountBUBalance(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                buBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
+                if(buBalance == null){
+                    buBalance = "0";
+                }
+                mAccountAvailableBalanceTv.setText(buBalance);
+            }
+        },100);
+
+        return buBalance;
+    }
 
     private String getAccountBPData(){
         String data = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
         return data;
     }
 
-    private String getAccountBUBalance(){
-        String buBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
-        if(buBalance == null){
-            return "0";
-        }
-        return buBalance;
-    }
 
     private String getDestAccAddr(){
         return destAccountAddressEt.getText().toString().trim();

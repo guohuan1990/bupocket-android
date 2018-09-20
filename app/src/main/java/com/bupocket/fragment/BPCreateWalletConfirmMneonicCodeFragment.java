@@ -2,6 +2,8 @@ package com.bupocket.fragment;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -127,6 +129,7 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
 
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public void onClick(View v) {
             TextView textView = (TextView)v;
@@ -144,10 +147,10 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
 
             if(mnemonicCodeListSelected.size() == 12 && mnemonicCodeListSelected.equals(srcMnemonicCodeList)){
                 mCompleteMnemonicCodeBtn.setEnabled(true);
-                mCompleteMnemonicCodeBtn.setBackgroundColor(Color.rgb(54, 179, 255));
+                mCompleteMnemonicCodeBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
             }else{
                 mCompleteMnemonicCodeBtn.setEnabled(false);
-                mCompleteMnemonicCodeBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+                mCompleteMnemonicCodeBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
             }
             System.out.println("ssss:" + textView.getText());
         }

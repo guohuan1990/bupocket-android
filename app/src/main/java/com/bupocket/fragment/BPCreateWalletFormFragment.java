@@ -1,8 +1,11 @@
 package com.bupocket.fragment;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -62,6 +65,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
     private boolean isPwdHideFirst = false;
     private boolean isConfirmPwdHideFirst = false;
     private SharedPreferencesHelper sharedPreferencesHelper;
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_create_wallet_form, null);
@@ -172,12 +176,6 @@ public class BPCreateWalletFormFragment extends BaseFragment {
     }
 
 
-    private void handleCreateWalletSubmitBtnStatus(){
-        if(mSetIdentityNameEt.getText() != null && mSetPwdEt.getText() != null && mRepeatPwdEt.getText() != null){
-            mCreateWalletSubmitBtn.setBackgroundColor(0x36B3FF);
-        }
-    }
-
     private void onSubmitBtnListener(){
         mCreateWalletSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,15 +223,9 @@ public class BPCreateWalletFormFragment extends BaseFragment {
         });
     }
 
-    private byte[] randomEntropy(){
-        SecureRandom secureRandom = SecureRandomUtils.secureRandom();
-        byte[] initialEntropy = new byte[16];
-        secureRandom.nextBytes(initialEntropy);
-        return initialEntropy;
-    }
 
     private void initTopBar() {
-//        QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
+        mTopBar.setBackgroundDividerEnabled(false);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -257,18 +249,19 @@ public class BPCreateWalletFormFragment extends BaseFragment {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void buildWatcher(){
         TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 mCreateWalletSubmitBtn.setEnabled(false);
-                mCreateWalletSubmitBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+                mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mCreateWalletSubmitBtn.setEnabled(false);
-                mCreateWalletSubmitBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+                mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
             }
 
             @Override
@@ -278,10 +271,10 @@ public class BPCreateWalletFormFragment extends BaseFragment {
                 boolean signRepeatPwd = mRepeatPwdEt.getText().length() >0;
                 if(signIdentityName && signSetPwd && signRepeatPwd){
                     mCreateWalletSubmitBtn.setEnabled(true);
-                    mCreateWalletSubmitBtn.setBackgroundColor(Color.rgb(54, 178, 255));
+                    mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
                 }else {
                     mCreateWalletSubmitBtn.setEnabled(false);
-                    mCreateWalletSubmitBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+                    mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
             }
         };

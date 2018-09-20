@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:text="@string/recover_wallet_title"
                 android:theme="@style/BPViewTitle" />
 
@@ -38,6 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="#F5F5F5"
+                    android:textSize="14sp"
                     android:gravity="left|top"
                     android:hint="@string/recover_edit_mneonic_code_hint"
                     android:inputType="textMultiLine"
@@ -62,7 +63,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:paddingEnd="20dp" android:paddingRight="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingRight="20dp"
                     android:gravity="left"
                     android:hint="@string/recover_set_pwd_hint"
                     android:inputType="textPassword"
@@ -127,7 +129,7 @@
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
             android:id="@+id/topbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/qmui_topbar_height"
             android:background="@color/app_color_white"
             android:fitsSystemWindows="true"/>
 

@@ -153,8 +153,8 @@
     <string name="invalid_tx_fee" translatable="false">无效的交易费</string>
     <string name="balance_not_enough" translatable="false">余额不足</string>
     <string name="send_token_note_too_long" translatable="false">备注太长</string>
+    <string name="splash_txt0" translatable="false">小布口袋</string>
     <string name="splash_txt1" translatable="false">泛在价值流通区块链网络</string>
-    <string name="splash_txt2" translatable="false">小布口袋，把你的BU装入这里</string>
 
     <string name="change_pwd_old_pwd" translatable="false">旧密码</string>
     <string name="change_pwd_new_pwd" translatable="false">新密码</string>

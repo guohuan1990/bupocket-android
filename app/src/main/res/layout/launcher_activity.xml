@@ -9,7 +9,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:background="@color/app_color_blue"
+            android:background="@mipmap/splash_bg"
             android:orientation="vertical"
             android:fitsSystemWindows="true">
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
@@ -25,35 +25,13 @@
                 android:layout_marginTop="25dp"
                 android:textSize="24sp"
                 android:textColor="#ffffff"
-                android:text="@string/splash_txt1"/>
+                android:text="@string/splash_txt0"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:textSize="16sp"
-                android:textColor="#d7d7d7"
-                android:text="@string/splash_txt2"/>
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true">
-
-            <RelativeLayout
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:padding="10dp" >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="#999999"
-                    android:text="V1.0.0"
-                />
-
-            </RelativeLayout>
-        </LinearLayout>
-
+                android:textColor="#ffffff"
+                android:text="@string/splash_txt1"/>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

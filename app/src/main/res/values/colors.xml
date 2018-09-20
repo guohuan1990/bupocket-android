@@ -38,8 +38,7 @@
     <color name="send_confirm_info_color">#666666</color>
     <color name="send_confirm_gray_color">#999999</color>
     <color name="multiline_edit_hint_color">#b2b2b2</color>
-    <color name="recover_btn_grey">#c9c9c9</color>
     <color name="terms_unagree_btn_grey">#c9c9c9</color>
     <color name="help_feedback_et_background_color">#F5F5F5</color>
-    <color name="disabled_btn_color">#c9c9c9</color>
+    <color name="disabled_btn_color">#9AD9FF</color>
 </resources>
