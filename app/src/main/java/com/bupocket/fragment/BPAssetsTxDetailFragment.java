@@ -172,6 +172,8 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     mTxDetailBlockInfoPrevBlockHashTv.setText(blockInfoRespBoBean.getPreviousHash());
                     mTxDetailBlockInfoTXCountTv.setText(blockInfoRespBoBean.getTxCount() + "");
                     mTxDetailBlockInfoConsensusTimeTv.setText(TimeUtil.timeStamp2Date(blockInfoRespBoBean.getCloseTimeDate().toString().substring(0,10),"yyyy.MM.dd HH:mm:ss"));
+
+                }else{
                     mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
                 }
             }

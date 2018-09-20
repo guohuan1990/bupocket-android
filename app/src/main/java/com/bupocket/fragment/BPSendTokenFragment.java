@@ -1,11 +1,11 @@
 package com.bupocket.fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -125,21 +125,28 @@ public class BPSendTokenFragment extends BaseFragment {
             }
         });
     }
-    private String getAccountBUBalance(){
-        new Handler().postDelayed(new Runnable() {
+    private Handler handler = new Handler(){
+        public void handleMessage(Message msg) {
+            mAccountAvailableBalanceTv.setText(msg.getData().get("buBalance").toString());
+        };
+    };
+
+    private void getAccountBUBalance(){
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 buBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
                 if(buBalance == null){
                     buBalance = "0";
                 }
-                mAccountAvailableBalanceTv.setText(buBalance);
+                Message msg = Message.obtain();
+                Bundle data = new Bundle();
+                data.putString("buBalance", buBalance);
+                msg.setData(data);
+                handler.sendMessage(msg);
             }
-        },100);
-
-        return buBalance;
+        }).start();
     }
-
     private String getAccountBPData(){
         String data = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
         return data;

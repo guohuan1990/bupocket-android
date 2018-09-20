@@ -68,7 +68,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/app_color_font"
-                        android:text="1,000.99939223"
                         android:textStyle="bold"
                         android:textSize="26sp"/>
                 <TextView
