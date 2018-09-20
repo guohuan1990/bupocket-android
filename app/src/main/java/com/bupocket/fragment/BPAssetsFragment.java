@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,8 +77,7 @@ public class BPAssetsFragment extends BaseFragment {
     @BindView(R.id.emptyView)
     QMUIEmptyView mEmptyView;
 
-//    @BindView(R.id.assetsAvatarIv)
-//    QMUIRoundButton mAssetsAvatarIv;
+    private String buBalance = "-";
 
     @Override
     protected View onCreateView() {
@@ -100,12 +100,6 @@ public class BPAssetsFragment extends BaseFragment {
                 go2SendTokenFragment();
             }
         });
-//        mAssetsAvatarIv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startFragment(new BPUserInfoFragment());
-//            }
-//        });
 
         return root;
     }
@@ -115,16 +109,23 @@ public class BPAssetsFragment extends BaseFragment {
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
         currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
         QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
-        mAccountBuBalanceTv.setText(getAccountBUBalance());
+        getAccountBUBalance();
         mUserBcAddressTv.setText(AddressUtil.anonymous(currentAccAddress));
         refreshData();
     }
 
     private String getAccountBUBalance(){
-        String buBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
-        if(buBalance == null){
-            return "0";
-        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                buBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
+                if(buBalance == null){
+                    buBalance = "0";
+                }
+                mAccountBuBalanceTv.setText(buBalance);
+            }
+        },100);
+
         return buBalance;
     }
 

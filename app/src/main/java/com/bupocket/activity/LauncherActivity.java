@@ -3,12 +3,8 @@ package com.bupocket.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.widget.Toast;
 import com.bupocket.BPMainActivity;
 import com.bupocket.R;
-import com.bupocket.SplashActivity;
 
 public class LauncherActivity extends Activity {
     private static final int GOTO_MAIN_ACTIVITY = 0;

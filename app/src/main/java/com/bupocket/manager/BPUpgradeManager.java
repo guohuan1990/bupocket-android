@@ -2,6 +2,7 @@ package com.bupocket.manager;
 
 import android.app.Activity;
 import com.alibaba.fastjson.JSON;
+import com.bupocket.R;
 import com.bupocket.http.api.dto.resp.GetCurrentVersionRespDto;
 import com.bupocket.utils.CProgressDialogUtils;
 import com.bupocket.utils.CommonUtil;
@@ -29,12 +30,11 @@ public class BPUpgradeManager {
     public void init(){
         new UpdateAppManager
                 .Builder()
-                //当前Activity
                 .setActivity(mActivity)
-                //更新地址
+                .setThemeColor(0xFF36B3FF)
                 .setUpdateUrl(com.bupocket.common.Constants.WEB_SERVER_DOMAIN)
-                //实现httpManager接口的对象
                 .setHttpManager(new UpdateAppHttpUtil())
+                .setTopPic(R.mipmap.upgrade_dialog_bg)
                 .build()
                 .checkNewApp(new UpdateCallback(){
                     @Override

@@ -2,6 +2,7 @@ package com.bupocket.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,8 @@ public class BPSendTokenFragment extends BaseFragment {
     QMUIRoundButton mCompleteMnemonicCodeBtn;
     @BindView(R.id.sendFormScanIv)
     ImageView mSendFormScanIv;
+
+    private String buBalance = "-";
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_send, null);
@@ -68,7 +71,7 @@ public class BPSendTokenFragment extends BaseFragment {
     private void initData(){
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
-        mAccountAvailableBalanceTv.setText(getAccountBUBalance());
+        getAccountBUBalance();
 
     }
     private void initTopBar() {
@@ -80,19 +83,26 @@ public class BPSendTokenFragment extends BaseFragment {
             }
         });
     }
+    private String getAccountBUBalance(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                buBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
+                if(buBalance == null){
+                    buBalance = "0";
+                }
+                mAccountAvailableBalanceTv.setText(buBalance);
+            }
+        },100);
+
+        return buBalance;
+    }
 
     private String getAccountBPData(){
         String data = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
         return data;
     }
 
-    private String getAccountBUBalance(){
-        String buBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
-        if(buBalance == null){
-            return "0";
-        }
-        return buBalance;
-    }
 
     private String getDestAccAddr(){
         return destAccountAddressEt.getText().toString().trim();
