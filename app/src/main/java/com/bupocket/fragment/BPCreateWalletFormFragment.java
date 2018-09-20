@@ -1,6 +1,9 @@
 package com.bupocket.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -53,6 +56,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
 
         initData();
         onSubmitBtnListener();
+        buildWatcher();
         return root;
     }
 
@@ -204,5 +208,37 @@ public class BPCreateWalletFormFragment extends BaseFragment {
         });
     }
 
+    private void buildWatcher(){
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                mCreateWalletSubmitBtn.setEnabled(false);
+                mCreateWalletSubmitBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mCreateWalletSubmitBtn.setEnabled(false);
+                mCreateWalletSubmitBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                boolean signIdentityName = mSetIdentityNameEt.getText().length() > 0;
+                boolean signSetPwd = mSetPwdEt.getText().length() > 0;
+                boolean signRepeatPwd = mRepeatPwdEt.getText().length() >0;
+                if(signIdentityName && signSetPwd && signRepeatPwd){
+                    mCreateWalletSubmitBtn.setEnabled(true);
+                    mCreateWalletSubmitBtn.setBackgroundColor(Color.rgb(54, 178, 255));
+                }else {
+                    mCreateWalletSubmitBtn.setEnabled(false);
+                    mCreateWalletSubmitBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+                }
+            }
+        };
+        mSetIdentityNameEt.addTextChangedListener(watcher);
+        mSetPwdEt.addTextChangedListener(watcher);
+        mRepeatPwdEt.addTextChangedListener(watcher);
+    }
 
 }

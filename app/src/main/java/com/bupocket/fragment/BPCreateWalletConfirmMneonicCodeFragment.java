@@ -1,6 +1,7 @@
 package com.bupocket.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -140,6 +141,14 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
                 mnemonicCodeListSelected.remove(code);
             }
             printMneonicCodeSelected();
+
+            if(mnemonicCodeListSelected.size() == 12 && mnemonicCodeListSelected.equals(srcMnemonicCodeList)){
+                mCompleteMnemonicCodeBtn.setEnabled(true);
+                mCompleteMnemonicCodeBtn.setBackgroundColor(Color.rgb(54, 179, 255));
+            }else{
+                mCompleteMnemonicCodeBtn.setEnabled(false);
+                mCompleteMnemonicCodeBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+            }
             System.out.println("ssss:" + textView.getText());
         }
     };

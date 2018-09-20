@@ -1,5 +1,8 @@
 package com.bupocket.fragment;
 
+import android.graphics.Color;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +51,39 @@ public class BPHelpFeedbackFragment extends BaseFragment{
                 SubmitFeedback();
             }
         });
+        buildWatcher();
         return root;
+    }
+
+    private void buildWatcher() {
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                mNextHelpFeedbackBtn.setEnabled(false);
+                mNextHelpFeedbackBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mNextHelpFeedbackBtn.setEnabled(false);
+                mNextHelpFeedbackBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                boolean signContent = mFeedbackContentET.getText().length() > 0;
+                boolean signContact = mContactET.getText().length() > 0;
+                if(signContent && signContact){
+                    mNextHelpFeedbackBtn.setEnabled(true);
+                    mNextHelpFeedbackBtn.setBackgroundColor(Color.rgb(54, 178, 255));
+                }else {
+                    mNextHelpFeedbackBtn.setEnabled(false);
+                    mNextHelpFeedbackBtn.setBackgroundColor(Color.rgb(201, 201, 201));
+                }
+            }
+        };
+        mFeedbackContentET.addTextChangedListener(watcher);
+        mContactET.addTextChangedListener(watcher);
     }
 
     private void initTopBar() {
