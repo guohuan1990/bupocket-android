@@ -60,7 +60,7 @@ public class BPAssetsFragment extends BaseFragment {
     @BindView(R.id.accountBUBalanceTv)
     TextView mAccountBuBalanceTv;
     protected SharedPreferencesHelper sharedPreferencesHelper;
-    private String pageSize = "5";
+    private String pageSize = "50";
     private Integer pageStart = 1;
     private String currentAccAddress;
     private String currentAccNick;
@@ -185,6 +185,9 @@ public class BPAssetsFragment extends BaseFragment {
 
     private void refreshData(){
         pageStart = 1;
+        tokenTxInfoMap.clear();
+        tokenTxInfoList.clear();
+
         loadMyTxList();
     }
 
@@ -200,8 +203,8 @@ public class BPAssetsFragment extends BaseFragment {
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
                 return;
             }
-
             refreshLayout.setEnableLoadMore(true);
+
             for (GetMyTxsRespDto.TxRecordBean obj : getMyTxsRespDto.getTxRecord()) {
 
                 String txAccountAddress = AddressUtil.anonymous((obj.getOutinType() == 0) ? obj.getToAddress() : obj.getFromAddress());
