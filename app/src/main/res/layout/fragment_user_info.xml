@@ -11,7 +11,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="20dp"
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:background="#F5F5F5"
         android:orientation="vertical">
