@@ -1,7 +1,10 @@
 package com.bupocket.fragment;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -196,18 +199,19 @@ public class BPCreateWalletFormFragment extends BaseFragment {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void buildWatcher(){
         TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 mCreateWalletSubmitBtn.setEnabled(false);
-                mCreateWalletSubmitBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+                mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mCreateWalletSubmitBtn.setEnabled(false);
-                mCreateWalletSubmitBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+                mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
             }
 
             @Override
@@ -217,10 +221,10 @@ public class BPCreateWalletFormFragment extends BaseFragment {
                 boolean signRepeatPwd = mRepeatPwdEt.getText().length() >0;
                 if(signIdentityName && signSetPwd && signRepeatPwd){
                     mCreateWalletSubmitBtn.setEnabled(true);
-                    mCreateWalletSubmitBtn.setBackgroundColor(getResources().getColor(R.color.app_btn_color_blue));
+                    mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
                 }else {
                     mCreateWalletSubmitBtn.setEnabled(false);
-                    mCreateWalletSubmitBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+                    mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
             }
         };

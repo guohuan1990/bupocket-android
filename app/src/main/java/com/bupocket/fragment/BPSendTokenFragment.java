@@ -2,9 +2,11 @@ package com.bupocket.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -87,6 +89,7 @@ public class BPSendTokenFragment extends BaseFragment {
                 mCompleteMnemonicCodeBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void afterTextChanged(Editable s) {
                 boolean signAccountAddress = destAccountAddressEt.getText().length() > 0;
@@ -94,10 +97,10 @@ public class BPSendTokenFragment extends BaseFragment {
                 boolean signTxFee = sendFormTxFeeEt.getText().length() > 0;
                 if(signAccountAddress && signAmount && signTxFee){
                     mCompleteMnemonicCodeBtn.setEnabled(true);
-                    mCompleteMnemonicCodeBtn.setBackgroundColor(getResources().getColor(R.color.app_btn_color_blue));
+                    mCompleteMnemonicCodeBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
                 }else {
                     mCompleteMnemonicCodeBtn.setEnabled(false);
-                    mCompleteMnemonicCodeBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+                    mCompleteMnemonicCodeBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
             }
         };

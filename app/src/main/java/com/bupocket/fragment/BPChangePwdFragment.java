@@ -1,8 +1,10 @@
 package com.bupocket.fragment;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -39,6 +41,7 @@ public class BPChangePwdFragment extends BaseFragment{
     @BindView(R.id.nextChangePwdBtn)
     QMUIRoundButton mNextChangePwdBtn;
     private SharedPreferencesHelper sharedPreferencesHelper;
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_change_pwd, null);
@@ -92,18 +95,19 @@ public class BPChangePwdFragment extends BaseFragment{
         return root;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void buildWatcher() {
         TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 mNextChangePwdBtn.setEnabled(false);
-                mNextChangePwdBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+                mNextChangePwdBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mNextChangePwdBtn.setEnabled(false);
-                mNextChangePwdBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+                mNextChangePwdBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
             }
 
             @Override
@@ -113,10 +117,10 @@ public class BPChangePwdFragment extends BaseFragment{
                 boolean signNewPasswordConfirm = mNewPasswordConfirmET.getText().length() > 0;
                 if(signOldPassword && signNewPassword && signNewPasswordConfirm){
                     mNextChangePwdBtn.setEnabled(true);
-                    mNextChangePwdBtn.setBackgroundColor(getResources().getColor(R.color.app_btn_color_blue));
+                    mNextChangePwdBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
                 }else {
                     mNextChangePwdBtn.setEnabled(false);
-                    mNextChangePwdBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+                    mNextChangePwdBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
             }
         };

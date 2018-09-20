@@ -1,6 +1,8 @@
 package com.bupocket.fragment;
 
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -39,6 +41,7 @@ public class BPHelpFeedbackFragment extends BaseFragment{
     @BindView(R.id.nextHelpFeedbackBtn)
     Button mNextHelpFeedbackBtn;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_help_feedback, null);
@@ -55,18 +58,19 @@ public class BPHelpFeedbackFragment extends BaseFragment{
         return root;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void buildWatcher() {
         TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 mNextHelpFeedbackBtn.setEnabled(false);
-                mNextHelpFeedbackBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+                mNextHelpFeedbackBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mNextHelpFeedbackBtn.setEnabled(false);
-                mNextHelpFeedbackBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+                mNextHelpFeedbackBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
             }
 
             @Override
@@ -75,10 +79,10 @@ public class BPHelpFeedbackFragment extends BaseFragment{
                 boolean signContact = mContactET.getText().length() > 0;
                 if(signContent && signContact){
                     mNextHelpFeedbackBtn.setEnabled(true);
-                    mNextHelpFeedbackBtn.setBackgroundColor(getResources().getColor(R.color.app_btn_color_blue));
+                    mNextHelpFeedbackBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
                 }else {
                     mNextHelpFeedbackBtn.setEnabled(false);
-                    mNextHelpFeedbackBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+                    mNextHelpFeedbackBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
             }
         };
