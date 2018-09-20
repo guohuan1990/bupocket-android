@@ -45,13 +45,13 @@ public class BPHelpFeedbackFragment extends BaseFragment{
         ButterKnife.bind(this, root);
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
-        buildWatcher();
         mNextHelpFeedbackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SubmitFeedback();
             }
         });
+        buildWatcher();
         return root;
     }
 
@@ -65,19 +65,25 @@ public class BPHelpFeedbackFragment extends BaseFragment{
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mNextHelpFeedbackBtn.setEnabled(true);
-                mNextHelpFeedbackBtn.setBackgroundColor(Color.rgb(54, 178, 255));
+                mNextHelpFeedbackBtn.setEnabled(false);
+                mNextHelpFeedbackBtn.setBackgroundColor(Color.rgb(201, 201, 201));
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length()==0){
+                boolean signContent = mFeedbackContentET.getText().length() > 0;
+                boolean signContact = mContactET.getText().length() > 0;
+                if(signContent && signContact){
+                    mNextHelpFeedbackBtn.setEnabled(true);
+                    mNextHelpFeedbackBtn.setBackgroundColor(Color.rgb(54, 178, 255));
+                }else {
                     mNextHelpFeedbackBtn.setEnabled(false);
                     mNextHelpFeedbackBtn.setBackgroundColor(Color.rgb(201, 201, 201));
                 }
             }
         };
-        mNextHelpFeedbackBtn.addTextChangedListener(watcher);
+        mFeedbackContentET.addTextChangedListener(watcher);
+        mContactET.addTextChangedListener(watcher);
     }
 
     private void initTopBar() {

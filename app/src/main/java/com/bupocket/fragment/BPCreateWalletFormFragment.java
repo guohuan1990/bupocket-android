@@ -218,13 +218,19 @@ public class BPCreateWalletFormFragment extends BaseFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mCreateWalletSubmitBtn.setEnabled(true);
-                mCreateWalletSubmitBtn.setBackgroundColor(Color.rgb(54, 178, 255));
+                mCreateWalletSubmitBtn.setEnabled(false);
+                mCreateWalletSubmitBtn.setBackgroundColor(Color.rgb(201, 201, 201));
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length()==0){
+                boolean signIdentityName = mSetIdentityNameEt.getText().length() > 0;
+                boolean signSetPwd = mSetPwdEt.getText().length() > 0;
+                boolean signRepeatPwd = mRepeatPwdEt.getText().length() >0;
+                if(signIdentityName && signSetPwd && signRepeatPwd){
+                    mCreateWalletSubmitBtn.setEnabled(true);
+                    mCreateWalletSubmitBtn.setBackgroundColor(Color.rgb(54, 178, 255));
+                }else {
                     mCreateWalletSubmitBtn.setEnabled(false);
                     mCreateWalletSubmitBtn.setBackgroundColor(Color.rgb(201, 201, 201));
                 }
