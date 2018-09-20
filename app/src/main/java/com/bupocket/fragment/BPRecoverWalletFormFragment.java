@@ -255,7 +255,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
                             sharedPreferencesHelper.put("identityId", walletBPData.getAccounts().get(0).getAddress());
                             sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode());
                             tipDialog.dismiss();
-                            startFragmentAndDestroyCurrent(new HomeFragment());
+                            startFragmentAndDestroyCurrent(new HomeFragment(),false);
                         } catch (Exception e) {
                             e.printStackTrace();
                             Looper.prepare();

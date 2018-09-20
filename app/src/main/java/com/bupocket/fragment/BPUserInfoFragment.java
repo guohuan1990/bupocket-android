@@ -2,7 +2,6 @@ package com.bupocket.fragment;
 
 import android.os.Bundle;
 import android.os.Looper;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -11,9 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bupocket.R;
-import com.bupocket.base.ActivityManage;
 import com.bupocket.base.BaseFragment;
-import com.bupocket.base.BaseFragmentActivity;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
@@ -186,14 +183,13 @@ public class BPUserInfoFragment extends BaseFragment {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
                         dialog.dismiss();
-                        showEditTextDialog();
+                        showPasswordComfirmDialog();
                     }
                 })
                 .create(mCurrentDialogStyle).show();
     }
 
-    private void showEditTextDialog() {
-        final QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(getActivity());
+    private void showPasswordComfirmDialog() {
         final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.password_comfirm_layout);
@@ -244,10 +240,7 @@ public class BPUserInfoFragment extends BaseFragment {
                             sharedPreferencesHelper.put("isFirstCreateWallet","");
                             sharedPreferencesHelper.put("createWalletStep","");
                             tipDialog.dismiss();
-
-                            startFragment(new BPCreateWalletFragment());
-//                            ActivityManage.finishAll();
-
+                            getActivity().getSupportFragmentManager().popBackStack(new BPCreateWalletFragment().getClass().getSimpleName(),0);
                         } catch (Exception e) {
                             e.printStackTrace();
                             Looper.prepare();
@@ -255,20 +248,6 @@ public class BPUserInfoFragment extends BaseFragment {
                             tipDialog.dismiss();
                             Looper.loop();
                             return;
-                        }
-//                        String ciphertextSkeyData = getSkeyStr();
-                        try {
-//                            byte[] skeyByte = Wallet.getInstance().getSkey(password,ciphertextSkeyData);
-//                            mnemonicCodeList = new MnemonicCode().toMnemonic(skeyByte);
-//                            tipDialog.dismiss();
-
-                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                            Looper.prepare();
-//                            Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
-//                            tipDialog.dismiss();
-//                            Looper.loop();
-//                            return;
                         }
                     }
                 }).start();
