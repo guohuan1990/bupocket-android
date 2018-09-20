@@ -1,9 +1,13 @@
 package com.bupocket.fragment;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Looper;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
@@ -62,6 +66,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
     private boolean isPwdHideFirst = false;
     private boolean isConfirmPwdHideFirst = false;
     private SharedPreferencesHelper sharedPreferencesHelper;
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected View onCreateView() {
 
@@ -71,7 +76,44 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
         initData();
         eventListeners();
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
+        buildWatcher();
         return root;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void buildWatcher() {
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                recoverSubmit.setEnabled(false);
+                recoverSubmit.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                recoverSubmit.setEnabled(false);
+                recoverSubmit.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                boolean signMneonicCode = mMneonicCodeEt.getText().length() > 0;
+                boolean signWalleName = mWalletNameEt.getText().length() > 0;
+                boolean signPwd = mPwdEt.getText().length() > 0;
+                boolean signConfirm = mConfirmPwdEt.getText().length() > 0;
+                if(signMneonicCode && signWalleName && signPwd && signConfirm){
+                    recoverSubmit.setEnabled(true);
+                    recoverSubmit.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
+                }else {
+                    recoverSubmit.setEnabled(false);
+                    recoverSubmit.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
+                }
+            }
+        };
+        mMneonicCodeEt.addTextChangedListener(watcher);
+        mWalletNameEt.addTextChangedListener(watcher);
+        mPwdEt.addTextChangedListener(watcher);
+        mConfirmPwdEt.addTextChangedListener(watcher);
     }
 
     private void initData(){
