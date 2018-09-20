@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="80dp"
-                android:src="@mipmap/icon_backup_wallet"/>
+                android:contentDescription="TODO" android:src="@mipmap/icon_backup_wallet"/>
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

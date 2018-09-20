@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/recover_edit_new_wallet_name_hint"
-                android:theme="@style/BPEditText" />
+                android:inputType="" android:theme="@style/BPEditText" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -62,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:paddingRight="20dp"
+                    android:paddingEnd="20dp" android:paddingRight="20dp"
                     android:gravity="left"
                     android:hint="@string/recover_set_pwd_hint"
                     android:inputType="textPassword"
@@ -72,9 +72,9 @@
                     android:id="@+id/recoverShowPwdIv"
                     android:layout_width="20dp"
                     android:layout_height="50dp"
-                    android:paddingBottom="20dp"
+                    android:contentDescription="TODO" android:paddingBottom="20dp"
                     android:paddingTop="20dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
                     android:src="@mipmap/icon_close_eye"
                     />
@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:paddingRight="20dp"
+                    android:paddingEnd="20dp" android:paddingRight="20dp"
                     android:gravity="left"
                     android:hint="@string/recover_confirm_pwd_hint"
                     android:inputType="textPassword"
@@ -101,9 +101,9 @@
                     android:id="@+id/recoverShowConfirmPwdIv"
                     android:layout_width="20dp"
                     android:layout_height="50dp"
-                    android:paddingBottom="20dp"
+                    android:contentDescription="TODO" android:paddingBottom="20dp"
                     android:paddingTop="20dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
                     android:src="@mipmap/icon_close_eye"
                     />

@@ -3,8 +3,8 @@ package com.bupocket;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
+import com.bupocket.utils.CommonUtil;
 import com.squareup.leakcanary.LeakCanary;
-import com.vector.update_app.UpdateAppManager;
 
 public class BPApplication extends Application {
     @SuppressLint("StaticFieldLeak")
@@ -22,10 +22,6 @@ public class BPApplication extends Application {
             return;
         }
         LeakCanary.install(this);
-
-//        BPUpgradeManager.getInstance(this).check();
-
-
     }
 
 }

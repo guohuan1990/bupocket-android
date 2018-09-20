@@ -1,29 +1,92 @@
 package com.bupocket.manager;
 
-import android.content.Context;
+import android.app.Activity;
+import com.alibaba.fastjson.JSON;
+import com.bupocket.http.api.dto.resp.GetCurrentVersionRespDto;
+import com.bupocket.utils.CProgressDialogUtils;
+import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.UpdateAppHttpUtil;
+import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
+import com.vector.update_app.UpdateCallback;
 
 public class BPUpgradeManager {
     public static final int INVALIDATE_VERSION_CODE = -1;
     private static BPUpgradeManager bpUpgradeManager;
-    private Context mContext;
+    private Activity mActivity;
 
-    public BPUpgradeManager(Context mContext) {
-        this.mContext = mContext;
+    public BPUpgradeManager(Activity mActivity) {
+        this.mActivity = mActivity;
     }
 
-    public static final BPUpgradeManager getInstance(Context context){
+    public static final BPUpgradeManager getInstance(Activity mActivity){
         if(bpUpgradeManager == null){
-            bpUpgradeManager = new BPUpgradeManager(context);
+            bpUpgradeManager = new BPUpgradeManager(mActivity);
         }
         return bpUpgradeManager;
     }
 
-    private void init(){
+    public void init(){
+        new UpdateAppManager
+                .Builder()
+                //当前Activity
+                .setActivity(mActivity)
+                //更新地址
+                .setUpdateUrl(com.bupocket.common.Constants.WEB_SERVER_DOMAIN)
+                //实现httpManager接口的对象
+                .setHttpManager(new UpdateAppHttpUtil())
+                .build()
+                .checkNewApp(new UpdateCallback(){
+                    @Override
+                    protected UpdateAppBean parseJson(String json) {
+                        GetCurrentVersionRespDto resp = JSON.parseObject(json, GetCurrentVersionRespDto.class);
 
+                        UpdateAppBean updateAppBean = new UpdateAppBean();
+                        updateAppBean
+                                .setUpdate(check(resp))
+                                .setNewVersion(resp.getVerNumber())
+                                .setApkFileUrl(resp.getDownloadLink())
+                                .setTargetSize(CommonUtil.isNull(resp.getAppSize()) ? "" : resp.getAppSize())
+                                .setUpdateLog(resp.getVerContents())
+                                .setConstraint(resp.getVerType() == 0 ? false : true);
+
+                        return updateAppBean;
+                    }
+
+                    @Override
+                    public void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
+                        if (updateApp.isConstraint()) {
+
+                        } else {
+
+                        }
+                        updateAppManager.showDialogFragment();
+                    }
+                    /**
+                     * 网络请求之前
+                     */
+                    @Override
+                    public void onBefore() {
+                        CProgressDialogUtils.showProgressDialog(mActivity);
+                    }
+
+                    /**
+                     * 网路请求之后
+                     */
+                    @Override
+                    public void onAfter() {
+                        CProgressDialogUtils.cancelProgressDialog(mActivity);
+                    }
+
+                });
     }
-    public void check(){
-        int oldVersion = BPPreferenceManager.getInstance(mContext).getVersionCode();
-        int currentVersion = 0;
+    private String check(GetCurrentVersionRespDto resp){
+        int oldVersion = CommonUtil.packageCode(mActivity.getBaseContext());
+
+        int currentVersion = Integer.parseInt(resp.getVerNumberCode());
+        if(currentVersion > oldVersion){
+            return "Yes";
+        }
+        return "No";
     }
 }

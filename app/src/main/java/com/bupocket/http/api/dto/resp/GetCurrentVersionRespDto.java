@@ -1,17 +1,24 @@
 package com.bupocket.http.api.dto.resp;
 
-import java.util.List;
-
 public class GetCurrentVersionRespDto {
 
-
+    private String appSize;
     private String createTime;
     private String downloadLink;
+    private String englishVerContents;
     private String updateTime;
+    private String verContents;
     private String verNumber;
+    private String verNumberCode;
     private int verType;
-    private List<String> englishVerContents;
-    private List<String> verContents;
+
+    public String getAppSize() {
+        return appSize;
+    }
+
+    public void setAppSize(String appSize) {
+        this.appSize = appSize;
+    }
 
     public String getCreateTime() {
         return createTime;
@@ -29,12 +36,28 @@ public class GetCurrentVersionRespDto {
         this.downloadLink = downloadLink;
     }
 
+    public String getEnglishVerContents() {
+        return englishVerContents;
+    }
+
+    public void setEnglishVerContents(String englishVerContents) {
+        this.englishVerContents = englishVerContents;
+    }
+
     public String getUpdateTime() {
         return updateTime;
     }
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getVerContents() {
+        return verContents;
+    }
+
+    public void setVerContents(String verContents) {
+        this.verContents = verContents;
     }
 
     public String getVerNumber() {
@@ -45,27 +68,19 @@ public class GetCurrentVersionRespDto {
         this.verNumber = verNumber;
     }
 
+    public String getVerNumberCode() {
+        return verNumberCode;
+    }
+
+    public void setVerNumberCode(String verNumberCode) {
+        this.verNumberCode = verNumberCode;
+    }
+
     public int getVerType() {
         return verType;
     }
 
     public void setVerType(int verType) {
         this.verType = verType;
-    }
-
-    public List<String> getEnglishVerContents() {
-        return englishVerContents;
-    }
-
-    public void setEnglishVerContents(List<String> englishVerContents) {
-        this.englishVerContents = englishVerContents;
-    }
-
-    public List<String> getVerContents() {
-        return verContents;
-    }
-
-    public void setVerContents(List<String> verContents) {
-        this.verContents = verContents;
     }
 }
