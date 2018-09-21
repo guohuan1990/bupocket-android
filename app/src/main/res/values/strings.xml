@@ -195,4 +195,8 @@
     <string name="content_empty_msg" translatable="false">请输入您的问题或反馈</string>
     <string name="contact_empty_msg" translatable="false">请输入您的联系方式</string>
 
+    <string name="language_cn" translatable="false">简体中文</string>
+    <string name="language_en" translatable="false">English</string>
+    <string name="set_success">设置成功~</string>
+
 </resources>
