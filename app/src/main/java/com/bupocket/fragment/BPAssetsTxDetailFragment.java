@@ -142,8 +142,6 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                         txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_send_fail);
                         txStatusStr = getResources().getString(R.string.tx_status_fail_txt1);
                     }
-
-
                     mTxStatusIcon.setImageDrawable(txStatusIconDrawable);
                     mTxStatusTv.setText(txStatusStr);
                     mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? "+" : "-") + txInfoRespBoBean.getAmount());

@@ -1,16 +1,16 @@
 package com.bupocket.http.api.dto.resp;
 
 public class ApiResult<T> {
-    String errcode;
+    String errCode;
     String msg;
     T data;
 
-    public String getErrcode() {
-        return errcode;
+    public String getErrCode() {
+        return errCode;
     }
 
-    public void setErrcode(String errcode) {
-        this.errcode = errcode;
+    public void setErrCode(String errCode) {
+        this.errCode = errCode;
     }
 
     public String getMsg() {

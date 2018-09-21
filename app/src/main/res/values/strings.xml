@@ -93,7 +93,9 @@
     <string name="send_status_success_txt" translatable="false">转账成功</string>
     <string name="send_status_target_addr" translatable="false">对方账户</string>
     <string name="send_status_amount" translatable="false">转出数量</string>
+    <string name="send_tx_handleing_txt" translatable="false">处理中...</string>
     <string name="send_status_fee" translatable="false">预估最多支付费用</string>
+    <string name="tx_timeout_err">交易超时</string>
     <string name="send_status_note" translatable="false">备注</string>
     <string name="send_status_time" translatable="false">转账时间</string>
     <string name="send_available_balance_txt" translatable="false">余额</string>

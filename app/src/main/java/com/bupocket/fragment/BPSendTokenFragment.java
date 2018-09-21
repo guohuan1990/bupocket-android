@@ -6,6 +6,7 @@ import android.os.*;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -14,8 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -63,8 +66,9 @@ public class BPSendTokenFragment extends BaseFragment {
     private String hash;
 
     private Double availableBuBalance;
-    private String state;
-    private String sendTime;
+    QMUITipDialog txSendingTipDialog;
+
+    private TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_send, null);
@@ -369,11 +373,11 @@ public class BPSendTokenFragment extends BaseFragment {
                                 // 检查合法性
                                 EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
                                 final String password = mPasswordConfirmEt.getText().toString().trim();
-                                final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                                txSendingTipDialog = new QMUITipDialog.Builder(getContext())
                                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                                        .setTipWord("处理中...")
+                                        .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
                                         .create();
-                                tipDialog.show();
+                                txSendingTipDialog.show();
                                 new Thread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -382,30 +386,16 @@ public class BPSendTokenFragment extends BaseFragment {
                                         String destAddess = getDestAccAddr();
                                         try {
                                             hash = Wallet.getInstance().sendBu(password,accountBPData, currentAccAddress, destAddess, sendAmount, note,txFee);
-                                            tipDialog.dismiss();
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                             Looper.prepare();
                                             Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
-                                            tipDialog.dismiss();
+                                            txSendingTipDialog.dismiss();
                                             Looper.loop();
                                         }finally {
-                                            tipDialog.dismiss();
                                             timer.schedule(timerTask,
                                                     1 * 1000,//延迟1秒执行
                                                     1000);
-
-                                            Bundle argz = new Bundle();
-                                            argz.putString("destAccAddr",destAddess);
-                                            argz.putString("sendAmount",sendAmount);
-                                            argz.putString("txFee",txFee);
-                                            argz.putString("note",note);
-                                            argz.getString("state",state);
-                                            argz.putString("sendTime",sendTime);
-                                            BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
-                                            bpSendStatusFragment.setArguments(argz);
-                                            startFragmentAndDestroyCurrent(bpSendStatusFragment);
-
                                         }
                                     }
                                 }).start();
@@ -452,6 +442,9 @@ public class BPSendTokenFragment extends BaseFragment {
 
         }
     }
+
+
+    private int timerTimes = 0;
     private final Timer timer = new Timer();
     @SuppressLint("HandlerLeak")
     private Handler mHanlder = new Handler() {
@@ -459,6 +452,13 @@ public class BPSendTokenFragment extends BaseFragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
+                    if(timerTimes > 20){
+                        timerTask.cancel();
+                        txSendingTipDialog.dismiss();
+                        return;
+                    }
+                    timerTimes++;
+                    System.out.println("timerTimes:" + timerTimes);
                     TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
                     Map<String, Object> parmasMap = new HashMap<>();
                     parmasMap.put("hash",hash);
@@ -467,13 +467,31 @@ public class BPSendTokenFragment extends BaseFragment {
 
                         @Override
                         public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
-                            state = response.body().getData().getTxDeatilRespBo().getStatus().toString();
-                            sendTime = response.body().getData().getTxDeatilRespBo().getApplyTimeDate();
+                            ApiResult<TxDetailRespDto> resp = response.body();
+                            System.out.println(JSON.toJSONString(resp));
+                            if(!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())){
+                                return;
+                            }else{
+                                txDeatilRespBoBean = resp.getData().getTxDeatilRespBo();
+                                Bundle argz = new Bundle();
+                                argz.putString("destAccAddr",txDeatilRespBoBean.getDestAddress());
+                                argz.putString("sendAmount",txDeatilRespBoBean.getAmount());
+                                argz.putString("txFee",txDeatilRespBoBean.getFee());
+                                // TODO 交易详情缺少 备注
+                                argz.putString("note","");
+                                argz.putString("state",txDeatilRespBoBean.getStatus().toString());
+                                argz.putString("sendTime",txDeatilRespBoBean.getApplyTimeDate());
+                                BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
+                                bpSendStatusFragment.setArguments(argz);
+                                timerTask.cancel();
+                                txSendingTipDialog.dismiss();
+                                startFragmentAndDestroyCurrent(bpSendStatusFragment);
+                            }
                         }
 
                         @Override
                         public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
-
+                            Toast.makeText(getActivity(), R.string.tx_timeout_err, Toast.LENGTH_SHORT).show();
                         }
                     });
                     break;

@@ -23,20 +23,18 @@
             android:visibility="visible">
 
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                    android:id="@+id/sendTokenStatusIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:clickable="false"
                 android:src="@mipmap/icon_send_success"
-                app:qmui_border_color="?attr/qmui_config_color_gray_6"
-                app:qmui_border_width="1px"
-                app:qmui_is_circle="true"
-                app:qmui_selected_border_color="?attr/qmui_config_color_gray_4"
-                app:qmui_selected_border_width="1px"
-                app:qmui_selected_mask_color="?attr/qmui_config_color_gray_8" />
+                app:qmui_border_width="0dp"
+                app:qmui_is_circle="true" />
 
 
             <TextView
+                    android:id="@+id/sendTokenStatusTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -191,7 +189,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/sendTime"
+                    android:id="@+id/sendTimeTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
