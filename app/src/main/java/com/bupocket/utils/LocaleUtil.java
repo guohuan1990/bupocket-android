@@ -70,15 +70,12 @@ public class LocaleUtil {
         Context appContext = context.getApplicationContext();
         SpUtil.getInstance().save("currentLanguage", currentLanguage);
         Locale myLocale = Locale.SIMPLIFIED_CHINESE;
-        // 0 简体中文 1 繁体中文 2 English
+        // 0 简体中文 1 English
         switch (currentLanguage) {
             case 0:
                 myLocale = Locale.SIMPLIFIED_CHINESE;
                 break;
             case 1:
-                myLocale = Locale.TRADITIONAL_CHINESE;
-                break;
-            case 2:
                 myLocale = Locale.ENGLISH;
                 break;
         }

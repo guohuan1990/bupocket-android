@@ -18,4 +18,5 @@
     <string name="user_info_title" translatable="false">My Identity</string>
     <string name="tabbr_otc_txt">c2c</string>
     <string name="recently_tx_txt">Recent transaction records</string>
+    <string name="set_success">success</string>
 </resources>
