@@ -12,7 +12,7 @@
         <LinearLayout
             android:id="@+id/meLinearLayout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="230dp"
             android:background="@mipmap/ic_me_header_bg"
             android:fitsSystemWindows="true"
             android:gravity="center_horizontal"

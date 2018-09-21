@@ -1,5 +1,8 @@
 package com.bupocket.base;
 
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,4 +25,5 @@ public abstract class BaseFragment extends QMUIFragment {
 
 //        BPUpgradeManager.getInstance(getContext()).runUpgradeTipTaskIfExist(getActivity());
     }
+
 }

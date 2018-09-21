@@ -2,25 +2,18 @@ package com.bupocket.fragment;
 
 import android.os.Bundle;
 import android.os.Looper;
-import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.wallet.MnemonicCodeTool;
 import com.bupocket.wallet.Wallet;
-import com.bupocket.wallet.enums.CreateWalletStepEnum;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import org.bitcoinj.crypto.MnemonicCode;
@@ -34,6 +27,8 @@ public class BPBackupWalletFragment extends BaseFragment {
 
     private List<String> mnemonicCodeList;
     private SharedPreferencesHelper sharedPreferencesHelper;
+
+    private long exitTime = 0;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_backup_wallet, null);
@@ -123,11 +118,15 @@ public class BPBackupWalletFragment extends BaseFragment {
         argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) mnemonicCodeList);
         createWalletShowMneonicCodeFragment.setArguments(argz);
         startFragment(createWalletShowMneonicCodeFragment);
-
     }
 
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(getContext(), getResources().getText(R.string.next_key_down_err), Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            getActivity().finish();
+        }
 
-    private void getMneonicCode(String password){
-        String skey = sharedPreferencesHelper.getSharedPreference("skey", "").toString();
     }
 }

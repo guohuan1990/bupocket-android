@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bupocket.R;
@@ -163,5 +164,16 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected boolean canDragBack() {
         return false;
+    }
+
+    private long exitTime = 0;
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(getContext(), getResources().getText(R.string.next_key_down_err), Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            getActivity().finish();
+        }
+
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.base.BaseFragment;
@@ -81,4 +82,19 @@ public class BPMainActivity extends BaseFragmentActivity {
         intent.putExtra(KEY_FRAGMENT, VALUE_FRAGMENT_NOTCH_HELPER);
         return intent;
     }
+
+    @Override
+    public void onBackPressed() {
+        if(getCurrentFragment().getTag().equals("BPBackupWalletFragment")){
+            ((BPBackupWalletFragment)getCurrentFragment()).onBackPressed();
+        }else if(getCurrentFragment().getTag().equals("HomeFragment")){
+            ((HomeFragment)getCurrentFragment()).onBackPressed();
+        }else if(getCurrentFragment().getTag().equals("BPCreateWalletFragment")){
+            ((BPCreateWalletFragment)getCurrentFragment()).onBackPressed();
+        }else{
+
+            super.onBackPressed();
+        }
+    }
+
 }

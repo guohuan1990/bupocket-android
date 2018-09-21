@@ -240,7 +240,7 @@ public class BPUserInfoFragment extends BaseFragment {
                             sharedPreferencesHelper.put("isFirstCreateWallet","");
                             sharedPreferencesHelper.put("createWalletStep","");
                             tipDialog.dismiss();
-                            getActivity().getSupportFragmentManager().popBackStack(new BPCreateWalletFragment().getClass().getSimpleName(),0);
+                            startFragment(new BPCreateWalletFragment());
                         } catch (Exception e) {
                             e.printStackTrace();
                             Looper.prepare();

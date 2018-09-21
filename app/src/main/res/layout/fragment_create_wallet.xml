@@ -15,6 +15,7 @@
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                 android:clickable="false"
                 android:layout_width="250dp"
+                app:qmui_border_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/icon_create_wallet_logo"
                 android:layout_marginTop="85dp"

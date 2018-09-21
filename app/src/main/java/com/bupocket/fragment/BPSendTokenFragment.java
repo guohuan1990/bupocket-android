@@ -330,6 +330,9 @@ public class BPSendTokenFragment extends BaseFragment {
                                         String destAddess = getDestAccAddr();
                                         try {
                                             Wallet.getInstance().sendBu(password,accountBPData, currentAccAddress, destAddess, sendAmount, note,txFee);
+
+
+
                                             tipDialog.dismiss();
                                         } catch (Exception e) {
                                             e.printStackTrace();
@@ -347,7 +350,7 @@ public class BPSendTokenFragment extends BaseFragment {
                                             argz.putString("sendTime","2018-09-15 19:02");
                                             BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
                                             bpSendStatusFragment.setArguments(argz);
-                                            startFragment(bpSendStatusFragment);
+                                            startFragmentAndDestroyCurrent(bpSendStatusFragment);
 
                                         }
                                     }

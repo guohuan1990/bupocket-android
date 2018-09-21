@@ -2,6 +2,7 @@ package com.bupocket.fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bupocket.R;
@@ -36,5 +37,15 @@ public class BPCreateWalletFragment extends BaseFragment {
         });
         
         return root;
+    }
+    private long exitTime = 0;
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(getContext(), getResources().getText(R.string.next_key_down_err), Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            getActivity().finish();
+        }
+
     }
 }

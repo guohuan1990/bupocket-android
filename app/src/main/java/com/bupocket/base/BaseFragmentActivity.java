@@ -21,5 +21,6 @@ public abstract class BaseFragmentActivity extends QMUIFragmentActivity {
         super.onDestroy();
         ActivityManage.removeActivity(this);
     }
+
 }
 

@@ -360,4 +360,5 @@ public class BPAssetsFragment extends BaseFragment {
 
         }
     }
+
 }
