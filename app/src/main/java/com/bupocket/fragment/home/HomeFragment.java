@@ -15,7 +15,6 @@ import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.BPAssetsFragment;
 import com.bupocket.fragment.BPProfileFragment;
-import com.bupocket.fragment.otc.OtcMainFragment;
 import com.qmuiteam.qmui.widget.QMUIPagerAdapter;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 
