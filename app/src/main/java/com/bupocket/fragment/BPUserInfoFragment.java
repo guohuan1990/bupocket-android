@@ -8,7 +8,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.CommonUtil;
@@ -21,14 +22,10 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-
 import org.bitcoinj.crypto.MnemonicCode;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static com.bupocket.R.string.user_info_logout_notice;
 
@@ -55,8 +52,6 @@ public class BPUserInfoFragment extends BaseFragment {
     private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private List<String> mnemonicCodeList;
-//    SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-//    private String identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
 
     @Override
     protected View onCreateView() {
@@ -107,7 +102,7 @@ public class BPUserInfoFragment extends BaseFragment {
                         final String password = mPasswordConfirmEt.getText().toString().trim();
                         final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                                .setTipWord(getResources().getString(R.string.wallet_create_creating_txt))
+                                .setTipWord(getResources().getString(R.string.user_info_backup_loading))
                                 .create();
                         tipDialog.show();
                         new Thread(new Runnable() {

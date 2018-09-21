@@ -14,10 +14,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:text="@string/view_title_create_wallet_identity"
             android:theme="@style/BPViewTitle" />
-
         <EditText
             android:id="@+id/create_wallet_identity_name_et"
             android:layout_width="match_parent"
@@ -101,7 +100,7 @@
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
             android:id="@+id/topbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/qmui_topbar_height"
+            android:layout_height="wrap_content"
             android:fitsSystemWindows="true"/>
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

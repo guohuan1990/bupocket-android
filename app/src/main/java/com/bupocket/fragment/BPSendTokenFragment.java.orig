@@ -2,7 +2,11 @@ package com.bupocket.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.*;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,13 +18,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.utils.AmountUtil;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
+import com.bupocket.http.api.UserService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
-import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
@@ -32,10 +41,9 @@ import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -381,7 +389,14 @@ public class BPSendTokenFragment extends BaseFragment {
                                         String accountBPData = getAccountBPData();
                                         String destAddess = getDestAccAddr();
                                         try {
+<<<<<<< HEAD
+                                            Wallet.getInstance().sendBu(password,accountBPData, currentAccAddress, destAddess, sendAmount, note,txFee);
+
+
+
+=======
                                             hash = Wallet.getInstance().sendBu(password,accountBPData, currentAccAddress, destAddess, sendAmount, note,txFee);
+>>>>>>> 9b7cc974570d4d64c7aa802e9a31b12bfa236a8c
                                             tipDialog.dismiss();
                                         } catch (Exception e) {
                                             e.printStackTrace();
@@ -394,7 +409,6 @@ public class BPSendTokenFragment extends BaseFragment {
                                             timer.schedule(timerTask,
                                                     1 * 1000,//延迟1秒执行
                                                     1000);
-
                                             Bundle argz = new Bundle();
                                             argz.putString("destAccAddr",destAddess);
                                             argz.putString("sendAmount",sendAmount);

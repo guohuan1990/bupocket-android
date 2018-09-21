@@ -29,18 +29,17 @@
             android:textSize="16sp" />
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="12.5dp"
-            android:orientation="horizontal">
+            android:paddingRight="12.5dp">
 
             <EditText
                 android:id="@+id/oldPasswordET"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12.5dp"
-                android:layout_weight="1"
+                android:paddingRight="20dp"
                 android:hint="@string/change_pwd_old_pwd_hint"
                 android:inputType="textPassword"
                 android:textSize="15sp"
@@ -51,9 +50,10 @@
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
+                android:layout_alignParentRight="true"
                 android:src="@mipmap/icon_close_eye" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -63,18 +63,17 @@
             android:text="@string/change_pwd_new_pwd"
             android:textSize="16sp" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="12.5dp"
-            android:orientation="horizontal">
+            android:paddingRight="12.5dp">
 
             <EditText
                 android:id="@+id/newPasswordET"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12.5dp"
+                android:paddingRight="20dp"
                 android:hint="@string/change_pwd_new_pwd_hint"
                 android:inputType="textPassword"
                 android:textSize="15sp"
@@ -85,9 +84,10 @@
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
+                android:layout_alignParentRight="true"
                 android:src="@mipmap/icon_close_eye" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -97,18 +97,17 @@
             android:text="@string/change_pwd_new_pwd_confirm"
             android:textSize="16sp" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="12.5dp"
-            android:orientation="horizontal">
+            android:paddingRight="12.5dp">
 
             <EditText
                 android:id="@+id/newPasswordConfirmET"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12.5dp"
+                android:paddingRight="20dp"
                 android:hint="@string/change_pwd_new_pwd_confirm_hint"
                 android:inputType="textPassword"
                 android:textSize="15sp"
@@ -119,9 +118,10 @@
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
+                android:layout_alignParentRight="true"
                 android:src="@mipmap/icon_close_eye" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -154,7 +154,7 @@
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/qmui_topbar_height"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true"/>
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

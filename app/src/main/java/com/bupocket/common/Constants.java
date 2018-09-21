@@ -5,5 +5,11 @@ public class Constants {
     public static final String BUMO_NODE_URL = "http://seed1.bumotest.io:26002";
 
 
-    public static final Integer SEND_TOKEN_NOTE_MAX_LENGTH = 50;
+    public static final Integer SEND_TOKEN_NOTE_MAX_LENGTH = 20;
+    public static final Integer HELP_FEEDBACK_CONTENT_LENGTH = 100;
+    public static final Integer HELP_FEEDBACK_CONTACT_LENGTH = 20;
+    public static final double MIN_FEE = 0.003;
+    public static final double RESERVE_AMOUNT = 0.02;
+    public static final double MIN_SEND_AMOUNT = 0.00000001;
+    public static final double MAX_SEND_AMOUNT = 10000;
 }

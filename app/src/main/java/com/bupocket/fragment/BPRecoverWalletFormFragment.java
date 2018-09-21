@@ -22,6 +22,7 @@ import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
@@ -147,13 +148,11 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
 
     private boolean walletNameFlag () {
         String walletName = mWalletNameEt.getText().toString().trim();
-//        ^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$ 不以下划线开头
-        String regex = "[a-zA-Z0-9_\\u4e00-\\u9fa5]{1,20}";
         if ("".equals(walletName)) {
             Toast.makeText(getActivity(), R.string.recover_edit_new_wallet_name_hint,Toast.LENGTH_SHORT).show();
             return false;
-        } else if (!walletName.matches(regex)) {
-            Toast.makeText(getActivity(), R.string.recover_input_wallet_name_error,Toast.LENGTH_SHORT).show();
+        } else if (!CommonUtil.validateNickname(walletName)) {
+            Toast.makeText(getActivity(), R.string.wallet_create_form_error4,Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

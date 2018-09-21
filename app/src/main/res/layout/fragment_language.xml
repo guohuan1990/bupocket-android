@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
             android:background="@color/qmui_config_color_white"
             android:text="@string/language_txt"
             android:theme="@style/BPViewTitle" />
@@ -105,7 +106,7 @@
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/qmui_topbar_height"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true"/>
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

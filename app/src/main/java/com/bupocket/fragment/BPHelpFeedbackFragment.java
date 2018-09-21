@@ -128,6 +128,28 @@ public class BPHelpFeedbackFragment extends BaseFragment{
                     tipDialog.dismiss();
                 }
             }, 1500);
+        } else if (content.length() > com.bupocket.common.Constants.HELP_FEEDBACK_CONTENT_LENGTH) {
+            final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setTipWord(getResources().getString(R.string.content_too_long_msg))
+                    .create();
+            tipDialog.show();
+            mNextHelpFeedbackBtn.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tipDialog.dismiss();
+                }
+            }, 1500);
+        } else if (contact.length() > com.bupocket.common.Constants.HELP_FEEDBACK_CONTACT_LENGTH) {
+            final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setTipWord(getResources().getString(R.string.contact_too_long_msg))
+                    .create();
+            tipDialog.show();
+            mNextHelpFeedbackBtn.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tipDialog.dismiss();
+                }
+            }, 1500);
         }else {
             parmasMap.put("content",content);
             parmasMap.put("contact",contact);
