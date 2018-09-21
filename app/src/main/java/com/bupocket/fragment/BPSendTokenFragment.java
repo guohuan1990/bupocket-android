@@ -152,8 +152,12 @@ public class BPSendTokenFragment extends BaseFragment {
             @Override
             public void run() {
                 String balance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
-                availableBuBalance = AmountUtil.availableSubtractionFee(balance,com.bupocket.common.Constants.RESERVE_AMOUNT);
-                if(availableBuBalance == null || availableBuBalance < 0){
+                if(balance == null || Double.parseDouble(balance) < 0 || Double.parseDouble(balance) == 0){
+                    availableBuBalance = 0d;
+                } else {
+                    availableBuBalance = AmountUtil.availableSubtractionFee(balance,com.bupocket.common.Constants.RESERVE_AMOUNT);
+                }
+                if(availableBuBalance == null || availableBuBalance < 0) {
                     availableBuBalance = 0d;
                 }
                 Message msg = Message.obtain();
@@ -422,7 +426,7 @@ public class BPSendTokenFragment extends BaseFragment {
         IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(this);
         intentIntegrator.setBeepEnabled(true);
         intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-        intentIntegrator.setPrompt("请将二维码置于取景框内扫描");
+        intentIntegrator.setPrompt(getResources().getString(R.string.wallet_scan_notice));
         // 开始扫描
         intentIntegrator.initiateScan();
     }
@@ -432,7 +436,7 @@ public class BPSendTokenFragment extends BaseFragment {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() == null) {
-                Toast.makeText(getActivity(), "取消扫描", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
             } else {
                 String destAddress = result.getContents();
                 destAccountAddressEt.setText(destAddress);
