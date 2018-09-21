@@ -21,10 +21,10 @@
     <string name="hint_wallet_create_form_input_password" translatable="false">密码</string>
     <string name="hint_wallet_create_form_input_rePassword" translatable="false">确认密码</string>
 
-    <string name="wallet_create_form_error1" translatable="false">密码和确认密码输入不一致</string>
-    <string name="wallet_create_form_error2" translatable="false">密码长度最多20个字符</string>
-    <string name="wallet_create_form_error3" translatable="false">密码长度至少8个字符</string>
-    <string name="wallet_create_form_error4" translatable="false">身份名格式不对</string>
+    <string name="wallet_create_form_error1" translatable="false">密码与确认密码不一致</string>
+    <string name="wallet_create_form_error2" translatable="false">密码长度为8~20个字符</string>
+    <string name="wallet_create_form_error3" translatable="false">密码长度为8~20个字符</string>
+    <string name="wallet_create_form_error4" translatable="false">身份名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
     <string name="wallet_create_form_error5" translatable="false">密码格式不对</string>
 
     <string name="wallet_create_creating_txt" translatable="false">创建中</string>
@@ -74,8 +74,8 @@
     <string name="recover_input_wallet_name_error" translatable="false">只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
     <string name="recover_set_pwd_hint" translatable="false">请设置密码</string>
     <string name="recover_set_pwd_error" translatable="false">密码为8-20个字符</string>
-    <string name="recover_confirm_pwd_hint" translatable="false">请再次确认密码</string>
-    <string name="recover_confirm_pwd_error" translatable="false">密码和确认密码输入不一致，请重新输入</string>
+    <string name="recover_confirm_pwd_hint" translatable="false">请确认密码</string>
+    <string name="recover_confirm_pwd_error" translatable="false">密码与确认密码不一致</string>
     <string name="recover_wallet_next_btn" translatable="false">恢复</string>
     <string name="recover_wallet_reloading" translatable="false">恢复中</string>
     <string name="recover_wallet_error_tip" translatable="false">导入失败</string>
@@ -142,9 +142,12 @@
     <string name="emptyView_mode_desc_no_data" translatable="false">暂无数据</string>
     <string name="invalid_address" translatable="false">BU 地址不正确，请重新输入</string>
     <string name="send_err1" translatable="false">不能给自己转账</string>
-    <string name="invalid_amount" translatable="false">无效的数量</string>
-    <string name="invalid_tx_fee" translatable="false">无效的交易费</string>
-    <string name="balance_not_enough" translatable="false">余额不足</string>
+    <string name="invalid_amount" translatable="false">无效的转账数量</string>
+    <string name="amount_too_small" translatable="false">转账数量单笔不可少于 0.00000001 BU</string>
+    <string name="amount_too_big" translatable="false">转账数量单笔不可超过 10000 BU</string>
+    <string name="invalid_tx_fee" translatable="false">最多支付交易费用格式有误，请重新输入</string>
+    <string name="tx_fee_too_small" translatable="false">最多支付交易费用不可少于 0.003 BU</string>
+    <string name="balance_not_enough" translatable="false">可用余额不足</string>
     <string name="send_token_note_too_long" translatable="false">备注信息不能超过20个字符</string>
     <string name="splash_txt0" translatable="false">小布口袋</string>
     <string name="splash_txt1" translatable="false">泛在价值流通区块链网络</string>
@@ -194,9 +197,9 @@
     <string name="help_feedback_submit_success_msg" translatable="false">提交成功</string>
     <string name="help_feedback_submit_failed_msg" translatable="false">提交失败</string>
     <string name="content_empty_msg" translatable="false">请输入您的问题或反馈</string>
-    <string name="content_too_long_msg" translatable="false">问题或建议不能超过 100 字符</string>
+    <string name="content_too_long_msg" translatable="false">问题或建议内容过长，不能超过100个字</string>
     <string name="contact_empty_msg" translatable="false">请输入您的联系方式</string>
-    <string name="contact_too_long_msg" translatable="false">联系方式不能超过 20 字符</string>
+    <string name="contact_too_long_msg" translatable="false">联系方式内容过长，不能超过20个字</string>
 
     <string name="language_cn" translatable="false">简体中文</string>
     <string name="language_en" translatable="false">English</string>

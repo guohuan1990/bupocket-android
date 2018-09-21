@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
@@ -52,7 +53,7 @@ public class BPSendTokenFragment extends BaseFragment {
     @BindView(R.id.sendFormScanIv)
     ImageView mSendFormScanIv;
 
-    private String buBalance = "-";
+    private Double availableBuBalance;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_send, null);
@@ -127,7 +128,7 @@ public class BPSendTokenFragment extends BaseFragment {
     }
     private Handler handler = new Handler(){
         public void handleMessage(Message msg) {
-            mAccountAvailableBalanceTv.setText(msg.getData().get("buBalance").toString());
+            mAccountAvailableBalanceTv.setText(msg.getData().get("availableBuBalance").toString());
         };
     };
 
@@ -135,13 +136,14 @@ public class BPSendTokenFragment extends BaseFragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                buBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
-                if(buBalance == null){
-                    buBalance = "0";
+                String balance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
+                availableBuBalance = AmountUtil.availableSubtractionFee(balance,com.bupocket.common.Constants.RESERVE_AMOUNT);
+                if(availableBuBalance == null || availableBuBalance < 0){
+                    availableBuBalance = 0d;
                 }
                 Message msg = Message.obtain();
                 Bundle data = new Bundle();
-                data.putString("buBalance", buBalance);
+                data.putString("availableBuBalance", String.valueOf(availableBuBalance));
                 msg.setData(data);
                 handler.sendMessage(msg);
             }
@@ -211,12 +213,38 @@ public class BPSendTokenFragment extends BaseFragment {
                     }, 1500);
                     return;
                 }
+                if (Double.parseDouble(sendAmount) < com.bupocket.common.Constants.MIN_SEND_AMOUNT) {
+                    tipDialog = new QMUITipDialog.Builder(getContext())
+                            .setTipWord(getResources().getString(R.string.amount_too_small))
+                            .create();
+                    tipDialog.show();
+                    sendAmountET.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            tipDialog.dismiss();
+                        }
+                    }, 1500);
+                    return;
+                }
                 if(Double.parseDouble(mAccountAvailableBalanceTv.getText().toString()) < Double.parseDouble(sendAmount)){
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.balance_not_enough))
                             .create();
                     tipDialog.show();
                     mAccountAvailableBalanceTv.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            tipDialog.dismiss();
+                        }
+                    }, 1500);
+                    return;
+                }
+                if (Double.parseDouble(sendAmount) > com.bupocket.common.Constants.MAX_SEND_AMOUNT) {
+                    tipDialog = new QMUITipDialog.Builder(getContext())
+                            .setTipWord(getResources().getString(R.string.amount_too_big))
+                            .create();
+                    tipDialog.show();
+                    sendAmountET.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             tipDialog.dismiss();
@@ -251,6 +279,19 @@ public class BPSendTokenFragment extends BaseFragment {
                 if(!CommonUtil.isBU(txFee) || CommonUtil.isNull(txFee)){
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.invalid_tx_fee))
+                            .create();
+                    tipDialog.show();
+                    sendFormTxFeeEt.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            tipDialog.dismiss();
+                        }
+                    }, 1500);
+                    return;
+                }
+                if (Double.parseDouble(txFee) < com.bupocket.common.Constants.MIN_FEE) {
+                    tipDialog = new QMUITipDialog.Builder(getContext())
+                            .setTipWord(getResources().getString(R.string.tx_fee_too_small))
                             .create();
                     tipDialog.show();
                     sendFormTxFeeEt.postDelayed(new Runnable() {
