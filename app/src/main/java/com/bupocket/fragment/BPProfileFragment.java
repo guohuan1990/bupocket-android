@@ -1,39 +1,21 @@
 package com.bupocket.fragment;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.bupocket.R;
-import com.bupocket.base.BaseFragment;
-import com.bupocket.utils.AddressUtil;
-import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.QRCodeUtil;
-import com.bupocket.utils.SharedPreferencesHelper;
-import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
-import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
-
-import java.util.ArrayList;
-
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.bupocket.R;
+import com.bupocket.base.BaseFragment;
+import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.SharedPreferencesHelper;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 public class BPProfileFragment extends BaseFragment{
     private SharedPreferencesHelper sharedPreferencesHelper;
-    private String currentAccAddress;
     private String currentAccNick;
 
     @BindString(R.string.qr_copy_success_message)
@@ -44,7 +26,8 @@ public class BPProfileFragment extends BaseFragment{
     RelativeLayout mChangePwdRL;
     @BindView(R.id.helpFeedbackRL)
     RelativeLayout mHelpRL;
-
+    @BindView(R.id.languageRL)
+    RelativeLayout mLanguageRL;
     @BindView(R.id.versionNameTv)
     TextView mVersionNameTv;
     @BindView(R.id.profileAvatarIv)
@@ -67,12 +50,17 @@ public class BPProfileFragment extends BaseFragment{
                 gotoHelpFeedbackFragment();
             }
         });
+        mLanguageRL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoLanguageFragment();
+            }
+        });
         mProfileAvatarIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle argz = new Bundle();
                 argz.putString("accName",currentAccNick);
-                argz.putString("accAddress",currentAccAddress);
                 BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
                 bpUserInfoFragment.setArguments(argz);
                 startFragment(bpUserInfoFragment);
@@ -97,5 +85,9 @@ public class BPProfileFragment extends BaseFragment{
 
     private void gotoHelpFeedbackFragment(){
         startFragment(new BPHelpFeedbackFragment());
+    }
+
+    private void gotoLanguageFragment(){
+        startFragment(new BPLanguageFragment());
     }
 }

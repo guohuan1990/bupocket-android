@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">BuPocket</string>
+    <string name="app_name">Bu Pocket</string>
     <string name="tabbar_assets_txt">Assets</string>
     <string name="tabbar_discovery_txt">Discovery</string>
     <string name="tabbar_profile_txt">Profile</string>
     <string name="tabbr_wallet_txt">Wallet</string>
+    <string name="create_wallet_txt">Create wallet</string>
+    <string name="user_info_logout">Logout Current Identity</string>
+    <string name="user_info_backup_current_wallet" translatable="false">Backup Identity</string>
+    <string name="user_info_wallet_name" translatable="false">Identity Name</string>
+    <string name="user_info_wallet_id" translatable="false">Idntification</string>
+    <string name="user_info_logout_notice" translatable="false">Identity and all imported wallets will be removed,
+        please make sue all wallets are properly backed up.
+    </string>
+    <string name="common_dialog_cancel" translatable="false">Cancel</string>
+    <string name="common_dialog_confirm" translatable="false">Confirm</string>
+    <string name="user_info_title" translatable="false">My Identity</string>
     <string name="tabbr_otc_txt">c2c</string>
+    <string name="recently_tx_txt">Recent transaction records</string>
+    <string name="set_success">success</string>
 </resources>

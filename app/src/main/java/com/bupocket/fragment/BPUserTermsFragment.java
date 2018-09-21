@@ -10,11 +10,13 @@ import android.widget.TextView;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
+import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +36,8 @@ public class BPUserTermsFragment extends BaseFragment {
     TextView mUserTermsNext;
 
     private Boolean isAgreeTerms = false;
+    private int currentLanguage = -1;
+    String myLocaleStr;
 
     @Override
     protected View onCreateView() {
@@ -41,21 +45,38 @@ public class BPUserTermsFragment extends BaseFragment {
         ButterKnife.bind(this, root);
         initTopBar();
         eventListeners();
-        changeLang("cn");
+        int language = SharedPreferencesHelper.getInstance().getInt("currentLanguage", currentLanguage);
+        if(language == -1){
+            myLocaleStr = getContext().getResources().getConfiguration().locale.getLanguage();
+            switch (myLocaleStr){
+                case "zh": {
+                    language = 0;
+                    break;
+                }
+                case "en": {
+                    language = 1;
+                    break;
+                }
+                default : {
+                    language = 0;
+                }
+            }
+        }
+        changeLang(language);
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         return root;
     }
 
-    private void changeLang(String lang) {
+    private void changeLang(int lang) {
         try {
             Resources res = getResources();
             InputStream in_s;
             switch (lang) {
-                case "cn": {
+                case 0: {
                     in_s = res.openRawResource(R.raw.use_terms_cn);
                     break;
                 }
-                case "en": {
+                case 1: {
                     in_s = res.openRawResource(R.raw.use_terms_en);
                     break;
                 }

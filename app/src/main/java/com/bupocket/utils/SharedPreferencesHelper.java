@@ -2,6 +2,9 @@ package com.bupocket.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import com.bupocket.BPApplication;
 
 import java.util.Map;
 
@@ -9,11 +12,26 @@ public class SharedPreferencesHelper {
     private SharedPreferences sharedPreferences;
 
     private SharedPreferences.Editor editor;
+    private static final String APP_SP = "app_sp";
+    private static final String TAG = SharedPreferencesHelper.class.getSimpleName();
+
+    private SharedPreferencesHelper() {
+    }
 
     public SharedPreferencesHelper(Context context, String FILE_NAME) {
         sharedPreferences = context.getSharedPreferences(FILE_NAME,
                 Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+    }
+
+    private static SharedPreferencesHelper instance = new SharedPreferencesHelper();
+    private static SharedPreferences mSp = null;
+
+    public static SharedPreferencesHelper getInstance() {
+        if (mSp == null) {
+            mSp = BPApplication.getContext().getSharedPreferences(APP_SP, Context.MODE_PRIVATE);
+        }
+        return instance;
     }
 
     /**
@@ -83,5 +101,22 @@ public class SharedPreferencesHelper {
      */
     public Map<String, ?> getAll() {
         return sharedPreferences.getAll();
+    }
+
+    public int getInt(String key, int defValue) {
+        return mSp.getInt(key, defValue);
+    }
+
+    public void save(String key, Object value) {
+        if (value == null) {
+            return;
+        }
+        if (value instanceof String) {
+            mSp.edit().putString(key, (String) value).commit();
+        } else if (value instanceof Boolean) {
+            mSp.edit().putBoolean(key, (Boolean) value).commit();
+        } else if (value instanceof Integer) {
+            mSp.edit().putInt(key, (Integer) value).commit();
+        }
     }
 }
