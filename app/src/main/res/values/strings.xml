@@ -42,13 +42,13 @@
     <string name="hint_wallet_create_form_create_btn_txt" translatable="false">创建</string>
     <string name="otc_top_bar_buy_txt" translatable="false">购买</string>
     <string name="otc_top_bar_sell_txt" translatable="false">出售</string>
-    <string name="view_title_backup_wallet" translatable="false">备份钱包</string>
+    <string name="view_title_backup_wallet" translatable="false">备份身份</string>
     <string name="view_title_create_wallet_identity" translatable="false">创建身份</string>
     <string name="create_wallet_prompt_dialog_title" translatable="false">温馨提示</string>
     <string name="create_wallet_prompt_txt1" translatable="false">密码用于加密保护私钥，以及转账、调用合约等，所以强度非常重要。
         小布口袋不存储密码，也无法帮您找回，请务必牢记。</string>
     <string name="create_wallet_prompt_txt2" translatable="false">长度为8~20字符，建议混合大小写字母、数字、符号。</string>
-    <string name="backup_wallet_txt1" translatable="false">没有妥善备份就无法保障资产安全，删除程序或钱包后，你需要备份文件来恢复钱包</string>
+    <string name="backup_wallet_txt1" translatable="false">没有妥善备份就无法保障资产安全，删除程序或退出身份后，你需要备份文件来恢复身份</string>
     <string name="backup_wallet_txt2" translatable="false">请确保在四周无人，没有摄像头的安全环境下备份</string>
     <string name="backup_wallet_btn_txt" translatable="false">备份助记词</string>
     <string name="view_title_backup_mneonic_code" translatable="false">备份助记词</string>
@@ -148,7 +148,7 @@
     <string name="emptyView_mode_desc_fail_desc" translatable="false">请检测网络是否能正常连接</string>
     <string name="emptyView_mode_desc_retry" translatable="false">点击重试</string>
     <string name="emptyView_mode_desc_no_data" translatable="false">暂无数据</string>
-    <string name="invalid_address" translatable="false">无效的账户地址</string>
+    <string name="invalid_address" translatable="false">BU 地址不正确，请重新输入</string>
     <string name="send_err1" translatable="false">不能给自己转账</string>
     <string name="invalid_amount" translatable="false">无效的数量</string>
     <string name="invalid_tx_fee" translatable="false">无效的交易费</string>
@@ -191,6 +191,7 @@
     <string name="user_info_backup_current_wallet" translatable="false">备份身份</string>
     <string name="user_info_logout" translatable="false">退出当前身份</string>
     <string name="user_info_logout_loading" translatable="false">退出中</string>
+    <string name="user_info_backup_loading" translatable="false">加载中</string>
     <string name="user_info_logout_notice" translatable="false">即将移除身份及导入的钱包，请确保钱包已备份</string>
     <string name="user_info_logout_warning" translatable="false">警告：若未妥善备份，退出后将无法找回钱包，请慎重处理该操作</string>
 
@@ -201,6 +202,8 @@
     <string name="help_feedback_submit_success_msg" translatable="false">提交成功</string>
     <string name="help_feedback_submit_failed_msg" translatable="false">提交失败</string>
     <string name="content_empty_msg" translatable="false">请输入您的问题或反馈</string>
+    <string name="content_too_long_msg" translatable="false">问题或建议不能超过 100 字符</string>
     <string name="contact_empty_msg" translatable="false">请输入您的联系方式</string>
+    <string name="contact_too_long_msg" translatable="false">联系方式不能超过 20 字符</string>
 
 </resources>

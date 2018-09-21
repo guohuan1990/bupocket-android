@@ -6,4 +6,6 @@ public class Constants {
 
 
     public static final Integer SEND_TOKEN_NOTE_MAX_LENGTH = 20;
+    public static final Integer HELP_FEEDBACK_CONTENT_LENGTH = 100;
+    public static final Integer help_feedback_contact_length = 20;
 }

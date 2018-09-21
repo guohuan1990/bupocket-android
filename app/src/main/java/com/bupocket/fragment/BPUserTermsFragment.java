@@ -41,16 +41,7 @@ public class BPUserTermsFragment extends BaseFragment {
         ButterKnife.bind(this, root);
         initTopBar();
         eventListeners();
-        changeLang("en");
-//        try {
-//            Resources res = getResources();
-//            InputStream in_s = res.openRawResource(R.raw.use_terms_cn);
-//            byte[] b = new byte[in_s.available()];
-//            in_s.read(b);
-//            mUserTermsContentTv.setText(new String(b));
-//        }catch (IOException e) {
-//            mUserTermsContentTv.setText(new String("loading"));
-//        }
+        changeLang("cn");
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         return root;
     }
@@ -72,7 +63,6 @@ public class BPUserTermsFragment extends BaseFragment {
                     in_s = res.openRawResource(R.raw.use_terms_cn);
                 }
             }
-//            InputStream in_s = res.openRawResource(R.raw.use_terms_cn);
             byte[] b = new byte[in_s.available()];
             in_s.read(b);
             mUserTermsContentTv.setText(new String(b));

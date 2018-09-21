@@ -64,7 +64,7 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
                 }
                 sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode());
                 sharedPreferencesHelper.put("isFirstCreateWallet", "0");
-//                getActivity().getSupportFragmentManager().popBackStack(new HomeFragment().getClass().getName(), 0);
+//                getActivity().getSupportFragmentManager().popBackStack(new HomeFragment().getClass().getSimpleName(),0);
                 startFragment(new HomeFragment());
             }
         });

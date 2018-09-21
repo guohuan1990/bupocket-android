@@ -55,8 +55,6 @@ public class BPUserInfoFragment extends BaseFragment {
     private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private List<String> mnemonicCodeList;
-//    SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-//    private String identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
 
     @Override
     protected View onCreateView() {
@@ -107,7 +105,7 @@ public class BPUserInfoFragment extends BaseFragment {
                         final String password = mPasswordConfirmEt.getText().toString().trim();
                         final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                                .setTipWord(getResources().getString(R.string.wallet_create_creating_txt))
+                                .setTipWord(getResources().getString(R.string.user_info_backup_loading))
                                 .create();
                         tipDialog.show();
                         new Thread(new Runnable() {
@@ -240,7 +238,8 @@ public class BPUserInfoFragment extends BaseFragment {
                             sharedPreferencesHelper.put("isFirstCreateWallet","");
                             sharedPreferencesHelper.put("createWalletStep","");
                             tipDialog.dismiss();
-                            getActivity().getSupportFragmentManager().popBackStack(new BPCreateWalletFragment().getClass().getSimpleName(),0);
+//                            getActivity().getSupportFragmentManager().popBackStack(new BPCreateWalletFragment().getClass().getSimpleName(),0);
+                            startFragmentAndDestroyCurrent(new BPCreateWalletFragment());
                         } catch (Exception e) {
                             e.printStackTrace();
                             Looper.prepare();

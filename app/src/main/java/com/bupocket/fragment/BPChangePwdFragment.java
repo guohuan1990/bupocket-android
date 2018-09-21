@@ -2,6 +2,7 @@ package com.bupocket.fragment;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.RequiresApi;
@@ -57,6 +58,8 @@ public class BPChangePwdFragment extends BaseFragment{
     private boolean isOldPwdHideFirst = false;
     private boolean isConfirmPwdHideFirst = false;
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+
+
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_change_pwd, null);
@@ -66,6 +69,7 @@ public class BPChangePwdFragment extends BaseFragment{
         initData();
         buildWatcher();
         eventListeners();
+
 
 
         mNextChangePwdBtn.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +82,7 @@ public class BPChangePwdFragment extends BaseFragment{
                             .create();
                     tipDialog.show();
                     new Thread(new Runnable() {
+
                         @Override
                         public void run() {
                             String oldPwd = mOldPasswordET.getText().toString().trim();
@@ -90,7 +95,7 @@ public class BPChangePwdFragment extends BaseFragment{
 
                                 tipDialog.dismiss();
 
-                                startFragmentAndDestroyCurrent(new HomeFragment());
+                                startFragment(new HomeFragment());
 
                             } catch (WalletException e) {
                                 e.printStackTrace();
@@ -103,6 +108,7 @@ public class BPChangePwdFragment extends BaseFragment{
                             }
                         }
                     }).start();
+
 
                 }
             }
