@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,9 +18,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.AmountUtil;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.TxService;
+import com.bupocket.http.api.UserService;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
@@ -31,6 +41,12 @@ import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class BPSendTokenFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -52,8 +68,11 @@ public class BPSendTokenFragment extends BaseFragment {
     QMUIRoundButton mCompleteMnemonicCodeBtn;
     @BindView(R.id.sendFormScanIv)
     ImageView mSendFormScanIv;
+    private String hash;
 
     private Double availableBuBalance;
+    private String state;
+    private String sendTime;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_send, null);
@@ -370,7 +389,7 @@ public class BPSendTokenFragment extends BaseFragment {
                                         String accountBPData = getAccountBPData();
                                         String destAddess = getDestAccAddr();
                                         try {
-                                            Wallet.getInstance().sendBu(password,accountBPData, currentAccAddress, destAddess, sendAmount, note,txFee);
+                                            hash = Wallet.getInstance().sendBu(password,accountBPData, currentAccAddress, destAddess, sendAmount, note,txFee);
                                             tipDialog.dismiss();
                                         } catch (Exception e) {
                                             e.printStackTrace();
@@ -380,12 +399,16 @@ public class BPSendTokenFragment extends BaseFragment {
                                             Looper.loop();
                                         }finally {
                                             tipDialog.dismiss();
+                                            timer.schedule(timerTask,
+                                                    1 * 1000,//延迟1秒执行
+                                                    1000);
                                             Bundle argz = new Bundle();
                                             argz.putString("destAccAddr",destAddess);
                                             argz.putString("sendAmount",sendAmount);
                                             argz.putString("txFee",txFee);
                                             argz.putString("note",note);
-                                            argz.putString("sendTime","2018-09-15 19:02");
+                                            argz.getString("state",state);
+                                            argz.putString("sendTime",sendTime);
                                             BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
                                             bpSendStatusFragment.setArguments(argz);
                                             startFragment(bpSendStatusFragment);
@@ -436,4 +459,44 @@ public class BPSendTokenFragment extends BaseFragment {
 
         }
     }
+    private final Timer timer = new Timer();
+    @SuppressLint("HandlerLeak")
+    private Handler mHanlder = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
+                    Map<String, Object> parmasMap = new HashMap<>();
+                    parmasMap.put("hash",hash);
+                    Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetail(parmasMap);
+                    call.enqueue(new retrofit2.Callback<ApiResult<TxDetailRespDto>>(){
+
+                        @Override
+                        public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
+                            state = response.body().getData().getTxDeatilRespBo().getStatus().toString();
+                            sendTime = response.body().getData().getTxDeatilRespBo().getApplyTimeDate();
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
+
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+
+    private TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() {
+            if(hash != null && !hash.equals("")){
+                mHanlder.sendEmptyMessage(1);
+            }
+        }
+    };
 }
