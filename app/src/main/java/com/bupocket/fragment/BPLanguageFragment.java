@@ -40,8 +40,8 @@ public class BPLanguageFragment extends BaseFragment{
             public void onClick(View v) {
                 currentLanguage = 0;
                 LocaleUtil.changeAppLanguage(getContext(), currentLanguage);
-                mCnSelectedIV.setBackgroundColor(R.mipmap.icon_language_selected);
-                mEnSelectedIV.setBackgroundColor(getResources().getColor(R.color.app_color_white));
+                mCnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
+                mEnSelectedIV.setBackgroundResource(R.color.app_color_white);
             }
         });
         mLanguageENRL.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +49,8 @@ public class BPLanguageFragment extends BaseFragment{
             public void onClick(View v) {
                 currentLanguage = 1;
                 LocaleUtil.changeAppLanguage(getContext(), currentLanguage);
-                mCnSelectedIV.setBackgroundColor(getResources().getColor(R.color.app_color_white));
-                mEnSelectedIV.setBackgroundColor(R.mipmap.icon_language_selected);
+                mCnSelectedIV.setBackgroundResource(R.color.app_color_white);
+                mEnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
             }
         });
         return root;
@@ -60,10 +60,10 @@ public class BPLanguageFragment extends BaseFragment{
         int language = SpUtil.getInstance().getInt("currentLanguage", currentLanguage);
         switch (language) {
             case 0:
-                mCnSelectedIV.setBackgroundColor(R.mipmap.icon_language_selected);
+                mCnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
                 break;
             case 1:
-                mEnSelectedIV.setBackgroundColor(R.mipmap.icon_language_selected);
+                mEnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
                 break;
         }
     }
