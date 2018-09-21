@@ -2,13 +2,6 @@
     <string name="app_name">BuPocket</string>
 
     <!-- StatusBarHelper 状态栏工具 -->
-    <string name="statusBarHelper_translucentActivity_desc" translatable="false">通过在 Activity 中调用 QMUIStatusBarHelper.translucent() 方法，即可实现沉浸式状态栏的效果</string>
-    <string name="statusBarHelper_statusBar_height_result" translatable="false">状态栏实际高度为 %1$d</string>
-    <!-- 关于我们 -->
-    <string name="about_title" translatable="false">关于</string>
-    <string name="about_item_homepage" translatable="false">访问官网</string>
-    <string name="about_item_github" translatable="false">GitHub</string>
-    <string name="about_copyright" translatable="false">© %1$s QMUI Team All rights reserved.</string>
 
 
     <string name="tabbar_assets_txt">资产</string>
@@ -21,7 +14,6 @@
 
     <string name="function_opening" translatable="false">功能即将开放</string>
     <string name="tabbr_wallet_txt">钱包</string>
-    <string name="tabbr_otc_txt">OTC</string>
     <string name="wallet_create_txt" translatable="false">创建数字身份</string>
     <string name="wallet_create_create_btn_txt" translatable="false">立即创建</string>
     <string name="wallet_create_recover_btn_txt" translatable="false">恢复身份</string>

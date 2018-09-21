@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.util.Log;
 import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.base.BaseFragment;
@@ -38,26 +39,22 @@ public class BPMainActivity extends BaseFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        setStrictMode();
         sharedPreferencesHelper = new SharedPreferencesHelper(BPMainActivity.this, "buPocket");
-        if(savedInstanceState == null){
-            BaseFragment baseFragment = getFirstFragment();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(getContextViewId(), baseFragment, baseFragment.getClass().getSimpleName())
-                    .addToBackStack(baseFragment.getClass().getSimpleName())
-                    .commit();
+        try{
+            if(savedInstanceState == null){
+                BaseFragment baseFragment = getFirstFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(getContextViewId(), baseFragment, baseFragment.getClass().getSimpleName())
+                        .addToBackStack(baseFragment.getClass().getSimpleName())
+                        .commit();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.e("出错了：","ddd",e);
         }
-        BPUpgradeManager.getInstance(this).init();
-    }
 
-    private void setStrictMode() {
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .detectDiskReads().detectDiskWrites().detectNetwork()
-                .penaltyLog().build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                .detectLeakedSqlLiteObjects().detectLeakedClosableObjects()
-                .penaltyLog().penaltyDeath().build());
+        BPUpgradeManager.getInstance(this).init();
     }
 
     private BaseFragment getFirstFragment() {
