@@ -371,7 +371,7 @@ public class BPSendTokenFragment extends BaseFragment {
                                 final String password = mPasswordConfirmEt.getText().toString().trim();
                                 final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                                        .setTipWord("处理中...")
+                                        .setTipWord(getResources().getString(R.string.send_loading))
                                         .create();
                                 tipDialog.show();
                                 new Thread(new Runnable() {
@@ -432,7 +432,7 @@ public class BPSendTokenFragment extends BaseFragment {
         IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(this);
         intentIntegrator.setBeepEnabled(true);
         intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-        intentIntegrator.setPrompt("请将二维码置于取景框内扫描");
+        intentIntegrator.setPrompt(getResources().getString(R.string.wallet_scan_notice));
         // 开始扫描
         intentIntegrator.initiateScan();
     }
@@ -442,7 +442,7 @@ public class BPSendTokenFragment extends BaseFragment {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() == null) {
-                Toast.makeText(getActivity(), "取消扫描", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
             } else {
                 String destAddress = result.getContents();
                 destAccountAddressEt.setText(destAddress);
