@@ -41,4 +41,5 @@
     <color name="terms_unagree_btn_grey">#c9c9c9</color>
     <color name="help_feedback_et_background_color">#F5F5F5</color>
     <color name="disabled_btn_color">#9AD9FF</color>
+    <color name="language_background_color">#F5F5F5</color>
 </resources>

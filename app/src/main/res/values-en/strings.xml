@@ -6,4 +6,5 @@
     <string name="tabbar_profile_txt">Profile</string>
     <string name="tabbr_wallet_txt">Wallet</string>
     <string name="tabbr_otc_txt">c2c</string>
+    <string name="recently_tx_txt">Recent transaction records</string>
 </resources>
