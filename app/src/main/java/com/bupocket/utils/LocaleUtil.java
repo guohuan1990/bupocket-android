@@ -19,7 +19,7 @@ public class LocaleUtil {
      * @return Locale
      */
     public static Locale getUserLocale() {
-        int currentLanguage = SpUtil.getInstance().getInt("currentLanguage", 0);
+        int currentLanguage = SharedPreferencesHelper.getInstance().getInt("currentLanguage", 0);
         Locale myLocale = Locale.SIMPLIFIED_CHINESE;
         switch (currentLanguage) {
             case 0:
@@ -41,7 +41,7 @@ public class LocaleUtil {
     public static void changeAppLanguage(Context context) {
         if (context == null) return;
         Context appContext = context.getApplicationContext();
-        int currentLanguage = SpUtil.getInstance().getInt("currentLanguage", -1);
+        int currentLanguage = SharedPreferencesHelper.getInstance().getInt("currentLanguage", -1);
         Locale myLocale;
         // 0 简体中文  1 English
         switch (currentLanguage) {
@@ -68,7 +68,7 @@ public class LocaleUtil {
     public static void changeAppLanguage(Context context, int currentLanguage) {
         if (context == null) return;
         Context appContext = context.getApplicationContext();
-        SpUtil.getInstance().save("currentLanguage", currentLanguage);
+        SharedPreferencesHelper.getInstance().save("currentLanguage", currentLanguage);
         Locale myLocale = Locale.SIMPLIFIED_CHINESE;
         // 0 简体中文 1 English
         switch (currentLanguage) {
@@ -156,7 +156,7 @@ public class LocaleUtil {
     public static void setLanguage(Context context, Configuration newConfig) {
         if (context == null) return;
         Context appContext = context.getApplicationContext();
-        int currentLanguage = SpUtil.getInstance().getInt("currentLanguage", -1);
+        int currentLanguage = SharedPreferencesHelper.getInstance().getInt("currentLanguage", -1);
         Locale locale;
         // 0 简体中文 1 繁体中文 2 English
         switch (currentLanguage) {

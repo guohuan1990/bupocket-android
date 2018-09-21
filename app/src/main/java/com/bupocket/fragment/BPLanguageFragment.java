@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.LocaleUtil;
-import com.bupocket.utils.SpUtil;
+import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import butterknife.BindView;
@@ -40,8 +40,8 @@ public class BPLanguageFragment extends BaseFragment{
             public void onClick(View v) {
                 currentLanguage = 0;
                 LocaleUtil.changeAppLanguage(getContext(), currentLanguage);
-                mCnSelectedIV.setBackgroundColor(R.mipmap.icon_language_selected);
-                mEnSelectedIV.setBackgroundColor(getResources().getColor(R.color.app_color_white));
+                mCnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
+                mEnSelectedIV.setBackgroundResource(R.color.app_color_white);
             }
         });
         mLanguageENRL.setOnClickListener(new View.OnClickListener() {
@@ -49,21 +49,23 @@ public class BPLanguageFragment extends BaseFragment{
             public void onClick(View v) {
                 currentLanguage = 1;
                 LocaleUtil.changeAppLanguage(getContext(), currentLanguage);
-                mCnSelectedIV.setBackgroundColor(getResources().getColor(R.color.app_color_white));
-                mEnSelectedIV.setBackgroundColor(R.mipmap.icon_language_selected);
+                mCnSelectedIV.setBackgroundResource(R.color.app_color_white);
+                mEnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
             }
         });
         return root;
     }
 
     private void getLanguage() {
-        int language = SpUtil.getInstance().getInt("currentLanguage", currentLanguage);
+        int language = SharedPreferencesHelper.getInstance().getInt("currentLanguage", currentLanguage);
         switch (language) {
             case 0:
-                mCnSelectedIV.setBackgroundColor(R.mipmap.icon_language_selected);
+                mCnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
+                mLanguageCNRL.setEnabled(false);
                 break;
             case 1:
-                mEnSelectedIV.setBackgroundColor(R.mipmap.icon_language_selected);
+                mEnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
+                mLanguageENRL.setEnabled(false);
                 break;
         }
     }
