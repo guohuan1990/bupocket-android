@@ -85,7 +85,7 @@ public class BPUserInfoFragment extends BaseFragment {
 
                 ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
                 TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
-                mPasswordConfirmNotice.setText(R.string.user_info_logout_warning);
+                mPasswordConfirmNotice.setText(R.string.wallet_password_confirm_txt1);
 
                 mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
                     @Override

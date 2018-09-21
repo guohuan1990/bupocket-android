@@ -148,8 +148,12 @@ public class BPSendTokenFragment extends BaseFragment {
             @Override
             public void run() {
                 String balance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
-                availableBuBalance = AmountUtil.availableSubtractionFee(balance,com.bupocket.common.Constants.RESERVE_AMOUNT);
-                if(availableBuBalance == null || availableBuBalance < 0){
+                if(balance == null || Double.parseDouble(balance) < 0 || Double.parseDouble(balance) == 0){
+                    availableBuBalance = 0d;
+                } else {
+                    availableBuBalance = AmountUtil.availableSubtractionFee(balance,com.bupocket.common.Constants.RESERVE_AMOUNT);
+                }
+                if(availableBuBalance == null || availableBuBalance < 0) {
                     availableBuBalance = 0d;
                 }
                 Message msg = Message.obtain();
