@@ -46,8 +46,6 @@ public class BPUserInfoFragment extends BaseFragment {
     @BindView(R.id.identityIdTv)
     TextView mIdentityIdTv;
 
-    @BindView(R.id.testLayout)
-    QMUIWindowInsetLayout mTestLayout;
 
     private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
     private SharedPreferencesHelper sharedPreferencesHelper;

@@ -80,10 +80,9 @@ public class Wallet {
     }
 
     public WalletBPData updateAccountPassword(String oblPwd,String newPwd, String ciphertextSkeyData) throws WalletException {
-        // 校验密码是否匹配
         try {
-            BaseKeyStoreEntity baseKeyStoreEntity = JSON.parseObject(ciphertextSkeyData, BaseKeyStoreEntity.class);
-            String sKey = KeyStore.decodeMsg(oblPwd,baseKeyStoreEntity);
+            // 校验密码是否匹配
+            String sKey =  HexFormat.byteToHex(getSkey(oblPwd,ciphertextSkeyData));
             return create(newPwd,sKey);
         }catch (Exception e){
             e.printStackTrace();
@@ -161,23 +160,16 @@ public class Wallet {
 
         Long nonce = getAccountNonce(fromAccAddr) + 1;
 
-        // Record txhash for subsequent confirmation of the real result of the transaction.
-        // After recommending five blocks, call again through txhash `Get the transaction information
-        // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
         return sendBu(senderPrivateKey, destAddress, sendAmount, nonce, gasPrice, feeLimit);
     }
     private String sendBu(String senderPrivateKey, String destAddress, Long amount, Long senderNonce, Long gasPrice, Long feeLimit) throws Exception {
 
-        // 1. Get the account address to send this transaction
         String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
-
-        // 2. Build sendBU
         BUSendOperation buSendOperation = new BUSendOperation();
         buSendOperation.setSourceAddress(senderAddresss);
         buSendOperation.setDestAddress(destAddress);
         buSendOperation.setAmount(amount);
 
-        // 3. Build transaction
         TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
         transactionBuildBlobRequest.setSourceAddress(senderAddresss);
         transactionBuildBlobRequest.setNonce(senderNonce);
@@ -185,7 +177,6 @@ public class Wallet {
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         transactionBuildBlobRequest.addOperation(buSendOperation);
 
-        // 4. Build transaction BLob
         String transactionBlob = null;
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
         TransactionBuildBlobResult transactionBuildBlobResult = transactionBuildBlobResponse.getResult();

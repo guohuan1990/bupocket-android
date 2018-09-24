@@ -7,9 +7,11 @@ import android.view.InputDevice;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.enums.OutinTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.TimeUtil;
@@ -18,6 +20,7 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 public class BPSendStatusFragment extends BaseFragment {
 
@@ -56,6 +59,7 @@ public class BPSendStatusFragment extends BaseFragment {
 
     private void initData(){
 
+        Drawable txStatusIconDrawable;
         String destAccAddr = getArguments().getString("destAccAddr");
         String sendAmount = getArguments().getString("sendAmount") + " BU";
         String txFee = getArguments().getString("txFee") + " BU";
@@ -63,7 +67,6 @@ public class BPSendStatusFragment extends BaseFragment {
         String sendTime = getArguments().getString("sendTime");
         Integer txStatus = Integer.parseInt(getArguments().getString("state"));
 
-        Drawable txStatusIconDrawable;
         String txStatusStr;
         if(txStatus.equals(TxStatusEnum.SUCCESS.getCode())){
             txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_send_success);
@@ -72,11 +75,10 @@ public class BPSendStatusFragment extends BaseFragment {
             txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_send_fail);
             txStatusStr = getResources().getString(R.string.tx_status_fail_txt1);
         }
-
         targetAddrTv.setText(destAccAddr);
         mSendTokenStatusIcon.setImageDrawable(txStatusIconDrawable);
         mSendTokenStatusTv.setText(txStatusStr);
-        sendAmountTv.setText(sendAmount);
+        sendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(sendAmount) ? "-" : "+") + sendAmount);
         sendFeeTv.setText(txFee);
         sendNoteTv.setText(note);
         mSendTimeTv.setText(TimeUtil.timeStamp2Date(sendTime.substring(0,10),"yyyy.MM.dd HH:mm:ss"));
@@ -84,6 +86,7 @@ public class BPSendStatusFragment extends BaseFragment {
     }
 
     private void initTopBar() {
+        mTopBar.setBackgroundDividerEnabled(false);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
