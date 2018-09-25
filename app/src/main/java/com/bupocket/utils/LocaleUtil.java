@@ -1,9 +1,12 @@
 package com.bupocket.utils;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
+import android.os.LocaleList;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
@@ -39,6 +42,8 @@ public class LocaleUtil {
      * 设置语言：如果之前有设置就遵循设置如果没设置过就跟随系统语言
      */
     public static void changeAppLanguage(Context context) {
+        Resources resources = context.getResources();
+        Configuration configuration = resources.getConfiguration();
         if (context == null) return;
         Context appContext = context.getApplicationContext();
         int currentLanguage = SharedPreferencesHelper.getInstance().getInt("currentLanguage", -1);
@@ -58,6 +63,8 @@ public class LocaleUtil {
         if (needUpdateLocale(appContext, myLocale)) {
             updateLocale(appContext, myLocale);
         }
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        resources.updateConfiguration(configuration, dm);
     }
 
     /**
@@ -183,5 +190,24 @@ public class LocaleUtil {
             }
             appContext.getResources().updateConfiguration(configuration, appContext.getResources().getDisplayMetrics());
         }
+    }
+
+    public static Context attachBaseContext(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { // 8.0需要使用createConfigurationContext处理
+            return updateResources(context);
+        } else {
+            return context;
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    private static Context updateResources(Context context) {
+        Resources resources = context.getResources();
+        Locale locale = getUserLocale();// 获取新设置的语言
+
+        Configuration configuration = resources.getConfiguration();
+        configuration.setLocale(locale);
+        configuration.setLocales(new LocaleList(locale));
+        return context.createConfigurationContext(configuration);
     }
 }
