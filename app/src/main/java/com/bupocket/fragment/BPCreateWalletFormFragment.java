@@ -91,11 +91,13 @@ public class BPCreateWalletFormFragment extends BaseFragment {
                     mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
                     mSetPwdEt.setInputType(InputType.TYPE_CLASS_TEXT);
                     mSetPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
+                    mSetPwdEt.setSelection(mSetPwdEt.getText().length());
                     isPwdHideFirst = true;
                 } else {
                     mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
                     mSetPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     mSetPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance ());
+                    mSetPwdEt.setSelection(mSetPwdEt.getText().length());
                     isPwdHideFirst = false;
                 }
             }
@@ -107,11 +109,13 @@ public class BPCreateWalletFormFragment extends BaseFragment {
                     mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
                     mRepeatPwdEt.setInputType(InputType.TYPE_CLASS_TEXT);
                     mRepeatPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
+                    mRepeatPwdEt.setSelection(mRepeatPwdEt.getText().length());
                     isConfirmPwdHideFirst = true;
                 } else {
                     mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
                     mRepeatPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     mRepeatPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance ());
+                    mRepeatPwdEt.setSelection(mRepeatPwdEt.getText().length());
                     isConfirmPwdHideFirst = false;
                 }
             }

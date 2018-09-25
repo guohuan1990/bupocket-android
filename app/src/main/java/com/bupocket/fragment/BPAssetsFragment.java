@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.adaptor.MyTokenTxAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -221,8 +223,22 @@ public class BPAssetsFragment extends BaseFragment {
             for (GetMyTxsRespDto.TxRecordBean obj : getMyTxsRespDto.getTxRecord()) {
 
                 String txAccountAddress = AddressUtil.anonymous((obj.getOutinType() == 0) ? obj.getToAddress() : obj.getFromAddress());
-                String amountStr = (obj.getOutinType() == 0) ? "-" + obj.getAmount() : "+" + obj.getAmount();
-                String txStartStr = (obj.getTxStatus() == 0) ? getResources().getString(R.string.tx_status_success_txt) : getResources().getString(R.string.tx_status_fail_txt);
+                String amountStr = null;
+                String txStartStr = null;
+                if(obj.getOutinType() == 0){
+                    amountStr = "-" + obj.getAmount();
+                }else {
+                    amountStr = "+" + obj.getAmount();
+                }
+
+                if(TxStatusEnum.SUCCESS.getCode().equals(obj.getTxStatus())){
+                    txStartStr = getResources().getString(R.string.tx_status_success_txt);
+                    txStartStr = String.format("<font color=\"#999999\">%s", txStartStr);
+                }else{
+                    txStartStr = getResources().getString(R.string.tx_status_fail_txt);
+                    txStartStr = String.format("<font color=\"#FF7272\">%s", txStartStr);
+                }
+
                 if(!tokenTxInfoMap.containsKey(obj.getTxHash())){
                     TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime()), amountStr, txStartStr);
                     tokenTxInfo.setTxHash(obj.getTxHash());

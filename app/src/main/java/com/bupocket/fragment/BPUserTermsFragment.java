@@ -58,7 +58,7 @@ public class BPUserTermsFragment extends BaseFragment {
                     break;
                 }
                 default : {
-                    language = 0;
+                    language = 1;
                 }
             }
         }
@@ -121,7 +121,8 @@ public class BPUserTermsFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
-                startFragmentAndDestroyCurrent(new HomeFragment());
+//                startFragmentAndDestroyCurrent(new HomeFragment());
+                popBackStack();
             }
         });
     }

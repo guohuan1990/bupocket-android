@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
@@ -456,9 +457,10 @@ public class BPSendTokenFragment extends BaseFragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    if(timerTimes > 20){
+                    if(timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES){
                         timerTask.cancel();
                         txSendingTipDialog.dismiss();
+                        startFragmentAndDestroyCurrent(new BPTxRequestTimeoutFragment());
                         return;
                     }
                     timerTimes++;
@@ -477,6 +479,8 @@ public class BPSendTokenFragment extends BaseFragment {
                                 return;
                             }else{
                                 txDeatilRespBoBean = resp.getData().getTxDeatilRespBo();
+                                timerTask.cancel();
+                                txSendingTipDialog.dismiss();
                                 Bundle argz = new Bundle();
                                 argz.putString("destAccAddr",txDeatilRespBoBean.getDestAddress());
                                 argz.putString("sendAmount",txDeatilRespBoBean.getAmount());
@@ -487,8 +491,6 @@ public class BPSendTokenFragment extends BaseFragment {
                                 argz.putString("sendTime",txDeatilRespBoBean.getApplyTimeDate());
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
                                 bpSendStatusFragment.setArguments(argz);
-                                timerTask.cancel();
-                                txSendingTipDialog.dismiss();
                                 startFragmentAndDestroyCurrent(bpSendStatusFragment);
                             }
                         }

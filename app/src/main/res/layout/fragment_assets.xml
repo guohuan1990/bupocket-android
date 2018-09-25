@@ -10,7 +10,7 @@
         <LinearLayout
                 android:id="@+id/asset_LinearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:background="@mipmap/ic_asset_header_bg"
@@ -90,8 +90,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/bp_btn_hight"
                         android:layout_weight="1"
-                        android:layout_marginEnd="5dp" android:gravity="center"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:gravity="center"
                         android:text="@string/wallet_scan_txt"
                         app:qmui_borderColor="@color/app_btn_color_white"
                         app:qmui_backgroundColor="@color/app_btn_color_white"
@@ -102,6 +102,7 @@
                         android:id="@+id/walletSendBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/bp_btn_hight"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/wallet_send_txt"
@@ -121,6 +122,9 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:background="@drawable/text_view_left_borer_bg1"
+                    android:textSize="16sp"
                     android:layout_marginBottom="10dp"
                     android:text="@string/recently_tx_txt"/>
 

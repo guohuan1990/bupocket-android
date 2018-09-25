@@ -78,7 +78,7 @@ public class BPChangePwdFragment extends BaseFragment{
                 if(validateData()){
                     final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                             .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                            .setTipWord(getResources().getString(R.string.change_pwd_changing_txt))
+                            .setTipWord(getResources().getString(R.string.handling))
                             .create();
                     tipDialog.show();
                     new Thread(new Runnable() {
@@ -125,11 +125,13 @@ public class BPChangePwdFragment extends BaseFragment{
                     mOldPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
                     mOldPasswordET.setInputType(InputType.TYPE_CLASS_TEXT);
                     mOldPasswordET.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
+                    mOldPasswordET.setSelection(mOldPasswordET.getText().length());
                     isOldPwdHideFirst = true;
                 } else {
                     mOldPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
                     mOldPasswordET.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     mOldPasswordET.setTransformationMethod(PasswordTransformationMethod.getInstance ());
+                    mOldPasswordET.setSelection(mOldPasswordET.getText().length());
                     isOldPwdHideFirst = false;
                 }
             }
@@ -141,11 +143,13 @@ public class BPChangePwdFragment extends BaseFragment{
                     mNewPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
                     mNewPasswordET.setInputType(InputType.TYPE_CLASS_TEXT);
                     mNewPasswordET.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
+                    mNewPasswordET.setSelection(mNewPasswordET.getText().length());
                     isNewPwdHideFirst = true;
                 } else {
                     mNewPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
                     mNewPasswordET.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     mNewPasswordET.setTransformationMethod(PasswordTransformationMethod.getInstance ());
+                    mNewPasswordET.setSelection(mNewPasswordET.getText().length());
                     isNewPwdHideFirst = false;
                 }
             }
@@ -157,11 +161,13 @@ public class BPChangePwdFragment extends BaseFragment{
                     mNewPasswordConfirmIv.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
                     mNewPasswordConfirmET.setInputType(InputType.TYPE_CLASS_TEXT);
                     mNewPasswordConfirmET.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
+                    mNewPasswordConfirmET.setSelection(mNewPasswordConfirmET.getText().length());
                     isConfirmPwdHideFirst = true;
                 } else {
                     mNewPasswordConfirmIv.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
                     mNewPasswordConfirmET.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     mNewPasswordConfirmET.setTransformationMethod(PasswordTransformationMethod.getInstance ());
+                    mNewPasswordConfirmET.setSelection(mNewPasswordConfirmET.getText().length());
                     isConfirmPwdHideFirst = false;
                 }
             }

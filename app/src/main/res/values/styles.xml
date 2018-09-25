@@ -183,13 +183,13 @@
     </style>
 
     <style name="BPViewTitle">
-        <item name="android:textSize">32sp</item>
-        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:textSize">28sp</item>
         <item name="android:layout_height">40dp</item>
+        <item name="android:background">#ffffff</item>
         <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
         <item name="android:paddingRight">10dp</item>
-        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">1dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
