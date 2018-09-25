@@ -58,7 +58,7 @@ public class BPUserTermsFragment extends BaseFragment {
                     break;
                 }
                 default : {
-                    language = 0;
+                    language = 1;
                 }
             }
         }

@@ -26,7 +26,7 @@ public class BPLanguageFragment extends BaseFragment{
     @BindView(R.id.enSelectedIV)
     ImageView mEnSelectedIV;
 
-    private int currentLanguage = 0;
+    private int currentLanguage = -1;
 
     @Override
     protected View onCreateView() {
@@ -58,15 +58,34 @@ public class BPLanguageFragment extends BaseFragment{
 
     private void getLanguage() {
         int language = SharedPreferencesHelper.getInstance().getInt("currentLanguage", currentLanguage);
+        if(language == -1){
+            String myLocaleStr = getContext().getResources().getConfiguration().locale.getLanguage();
+            switch (myLocaleStr){
+                case "zh": {
+                    language = 0;
+                    break;
+                }
+                case "en": {
+                    language = 1;
+                    break;
+                }
+                default : {
+                    language = 1;
+                }
+            }
+
+        }
         switch (language) {
-            case 0:
+            case 0:{
                 mCnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
                 mLanguageCNRL.setEnabled(false);
                 break;
-            case 1:
+            }
+            case 1:{
                 mEnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
                 mLanguageENRL.setEnabled(false);
                 break;
+            }
         }
     }
 
