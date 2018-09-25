@@ -25,8 +25,12 @@ public class UpdateAppHttpUtil implements HttpManager {
             @Override
             public void onResponse(Call<ApiResult<GetCurrentVersionRespDto>> call, Response<ApiResult<GetCurrentVersionRespDto>> response) {
                 ApiResult<GetCurrentVersionRespDto> respDto = response.body();
-                callBack.onResponse(JSON.toJSONString(respDto.getData()));
-                System.out.println(respDto);
+                try{
+                    callBack.onResponse(JSON.toJSONString(respDto.getData()));
+                    System.out.println(respDto);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
