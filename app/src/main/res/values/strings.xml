@@ -21,6 +21,9 @@
     <string name="hint_wallet_create_form_input_password" translatable="false">密码</string>
     <string name="hint_wallet_create_form_input_rePassword" translatable="false">确认密码</string>
 
+    <string name="wallet_create_form_input_identity_name_empty" translatable="false">请输入身份名</string>
+    <string name="wallet_create_form_input_password_empty" translatable="false">请输入密码</string>
+    <string name="wallet_create_form_input_rePassword_empty" translatable="false">请确认密码</string>
     <string name="wallet_create_form_error1" translatable="false">密码与确认密码不一致</string>
     <string name="wallet_create_form_error2" translatable="false">密码长度为8~20个字符</string>
     <string name="wallet_create_form_error3" translatable="false">密码长度为8~20个字符</string>

@@ -131,7 +131,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
     private boolean validateData(){
         String indntityName = mSetIdentityNameEt.getText().toString().trim();
         if("".equals(indntityName)){
-            Toast.makeText(getActivity(), R.string.hint_wallet_create_form_input_identity_name,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.wallet_create_form_input_identity_name_empty,Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -143,7 +143,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
         String password = mSetPwdEt.getText().toString().trim();
 
         if("".equals(password)){
-            Toast.makeText(getActivity(), R.string.hint_wallet_create_form_input_password,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty,Toast.LENGTH_SHORT).show();
             return false;
         }
         if(password.length() < 8){
@@ -162,7 +162,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
         String repeatPassword = mRepeatPwdEt.getText().toString().trim();
 
         if("".equals(repeatPassword)){
-            Toast.makeText(getActivity(), R.string.hint_wallet_create_form_input_rePassword,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.wallet_create_form_input_rePassword_empty,Toast.LENGTH_SHORT).show();
             return false;
         }
         if(!repeatPassword.equals(password)){
