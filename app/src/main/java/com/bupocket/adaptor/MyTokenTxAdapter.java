@@ -1,5 +1,6 @@
 package com.bupocket.adaptor;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -10,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.bupocket.R;
+import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.dto.resp.GetMyTxsRespDto;
 import com.bupocket.model.TokenTxInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyTokenTxAdapter extends BaseAdapter {
@@ -24,6 +27,7 @@ public class MyTokenTxAdapter extends BaseAdapter {
         this.datas = datas;
         this.mContext = mContext;
     }
+
 
     @Override
     public int getCount() {
@@ -59,7 +63,14 @@ public class MyTokenTxAdapter extends BaseAdapter {
         holder.userAccAddrTV.setText(datas.get(i).getTxAccountAddress());
         holder.txAmountTV.setText(datas.get(i).getTxAmount());
         holder.txDateTV.setText(datas.get(i).getTxDate());
-        holder.txStatusTV.setText(Html.fromHtml(datas.get(i).getTxStatus(),Html.FROM_HTML_MODE_COMPACT));
+        String status = datas.get(i).getTxStatus();
+        if(TxStatusEnum.SUCCESS.getName().equals(status)){
+            holder.txStatusTV.setText(R.string.tx_status_success_txt);
+            holder.txStatusTV.setTextColor(convertView.getResources().getColor(R.color.tx_status_success_txt_color));
+        }else {
+            holder.txStatusTV.setText(R.string.tx_status_fail_txt);
+            holder.txStatusTV.setTextColor(convertView.getResources().getColor(R.color.tx_status_failed_txt_color));
+        }
         return convertView;
     }
 

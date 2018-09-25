@@ -232,11 +232,9 @@ public class BPAssetsFragment extends BaseFragment {
                 }
 
                 if(TxStatusEnum.SUCCESS.getCode().equals(obj.getTxStatus())){
-                    txStartStr = getResources().getString(R.string.tx_status_success_txt);
-                    txStartStr = String.format("<font color=\"#999999\">%s", txStartStr);
+                    txStartStr = TxStatusEnum.SUCCESS.getName();
                 }else{
-                    txStartStr = getResources().getString(R.string.tx_status_fail_txt);
-                    txStartStr = String.format("<font color=\"#FF7272\">%s", txStartStr);
+                    txStartStr = TxStatusEnum.FAIL.getName();
                 }
 
                 if(!tokenTxInfoMap.containsKey(obj.getTxHash())){

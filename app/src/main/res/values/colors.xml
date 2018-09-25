@@ -43,4 +43,6 @@
     <color name="disabled_btn_color">#9AD9FF</color>
     <color name="language_background_color">#F5F5F5</color>
     <color name="app_color_white_background">#FFFFFF</color>
+    <color name="tx_status_success_txt_color">#999999</color>
+    <color name="tx_status_failed_txt_color">#E46969</color>
 </resources>
