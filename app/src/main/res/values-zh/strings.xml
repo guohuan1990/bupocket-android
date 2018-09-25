@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">小布口袋</string>
-    <string name="tabbar_assets_txt">资产</string>
+    <string name="tabbar_assets_txt">钱包</string>
     <string name="tabbar_discovery_txt">发现</string>
-    <string name="tabbar_profile_txt">我</string>
+    <string name="tabbar_profile_txt">我的</string>
     <string name="tabbr_wallet_txt">钱包</string>
 </resources>

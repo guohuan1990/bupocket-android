@@ -4,7 +4,7 @@
     <!-- StatusBarHelper 状态栏工具 -->
 
 
-    <string name="tabbar_assets_txt">资产</string>
+    <string name="tabbar_assets_txt">钱包</string>
     <string name="tabbar_discovery_txt">发现</string>
     <string name="tabbar_profile_txt">我的</string>
 
@@ -25,10 +25,10 @@
     <string name="wallet_create_form_input_password_empty" translatable="false">请输入密码</string>
     <string name="wallet_create_form_input_rePassword_empty" translatable="false">请确认密码</string>
     <string name="wallet_create_form_error1" translatable="false">密码与确认密码不一致</string>
-    <string name="wallet_create_form_error2" translatable="false">密码长度为8~20个字符</string>
-    <string name="wallet_create_form_error3" translatable="false">密码长度为8~20个字符</string>
+    <string name="wallet_create_form_error2" translatable="false">密码为8~20个任意字符</string>
+    <string name="wallet_create_form_error3" translatable="false">密码为8~20个任意字符</string>
     <string name="wallet_create_form_error4" translatable="false">身份名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
-    <string name="wallet_create_form_error5" translatable="false">密码格式不对</string>
+    <string name="wallet_create_form_error5" translatable="false">密码为8~20个任意字符</string>
 
     <string name="wallet_create_creating_txt" translatable="false">创建中</string>
     <string name="wallet_create_created_txt" translatable="false">创建成功</string>
@@ -56,7 +56,7 @@
     <string name="confirm_mneonic_code_btn_txt" translatable="false">完成</string>
     <string name="wallet_password_confirm_title" translatable="false">密码确认</string>
     <string name="wallet_password_confirm_txt1" translatable="false">请填写钱包密码以确认备份</string>
-    <string name="hint_wallet_passwrod_confirm_txt1" translatable="false">8-20个字符，含数字、字母和符号</string>
+    <string name="hint_wallet_passwrod_confirm_txt1" translatable="false">8~20任意字符</string>
     <string name="hint_wallet_passwrod_confirm_submit_btn" translatable="false">确认</string>
     <string name="wallet_send_txt" translatable="false">转账</string>
     <string name="wallet_scan_txt" translatable="false">扫一扫</string>
@@ -79,12 +79,12 @@
     <string name="recover_edit_new_wallet_name_hint" translatable="false">请输入新钱包名</string>
     <string name="recover_input_wallet_name_error" translatable="false">只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
     <string name="recover_set_pwd_hint" translatable="false">请设置密码</string>
-    <string name="recover_set_pwd_error" translatable="false">密码为8-20个字符</string>
+    <string name="recover_set_pwd_error" translatable="false">密码为8~20个任意字符</string>
     <string name="recover_confirm_pwd_hint" translatable="false">请确认密码</string>
     <string name="recover_confirm_pwd_error" translatable="false">密码与确认密码不一致</string>
     <string name="recover_wallet_next_btn" translatable="false">恢复</string>
     <string name="recover_wallet_reloading" translatable="false">恢复中</string>
-    <string name="recover_wallet_error_tip" translatable="false">导入失败</string>
+    <string name="recover_wallet_error_tip" translatable="false">助记词输入有误，请重新输入</string>
 
     <string name="view_title_wallet_sendBU" translatable="false">BU转账</string>
     <string name="send_address_title" translatable="false">对方账户（BU地址）</string>
@@ -175,10 +175,10 @@
     <string name="change_pwd_err4" translatable="false">请输入旧密码</string>
     <string name="change_pwd_err5" translatable="false">请输入旧密码</string>
     <string name="change_pwd_form_error1" translatable="false">密码和确认密码输入不一致，请重新输入</string>
-    <string name="change_pwd_form_error2" translatable="false">密码长度最多20个字符</string>
-    <string name="change_pwd_form_error3" translatable="false">密码长度至少8个字符</string>
+    <string name="change_pwd_form_error2" translatable="false">密码为8~20个任意字符</string>
+    <string name="change_pwd_form_error3" translatable="false">密码为8~20个任意字符</string>
     <string name="change_pwd_form_error4" translatable="false">身份名格式不对</string>
-    <string name="change_pwd_form_error5" translatable="false">密码格式不对</string>
+    <string name="change_pwd_form_error5" translatable="false">密码为8~20个任意字符</string>
     <string name="change_pwd_form_error6" translatable="false">旧密码错误</string>
     <string name="change_pwd_changing_txt" translatable="false">密码修改中...</string>
     <string name="change_pwd_change_success_txt" translatable="false">密码修改成功</string>

@@ -78,7 +78,7 @@ public class BPSendStatusFragment extends BaseFragment {
         targetAddrTv.setText(destAccAddr);
         mSendTokenStatusIcon.setImageDrawable(txStatusIconDrawable);
         mSendTokenStatusTv.setText(txStatusStr);
-        sendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(sendAmount) ? "-" : "+") + sendAmount);
+        sendAmountTv.setText(sendAmount);
         sendFeeTv.setText(txFee);
         sendNoteTv.setText(note);
         mSendTimeTv.setText(TimeUtil.timeStamp2Date(sendTime.substring(0,10),"yyyy.MM.dd HH:mm:ss"));

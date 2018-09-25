@@ -226,9 +226,9 @@ public class BPAssetsFragment extends BaseFragment {
                 String amountStr = null;
                 String txStartStr = null;
                 if(obj.getOutinType() == 0){
-                    amountStr = "-" + obj.getAmount();
+                    amountStr = "-" + obj.getAmount() + "BU";
                 }else {
-                    amountStr = "+" + obj.getAmount();
+                    amountStr = "+" + obj.getAmount() + "BU";
                 }
 
                 if(TxStatusEnum.SUCCESS.getCode().equals(obj.getTxStatus())){
