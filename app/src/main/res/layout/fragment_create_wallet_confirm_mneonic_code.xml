@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@color/qmui_config_color_white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <LinearLayout
@@ -9,13 +10,17 @@
             android:layout_height="match_parent"
             android:layout_marginTop="?attr/qmui_topbar_height"
             android:background="#FFFFFF"
-            android:padding="@dimen/view_padding"
             android:orientation="vertical">
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/view_title_confirm_mneonic_code"
                 android:theme="@style/BPViewTitle"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/view_padding"
+            android:orientation="vertical">
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,6 +56,7 @@
                 app:rowCount="3"
                 app:columnCount="4">
         </android.support.v7.widget.GridLayout>
+    </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

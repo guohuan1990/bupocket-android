@@ -12,4 +12,6 @@ public class Constants {
     public static final double RESERVE_AMOUNT = 0.02;
     public static final double MIN_SEND_AMOUNT = 0.00000001;
     public static final double MAX_SEND_AMOUNT = 10000;
+
+    public static final Integer TX_REQUEST_TIMEOUT_TIMES = 20;
 }

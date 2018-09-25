@@ -78,7 +78,7 @@ public class BPChangePwdFragment extends BaseFragment{
                 if(validateData()){
                     final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                             .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                            .setTipWord(getResources().getString(R.string.change_pwd_changing_txt))
+                            .setTipWord(getResources().getString(R.string.handling))
                             .create();
                     tipDialog.show();
                     new Thread(new Runnable() {

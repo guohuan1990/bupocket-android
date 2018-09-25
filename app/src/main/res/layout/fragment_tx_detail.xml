@@ -197,9 +197,10 @@
                                     android:paddingLeft="5dp"
                                     android:layout_marginTop="10dp"
                                     android:layout_marginBottom="10dp"
-                                    android:background="@drawable/text_view_left_borer_bg"
+
                                     android:textStyle="bold"
-                                    android:paddingStart="5dp" android:text="TX Info"/>
+                                    android:paddingStart="5dp"
+                                    android:text="TX Info"/>
                             <LinearLayout android:layout_width="match_parent"
                                           android:layout_height="wrap_content"
                                           android:padding="@dimen/view_padding"
@@ -220,8 +221,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="4"
-                                            android:gravity="end"
-                                            android:text="83a5afe9b4d17bd29dca1beff1e182269f65162a32ce6d9924e7a4695b2d4317"/>
+                                            android:gravity="end"/>
                                 </LinearLayout>
                                 <LinearLayout
                                         android:layout_width="match_parent"
@@ -405,9 +405,10 @@
                                     android:paddingLeft="5dp"
                                     android:layout_marginTop="10dp"
                                     android:layout_marginBottom="10dp"
-                                    android:background="@drawable/text_view_left_borer_bg"
+
                                     android:textStyle="bold"
-                                    android:paddingStart="5dp" android:text="Block Info"/>
+                                    android:paddingStart="5dp"
+                                    android:text="Block Info"/>
                             <LinearLayout android:layout_width="match_parent"
                                           android:layout_height="wrap_content"
                                           android:padding="@dimen/view_padding"
@@ -448,7 +449,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_weight="4"
                                             android:gravity="end"
-                                            android:text="83a5afe9b4d17bd29dca1beff1e182269f65162a32ce6d9924e7a4695b2d4317"/>
+                                            android:text=""/>
                                 </LinearLayout>
                                 <LinearLayout
                                         android:layout_width="match_parent"

@@ -64,6 +64,7 @@
     <string name="tx_status_fail_txt" translatable="false">失败</string>
     <string name="tx_status_success_txt1" translatable="false">转账成功</string>
     <string name="tx_status_fail_txt1" translatable="false">转账失败</string>
+    <string name="tx_timeout_txt1" translatable="false">请求超时</string>
 
     <string name="password_comfirm_dialog_title" translatable="false">密码确认</string>
     <string name="password_comfirm_dialog_sub_txt" translatable="false">请填写钱包密码以确认转出</string>
@@ -210,5 +211,7 @@
     <string name="language_cn" translatable="false">简体中文</string>
     <string name="language_en" translatable="false">English</string>
     <string name="set_success">设置成功</string>
+    <string name="handling">处理中...</string>
+    <string name="i_knew_btn_txt">我知道了</string>
 
 </resources>

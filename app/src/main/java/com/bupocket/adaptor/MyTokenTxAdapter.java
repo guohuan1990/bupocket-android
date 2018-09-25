@@ -1,6 +1,9 @@
 package com.bupocket.adaptor;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +40,7 @@ public class MyTokenTxAdapter extends BaseAdapter {
         return position;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         ViewHolder holder;
@@ -55,7 +59,7 @@ public class MyTokenTxAdapter extends BaseAdapter {
         holder.userAccAddrTV.setText(datas.get(i).getTxAccountAddress());
         holder.txAmountTV.setText(datas.get(i).getTxAmount());
         holder.txDateTV.setText(datas.get(i).getTxDate());
-        holder.txStatusTV.setText(datas.get(i).getTxStatus());
+        holder.txStatusTV.setText(Html.fromHtml(datas.get(i).getTxStatus(),Html.FROM_HTML_MODE_COMPACT));
         return convertView;
     }
 
