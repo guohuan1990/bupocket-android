@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +39,7 @@ public class BPCreateWalletShowMneonicCodeFragment extends BaseFragment {
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_create_wallet_show_mneonic_code, null);
         ButterKnife.bind(this, root);
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         initTopBar();
         printMnemonicCode();
         submit();
@@ -53,6 +55,7 @@ public class BPCreateWalletShowMneonicCodeFragment extends BaseFragment {
 
                 BPCreateWalletConfirmMneonicCodeFragment createWalletConfirmMneonicCodeFragment = new BPCreateWalletConfirmMneonicCodeFragment();
                 Bundle argz = new Bundle();
+                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
                 List<String> mneonicCodeList = getArguments().getStringArrayList("mneonicCodeList");
                 argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) mneonicCodeList);
                 createWalletConfirmMneonicCodeFragment.setArguments(argz);
@@ -97,6 +100,7 @@ public class BPCreateWalletShowMneonicCodeFragment extends BaseFragment {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
                 popBackStack();
             }
         });

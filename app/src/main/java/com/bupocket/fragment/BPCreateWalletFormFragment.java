@@ -124,7 +124,6 @@ public class BPCreateWalletFormFragment extends BaseFragment {
 
     private void initData(){
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
 
         initCreateWalletPromptView();
