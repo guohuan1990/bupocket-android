@@ -222,13 +222,15 @@ public class Wallet {
         String address = PrivateKey.getEncAddress(publicKey);
         return address;
     }
-    private Long getAccountNonce(String accountAddress){
+    private Long getAccountNonce(String accountAddress) throws WalletException{
         AccountGetNonceRequest request = new AccountGetNonceRequest();
         request.setAddress(accountAddress);
 
         AccountGetNonceResponse response = sdk.getAccountService().getNonce(request);
         if (0 == response.getErrorCode()) {
-           return response.getResult().getNonce();
+            return response.getResult().getNonce();
+        }else if(11007 == response.getErrorCode()){
+            throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
         }
         return null;
     }
