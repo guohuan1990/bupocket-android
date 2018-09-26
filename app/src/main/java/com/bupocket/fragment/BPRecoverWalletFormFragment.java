@@ -127,7 +127,8 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
-                startFragmentAndDestroyCurrent(new BPCreateWalletFragment());
+//                startFragmentAndDestroyCurrent(new BPCreateWalletFragment());
+                popBackStack();
             }
         });
     }
