@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/app_color_white_background">
 
         <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
@@ -19,112 +20,116 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:layout_marginTop="10dp"
+                android:padding="10dp"
                 android:text="@string/recover_wallet_title"
                 android:theme="@style/BPViewTitle" />
+
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/view_padding">
+
+                <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-            android:padding="@dimen/view_padding">
-                <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:layout_marginBottom="30dp"
-                              android:orientation="vertical">
+                    android:layout_marginBottom="30dp"
+                    android:orientation="vertical">
 
                     <EditText
-                            android:id="@+id/recoverMneonicCodeEt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:background="#F5F5F5"
-                            android:textSize="14sp"
-                            android:gravity="left|top"
-                            android:hint="@string/recover_edit_mneonic_code_hint"
-                            android:inputType="textMultiLine"
-                            android:minLines="6"
-                            android:padding="10dp"
-                            android:textColorHint="@color/multiline_edit_hint_color" />
+                        android:id="@+id/recoverMneonicCodeEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="#F5F5F5"
+                        android:gravity="start|top"
+                        android:hint="@string/recover_edit_mneonic_code_hint"
+                        android:inputType="textMultiLine"
+                        android:minLines="6"
+                        android:padding="10dp"
+                        android:textColorHint="@color/multiline_edit_hint_color"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <EditText
-                        android:id="@+id/recoverWalletNameEt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/recover_edit_new_wallet_name_hint"
-                        android:inputType="" android:theme="@style/BPEditText" />
+                    android:id="@+id/recoverWalletNameEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/recover_edit_new_wallet_name_hint"
+                    android:inputType=""
+                    android:theme="@style/BPEditText" />
 
                 <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <EditText
-                            android:id="@+id/recoverPwdEt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="30dp"
-                            android:paddingEnd="20dp"
-                            android:paddingRight="20dp"
-                            android:gravity="left"
-                            android:hint="@string/recover_set_pwd_hint"
-                            android:inputType="textPassword"
-                            android:theme="@style/BPEditText" />
+                        android:id="@+id/recoverPwdEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:gravity="start"
+                        android:hint="@string/recover_set_pwd_hint"
+                        android:inputType="textPassword"
+                        android:paddingEnd="20dp"
+                        android:paddingRight="20dp"
+                        android:theme="@style/BPEditText" />
 
                     <ImageView
-                            android:id="@+id/recoverShowPwdIv"
-                            android:layout_width="20dp"
-                            android:layout_height="50dp"
-                            android:contentDescription="TODO" android:paddingBottom="20dp"
-                            android:paddingTop="20dp"
-                            android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
-                            android:layout_alignParentBottom="true"
-                            android:src="@mipmap/icon_close_eye"
-                    />
+                        android:id="@+id/recoverShowPwdIv"
+                        android:layout_width="20dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:src="@mipmap/icon_close_eye" />
                 </RelativeLayout>
 
 
-
                 <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <EditText
-                            android:id="@+id/recoverConfirmPwdEt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="30dp"
-                            android:paddingEnd="20dp" android:paddingRight="20dp"
-                            android:gravity="left"
-                            android:hint="@string/recover_confirm_pwd_hint"
-                            android:inputType="textPassword"
-                            android:theme="@style/BPEditText" />
+                        android:id="@+id/recoverConfirmPwdEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:gravity="start"
+                        android:hint="@string/recover_confirm_pwd_hint"
+                        android:inputType="textPassword"
+                        android:paddingEnd="20dp"
+                        android:paddingRight="20dp"
+                        android:theme="@style/BPEditText" />
 
                     <ImageView
-                            android:id="@+id/recoverShowConfirmPwdIv"
-                            android:layout_width="20dp"
-                            android:layout_height="50dp"
-                            android:contentDescription="TODO" android:paddingBottom="20dp"
-                            android:paddingTop="20dp"
-                            android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
-                            android:layout_alignParentBottom="true"
-                            android:src="@mipmap/icon_close_eye"
-                    />
+                        android:id="@+id/recoverShowConfirmPwdIv"
+                        android:layout_width="20dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:src="@mipmap/icon_close_eye" />
                 </RelativeLayout>
 
                 <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                        android:id="@+id/recoverWalletSubmitBtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/bp_btn_hight"
-                        android:layout_marginTop="55dp"
-                        android:gravity="center"
-                        android:text="@string/recover_wallet_next_btn"
-                        android:textColor="@color/app_btn_color_white"
-                        android:textSize="18sp"
-                        app:qmui_backgroundColor="@color/disabled_btn_color"
-                        app:qmui_borderColor="@color/disabled_btn_color"
-                        app:qmui_radius="5dp" />
+                    android:id="@+id/recoverWalletSubmitBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/bp_btn_hight"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="55dp"
+                    android:gravity="center"
+                    android:text="@string/recover_wallet_next_btn"
+                    android:textColor="@color/app_btn_color_white"
+                    android:textSize="18sp"
+                    app:qmui_backgroundColor="@color/disabled_btn_color"
+                    app:qmui_borderColor="@color/disabled_btn_color"
+                    app:qmui_radius="5dp" />
             </LinearLayout>
 
 
@@ -132,10 +137,10 @@
     </ScrollView>
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
-            android:id="@+id/topbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/app_color_white"
-            android:fitsSystemWindows="true"/>
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_color_white"
+        android:fitsSystemWindows="true" />
 
 </android.support.design.widget.CoordinatorLayout>

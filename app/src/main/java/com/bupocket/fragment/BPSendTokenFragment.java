@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
+import com.bupocket.activity.CaptureActivity;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.TxStatusEnum;
@@ -334,10 +335,10 @@ public class BPSendTokenFragment extends BaseFragment {
                 addressTxt.setText(address);
 
                 TextView amountTxt = sheet.findViewById(R.id.sendAmount);
-                amountTxt.setText(sendAmount);
+                amountTxt.setText(sendAmount + " BU");
 
                 TextView estimateCostTxt = sheet.findViewById(R.id.sendEstimateCost);
-                estimateCostTxt.setText(txFee);
+                estimateCostTxt.setText(txFee + " BU");
 
                 TextView remarkTxt = sheet.findViewById(R.id.sendRemark);
                 remarkTxt.setText(note);
@@ -428,6 +429,7 @@ public class BPSendTokenFragment extends BaseFragment {
         intentIntegrator.setBeepEnabled(true);
         intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
         intentIntegrator.setPrompt(getResources().getString(R.string.wallet_scan_notice));
+        intentIntegrator.setCaptureActivity(CaptureActivity.class);
         // 开始扫描
         intentIntegrator.initiateScan();
     }
@@ -486,7 +488,7 @@ public class BPSendTokenFragment extends BaseFragment {
                                 argz.putString("sendAmount",txDeatilRespBoBean.getAmount());
                                 argz.putString("txFee",txDeatilRespBoBean.getFee());
                                 // TODO 交易详情缺少 备注
-                                argz.putString("note","");
+                                argz.putString("note",txDeatilRespBoBean.getOriginalMetadata());
                                 argz.putString("state",txDeatilRespBoBean.getStatus().toString());
                                 argz.putString("sendTime",txDeatilRespBoBean.getApplyTimeDate());
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();

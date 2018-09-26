@@ -215,7 +215,7 @@ public class BPAssetsFragment extends BaseFragment {
     private void handleMyTxs(GetMyTxsRespDto getMyTxsRespDto){
 
         if(getMyTxsRespDto != null || getMyTxsRespDto.getTxRecord() != null){
-            if(getMyTxsRespDto.getPage().getTotal() == 0){
+            if(getMyTxsRespDto.getPage().getCount() == 0){
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
                 return;
             }
@@ -227,9 +227,9 @@ public class BPAssetsFragment extends BaseFragment {
                 String amountStr = null;
                 String txStartStr = null;
                 if(obj.getOutinType() == 0){
-                    amountStr = "-" + obj.getAmount() + "BU";
+                    amountStr = "-" + obj.getAmount() + " BU";
                 }else {
-                    amountStr = "+" + obj.getAmount() + "BU";
+                    amountStr = "+" + obj.getAmount() + " BU";
                 }
 
                 if(TxStatusEnum.SUCCESS.getCode().equals(obj.getTxStatus())){

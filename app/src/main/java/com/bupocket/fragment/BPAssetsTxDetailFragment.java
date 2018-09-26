@@ -150,11 +150,12 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     mTxDetailFeeTv.setText(txDeatilRespBoBean.getFee());
                     mTxDetailSendDateTv.setText(TimeUtil.timeStamp2Date(txDeatilRespBoBean.getApplyTimeDate().toString().substring(0,10),"yyyy.MM.dd HH:mm:ss"));
                     mTxDetailTXHashTv.setText(txInfoRespBoBean.getHash());
+                    mTxDetailNoteTv.setText(txDeatilRespBoBean.getOriginalMetadata());
 
                     mTxDetailTxInfoSourceAddressTv.setText(txInfoRespBoBean.getSourceAddress());
                     mTxDetailTxInfoDestAddressTv.setText(txInfoRespBoBean.getDestAddress());
-                    mTxDetailTxInfoAmountTv.setText(txInfoRespBoBean.getAmount());
-                    mTxDetailTxInfoTXFeeTv.setText(txInfoRespBoBean.getFee());
+                    mTxDetailTxInfoAmountTv.setText(txInfoRespBoBean.getAmount() + " BU");
+                    mTxDetailTxInfoTXFeeTv.setText(txInfoRespBoBean.getFee() + " BU");
                     mTxDetailTxInfoNonceTv.setText(txInfoRespBoBean.getNonce() + "");
                     mTxDetailTxInfoLedgerSeqTv.setText(txInfoRespBoBean.getLedgerSeq() + "");
 

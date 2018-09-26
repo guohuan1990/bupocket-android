@@ -5,4 +5,5 @@
     <string name="tabbar_discovery_txt">发现</string>
     <string name="tabbar_profile_txt">我的</string>
     <string name="tabbr_wallet_txt">钱包</string>
+    <string name="set_success">设置成功</string>
 </resources>

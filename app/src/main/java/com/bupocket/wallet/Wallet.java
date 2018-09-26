@@ -160,9 +160,11 @@ public class Wallet {
 
         Long nonce = getAccountNonce(fromAccAddr) + 1;
 
-        return sendBu(senderPrivateKey, destAddress, sendAmount, nonce, gasPrice, feeLimit);
+        String transMetadata = note;
+
+        return sendBu(senderPrivateKey, destAddress, sendAmount, nonce, gasPrice, feeLimit,transMetadata);
     }
-    private String sendBu(String senderPrivateKey, String destAddress, Long amount, Long senderNonce, Long gasPrice, Long feeLimit) throws Exception {
+    private String sendBu(String senderPrivateKey, String destAddress, Long amount, Long senderNonce, Long gasPrice, Long feeLimit,String transMetadata) throws Exception {
 
         String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
         BUSendOperation buSendOperation = new BUSendOperation();
@@ -176,6 +178,7 @@ public class Wallet {
         transactionBuildBlobRequest.setFeeLimit(feeLimit);
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         transactionBuildBlobRequest.addOperation(buSendOperation);
+        transactionBuildBlobRequest.setMetadata(transMetadata);
 
         String transactionBlob = null;
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
