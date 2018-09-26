@@ -35,6 +35,8 @@ public class UpdateAppHttpUtil implements HttpManager {
 
             @Override
             public void onFailure(Call<ApiResult<GetCurrentVersionRespDto>> call, Throwable t) {
+                System.out.println("call = [" + call + "], t = [" + t + "]");
+                callBack.onError("false");
             }
         });
     }

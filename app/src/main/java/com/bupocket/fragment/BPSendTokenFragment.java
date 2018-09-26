@@ -396,7 +396,7 @@ public class BPSendTokenFragment extends BaseFragment {
                                         }catch (WalletException e){
                                             e.printStackTrace();
                                             Looper.prepare();
-                                            Toast.makeText(getActivity(), "网络不给力，请稍后再试", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
                                             txSendingTipDialog.dismiss();
                                             Looper.loop();
                                         } catch (Exception e) {
