@@ -29,6 +29,7 @@ import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.exception.WalletException;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -392,6 +393,12 @@ public class BPSendTokenFragment extends BaseFragment {
                                         String destAddess = getDestAccAddr();
                                         try {
                                             hash = Wallet.getInstance().sendBu(password,accountBPData, currentAccAddress, destAddess, sendAmount, note,txFee);
+                                        }catch (WalletException e){
+                                            e.printStackTrace();
+                                            Looper.prepare();
+                                            Toast.makeText(getActivity(), "网络不给力，请稍后再试", Toast.LENGTH_SHORT).show();
+                                            txSendingTipDialog.dismiss();
+                                            Looper.loop();
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                             Looper.prepare();
