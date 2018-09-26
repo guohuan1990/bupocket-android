@@ -51,6 +51,11 @@ xmlns:tools="http://schemas.android.com/tools">
         android:screenOrientation="portrait"
         tools:replace="screenOrientation" />
 
+    <activity
+        android:name="com.bupocket.activity.CaptureActivity"
+        android:label="自定义扫描界面"
+        android:screenOrientation="portrait"/>
+
 </application>
 
 </manifest>
