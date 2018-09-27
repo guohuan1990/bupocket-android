@@ -73,7 +73,7 @@ public class BPSendTokenFragment extends BaseFragment {
     ImageView mSendFormScanIv;
     private String hash;
 
-    private Double availableBuBalance;
+    private String availableBuBalance;
     QMUITipDialog txSendingTipDialog;
 
     private TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean;
@@ -161,12 +161,12 @@ public class BPSendTokenFragment extends BaseFragment {
             public void run() {
                 String balance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
                 if(balance == null || Double.parseDouble(balance) < 0 || Double.parseDouble(balance) == 0){
-                    availableBuBalance = 0d;
+                    availableBuBalance = "0";
                 } else {
-                    availableBuBalance = AmountUtil.availableSubtractionFee(balance,com.bupocket.common.Constants.RESERVE_AMOUNT);
+                    availableBuBalance = String.valueOf(AmountUtil.availableSubtractionFee(balance,com.bupocket.common.Constants.RESERVE_AMOUNT));
                 }
-                if(availableBuBalance == null || availableBuBalance < 0) {
-                    availableBuBalance = 0d;
+                if(availableBuBalance == null || Double.parseDouble(availableBuBalance) < 0) {
+                    availableBuBalance = "0";
                 }
                 Message msg = Message.obtain();
                 Bundle data = new Bundle();
@@ -499,7 +499,6 @@ public class BPSendTokenFragment extends BaseFragment {
                                 argz.putString("destAccAddr",txDeatilRespBoBean.getDestAddress());
                                 argz.putString("sendAmount",txDeatilRespBoBean.getAmount());
                                 argz.putString("txFee",txDeatilRespBoBean.getFee());
-                                // TODO 交易详情缺少 备注
                                 argz.putString("note",txDeatilRespBoBean.getOriginalMetadata());
                                 argz.putString("state",txDeatilRespBoBean.getStatus().toString());
                                 argz.putString("sendTime",txDeatilRespBoBean.getApplyTimeDate());
