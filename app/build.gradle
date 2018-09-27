@@ -49,10 +49,6 @@ android {
     }
     packagingOptions {
         exclude 'lib/x86_64/darwin/libscrypt.dylib'
-//        exclude 'com/google/thirdparty/publicsuffix/PublicSuffixPatterns.gwt.xml'
-//        exclude 'com/google/thirdparty/publicsuffix/PublicSuffixType.gwt.xml'
-//        exclude 'org/bitcoinj/crypto/mnemonic/wordlist/english.txt'
-//        exclude 'org/bitcoinj/crypto/cacerts'
     }
     configurations { all { exclude module: 'httpclient' exclude module: 'commons-logging' } }
     productFlavors {
@@ -81,10 +77,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'commons-beanutils:commons-beanutils:1.9.3'
     implementation 'com.qianwen:update-app:3.5.2'
-    implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
     implementation 'com.qianwen:okhttp-utils:3.8.0'
-    //    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+        annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //leak
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
