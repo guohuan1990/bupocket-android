@@ -72,10 +72,6 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
     TextView mTxDetailTxInfoNonceTv;
     @BindView(R.id.txDetailTxInfoLedgerSeqTv)
     TextView mTxDetailTxInfoLedgerSeqTv;
-    @BindView(R.id.txDetailTxInfoTxSignaturePkTv)
-    TextView mTxDetailTxInfoTxSignaturePkTv;
-    @BindView(R.id.txDetailTxInfoTxSignatureSdTv)
-    TextView mTxDetailTxInfoTxSignatureSdTv;
     @BindView(R.id.txDetailBlockInfoBlockHeightTv)
     TextView mTxDetailBlockInfoBlockHeightTv;
     @BindView(R.id.txDetailBlockInfoBlockHashTv)
