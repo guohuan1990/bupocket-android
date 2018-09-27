@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -13,6 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
+import com.bupocket.adaptor.TxDetailSignatureAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.OutinTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
@@ -29,7 +31,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BPAssetsTxDetailFragment extends BaseFragment {
@@ -85,6 +89,11 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
 
     @BindView(R.id.txDetailLl)
     LinearLayout mTxDetailLl;
+
+    @BindView(R.id.txDetailSignatureItemLv)
+    ListView mTxDetailSignatureItemLv;
+
+    TxDetailSignatureAdapter txDetailSignatureAdapter;
 
     private String txHash;
     private Integer outinType;
@@ -161,10 +170,22 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
 
                     String signatureStr = txInfoRespBoBean.getSignatureStr();
                     JSONArray signatureArr = JSON.parseArray(signatureStr);
-                    JSONObject signatureObj = JSON.parseObject(signatureArr.getString(0));
+                    JSONObject signatureObj = null;
+                    List<TxDetailSignatureAdapter.Signature> signatures = new ArrayList<>();
+                    TxDetailSignatureAdapter.Signature signature = null;
+                    for (int i = 0; i < signatureArr.size(); i++) {
+                        signatureObj = JSON.parseObject(signatureArr.getString(i));
+                        signature = new TxDetailSignatureAdapter.Signature();
+                        signature.setPublicKey(signatureObj.getString("publicKey"));
+                        signature.setSignData(signatureObj.getString("signData"));
+                        signatures.add(signature);
+                    }
+                    txDetailSignatureAdapter = new TxDetailSignatureAdapter(signatures, getContext());
+                    mTxDetailSignatureItemLv.setAdapter(txDetailSignatureAdapter);
 
-                    mTxDetailTxInfoTxSignaturePkTv.setText(signatureObj.getString("publicKey"));
-                    mTxDetailTxInfoTxSignatureSdTv.setText(signatureObj.getString("signData"));
+
+//                    mTxDetailTxInfoTxSignaturePkTv.setText(signatureObj.getString("publicKey"));
+//                    mTxDetailTxInfoTxSignatureSdTv.setText(signatureObj.getString("signData"));
 
                     mTxDetailBlockInfoBlockHeightTv.setText(blockInfoRespBoBean.getSeq() + "");
                     mTxDetailBlockInfoBlockHashTv.setText(blockInfoRespBoBean.getHash());
