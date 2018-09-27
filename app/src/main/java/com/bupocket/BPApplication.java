@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.util.Log;
 
-import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LocaleUtil;
 import com.squareup.leakcanary.LeakCanary;
 

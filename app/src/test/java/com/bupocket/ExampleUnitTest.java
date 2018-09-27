@@ -2,18 +2,19 @@ package com.bupocket;
 
 import com.alibaba.fastjson.JSON;
 import com.bupocket.common.Constants;
-import com.bupocket.wallet.Wallet;
-import io.bumo.SDK;
-import io.bumo.common.ToBaseUnit;
-import io.bumo.encryption.crypto.mnemonic.Mnemonic;
-import io.bumo.model.request.AccountGetBalanceRequest;
-import io.bumo.model.response.AccountGetBalanceResponse;
+
 import org.junit.Test;
 
 import java.security.SecureRandom;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import io.bumo.SDK;
+import io.bumo.common.ToBaseUnit;
+import io.bumo.encryption.crypto.mnemonic.Mnemonic;
+import io.bumo.model.request.AccountGetBalanceRequest;
+import io.bumo.model.response.AccountGetBalanceResponse;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).

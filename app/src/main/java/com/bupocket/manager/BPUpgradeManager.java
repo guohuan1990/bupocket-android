@@ -1,6 +1,7 @@
 package com.bupocket.manager;
 
 import android.app.Activity;
+
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.http.api.dto.resp.GetCurrentVersionRespDto;

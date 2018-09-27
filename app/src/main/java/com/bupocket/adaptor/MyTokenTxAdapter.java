@@ -1,21 +1,19 @@
 package com.bupocket.adaptor;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
 import com.bupocket.R;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.dto.resp.GetMyTxsRespDto;
 import com.bupocket.model.TokenTxInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyTokenTxAdapter extends BaseAdapter {

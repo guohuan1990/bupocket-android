@@ -6,6 +6,17 @@
     <string name="tabbar_profile_txt">我的</string>
     <string name="tabbr_wallet_txt">钱包</string>
     <string name="set_success">设置成功</string>
+    <string name="create_wallet_txt">创建钱包</string>
+    <string name="recently_tx_txt">最近交易记录</string>
+    <string name="user_info_title">我的身份</string>
+    <string name="user_info_wallet_name">身份名</string>
+    <string name="user_info_wallet_id">身份 ID</string>
+    <string name="user_info_backup_current_wallet">备份身份</string>
+    <string name="user_info_logout">退出当前身份</string>
+    <string name="user_info_logout_notice">即将移除身份及导入的钱包，请确保钱包已备份</string>
+    <string name="common_dialog_cancel">取消</string>
+    <string name="common_dialog_confirm">确认</string>
+    <string name="tabbr_otc_txt">c2c</string>
 
 
     <string formatted="false" name="srl_component_falsify">%s 虚假区域\n代表运行时拖动的高度【%.1fdp】 \n而不会显示任何东西</string>

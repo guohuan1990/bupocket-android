@@ -1,7 +1,5 @@
 package com.bupocket.model;
 
-import java.util.List;
-
 public class AdInfo {
     private String userNick;
     private String transactionSize;
