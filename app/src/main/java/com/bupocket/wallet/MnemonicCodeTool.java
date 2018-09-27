@@ -1,14 +1,21 @@
 package com.bupocket.wallet;
 
-import io.bumo.encryption.key.PrivateKey;
-import io.bumo.encryption.utils.hex.HexFormat;
-import org.bitcoinj.crypto.*;
+import org.bitcoinj.crypto.ChildNumber;
+import org.bitcoinj.crypto.DeterministicHierarchy;
+import org.bitcoinj.crypto.DeterministicKey;
+import org.bitcoinj.crypto.HDKeyDerivation;
+import org.bitcoinj.crypto.HDUtils;
+import org.bitcoinj.crypto.MnemonicCode;
+import org.bitcoinj.crypto.MnemonicException;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.bumo.encryption.key.PrivateKey;
+import io.bumo.encryption.utils.hex.HexFormat;
 
 
 public class MnemonicCodeTool {

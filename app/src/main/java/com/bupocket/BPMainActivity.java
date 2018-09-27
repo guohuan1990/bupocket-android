@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.base.BaseFragmentActivity;

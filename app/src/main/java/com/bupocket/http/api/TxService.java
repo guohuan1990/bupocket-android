@@ -3,11 +3,12 @@ package com.bupocket.http.api;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetMyTxsRespDto;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
+
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
-
-import java.util.Map;
 
 public interface TxService {
     @POST("wallet/user/tx/list")

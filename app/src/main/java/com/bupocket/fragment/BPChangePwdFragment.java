@@ -1,9 +1,6 @@
 package com.bupocket.fragment;
 
-import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
@@ -14,10 +11,10 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
-
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
@@ -29,11 +26,11 @@ import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
-import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 public class BPChangePwdFragment extends BaseFragment{
     @BindView(R.id.topbar)

@@ -3,12 +3,14 @@ package com.bupocket.fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class BPCreateWalletFragment extends BaseFragment {
     @BindView(R.id.create_wallet_btn)

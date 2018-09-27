@@ -7,8 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -25,12 +24,15 @@ import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BPAssetsTxDetailFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -147,7 +149,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? "-" : "+") + txInfoRespBoBean.getAmount());
                     mTxFromAccAddrTv.setText(txDeatilRespBoBean.getSourceAddress());
                     mTxToAccAddrTv.setText(txDeatilRespBoBean.getDestAddress());
-                    mTxDetailFeeTv.setText(txDeatilRespBoBean.getFee());
+                    mTxDetailFeeTv.setText(txDeatilRespBoBean.getFee() + " BU");
                     mTxDetailSendDateTv.setText(TimeUtil.timeStamp2Date(txDeatilRespBoBean.getApplyTimeDate().toString().substring(0,10),"yyyy.MM.dd HH:mm:ss"));
                     mTxDetailTXHashTv.setText(txInfoRespBoBean.getHash());
                     mTxDetailNoteTv.setText(txDeatilRespBoBean.getOriginalMetadata());

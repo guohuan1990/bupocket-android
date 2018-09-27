@@ -2,12 +2,13 @@ package com.bupocket.fragment;
 
 import android.os.Bundle;
 import android.os.Looper;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.*;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -16,10 +17,14 @@ import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
 import org.bitcoinj.crypto.MnemonicCode;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class BPBackupWalletFragment extends BaseFragment {
     @BindView(R.id.backupWalletBtn)

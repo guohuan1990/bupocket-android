@@ -9,14 +9,12 @@ import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
