@@ -79,12 +79,11 @@
                     <ImageView
                         android:id="@+id/recoverShowPwdIv"
                         android:layout_width="20dp"
-                        android:layout_height="50dp"
-                        android:layout_alignParentEnd="true"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
                         android:paddingTop="20dp"
-                        android:paddingBottom="20dp"
+                        android:paddingBottom="10dp"
                         android:src="@mipmap/icon_close_eye" />
                 </RelativeLayout>
 
@@ -108,12 +107,11 @@
                     <ImageView
                         android:id="@+id/recoverShowConfirmPwdIv"
                         android:layout_width="20dp"
-                        android:layout_height="50dp"
-                        android:layout_alignParentEnd="true"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
                         android:paddingTop="20dp"
-                        android:paddingBottom="20dp"
+                        android:paddingBottom="10dp"
                         android:src="@mipmap/icon_close_eye" />
                 </RelativeLayout>
 

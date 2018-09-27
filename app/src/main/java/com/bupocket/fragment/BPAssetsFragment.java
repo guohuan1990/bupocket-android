@@ -211,7 +211,6 @@ public class BPAssetsFragment extends BaseFragment {
         pageStart = 1;
         tokenTxInfoMap.clear();
         tokenTxInfoList.clear();
-
         loadMyTxList();
     }
 
@@ -223,7 +222,7 @@ public class BPAssetsFragment extends BaseFragment {
     private void handleMyTxs(GetMyTxsRespDto getMyTxsRespDto){
 
         if(getMyTxsRespDto != null || getMyTxsRespDto.getTxRecord() != null){
-            if(getMyTxsRespDto.getTxRecord().size() == 0){
+            if(getMyTxsRespDto.getTxRecord().size() == 0) {
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
                 return;
             }
@@ -290,9 +289,9 @@ public class BPAssetsFragment extends BaseFragment {
         call.enqueue(new Callback<ApiResult<GetMyTxsRespDto>>() {
             @Override
             public void onResponse(Call<ApiResult<GetMyTxsRespDto>> call, Response<ApiResult<GetMyTxsRespDto>> response) {
-
                 ApiResult<GetMyTxsRespDto> respDto = response.body();
                 Log.d("GetMyTxsRespDto:", JSON.toJSONString(respDto));
+                mEmptyView.show(null,null);
                 handleMyTxs(respDto.getData());
             }
 
