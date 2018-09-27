@@ -25,10 +25,10 @@
     <string name="wallet_create_form_input_password_empty" translatable="false">请输入密码</string>
     <string name="wallet_create_form_input_rePassword_empty" translatable="false">请确认密码</string>
     <string name="wallet_create_form_error1" translatable="false">密码与确认密码不一致</string>
-    <string name="wallet_create_form_error2" translatable="false">密码为8~20个任意字符</string>
-    <string name="wallet_create_form_error3" translatable="false">密码为8~20个任意字符</string>
+    <string name="wallet_create_form_error2" translatable="false">密码长度为8~20个字符，且内容仅限字母和数字</string>
+    <string name="wallet_create_form_error3" translatable="false">密码长度为8~20个字符，且内容仅限字母和数字</string>
     <string name="wallet_create_form_error4" translatable="false">身份名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
-    <string name="wallet_create_form_error5" translatable="false">密码为8~20个任意字符</string>
+    <string name="wallet_create_form_error5" translatable="false">密码长度为8~20个字符，且内容仅限字母和数字</string>
 
     <string name="wallet_create_creating_txt" translatable="false">创建中</string>
     <string name="wallet_create_created_txt" translatable="false">创建成功</string>
@@ -56,7 +56,7 @@
     <string name="confirm_mneonic_code_btn_txt" translatable="false">完成</string>
     <string name="wallet_password_confirm_title" translatable="false">密码确认</string>
     <string name="wallet_password_confirm_txt1" translatable="false">请填写钱包密码以确认备份</string>
-    <string name="hint_wallet_passwrod_confirm_txt1" translatable="false">8~20任意字符</string>
+    <string name="hint_wallet_passwrod_confirm_txt1" translatable="false">8~20个字符，且内容仅限字母和数字</string>
     <string name="hint_wallet_passwrod_confirm_submit_btn" translatable="false">确认</string>
     <string name="wallet_send_txt" translatable="false">转账</string>
     <string name="wallet_scan_txt" translatable="false">扫一扫</string>
@@ -79,7 +79,7 @@
     <string name="recover_edit_new_wallet_name_hint" translatable="false">请输入新钱包名</string>
     <string name="recover_input_wallet_name_error" translatable="false">只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
     <string name="recover_set_pwd_hint" translatable="false">请设置密码</string>
-    <string name="recover_set_pwd_error" translatable="false">密码为8~20个任意字符</string>
+    <string name="recover_set_pwd_error" translatable="false">密码长度为8~20个字符，且内容仅限字母和数字</string>
     <string name="recover_confirm_pwd_hint" translatable="false">请确认密码</string>
     <string name="recover_confirm_pwd_error" translatable="false">密码与确认密码不一致</string>
     <string name="recover_wallet_next_btn" translatable="false">恢复</string>
@@ -222,22 +222,22 @@
     <string name="capture_activity_title" translatable="false">二维码扫描</string>
 
 
-    <!--<string formatted="false" name="srl_component_falsify">%s 虚假区域\n代表运行时拖动的高度【%.1fdp】 \n而不会显示任何东西</string>-->
-    <!--<string name="srl_content_empty">SmartRefreshLayout中没有找到内容视图。您是否忘记在xml布局文件中添加？</string>-->
-    <!--<string name="srl_footer_failed">加载失败</string>-->
-    <!--<string name="srl_footer_finish">加载完成</string>-->
-    <!--<string name="srl_footer_loading">正在加载…</string>-->
-    <!--<string name="srl_footer_nothing">没有更多数据了</string>-->
-    <!--<string name="srl_footer_pulling">上拉加载更多</string>-->
-    <!--<string name="srl_footer_refreshing">正在刷新…</string>-->
-    <!--<string name="srl_footer_release">释放立即加载</string>-->
-    <!--<string name="srl_header_failed">刷新失败</string>-->
-    <!--<string name="srl_header_finish">刷新完成</string>-->
-    <!--<string name="srl_header_loading">正在加载…</string>-->
-    <!--<string name="srl_header_pulling">下拉可以刷新</string>-->
-    <!--<string name="srl_header_refreshing">正在刷新…</string>-->
-    <!--<string name="srl_header_release">释放立即刷新</string>-->
-    <!--<string name="srl_header_secondary">释放进入二楼</string>-->
-    <!--<string name="srl_header_update">上次更新 M-d HH:mm</string>-->
+    <string formatted="false" name="srl_component_falsify">%s 虚假区域\n代表运行时拖动的高度【%.1fdp】 \n而不会显示任何东西</string>
+    <string name="srl_content_empty">SmartRefreshLayout中没有找到内容视图。您是否忘记在xml布局文件中添加？</string>
+    <string name="srl_footer_failed">加载失败</string>
+    <string name="srl_footer_finish">加载完成</string>
+    <string name="srl_footer_loading">正在加载…</string>
+    <string name="srl_footer_nothing">没有更多数据了</string>
+    <string name="srl_footer_pulling">上拉加载更多</string>
+    <string name="srl_footer_refreshing">正在刷新…</string>
+    <string name="srl_footer_release">释放立即加载</string>
+    <string name="srl_header_failed">刷新失败</string>
+    <string name="srl_header_finish">刷新完成</string>
+    <string name="srl_header_loading">正在加载…</string>
+    <string name="srl_header_pulling">下拉可以刷新</string>
+    <string name="srl_header_refreshing">正在刷新…</string>
+    <string name="srl_header_release">释放立即刷新</string>
+    <string name="srl_header_secondary">释放进入二楼</string>
+    <string name="srl_header_update">上次更新 M-d HH:mm</string>
 
 </resources>
