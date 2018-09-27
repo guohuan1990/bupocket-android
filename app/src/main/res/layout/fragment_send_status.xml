@@ -129,7 +129,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:layout_marginEnd="60dp" android:layout_marginRight="60dp"
-                        android:text="@string/send_status_fee"
+                        android:text="@string/tx_detail_fee_label"
                         android:textColor="#999999"
                         android:textSize="14sp" />
 
