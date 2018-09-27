@@ -6,9 +6,9 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -21,22 +21,20 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
+import com.bupocket.utils.TO;
 import com.bupocket.utils.TimeUtil;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class BPAssetsTxDetailFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -88,8 +86,8 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
     @BindView(R.id.txDetailLl)
     LinearLayout mTxDetailLl;
 
-    @BindView(R.id.txDetailSignatureItemLv)
-    ListView mTxDetailSignatureItemLv;
+    @BindView(R.id.txDetailSignatureListLl)
+    LinearLayout txDetailSignatureListLl;
 
     TxDetailSignatureAdapter txDetailSignatureAdapter;
 
@@ -116,6 +114,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
         mEmptyView.show(true);
         txHash = getTxHash();
         outinType = getArguments().getInt("outinType");
+
     }
 
 
@@ -178,9 +177,11 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                         signature.setSignData(signatureObj.getString("signData"));
                         signatures.add(signature);
                     }
-                    txDetailSignatureAdapter = new TxDetailSignatureAdapter(signatures, getContext());
-                    mTxDetailSignatureItemLv.setAdapter(txDetailSignatureAdapter);
 
+                    loads(signatures);
+//                    txDetailSignatureAdapter = new TxDetailSignatureAdapter(signatures, getContext());
+//                    mTxDetailSignatureItemLv.setAdapter(txDetailSignatureAdapter);
+//                    setListViewHeightBasedOnChildren(mTxDetailSignatureItemLv);
 
 //                    mTxDetailTxInfoTxSignaturePkTv.setText(signatureObj.getString("publicKey"));
 //                    mTxDetailTxInfoTxSignatureSdTv.setText(signatureObj.getString("signData"));
@@ -202,6 +203,70 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
             }
         });
+    }
+
+    private void loads(List<TxDetailSignatureAdapter.Signature> signatures){
+
+        for (TxDetailSignatureAdapter.Signature signature: signatures
+             ) {
+            LinearLayout layout = new LinearLayout(getContext());
+            layout.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            layoutParams.setMargins(10, 10, 10, 30);
+            layout.setLayoutParams(layoutParams);
+
+            LinearLayout pkLayout = new LinearLayout(getContext());
+            pkLayout.setOrientation(LinearLayout.VERTICAL);
+
+            pkLayout.setBackgroundColor(0xFFF8F8F8);
+            LinearLayout.LayoutParams LP_MM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            pkLayout.setLayoutParams(LP_MM);
+
+
+            TextView pkLabelTv = new TextView(getContext());
+            pkLabelTv.setText("Public Key");
+            pkLabelTv.setTextColor(0xFF888888);
+            pkLabelTv.setPadding(20,10,10,20);
+
+            pkLayout.addView(pkLabelTv);
+
+            TextView pkVTv = new TextView(getContext());
+            pkVTv.setText(signature.getPublicKey());
+            pkVTv.setPadding(20,10,20,20);
+            pkLayout.addView(pkVTv);
+
+
+
+            LinearLayout skLayout = new LinearLayout(getContext());
+            skLayout.setOrientation(LinearLayout.VERTICAL);
+            skLayout.setBackgroundColor(0xFFF8F8F8);
+            skLayout.setLayoutParams(LP_MM);
+
+
+            TextView sdLabelTv = new TextView(getContext());
+            sdLabelTv.setText("Singed Data");
+            sdLabelTv.setPadding(20,10,10,20);
+            sdLabelTv.setTextColor(0xFF888888);
+
+            skLayout.addView(sdLabelTv);
+
+            TextView sdVTv = new TextView(getContext());
+            sdVTv.setText(signature.getSignData());
+            sdVTv.setPadding(20,10,20,20);
+            skLayout.addView(sdVTv);
+
+
+            layout.addView(pkLayout);
+            layout.addView(skLayout);
+
+            txDetailSignatureListLl.addView(layout);
+        }
+
+
+
+
     }
 
     private void initTopBar() {

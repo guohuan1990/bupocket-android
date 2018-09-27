@@ -227,6 +227,7 @@ public class BPAssetsFragment extends BaseFragment {
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
                 return;
             }
+
             refreshLayout.setEnableLoadMore(true);
 
             for (GetMyTxsRespDto.TxRecordBean obj : getMyTxsRespDto.getTxRecord()) {
