@@ -217,5 +217,7 @@
     <string name="handling" translatable="false">处理中...</string>
     <string name="i_knew_btn_txt" translatable="false">我知道了</string>
     <string name="network_error_msg" translatable="false">网络不给力，请稍后再试</string>
+    <string name="capture_activity_label" translatable="false">自定义扫描界面</string>
+    <string name="capture_activity_title" translatable="false">二维码扫描</string>
 
 </resources>
