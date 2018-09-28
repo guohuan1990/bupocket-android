@@ -280,11 +280,6 @@ public class BPSendTokenFragment extends BaseFragment {
                     return;
                 }
 
-                // TODO 最大转出金额
-
-
-
-
                 final String note = sendFormNoteEt.getText().toString();
 
                 if(!CommonUtil.isNull(note) && note.length() > com.bupocket.common.Constants.SEND_TOKEN_NOTE_MAX_LENGTH){

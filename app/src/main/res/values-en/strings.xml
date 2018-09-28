@@ -89,7 +89,7 @@
     <string name="send_fee_title" translatable="false">Maximum transaction fee (BU)</string>
     <string name="send_input_receiver_address_hint" translatable="false">Please enter the recipient address</string>
 
-    <string name="send_amount_title" translatable="false">Amount（BU）</string>
+    <string name="send_amount_title" translatable="false">Amount (BU)</string>
     <string name="send_hint_txt1" translatable="false">Each BU transfer cannot exceed 10,000 BU</string>
     <string name="send_hint_txt2" translatable="false">Please enter a note</string>
     <string name="send_hint_txt3" translatable="false">Please enter the transaction fee</string>

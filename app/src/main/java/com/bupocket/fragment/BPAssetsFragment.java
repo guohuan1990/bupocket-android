@@ -94,7 +94,7 @@ public class BPAssetsFragment extends BaseFragment {
 
     @BindView(R.id.assetsAvatarIv)
     QMUIRadiusImageView mAssetsAvatarIv;
-    private String buBalance = "-";
+    private String buBalance = "--";
 
 
     @Override
