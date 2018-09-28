@@ -138,7 +138,7 @@
     <string name="send_confirm_submit_btn_txt" translatable="false">Submit</string>
     <!-- 使用条款 -->
     <string name="use_terms_title" translatable="false">Terms of service</string>
-    <string name="use_terms_checkbox_agree" translatable="false">I have read and agreed to the above terms and conditions</string>
+    <string name="use_terms_checkbox_agree" translatable="false">Agreed</string>
     <string name="use_terms_next_btn" translatable="false">Continue</string>
 
 
