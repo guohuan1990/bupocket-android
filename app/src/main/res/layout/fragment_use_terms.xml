@@ -27,17 +27,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/userTermsContentTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:lineSpacingMultiplier="1.2"
-                    android:padding="10dp" />
-                <!--<WebView-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent">-->
-
-                <!--</WebView>-->
+                <!--<TextView-->
+                    <!--android:id="@+id/userTermsContentTv"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:lineSpacingMultiplier="1.2"-->
+                    <!--android:padding="10dp" />-->
+                <WebView
+                    android:id="@+id/useTermsContentWv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
 
