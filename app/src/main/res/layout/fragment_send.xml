@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/qmui_config_color_white">
 
     <ScrollView
@@ -153,6 +154,21 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/send_available_balance_txt" />
 
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_gravity="end"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true">
                             <TextView
                                 android:id="@+id/accountAvailableBalanceTv"
                                 android:layout_width="wrap_content"
@@ -167,9 +183,8 @@
                                 android:paddingStart="5dp"
                                 android:text="BU"
                                 android:textColor="@color/app_color_font_main" />
-
                         </LinearLayout>
-                    </LinearLayout>
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"

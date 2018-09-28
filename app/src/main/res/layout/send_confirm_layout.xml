@@ -2,7 +2,8 @@
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,27 +54,29 @@
                 android:background="@drawable/bg_dash_line"
                 android:layerType="software" />
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="26dp">
+                android:layout_marginTop="26dp"
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/send_confirm_target_address_txt"
+                    android:layout_marginBottom="10dp"
                     android:textColor="@color/send_confirm_gray_color"
                     android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/sendTargetAddress"
-                    android:layout_width="205dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" android:gravity="right"
+                    android:gravity="left"
                     android:textColor="@color/send_confirm_info_color"
+                    tools:text="test"
                     android:textSize="15sp" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
