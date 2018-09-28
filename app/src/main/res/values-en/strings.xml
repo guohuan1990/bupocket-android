@@ -23,10 +23,10 @@
     <string name="wallet_create_form_input_password_empty" translatable="false">Please enter your password</string>
     <string name="wallet_create_form_input_rePassword_empty" translatable="false">Please confirm your password</string>
     <string name="wallet_create_form_error1" translatable="false">Passwords entered are inconsistent, please enter again</string>
-    <string name="wallet_create_form_error2" translatable="false">The password consists of 8~20 characters</string>
-    <string name="wallet_create_form_error3" translatable="false">The password consists of 8~20 characters</string>
+    <string name="wallet_create_form_error2" translatable="false">The password consists of letters and numerals, the length of which is 8~20 characters</string>
+    <string name="wallet_create_form_error3" translatable="false">The password consists of letters and numerals, the length of which is 8~20 characters</string>
     <string name="wallet_create_form_error4" translatable="false">The identity name is only allowed to enter letters, numerals, underscores, and cannot exceed 20 characters</string>
-    <string name="wallet_create_form_error5" translatable="false">The password consists of 8~20 characters</string>
+    <string name="wallet_create_form_error5" translatable="false">The password consists of letters and numerals, the length of which is 8~20 characters</string>
 
     <string name="wallet_create_creating_txt" translatable="false">Creating</string>
     <string name="wallet_create_created_txt" translatable="false">Created successfully</string>
@@ -39,7 +39,7 @@
     <string name="view_title_create_wallet_identity" translatable="false">Create an identity</string>
     <string name="create_wallet_prompt_dialog_title" translatable="false">Tip</string>
     <string name="create_wallet_prompt_txt1" translatable="false">The password is used to encrypt and protect the private key, BU transfer, contract call, etc., so it be must be strong enough. The BuPocket does not store passwords, and you cannot retrieve passwords from it. Please keep in mind.</string>
-    <string name="create_wallet_prompt_txt2" translatable="false">The password consists of 8~20 characters.</string>
+    <string name="create_wallet_prompt_txt2" translatable="false">The password consists of letters and numerals, the length of which is 8~20 characters.</string>
     <string name="backup_wallet_txt1" translatable="false">Asset security cannot be guaranteed without proper backup. After deleting the program or logging out, you need to back up the file to restore your identity.</string>
     <string name="backup_wallet_txt2" translatable="false">Please make sure to back up in a safe environment with no people around and no camera.</string>
     <string name="backup_wallet_btn_txt" translatable="false">Back up mnemonic words</string>
@@ -62,8 +62,8 @@
     <string name="recently_tx_txt" translatable="false">Recent transaction history</string>
     <string name="tx_status_success_txt" translatable="false">Succeeded</string>
     <string name="tx_status_fail_txt" translatable="false">Failed</string>
-    <string name="tx_status_success_txt1" translatable="false">Transferred successfully</string>
-    <string name="tx_status_fail_txt1" translatable="false">Failed to transfer</string>
+    <string name="tx_status_success_txt1" translatable="false">Succeeded</string>
+    <string name="tx_status_fail_txt1" translatable="false">Failed</string>
     <string name="tx_timeout_txt1" translatable="false">Request timeout</string>
 
     <string name="password_comfirm_dialog_title" translatable="false">Confirm password</string>
@@ -76,7 +76,7 @@
     <string name="recover_edit_new_wallet_name_hint" translatable="false">Please enter a name for the new wallet</string>
     <string name="recover_input_wallet_name_error" translatable="false">Only letters, numerals, and underscores are allowed and it cannot exceed 20 characters</string>
     <string name="recover_set_pwd_hint" translatable="false">Please set a password</string>
-    <string name="recover_set_pwd_error" translatable="false">The password consists of 8~20 characters</string>
+    <string name="recover_set_pwd_error" translatable="false">The password consists of letters and numerals, the length of which is 8~20 characters</string>
     <string name="recover_confirm_pwd_hint" translatable="false">Confirm password</string>
     <string name="recover_confirm_pwd_error" translatable="false">Passwords do not match</string>
     <string name="recover_wallet_next_btn" translatable="false">Recover</string>
@@ -105,7 +105,7 @@
     <string name="send_form_next_btn_txt" translatable="false">Next</string>
     <string name="tx_dettail_from_acc_addr_label" translatable="false">Sender address</string>
     <string name="tx_dettail_to_acc_addr_label" translatable="false">Recipient address</string>
-    <string name="tx_detail_fee_label" translatable="false">Transaction fee（BU）</string>
+    <string name="tx_detail_fee_label" translatable="false">Transaction fee</string>
     <string name="tx_detail_send_date_label" translatable="false">Sending time</string>
     <string name="tx_detail_note_label" translatable="false">Remark</string>
 
@@ -131,7 +131,7 @@
     <!-- 确认转账 -->
     <string name="send_confirm_title" translatable="false">Confirm transaction</string>
     <string name="send_confirm_txt" translatable="false">Please confirm if the transfer information is correct.</string>
-    <string name="send_confirm_target_address_txt" translatable="false">Receiving account</string>
+    <string name="send_confirm_target_address_txt" translatable="false">Recipient account</string>
     <string name="send_confirm_amount_txt" translatable="false">Amount</string>
     <string name="send_confirm_estimate_txt" translatable="false">Estimated maximum payment</string>
     <string name="send_confirm_remark_txt" translatable="false">Remark</string>
@@ -172,10 +172,10 @@
     <string name="change_pwd_err4" translatable="false">Please enter the old password</string>
     <string name="change_pwd_err5" translatable="false">Please enter the old password</string>
     <string name="change_pwd_form_error1" translatable="false">Passwords entered are inconsistent, please enter again</string>
-    <string name="change_pwd_form_error2" translatable="false">The password consists of 8~20 characters</string>
-    <string name="change_pwd_form_error3" translatable="false">The password consists of 8~20 characters</string>
+    <string name="change_pwd_form_error2" translatable="false">The password consists of letters and numerals, the length of which is 8~20 characters</string>
+    <string name="change_pwd_form_error3" translatable="false">The password consists of letters and numerals, the length of which is 8~20 characters</string>
     <string name="change_pwd_form_error4" translatable="false">Identity format is wrong</string>
-    <string name="change_pwd_form_error5" translatable="false">The password consists of 8~20 characters</string>
+    <string name="change_pwd_form_error5" translatable="false">The password consists of letters and numerals, the length of which is 8~20 characters</string>
     <string name="change_pwd_form_error6" translatable="false">Old password error</string>
     <string name="change_pwd_changing_txt" translatable="false">Resetting password...</string>
     <string name="change_pwd_change_success_txt" translatable="false">Password reset successfully</string>
@@ -214,9 +214,10 @@
     <string name="handling" translatable="false">Processing...</string>
     <string name="i_knew_btn_txt" translatable="false">Got it</string>
     <string name="network_error_msg" translatable="false">Network failure, please try again later</string>
-    <string name="time_day_ago">day ago</string>
-    <string name="time_hour_ago">hour ago</string>
-    <string name="time_minute_ago">minute ago</string>
+    <string name="capture_activity_title" translatable="false">Scan QR</string>
+    <string name="time_day_ago">days ago</string>
+    <string name="time_hour_ago">hours ago</string>
+    <string name="time_minute_ago">minutes ago</string>
     <string name="time_just_now">Just now</string>
 
 
