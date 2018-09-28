@@ -14,7 +14,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
@@ -31,9 +32,6 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class BPCreateWalletFormFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -160,13 +158,6 @@ public class BPCreateWalletFormFragment extends BaseFragment {
             return false;
         }
 
-
-
-
-
-
-
-
         return true;
     }
 
@@ -179,6 +170,8 @@ public class BPCreateWalletFormFragment extends BaseFragment {
                if(!flag){
                    return;
                }
+
+
                 final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                         .setTipWord(getResources().getString(R.string.wallet_create_creating_txt))
@@ -191,19 +184,23 @@ public class BPCreateWalletFormFragment extends BaseFragment {
 
                         WalletBPData walletBPData = null;
                         try {
-                            walletBPData = Wallet.getInstance().create(accountPwd);
+                            walletBPData = Wallet.getInstance().create(accountPwd,getContext());
                             sharedPreferencesHelper.put("skey", walletBPData.getSkey());
                             sharedPreferencesHelper.put("currentAccNick", mSetIdentityNameEt.getText().toString());
                             sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
                             sharedPreferencesHelper.put("identityId", walletBPData.getAccounts().get(0).getAddress());
                             sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
                             sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode());
+
+
+
                             BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
                             Bundle argz = new Bundle();
                             argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) walletBPData.getMnemonicCodes());
                             backupWalletFragment.setArguments(argz);
-
                             startFragment(backupWalletFragment);
+
+
                             tipDialog.dismiss();
                         } catch (WalletException e) {
                             e.printStackTrace();
@@ -277,5 +274,6 @@ public class BPCreateWalletFormFragment extends BaseFragment {
         mSetPwdEt.addTextChangedListener(watcher);
         mRepeatPwdEt.addTextChangedListener(watcher);
     }
+
 
 }

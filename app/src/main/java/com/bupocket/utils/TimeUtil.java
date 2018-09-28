@@ -1,7 +1,11 @@
 package com.bupocket.utils;
 
+import android.content.Context;
+import android.content.res.Resources;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import com.bupocket.R;
 
 public class TimeUtil {
 
@@ -10,18 +14,19 @@ public class TimeUtil {
     private static long day = hour * 24;
     private static long halfamonth = day * 15;
     private static long month = day * 30;
-    public  static String getDateDiff(long dateTimeStamp){
+    public  static String getDateDiff(long dateTimeStamp,Context context){
+        Resources resources = context.getResources();
         dateTimeStamp = Long.parseLong((dateTimeStamp+"").substring(0,13));
         String result;
         long now = new Date().getTime();
         long diffValue = now - dateTimeStamp;
-        if(diffValue < 0){
-        }
         long monthC =diffValue/month;
         long weekC =diffValue/(7*day);
         long dayC =diffValue/day;
         long hourC =diffValue/hour;
         long minC =diffValue/minute;
+
+
         if(monthC>=1 || weekC >= 1){
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             sdf.setLenient(false);
@@ -29,18 +34,18 @@ public class TimeUtil {
             return result;
         }
         else if(dayC>=1){
-            result = Integer.parseInt(dayC+"") +"天前";
+            result = Integer.parseInt(dayC + "") + " " + resources.getString(R.string.time_day_ago);
             return result;
         }
         else if(hourC>=1){
-            result = Integer.parseInt(hourC+"") +"小时前";
+            result = Integer.parseInt(hourC+"") + " "  + resources.getString(R.string.time_hour_ago);
             return result;
         }
         else if(minC>=1){
-            result =  Integer.parseInt(minC+"") +"分钟前";
+            result =  Integer.parseInt(minC+"") + " "  + resources.getString(R.string.time_minute_ago);
             return result;
         }else{
-            result = "刚刚";
+            result = resources.getString(R.string.time_just_now);
             return result;
         }
     }

@@ -79,11 +79,9 @@ dependencies {
     implementation 'com.qianwen:update-app:3.5.2'
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
     implementation 'com.qianwen:okhttp-utils:3.8.0'
-        annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //leak
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     testImplementation 'junit:junit:4.12'
-    //    implementation project(':library')
-    //    annotationProcessor project(':compiler')
 }

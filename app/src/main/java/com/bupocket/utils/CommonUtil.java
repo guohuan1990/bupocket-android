@@ -3,21 +3,20 @@ package com.bupocket.utils;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
+import android.provider.Settings;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
@@ -625,4 +624,31 @@ public class CommonUtil {
         return false;
     }
 
+    public static String getUniqueId(Context context){
+        String androidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        String id = androidID + Build.SERIAL;
+        try {
+            return toMD5(id);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return id;
+        }
+    }
+
+
+    private static String toMD5(String text) throws NoSuchAlgorithmException {
+        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+        byte[] digest = messageDigest.digest(text.getBytes());
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < digest.length; i++) {
+            int digestInt = digest[i] & 0xff;
+            String hexString = Integer.toHexString(digestInt);
+            if (hexString.length() < 2) {
+                sb.append(0);
+            }
+            sb.append(hexString);
+        }
+        return sb.toString();
+    }
 }

@@ -1,9 +1,5 @@
 <resources>
-    <string name="app_name">BuPocket</string>
-
-    <!-- StatusBarHelper 状态栏工具 -->
-
-
+    <string name="app_name">小布口袋</string>
     <string name="tabbar_assets_txt">钱包</string>
     <string name="tabbar_discovery_txt">发现</string>
     <string name="tabbar_profile_txt">我的</string>
@@ -42,7 +38,7 @@
     <string name="create_wallet_prompt_dialog_title" translatable="false">温馨提示</string>
     <string name="create_wallet_prompt_txt1" translatable="false">密码用于加密保护私钥，以及转账、调用合约等，所以强度非常重要。
         小布口袋不存储密码，也无法帮您找回，请务必牢记。</string>
-    <string name="create_wallet_prompt_txt2" translatable="false">长度为8~20字符，建议混合大小写字母、数字、符号。</string>
+    <string name="create_wallet_prompt_txt2" translatable="false">密码长度为8~20个字符，且内容仅限字母和数字</string>
     <string name="backup_wallet_txt1" translatable="false">没有妥善备份就无法保障资产安全，删除程序或退出身份后，你需要备份文件来恢复身份</string>
     <string name="backup_wallet_txt2" translatable="false">请确保在四周无人，没有摄像头的安全环境下备份</string>
     <string name="backup_wallet_btn_txt" translatable="false">备份助记词</string>
@@ -220,6 +216,10 @@
     <string name="capture_activity_label" translatable="false">自定义扫描界面</string>
     <string name="tabbr_otc_txt">c2c</string>
     <string name="capture_activity_title" translatable="false">二维码扫描</string>
+    <string name="time_day_ago">天前</string>
+    <string name="time_hour_ago">小时前</string>
+    <string name="time_minute_ago">分钟前</string>
+    <string name="time_just_now">刚刚</string>
 
 
     <string formatted="false" name="srl_component_falsify">%s 虚假区域\n代表运行时拖动的高度【%.1fdp】 \n而不会显示任何东西</string>
