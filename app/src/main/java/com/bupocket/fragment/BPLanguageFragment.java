@@ -11,6 +11,7 @@ import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

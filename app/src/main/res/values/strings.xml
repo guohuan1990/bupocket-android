@@ -4,13 +4,13 @@
     <!-- StatusBarHelper 状态栏工具 -->
 
 
-    <string name="tabbar_assets_txt">资产</string>
+    <string name="tabbar_assets_txt">钱包</string>
     <string name="tabbar_discovery_txt">发现</string>
     <string name="tabbar_profile_txt">我的</string>
 
     <string name="fragment_title_tx_detail_txt" translatable="false">交易详情</string>
     <string name="create_wallet_info_txt_1" translatable="false">请仔细抄写下方助记词，并存放在安全的地方</string>
-    <string name="create_wallet_txt" translatable="false">创建钱包</string>
+    <string name="create_wallet_txt">创建钱包</string>
 
     <string name="function_opening" translatable="false">功能即将开放</string>
     <string name="tabbr_wallet_txt">钱包</string>
@@ -25,10 +25,10 @@
     <string name="wallet_create_form_input_password_empty" translatable="false">请输入密码</string>
     <string name="wallet_create_form_input_rePassword_empty" translatable="false">请确认密码</string>
     <string name="wallet_create_form_error1" translatable="false">密码与确认密码不一致</string>
-    <string name="wallet_create_form_error2" translatable="false">密码长度为8~20个字符</string>
-    <string name="wallet_create_form_error3" translatable="false">密码长度为8~20个字符</string>
+    <string name="wallet_create_form_error2" translatable="false">密码长度为8~20个字符，且内容仅限字母和数字</string>
+    <string name="wallet_create_form_error3" translatable="false">密码长度为8~20个字符，且内容仅限字母和数字</string>
     <string name="wallet_create_form_error4" translatable="false">身份名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
-    <string name="wallet_create_form_error5" translatable="false">密码格式不对</string>
+    <string name="wallet_create_form_error5" translatable="false">密码长度为8~20个字符，且内容仅限字母和数字</string>
 
     <string name="wallet_create_creating_txt" translatable="false">创建中</string>
     <string name="wallet_create_created_txt" translatable="false">创建成功</string>
@@ -56,13 +56,13 @@
     <string name="confirm_mneonic_code_btn_txt" translatable="false">完成</string>
     <string name="wallet_password_confirm_title" translatable="false">密码确认</string>
     <string name="wallet_password_confirm_txt1" translatable="false">请填写钱包密码以确认备份</string>
-    <string name="hint_wallet_passwrod_confirm_txt1" translatable="false">8-20个字符，含数字、字母和符号</string>
+    <string name="hint_wallet_passwrod_confirm_txt1" translatable="false">8~20个字符，且内容仅限字母和数字</string>
     <string name="hint_wallet_passwrod_confirm_submit_btn" translatable="false">确认</string>
     <string name="wallet_send_txt" translatable="false">转账</string>
     <string name="wallet_scan_txt" translatable="false">扫一扫</string>
     <string name="wallet_scan_notice" translatable="false">请将二维码置于取景框内扫描</string>
     <string name="wallet_scan_cancel" translatable="false">取消扫描</string>
-    <string name="recently_tx_txt" translatable="false">最近交易记录</string>
+    <string name="recently_tx_txt">最近交易记录</string>
     <string name="tx_status_success_txt" translatable="false">成功</string>
     <string name="tx_status_fail_txt" translatable="false">失败</string>
     <string name="tx_status_success_txt1" translatable="false">转账成功</string>
@@ -79,17 +79,17 @@
     <string name="recover_edit_new_wallet_name_hint" translatable="false">请输入新钱包名</string>
     <string name="recover_input_wallet_name_error" translatable="false">只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
     <string name="recover_set_pwd_hint" translatable="false">请设置密码</string>
-    <string name="recover_set_pwd_error" translatable="false">密码为8-20个字符</string>
+    <string name="recover_set_pwd_error" translatable="false">密码长度为8~20个字符，且内容仅限字母和数字</string>
     <string name="recover_confirm_pwd_hint" translatable="false">请确认密码</string>
     <string name="recover_confirm_pwd_error" translatable="false">密码与确认密码不一致</string>
     <string name="recover_wallet_next_btn" translatable="false">恢复</string>
     <string name="recover_wallet_reloading" translatable="false">恢复中</string>
-    <string name="recover_wallet_error_tip" translatable="false">导入失败</string>
+    <string name="recover_wallet_error_tip" translatable="false">助记词输入有误，请重新输入</string>
 
     <string name="view_title_wallet_sendBU" translatable="false">BU转账</string>
     <string name="send_address_title" translatable="false">对方账户（BU地址）</string>
     <string name="send_note_title" translatable="false">备注</string>
-    <string name="send_fee_title" translatable="false">最多支付交易费用（BU)</string>
+    <string name="send_fee_title" translatable="false">最多支付交易费用（BU）</string>
     <string name="send_input_receiver_address_hint" translatable="false">请输入接收方地址</string>
 
     <string name="send_amount_title" translatable="false">转账数量（BU）</string>
@@ -101,14 +101,14 @@
     <string name="send_status_amount" translatable="false">转出数量</string>
     <string name="send_tx_handleing_txt" translatable="false">处理中...</string>
     <string name="send_status_fee" translatable="false">预估最多支付费用</string>
-    <string name="tx_timeout_err">交易超时</string>
+    <string name="tx_timeout_err" translatable="false">交易超时</string>
     <string name="send_status_note" translatable="false">备注</string>
     <string name="send_status_time" translatable="false">转账时间</string>
     <string name="send_available_balance_txt" translatable="false">可用余额</string>
     <string name="send_form_next_btn_txt" translatable="false">下一步</string>
     <string name="tx_dettail_from_acc_addr_label" translatable="false">发送方地址</string>
     <string name="tx_dettail_to_acc_addr_label" translatable="false">接收方地址</string>
-    <string name="tx_detail_fee_label" translatable="false">交易费（BU）</string>
+    <string name="tx_detail_fee_label" translatable="false">交易费</string>
     <string name="tx_detail_send_date_label" translatable="false">发送时间</string>
     <string name="tx_detail_note_label" translatable="false">备注</string>
 
@@ -117,7 +117,7 @@
     <string name="checking_password_error" translatable="false">密码错误</string>
     <string name="geting_account_bu_balance" translatable="false">获取中</string>
     <string name="check_mneonic_code_err1" translatable="false">助记词顺序有误，请您核对后更正</string>
-    <string name="next_key_down_err">再按一次退出程序</string>
+    <string name="next_key_down_err" translatable="false">再按一次退出程序</string>
     <!-- 二维码页面 -->
     <string name="qr_pocket_address_title" translatable="false">钱包地址</string>
     <string name="qr_cancel_btn_des" translatable="false">取消</string>
@@ -175,10 +175,10 @@
     <string name="change_pwd_err4" translatable="false">请输入旧密码</string>
     <string name="change_pwd_err5" translatable="false">请输入旧密码</string>
     <string name="change_pwd_form_error1" translatable="false">密码和确认密码输入不一致，请重新输入</string>
-    <string name="change_pwd_form_error2" translatable="false">密码长度最多20个字符</string>
-    <string name="change_pwd_form_error3" translatable="false">密码长度至少8个字符</string>
+    <string name="change_pwd_form_error2" translatable="false">密码长度为8~20个字符，且内容仅限字母和数字</string>
+    <string name="change_pwd_form_error3" translatable="false">密码长度为8~20个字符，且内容仅限字母和数字</string>
     <string name="change_pwd_form_error4" translatable="false">身份名格式不对</string>
-    <string name="change_pwd_form_error5" translatable="false">密码格式不对</string>
+    <string name="change_pwd_form_error5" translatable="false">密码长度为8~20个字符，且内容仅限字母和数字</string>
     <string name="change_pwd_form_error6" translatable="false">旧密码错误</string>
     <string name="change_pwd_changing_txt" translatable="false">密码修改中...</string>
     <string name="change_pwd_change_success_txt" translatable="false">密码修改成功</string>
@@ -190,18 +190,18 @@
     <string name="contact_hint" translatable="false">请输入您的联系方式</string>
     <string name="submit_feedback_btn_txt" translatable="false">提交</string>
 
-    <string name="user_info_title" translatable="false">我的身份</string>
-    <string name="user_info_wallet_name" translatable="false">身份名</string>
-    <string name="user_info_wallet_id" translatable="false">身份 ID</string>
-    <string name="user_info_backup_current_wallet" translatable="false">备份身份</string>
-    <string name="user_info_logout" translatable="false">退出当前身份</string>
+    <string name="user_info_title">我的身份</string>
+    <string name="user_info_wallet_name">身份名</string>
+    <string name="user_info_wallet_id">身份 ID</string>
+    <string name="user_info_backup_current_wallet">备份身份</string>
+    <string name="user_info_logout">退出当前身份</string>
     <string name="user_info_logout_loading" translatable="false">退出中</string>
     <string name="user_info_backup_loading" translatable="false">加载中</string>
-    <string name="user_info_logout_notice" translatable="false">即将移除身份及导入的钱包，请确保钱包已备份</string>
+    <string name="user_info_logout_notice">即将移除身份及导入的钱包，请确保钱包已备份</string>
     <string name="user_info_logout_warning" translatable="false">警告：若未妥善备份，退出后将无法找回钱包，请慎重处理该操作</string>
 
-    <string name="common_dialog_cancel" translatable="false">取消</string>
-    <string name="common_dialog_confirm" translatable="false">确认</string>
+    <string name="common_dialog_cancel">取消</string>
+    <string name="common_dialog_confirm">确认</string>
     <string name="common_dialog_input_pwd" translatable="false">请输入密码</string>
 
     <string name="help_feedback_submit_success_msg" translatable="false">提交成功</string>
@@ -214,7 +214,30 @@
     <string name="language_cn" translatable="false">简体中文</string>
     <string name="language_en" translatable="false">English</string>
     <string name="set_success">设置成功</string>
-    <string name="handling">处理中...</string>
-    <string name="i_knew_btn_txt">我知道了</string>
+    <string name="handling" translatable="false">处理中...</string>
+    <string name="i_knew_btn_txt" translatable="false">我知道了</string>
+    <string name="network_error_msg" translatable="false">网络不给力，请稍后再试</string>
+    <string name="capture_activity_label" translatable="false">自定义扫描界面</string>
+    <string name="tabbr_otc_txt">c2c</string>
+    <string name="capture_activity_title" translatable="false">二维码扫描</string>
+
+
+    <string formatted="false" name="srl_component_falsify">%s 虚假区域\n代表运行时拖动的高度【%.1fdp】 \n而不会显示任何东西</string>
+    <string name="srl_content_empty">SmartRefreshLayout中没有找到内容视图。您是否忘记在xml布局文件中添加？</string>
+    <string name="srl_footer_failed">加载失败</string>
+    <string name="srl_footer_finish">加载完成</string>
+    <string name="srl_footer_loading">正在加载…</string>
+    <string name="srl_footer_nothing">没有更多数据了</string>
+    <string name="srl_footer_pulling">上拉加载更多</string>
+    <string name="srl_footer_refreshing">正在刷新…</string>
+    <string name="srl_footer_release">释放立即加载</string>
+    <string name="srl_header_failed">刷新失败</string>
+    <string name="srl_header_finish">刷新完成</string>
+    <string name="srl_header_loading">正在加载…</string>
+    <string name="srl_header_pulling">下拉可以刷新</string>
+    <string name="srl_header_refreshing">正在刷新…</string>
+    <string name="srl_header_release">释放立即刷新</string>
+    <string name="srl_header_secondary">释放进入二楼</string>
+    <string name="srl_header_update">上次更新 M-d HH:mm</string>
 
 </resources>

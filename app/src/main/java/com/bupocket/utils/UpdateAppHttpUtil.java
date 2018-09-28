@@ -1,6 +1,7 @@
 package com.bupocket.utils;
 
 import android.support.annotation.NonNull;
+
 import com.alibaba.fastjson.JSON;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.VersionService;
@@ -9,12 +10,13 @@ import com.bupocket.http.api.dto.resp.GetCurrentVersionRespDto;
 import com.vector.update_app.HttpManager;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
-import okhttp3.Request;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import java.io.File;
 import java.util.Map;
+
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class UpdateAppHttpUtil implements HttpManager {
     @Override
@@ -35,6 +37,8 @@ public class UpdateAppHttpUtil implements HttpManager {
 
             @Override
             public void onFailure(Call<ApiResult<GetCurrentVersionRespDto>> call, Throwable t) {
+                System.out.println("call = [" + call + "], t = [" + t + "]");
+                callBack.onError("false");
             }
         });
     }

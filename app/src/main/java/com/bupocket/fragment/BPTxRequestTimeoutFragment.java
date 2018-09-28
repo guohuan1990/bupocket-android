@@ -2,13 +2,15 @@ package com.bupocket.fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class BPTxRequestTimeoutFragment extends BaseFragment {
     @BindView(R.id.topbar)

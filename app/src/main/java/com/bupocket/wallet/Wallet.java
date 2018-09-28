@@ -8,21 +8,32 @@ import com.bupocket.wallet.model.WalletBPData;
 import com.bupocket.wallet.utils.KeyStore;
 import com.bupocket.wallet.utils.keystore.BaseKeyStoreEntity;
 import com.bupocket.wallet.utils.keystore.KeyStoreEntity;
+
+import org.bitcoinj.crypto.MnemonicCode;
+
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
+
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.encryption.crypto.mnemonic.Mnemonic;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.encryption.utils.hex.HexFormat;
-import io.bumo.model.request.*;
+import io.bumo.model.request.AccountCheckValidRequest;
+import io.bumo.model.request.AccountGetBalanceRequest;
+import io.bumo.model.request.AccountGetNonceRequest;
+import io.bumo.model.request.TransactionBuildBlobRequest;
+import io.bumo.model.request.TransactionSignRequest;
+import io.bumo.model.request.TransactionSubmitRequest;
 import io.bumo.model.request.operation.BUSendOperation;
-import io.bumo.model.response.*;
+import io.bumo.model.response.AccountCheckValidResponse;
+import io.bumo.model.response.AccountGetBalanceResponse;
+import io.bumo.model.response.AccountGetNonceResponse;
+import io.bumo.model.response.TransactionBuildBlobResponse;
+import io.bumo.model.response.TransactionSignResponse;
+import io.bumo.model.response.TransactionSubmitResponse;
 import io.bumo.model.response.result.TransactionBuildBlobResult;
-import org.bitcoinj.crypto.MnemonicCode;
-
-import java.io.IOException;
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Wallet {
     SDK sdk = SDK.getInstance(Constants.BUMO_NODE_URL);
@@ -134,35 +145,45 @@ public class Wallet {
 
 
     public String sendBu(String password,String bPData, String fromAccAddr,String toAccAddr,String amount, String note, String fee) throws Exception {
+        String hash = null;
+        try {
+            String senderPrivateKey = null;
+            List<WalletBPData.AccountsBean> accountsBeans = JSON.parseArray(bPData, WalletBPData.AccountsBean.class);
 
-        String senderPrivateKey = null;
-        List<WalletBPData.AccountsBean> accountsBeans = JSON.parseArray(bPData, WalletBPData.AccountsBean.class);
-
-        if(accountsBeans.size()>0){
-            for (WalletBPData.AccountsBean accountsBean:accountsBeans
-                 ) {
-                if(fromAccAddr.equals(accountsBean.getAddress())){
-                    senderPrivateKey = KeyStore.decodeMsg(password,JSON.parseObject(accountsBean.getSecret().toString(),BaseKeyStoreEntity.class));
-                    break;
+            if(accountsBeans.size()>0){
+                for (WalletBPData.AccountsBean accountsBean:accountsBeans
+                        ) {
+                    if(fromAccAddr.equals(accountsBean.getAddress())){
+                        senderPrivateKey = KeyStore.decodeMsg(password,JSON.parseObject(accountsBean.getSecret().toString(),BaseKeyStoreEntity.class));
+                        if(!senderPrivateKey.startsWith("priv")){
+                            throw new Exception();
+                        }
+                        break;
+                    }
                 }
             }
+            // Init variable
+            // The account address to receive bu
+            String destAddress = toAccAddr;
+            // The amount to be sent
+            Long sendAmount = ToBaseUnit.BU2MO(amount);
+            // The fixed write 1000L, the unit is MO
+            Long gasPrice = 1000L;
+            // Set up the maximum cost 0.01BU
+            Long feeLimit = ToBaseUnit.BU2MO(fee);
+            // Transaction initiation account's nonce + 1
+            String transMetadata = note;
+
+            Long nonce = getAccountNonce(fromAccAddr) + 1;
+            hash = sendBu(senderPrivateKey, destAddress, sendAmount, nonce, gasPrice, feeLimit,transMetadata);
+        }catch (WalletException e){
+            throw new WalletException(e.getErrCode(),e.getErrMsg());
+        }catch (Exception e){
+            throw new Exception(e);
         }
-        // Init variable
-        // The account address to receive bu
-        String destAddress = toAccAddr;
-        // The amount to be sent
-        Long sendAmount = ToBaseUnit.BU2MO(amount);
-        // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
-        // Set up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO(fee);
-        // Transaction initiation account's nonce + 1
-
-        Long nonce = getAccountNonce(fromAccAddr) + 1;
-
-        return sendBu(senderPrivateKey, destAddress, sendAmount, nonce, gasPrice, feeLimit);
+        return hash;
     }
-    private String sendBu(String senderPrivateKey, String destAddress, Long amount, Long senderNonce, Long gasPrice, Long feeLimit) throws Exception {
+    private String sendBu(String senderPrivateKey, String destAddress, Long amount, Long senderNonce, Long gasPrice, Long feeLimit,String transMetadata) throws Exception {
 
         String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
         BUSendOperation buSendOperation = new BUSendOperation();
@@ -176,6 +197,7 @@ public class Wallet {
         transactionBuildBlobRequest.setFeeLimit(feeLimit);
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         transactionBuildBlobRequest.addOperation(buSendOperation);
+        transactionBuildBlobRequest.setMetadata(transMetadata);
 
         String transactionBlob = null;
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
@@ -211,13 +233,15 @@ public class Wallet {
         String address = PrivateKey.getEncAddress(publicKey);
         return address;
     }
-    private Long getAccountNonce(String accountAddress){
+    private Long getAccountNonce(String accountAddress) throws WalletException{
         AccountGetNonceRequest request = new AccountGetNonceRequest();
         request.setAddress(accountAddress);
 
         AccountGetNonceResponse response = sdk.getAccountService().getNonce(request);
         if (0 == response.getErrorCode()) {
-           return response.getResult().getNonce();
+            return response.getResult().getNonce();
+        }else if(11007 == response.getErrorCode()){
+            throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
         }
         return null;
     }

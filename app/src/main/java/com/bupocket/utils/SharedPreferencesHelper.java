@@ -2,7 +2,6 @@ package com.bupocket.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.bupocket.BPApplication;
 

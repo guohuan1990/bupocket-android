@@ -1,17 +1,13 @@
 package com.bupocket.fragment;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.view.InputDevice;
 import android.view.LayoutInflater;
 import android.view.View;
-
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.bupocket.enums.OutinTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.TimeUtil;
@@ -20,7 +16,6 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 public class BPSendStatusFragment extends BaseFragment {
 
@@ -78,7 +73,7 @@ public class BPSendStatusFragment extends BaseFragment {
         targetAddrTv.setText(destAccAddr);
         mSendTokenStatusIcon.setImageDrawable(txStatusIconDrawable);
         mSendTokenStatusTv.setText(txStatusStr);
-        sendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(sendAmount) ? "-" : "+") + sendAmount);
+        sendAmountTv.setText(sendAmount);
         sendFeeTv.setText(txFee);
         sendNoteTv.setText(note);
         mSendTimeTv.setText(TimeUtil.timeStamp2Date(sendTime.substring(0,10),"yyyy.MM.dd HH:mm:ss"));

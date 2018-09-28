@@ -5,14 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindString;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class BPProfileFragment extends BaseFragment{
     private SharedPreferencesHelper sharedPreferencesHelper;

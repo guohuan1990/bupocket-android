@@ -10,14 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.BPAssetsFragment;
 import com.bupocket.fragment.BPProfileFragment;
 import com.qmuiteam.qmui.widget.QMUIPagerAdapter;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class HomeFragment extends BaseFragment {

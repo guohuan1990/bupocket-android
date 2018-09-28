@@ -1,21 +1,17 @@
 package com.bupocket.fragment;
 
-import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.http.api.RetrofitFactory;
-import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.UserService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;

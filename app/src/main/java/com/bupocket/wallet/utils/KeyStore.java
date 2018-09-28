@@ -2,14 +2,15 @@ package com.bupocket.wallet.utils;
 
 import com.bupocket.wallet.utils.keystore.BaseKeyStoreEntity;
 import com.bupocket.wallet.utils.keystore.KeyStoreEntity;
+
+import java.security.SecureRandom;
+
 import io.bumo.encryption.crypto.keystore.entity.ScryptParamsEty;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.encryption.model.KeyType;
 import io.bumo.encryption.utils.aes.AesCtr;
 import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.encryption.utils.scrypt.SCrypt;
-
-import java.security.SecureRandom;
 
 public class KeyStore {
 

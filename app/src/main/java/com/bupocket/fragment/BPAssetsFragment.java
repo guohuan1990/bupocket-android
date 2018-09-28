@@ -8,17 +8,19 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import butterknife.BindString;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
+import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.MyTokenTxAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.TxStatusEnum;
@@ -27,7 +29,10 @@ import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetMyTxsRespDto;
 import com.bupocket.model.TokenTxInfo;
-import com.bupocket.utils.*;
+import com.bupocket.utils.AddressUtil;
+import com.bupocket.utils.QRCodeUtil;
+import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.TimeUtil;
 import com.bupocket.wallet.Wallet;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -40,14 +45,18 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BPAssetsFragment extends BaseFragment {
     @BindView(R.id.user_nick)
@@ -202,7 +211,6 @@ public class BPAssetsFragment extends BaseFragment {
         pageStart = 1;
         tokenTxInfoMap.clear();
         tokenTxInfoList.clear();
-
         loadMyTxList();
     }
 
@@ -214,10 +222,11 @@ public class BPAssetsFragment extends BaseFragment {
     private void handleMyTxs(GetMyTxsRespDto getMyTxsRespDto){
 
         if(getMyTxsRespDto != null || getMyTxsRespDto.getTxRecord() != null){
-            if(getMyTxsRespDto.getPage().getTotal() == 0){
+            if(getMyTxsRespDto.getTxRecord().size() == 0) {
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
                 return;
             }
+
             refreshLayout.setEnableLoadMore(true);
 
             for (GetMyTxsRespDto.TxRecordBean obj : getMyTxsRespDto.getTxRecord()) {
@@ -226,9 +235,9 @@ public class BPAssetsFragment extends BaseFragment {
                 String amountStr = null;
                 String txStartStr = null;
                 if(obj.getOutinType() == 0){
-                    amountStr = "-" + obj.getAmount();
+                    amountStr = "-" + obj.getAmount() + " BU";
                 }else {
-                    amountStr = "+" + obj.getAmount();
+                    amountStr = "+" + obj.getAmount() + " BU";
                 }
 
                 if(TxStatusEnum.SUCCESS.getCode().equals(obj.getTxStatus())){
@@ -280,9 +289,9 @@ public class BPAssetsFragment extends BaseFragment {
         call.enqueue(new Callback<ApiResult<GetMyTxsRespDto>>() {
             @Override
             public void onResponse(Call<ApiResult<GetMyTxsRespDto>> call, Response<ApiResult<GetMyTxsRespDto>> response) {
-
                 ApiResult<GetMyTxsRespDto> respDto = response.body();
                 Log.d("GetMyTxsRespDto:", JSON.toJSONString(respDto));
+                mEmptyView.show(null,null);
                 handleMyTxs(respDto.getData());
             }
 
@@ -351,6 +360,7 @@ public class BPAssetsFragment extends BaseFragment {
         intentIntegrator.setBeepEnabled(true);
         intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
         intentIntegrator.setPrompt(getResources().getString(R.string.wallet_scan_notice));
+        intentIntegrator.setCaptureActivity(CaptureActivity.class);
         // 开始扫描
         intentIntegrator.initiateScan();
     }

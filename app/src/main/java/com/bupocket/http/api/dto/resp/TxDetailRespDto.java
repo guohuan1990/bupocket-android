@@ -111,6 +111,7 @@ public class TxDetailRespDto {
         private String fee;
         private String sourceAddress;
         private Integer status;
+        private String originalMetadata;
 
         public String getAmount() {
             return amount;
@@ -158,6 +159,14 @@ public class TxDetailRespDto {
 
         public void setStatus(Integer status) {
             this.status = status;
+        }
+
+        public String getOriginalMetadata() {
+            return originalMetadata;
+        }
+
+        public void setOriginalMetadata(String originalMetadata) {
+            this.originalMetadata = originalMetadata;
         }
     }
 
@@ -245,5 +254,6 @@ public class TxDetailRespDto {
         public void setSourceAddress(String sourceAddress) {
             this.sourceAddress = sourceAddress;
         }
+
     }
 }

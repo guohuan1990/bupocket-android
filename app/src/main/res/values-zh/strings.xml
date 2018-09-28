@@ -1,8 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">小布口袋</string>
-    <string name="tabbar_assets_txt">资产</string>
+    <string name="tabbar_assets_txt">钱包</string>
     <string name="tabbar_discovery_txt">发现</string>
-    <string name="tabbar_profile_txt">我</string>
+    <string name="tabbar_profile_txt">我的</string>
     <string name="tabbr_wallet_txt">钱包</string>
+    <string name="set_success">设置成功</string>
+    <string name="create_wallet_txt">创建钱包</string>
+    <string name="recently_tx_txt">最近交易记录</string>
+    <string name="user_info_title">我的身份</string>
+    <string name="user_info_wallet_name">身份名</string>
+    <string name="user_info_wallet_id">身份 ID</string>
+    <string name="user_info_backup_current_wallet">备份身份</string>
+    <string name="user_info_logout">退出当前身份</string>
+    <string name="user_info_logout_notice">即将移除身份及导入的钱包，请确保钱包已备份</string>
+    <string name="common_dialog_cancel">取消</string>
+    <string name="common_dialog_confirm">确认</string>
+    <string name="tabbr_otc_txt">c2c</string>
+
+
+    <string formatted="false" name="srl_component_falsify">%s 虚假区域\n代表运行时拖动的高度【%.1fdp】 \n而不会显示任何东西</string>
+    <string name="srl_content_empty">SmartRefreshLayout中没有找到内容视图。您是否忘记在xml布局文件中添加？</string>
+    <string name="srl_footer_failed">加载失败</string>
+    <string name="srl_footer_finish">加载完成</string>
+    <string name="srl_footer_loading">正在加载…</string>
+    <string name="srl_footer_nothing">没有更多数据了</string>
+    <string name="srl_footer_pulling">上拉加载更多</string>
+    <string name="srl_footer_refreshing">正在刷新…</string>
+    <string name="srl_footer_release">释放立即加载</string>
+    <string name="srl_header_failed">刷新失败</string>
+    <string name="srl_header_finish">刷新完成</string>
+    <string name="srl_header_loading">正在加载…</string>
+    <string name="srl_header_pulling">下拉可以刷新</string>
+    <string name="srl_header_refreshing">正在刷新…</string>
+    <string name="srl_header_release">释放立即刷新</string>
+    <string name="srl_header_secondary">释放进入二楼</string>
+    <string name="srl_header_update">上次更新 M-d HH:mm</string>
 </resources>

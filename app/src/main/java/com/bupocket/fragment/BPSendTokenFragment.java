@@ -2,21 +2,24 @@ package com.bupocket.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.*;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
+import com.bupocket.activity.CaptureActivity;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.TxStatusEnum;
@@ -28,6 +31,7 @@ import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.exception.WalletException;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -36,13 +40,16 @@ import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class BPSendTokenFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -66,7 +73,7 @@ public class BPSendTokenFragment extends BaseFragment {
     ImageView mSendFormScanIv;
     private String hash;
 
-    private Double availableBuBalance;
+    private String availableBuBalance;
     QMUITipDialog txSendingTipDialog;
 
     private TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean;
@@ -154,12 +161,12 @@ public class BPSendTokenFragment extends BaseFragment {
             public void run() {
                 String balance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
                 if(balance == null || Double.parseDouble(balance) < 0 || Double.parseDouble(balance) == 0){
-                    availableBuBalance = 0d;
+                    availableBuBalance = "0";
                 } else {
-                    availableBuBalance = AmountUtil.availableSubtractionFee(balance,com.bupocket.common.Constants.RESERVE_AMOUNT);
+                    availableBuBalance = String.valueOf(AmountUtil.availableSubtractionFee(balance,com.bupocket.common.Constants.RESERVE_AMOUNT));
                 }
-                if(availableBuBalance == null || availableBuBalance < 0) {
-                    availableBuBalance = 0d;
+                if(availableBuBalance == null || Double.parseDouble(availableBuBalance) < 0) {
+                    availableBuBalance = "0";
                 }
                 Message msg = Message.obtain();
                 Bundle data = new Bundle();
@@ -334,10 +341,10 @@ public class BPSendTokenFragment extends BaseFragment {
                 addressTxt.setText(address);
 
                 TextView amountTxt = sheet.findViewById(R.id.sendAmount);
-                amountTxt.setText(sendAmount);
+                amountTxt.setText(sendAmount + " BU");
 
                 TextView estimateCostTxt = sheet.findViewById(R.id.sendEstimateCost);
-                estimateCostTxt.setText(txFee);
+                estimateCostTxt.setText(txFee + " BU");
 
                 TextView remarkTxt = sheet.findViewById(R.id.sendRemark);
                 remarkTxt.setText(note);
@@ -391,6 +398,12 @@ public class BPSendTokenFragment extends BaseFragment {
                                         String destAddess = getDestAccAddr();
                                         try {
                                             hash = Wallet.getInstance().sendBu(password,accountBPData, currentAccAddress, destAddess, sendAmount, note,txFee);
+                                        }catch (WalletException e){
+                                            e.printStackTrace();
+                                            Looper.prepare();
+                                            Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
+                                            txSendingTipDialog.dismiss();
+                                            Looper.loop();
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                             Looper.prepare();
@@ -428,6 +441,7 @@ public class BPSendTokenFragment extends BaseFragment {
         intentIntegrator.setBeepEnabled(true);
         intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
         intentIntegrator.setPrompt(getResources().getString(R.string.wallet_scan_notice));
+        intentIntegrator.setCaptureActivity(CaptureActivity.class);
         // 开始扫描
         intentIntegrator.initiateScan();
     }
@@ -485,8 +499,7 @@ public class BPSendTokenFragment extends BaseFragment {
                                 argz.putString("destAccAddr",txDeatilRespBoBean.getDestAddress());
                                 argz.putString("sendAmount",txDeatilRespBoBean.getAmount());
                                 argz.putString("txFee",txDeatilRespBoBean.getFee());
-                                // TODO 交易详情缺少 备注
-                                argz.putString("note","");
+                                argz.putString("note",txDeatilRespBoBean.getOriginalMetadata());
                                 argz.putString("state",txDeatilRespBoBean.getStatus().toString());
                                 argz.putString("sendTime",txDeatilRespBoBean.getApplyTimeDate());
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();

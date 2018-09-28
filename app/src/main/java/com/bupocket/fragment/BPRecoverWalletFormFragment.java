@@ -1,6 +1,5 @@
 package com.bupocket.fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Looper;
 import android.support.annotation.RequiresApi;
@@ -16,8 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
@@ -32,12 +29,11 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
-import org.bitcoinj.crypto.MnemonicCode;
-
 import java.util.Arrays;
 import java.util.List;
 
-import static com.bupocket.R.color.qmui_btn_blue_bg;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class BPRecoverWalletFormFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -127,7 +123,8 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
-                startFragmentAndDestroyCurrent(new BPCreateWalletFragment());
+//                startFragmentAndDestroyCurrent(new BPCreateWalletFragment());
+                popBackStack();
             }
         });
     }
