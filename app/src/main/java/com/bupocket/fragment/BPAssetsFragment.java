@@ -72,6 +72,8 @@ public class BPAssetsFragment extends BaseFragment {
     @BindView(R.id.accountBUBalanceTv)
     TextView mAccountBuBalanceTv;
     protected SharedPreferencesHelper sharedPreferencesHelper;
+
+    private GetMyTxsRespDto.PageBean page;
     private String pageSize = "50";
     private Integer pageStart = 1;
     private String currentAccAddress;
@@ -93,6 +95,7 @@ public class BPAssetsFragment extends BaseFragment {
     @BindView(R.id.assetsAvatarIv)
     QMUIRadiusImageView mAssetsAvatarIv;
     private String buBalance = "-";
+
 
     @Override
     protected View onCreateView() {
@@ -194,10 +197,12 @@ public class BPAssetsFragment extends BaseFragment {
                             refreshlayout.finishRefresh();
                             return;
                         }
-                        if(pageStart == myTokenTxAdapter.getPage().getStart()){
-                            loadMoreData();
-                            refreshlayout.finishLoadMore(500);
-                        }else{
+
+
+                        loadMoreData();
+                        refreshlayout.finishLoadMore(500);
+
+                        if(!page.isNextFlag()){
                             refreshLayout.finishLoadMoreWithNoMoreData();
                         }
                     }
@@ -215,16 +220,21 @@ public class BPAssetsFragment extends BaseFragment {
     }
 
     private void loadMoreData(){
-        pageStart ++;
-        loadMyTxList();
+        if(page.isNextFlag()){
+            pageStart ++;
+            loadMyTxList();
+        }
     }
 
     private void handleMyTxs(GetMyTxsRespDto getMyTxsRespDto){
 
         if(getMyTxsRespDto != null || getMyTxsRespDto.getTxRecord() != null){
+            page = getMyTxsRespDto.getPage();
             if(getMyTxsRespDto.getTxRecord().size() == 0) {
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
                 return;
+            }else{
+                mEmptyView.show(null, null);
             }
 
             refreshLayout.setEnableLoadMore(true);
@@ -247,7 +257,7 @@ public class BPAssetsFragment extends BaseFragment {
                 }
 
                 if(!tokenTxInfoMap.containsKey(obj.getTxHash())){
-                    TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime()), amountStr, txStartStr);
+                    TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime(),getContext()), amountStr, txStartStr);
                     tokenTxInfo.setTxHash(obj.getTxHash());
                     tokenTxInfo.setOutinType(obj.getOutinType());
                     tokenTxInfoMap.put(obj.getTxHash(), tokenTxInfo);

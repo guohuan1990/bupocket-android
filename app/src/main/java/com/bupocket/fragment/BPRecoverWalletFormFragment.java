@@ -156,13 +156,21 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
     }
 
     private boolean pwdFlag () {
-        String pwd = mPwdEt.getText().toString().trim();
-        String regex = ".{8,20}";
-        if ("".equals(pwd)) {
-            Toast.makeText(getActivity(), R.string.recover_set_pwd_hint,Toast.LENGTH_SHORT).show();
+        String password = mPwdEt.getText().toString().trim();
+        if("".equals(password)){
+            Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty,Toast.LENGTH_SHORT).show();
             return false;
-        } else if (!pwd.matches(regex)) {
-            Toast.makeText(getActivity(), R.string.recover_set_pwd_error,Toast.LENGTH_SHORT).show();
+        }
+        if(password.length() < 8){
+            Toast.makeText(getActivity(), R.string.wallet_create_form_error3,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(password.length() > 20){
+            Toast.makeText(getActivity(), R.string.wallet_create_form_error2,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(!CommonUtil.validatePassword(password)){
+            Toast.makeText(getActivity(), R.string.wallet_create_form_error5,Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -247,7 +255,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
                     public void run() {
                         try {
                             List<String> mnemonicCodes = getMnemonicCode();
-                            WalletBPData walletBPData = Wallet.getInstance().importMnemonicCode(mnemonicCodes,password);
+                            WalletBPData walletBPData = Wallet.getInstance().importMnemonicCode(mnemonicCodes,password,getContext());
                             sharedPreferencesHelper.put("skey", walletBPData.getSkey());
                             sharedPreferencesHelper.put("currentAccNick", mWalletNameEt.getText().toString());
                             sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));

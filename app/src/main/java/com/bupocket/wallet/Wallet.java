@@ -1,39 +1,37 @@
 package com.bupocket.wallet;
 
+import android.content.Context;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.common.Constants;
+import com.bupocket.http.api.AccountService;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
 import com.bupocket.wallet.utils.KeyStore;
 import com.bupocket.wallet.utils.keystore.BaseKeyStoreEntity;
 import com.bupocket.wallet.utils.keystore.KeyStoreEntity;
-
-import org.bitcoinj.crypto.MnemonicCode;
-
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.List;
-
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.encryption.crypto.mnemonic.Mnemonic;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.encryption.utils.hex.HexFormat;
-import io.bumo.model.request.AccountCheckValidRequest;
-import io.bumo.model.request.AccountGetBalanceRequest;
-import io.bumo.model.request.AccountGetNonceRequest;
-import io.bumo.model.request.TransactionBuildBlobRequest;
-import io.bumo.model.request.TransactionSignRequest;
-import io.bumo.model.request.TransactionSubmitRequest;
+import io.bumo.model.request.*;
 import io.bumo.model.request.operation.BUSendOperation;
-import io.bumo.model.response.AccountCheckValidResponse;
-import io.bumo.model.response.AccountGetBalanceResponse;
-import io.bumo.model.response.AccountGetNonceResponse;
-import io.bumo.model.response.TransactionBuildBlobResponse;
-import io.bumo.model.response.TransactionSignResponse;
-import io.bumo.model.response.TransactionSubmitResponse;
+import io.bumo.model.response.*;
 import io.bumo.model.response.result.TransactionBuildBlobResult;
+import org.bitcoinj.crypto.MnemonicCode;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Wallet {
     SDK sdk = SDK.getInstance(Constants.BUMO_NODE_URL);
@@ -44,11 +42,12 @@ public class Wallet {
     public static Wallet getInstance(){
         if(wallet == null){
             wallet = new Wallet();
+
         }
         return wallet;
     }
 
-    private WalletBPData create(String password, String sKey) throws WalletException {
+    private WalletBPData create(String password, String sKey,Context context) throws WalletException {
         try {
             WalletBPData walletBPData;
             List<String> mnemonicCodes;
@@ -75,6 +74,15 @@ public class Wallet {
             }
             walletBPData.setAccounts(accountsBeans);
             walletBPData.setMnemonicCodes(mnemonicCodes);
+            WalletBPData.AccountsBean identityAccountBean = accountsBeans.get(0);
+            WalletBPData.AccountsBean walletAccountBean = accountsBeans.get(1);
+
+            String walletAccountPk = getPk(privateKeys.get(1));
+
+            String walletAccountSignData = signData(privateKeys.get(1), walletAccountBean.getAddress());
+
+            deviceBind(walletAccountBean.getAddress(),identityAccountBean.getAddress(),walletAccountPk,walletAccountSignData,context);
+
             return walletBPData;
 
         } catch (Exception e) {
@@ -82,19 +90,19 @@ public class Wallet {
             throw new WalletException(ExceptionEnum.SYS_ERR.getCode(), ExceptionEnum.SYS_ERR.getMessage());
         }
     }
-    public WalletBPData create(String password) throws WalletException {
+    public WalletBPData create(String password, Context context) throws WalletException {
         byte[] aesIv = new byte[16];
         SecureRandom randomIv = new SecureRandom();
         randomIv.nextBytes(aesIv);
         String skey = HexFormat.byteToHex(aesIv);
-        return create(password, skey);
+        return create(password, skey,context);
     }
 
-    public WalletBPData updateAccountPassword(String oblPwd,String newPwd, String ciphertextSkeyData) throws WalletException {
+    public WalletBPData updateAccountPassword(String oblPwd,String newPwd, String ciphertextSkeyData, Context context) throws WalletException {
         try {
             // 校验密码是否匹配
             String sKey =  HexFormat.byteToHex(getSkey(oblPwd,ciphertextSkeyData));
-            return create(newPwd,sKey);
+            return create(newPwd,sKey,context);
         }catch (Exception e){
             e.printStackTrace();
             throw new WalletException(ExceptionEnum.SYS_ERR.getCode(),ExceptionEnum.SYS_ERR.getMessage());
@@ -102,10 +110,10 @@ public class Wallet {
     }
 
 
-    public WalletBPData importMnemonicCode(List<String> mnemonicCodes,String password) throws Exception {
+    public WalletBPData importMnemonicCode(List<String> mnemonicCodes,String password, Context context) throws Exception {
         byte[] sKeyByte = new MnemonicCode().toEntropy(mnemonicCodes);
         String sKey = HexFormat.byteToHex(sKeyByte);
-        return create(password, sKey);
+        return create(password, sKey,context);
     }
 
     public void checkPwd(String password,String ciphertextSkeyData) throws Exception {
@@ -244,6 +252,45 @@ public class Wallet {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
         }
         return null;
+    }
+
+    private void deviceBind(final String walletAddress, final String identityAddress, final String publicKey, final String signData, final Context context){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                AccountService accountService = RetrofitFactory.getInstance().getRetrofit().create(AccountService.class);
+                Map<String, Object> parmasMap = new HashMap<>();
+                parmasMap.put("walletAddress",walletAddress);
+                parmasMap.put("identityAddress", identityAddress);
+                parmasMap.put("deviceId", CommonUtil.getUniqueId(context));
+                parmasMap.put("publicKey",publicKey);
+                parmasMap.put("signData",signData);
+
+                Call<ApiResult> call = accountService.deviceBind(parmasMap);
+                call.enqueue(new Callback<ApiResult>() {
+                    @Override
+                    public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+                        ApiResult respDto = response.body();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ApiResult> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+            }
+        }).start();
+    }
+
+
+    private String getPk(String sk){
+        return PrivateKey.getEncPublicKey(sk);
+    }
+
+
+    private String signData(String sk,String message){
+        return HexFormat.byteToHex(PrivateKey.sign(message.getBytes(), sk));
     }
 
 

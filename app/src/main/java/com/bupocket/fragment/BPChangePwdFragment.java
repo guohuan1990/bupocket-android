@@ -85,7 +85,7 @@ public class BPChangePwdFragment extends BaseFragment{
                             String oldPwd = mOldPasswordET.getText().toString().trim();
                             String newPwd = mNewPasswordET.getText().toString().trim();
                             try {
-                                WalletBPData walletBPData = Wallet.getInstance().updateAccountPassword(oldPwd,newPwd,sharedPreferencesHelper.getSharedPreference("skey", "").toString());
+                                WalletBPData walletBPData = Wallet.getInstance().updateAccountPassword(oldPwd,newPwd,sharedPreferencesHelper.getSharedPreference("skey", "").toString(),getContext());
 
                                 sharedPreferencesHelper.put("skey", walletBPData.getSkey());
                                 sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
