@@ -24,6 +24,7 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,8 +42,9 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
     private SharedPreferencesHelper sharedPreferencesHelper;
     private List<String> srcMnemonicCodeList = new ArrayList<>();
 
-    private List<String> mnemonicCodeList;
-    private List<String> mnemonicCodeListSelected = new ArrayList<>();
+    private List<MnemonicWord> mnemonicCodeList = new ArrayList<>();
+    private List<MnemonicWord> mnemonicCodeListSelected = new ArrayList<>();
+    private List<String> strMnemonicCodeListSelected = new ArrayList<>();
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_create_wallet_confirm_mneonic_code, null);
@@ -54,11 +56,15 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 // 校验助记词是否合法
-                if(mnemonicCodeListSelected.size() < 12){
+                strMnemonicCodeListSelected.clear();
+                for(MnemonicWord word : mnemonicCodeListSelected){
+                    strMnemonicCodeListSelected.add(word.getCode());
+                }
+                if(strMnemonicCodeListSelected.size() < 12){
                     Toast.makeText(getActivity(), R.string.check_mneonic_code_err1,Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!mnemonicCodeListSelected.equals(srcMnemonicCodeList)){
+                if(!strMnemonicCodeListSelected.equals(srcMnemonicCodeList)){
                     Toast.makeText(getActivity(), R.string.check_mneonic_code_err1,Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -74,10 +80,16 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
 
     private void getMneonicCode(){
         srcMnemonicCodeList = getArguments().getStringArrayList("mneonicCodeList");
-        mnemonicCodeList = new ArrayList<>(srcMnemonicCodeList);
+        assert srcMnemonicCodeList != null;
+        for(String code : srcMnemonicCodeList){
+            MnemonicWord mnemonicWord = new MnemonicWord();
+            mnemonicWord.setWordId(UUID.randomUUID().toString());
+            mnemonicWord.setCode(code);
+            mnemonicCodeList.add(mnemonicWord);
+        }
         Collections.shuffle(mnemonicCodeList);
-        System.out.println("srcMnemonicCodeList:" + JSON.toJSONString(srcMnemonicCodeList));
-        System.out.println("mnemonicCodeList:" + JSON.toJSONString(mnemonicCodeList));
+//        System.out.println("srcMnemonicCodeList:" + JSON.toJSONString(srcMnemonicCodeList));
+//        System.out.println("mnemonicCodeList:" + JSON.toJSONString(mnemonicCodeList));
     }
 
     private void initData(){
@@ -94,7 +106,8 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
             TextView textView = new TextView(mContext);
             textView.setGravity(Gravity.CENTER);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-            textView.setText(mnemonicCodeList.get(i));
+            textView.setText(mnemonicCodeList.get(i).getCode());
+            textView.setHint(mnemonicCodeList.get(i).getWordId());
             textView.setTextColor(0xFF36B3FF);
             textView.setBackgroundColor(0xFFF5F5F5);
             textView.setOnClickListener(clickListener);
@@ -115,9 +128,9 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
 
     private void printMneonicCodeSelected(){
         StringBuffer sb = new StringBuffer();
-        for (String code: mnemonicCodeListSelected
+        for (MnemonicWord mnemonicWord: mnemonicCodeListSelected
              ) {
-            sb.append(code + "\t\t");
+            sb.append(mnemonicWord.getCode() + "\t\t");
         }
         mMnemonicCodeListSelected.setText(sb.toString());
     }
@@ -135,25 +148,33 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
         public void onClick(View v) {
             TextView textView = (TextView)v;
             String code = textView.getText().toString();
-            if(!mnemonicCodeListSelected.contains(code)){
+            String wordId = textView.getHint().toString();
+            MnemonicWord mnemonicWord = new MnemonicWord();
+            mnemonicWord.setCode(code);
+            mnemonicWord.setWordId(wordId);
+            if(!mnemonicCodeListSelected.contains(mnemonicWord)){
                 textView.setTextColor(0xFFFFFFFF);
                 textView.setBackgroundColor(0xFF36B3FF);
-                mnemonicCodeListSelected.add(code);
+                mnemonicCodeListSelected.add(mnemonicWord);
             } else {
                 textView.setTextColor(0xFF36B3FF);
                 textView.setBackgroundColor(0xFFF5F5F5);
-                mnemonicCodeListSelected.remove(code);
+                mnemonicCodeListSelected.remove(mnemonicWord);
             }
             printMneonicCodeSelected();
 
-            if(mnemonicCodeListSelected.size() == 12 && mnemonicCodeListSelected.equals(srcMnemonicCodeList)){
+            strMnemonicCodeListSelected.clear();
+            for(MnemonicWord word : mnemonicCodeListSelected){
+                strMnemonicCodeListSelected.add(word.getCode());
+            }
+            if(strMnemonicCodeListSelected.size() == 12 && strMnemonicCodeListSelected.equals(srcMnemonicCodeList)){
                 mCompleteMnemonicCodeBtn.setEnabled(true);
                 mCompleteMnemonicCodeBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
             }else{
                 mCompleteMnemonicCodeBtn.setEnabled(false);
                 mCompleteMnemonicCodeBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
             }
-            System.out.println("ssss:" + textView.getText());
+//            System.out.println("ssss:" + textView.getText());
         }
     };
 
@@ -171,5 +192,34 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
         });
     }
 
+    private class MnemonicWord{
+        private String wordId;
+        private String code;
+
+        public String getWordId() {
+            return wordId;
+        }
+
+        public void setWordId(String wordId) {
+            this.wordId = wordId;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if(obj instanceof MnemonicWord){
+                MnemonicWord mnemonicWord = (MnemonicWord)obj;
+                return this.getCode().equals(mnemonicWord.getCode()) && this.getWordId().equals(mnemonicWord.getWordId());
+            }
+            return super.equals(obj);
+        }
+    }
 
 }

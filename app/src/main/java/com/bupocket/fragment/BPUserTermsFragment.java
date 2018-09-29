@@ -96,7 +96,7 @@ public class BPUserTermsFragment extends BaseFragment {
             }
             case 1: {
 //                    in_s = res.openRawResource(R.raw.use_terms_en);
-                mUseTermsContentWv.loadData(getRawFileFromResource(R.raw.use_terms_html_en), "text/html; charset=UTF-8", null);
+                mUseTermsContentWv.loadData(getRawFileFromResource(R.raw.use_terms_html_cn), "text/html; charset=UTF-8", null);
                 break;
             }
             default: {
