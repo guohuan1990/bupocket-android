@@ -230,7 +230,7 @@ public class BPAssetsFragment extends BaseFragment {
 
         if(getMyTxsRespDto != null || getMyTxsRespDto.getTxRecord() != null){
             page = getMyTxsRespDto.getPage();
-            if(getMyTxsRespDto.getTxRecord().size() == 0) {
+            if(getMyTxsRespDto.getTxRecord() == null || getMyTxsRespDto.getTxRecord().size() == 0) {
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
                 return;
             }else{
