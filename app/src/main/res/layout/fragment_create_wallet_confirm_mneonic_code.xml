@@ -17,6 +17,8 @@
             android:layout_height="wrap_content"
             android:text="@string/view_title_confirm_mneonic_code"
             android:theme="@style/BPViewTitle"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:paddingLeft="@dimen/view_padding"/>
 
         <LinearLayout
@@ -29,6 +31,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/confirm_mneonic_code_txt"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:textColor="#999999" />
 
             <LinearLayout
@@ -37,6 +41,8 @@
                 android:layout_marginTop="28dp"
                 android:background="#F5F5F5"
                 android:orientation="vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:padding="15dp">
 
                 <TextView

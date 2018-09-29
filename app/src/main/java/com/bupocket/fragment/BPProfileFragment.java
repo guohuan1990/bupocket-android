@@ -28,8 +28,8 @@ public class BPProfileFragment extends BaseFragment{
     RelativeLayout mChangePwdRL;
     @BindView(R.id.helpFeedbackRL)
     RelativeLayout mHelpRL;
-    @BindView(R.id.languageRL)
-    RelativeLayout mLanguageRL;
+//    @BindView(R.id.languageRL)
+//    RelativeLayout mLanguageRL;
     @BindView(R.id.versionNameTv)
     TextView mVersionNameTv;
     @BindView(R.id.profileAvatarIv)
@@ -52,12 +52,12 @@ public class BPProfileFragment extends BaseFragment{
                 gotoHelpFeedbackFragment();
             }
         });
-        mLanguageRL.setOnClickListener(new View.OnClickListener() {
+        /*mLanguageRL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gotoLanguageFragment();
             }
-        });
+        });*/
         mProfileAvatarIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
