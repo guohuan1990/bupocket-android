@@ -100,6 +100,19 @@ public class BPUserInfoFragment extends BaseFragment {
                         // 检查合法性
                         EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
                         final String password = mPasswordConfirmEt.getText().toString().trim();
+                        if(CommonUtil.isNull(password)){
+                            final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                                    .setTipWord(getResources().getString(R.string.common_dialog_input_pwd))
+                                    .create();
+                            tipDialog.show();
+                            mPasswordConfirmEt.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tipDialog.dismiss();
+                                }
+                            }, 1500);
+                            return;
+                        }
                         final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                                 .setTipWord(getResources().getString(R.string.user_info_backup_loading))
