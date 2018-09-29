@@ -53,7 +53,7 @@
     <string name="confirm_mneonic_code_btn_txt" translatable="false">Done</string>
     <string name="wallet_password_confirm_title" translatable="false">Confirm password</string>
     <string name="wallet_password_confirm_txt1" translatable="false">Please enter the wallet password to confirm the backup</string>
-    <string name="hint_wallet_passwrod_confirm_txt1" translatable="false">8~20 characters</string>
+    <string name="hint_wallet_passwrod_confirm_txt1" translatable="false">8~20 letters and numbers</string>
     <string name="hint_wallet_passwrod_confirm_submit_btn" translatable="false">Confirm</string>
     <string name="wallet_send_txt" translatable="false">Transfer</string>
     <string name="wallet_scan_txt" translatable="false">Scan</string>
