@@ -1,5 +1,6 @@
 package com.bupocket.activity;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,11 +11,16 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.bupocket.R;
+import com.bupocket.utils.LocaleUtil;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
 
 public class CaptureActivity extends AppCompatActivity {
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleUtil.attachBaseContext(base));
+    }
     /**
      * 条形码扫描管理器
      */

@@ -171,9 +171,6 @@ public class LocaleUtil {
                 locale = Locale.SIMPLIFIED_CHINESE;
                 break;
             case 1:
-                locale = Locale.TRADITIONAL_CHINESE;
-                break;
-            case 2:
                 locale = Locale.ENGLISH;
                 break;
             default:
