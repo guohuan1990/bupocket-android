@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
 package="com.bupocket"
-android:versionCode="1011"
-android:versionName="v1.0.11"
+android:versionCode="1012"
+android:versionName="v1.0.12"
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools">
 
@@ -38,18 +38,12 @@ xmlns:tools="http://schemas.android.com/tools">
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
     <activity
             android:name=".activity.LauncherActivity"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
         <intent-filter>
             <action android:name="android.intent.action.MAIN"/>
             <category android:name="android.intent.category.LAUNCHER"/>
         </intent-filter>
     </activity>
-
-    <activity
-        android:name="com.journeyapps.barcodescanner.CaptureActivity"
-        android:screenOrientation="portrait"
-        tools:replace="screenOrientation" />
 
     <activity
         android:name="com.bupocket.activity.CaptureActivity"
