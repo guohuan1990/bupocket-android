@@ -83,10 +83,11 @@ public class BPUpgradeManager {
     }
     private String check(GetCurrentVersionRespDto resp){
         int oldVersion = CommonUtil.packageCode(mActivity.getBaseContext());
-
-        int currentVersion = Integer.parseInt(resp.getVerNumberCode());
-        if(currentVersion > oldVersion){
-            return "Yes";
+        if(resp.getVerNumberCode() != null){
+            int currentVersion = Integer.parseInt(resp.getVerNumberCode());
+            if(currentVersion > oldVersion){
+                return "Yes";
+            }
         }
         return "No";
     }

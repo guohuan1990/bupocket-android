@@ -43,6 +43,7 @@
     <string name="backup_wallet_txt2" translatable="false">请确保在四周无人，没有摄像头的安全环境下备份</string>
     <string name="backup_wallet_btn_txt" translatable="false">备份助记词</string>
     <string name="view_title_backup_mneonic_code" translatable="false">备份助记词</string>
+    <string name="skip_backup_mneonic_btn_code">跳过</string>
     <string name="backup_mneonic_code_txt1" translatable="false">请勿截图</string>
     <string name="backup_mneonic_code_txt2" translatable="false">泄露助记词将导致资产丢失，请抄写下助记词并存放在安全的地方</string>
     <string name="backup_mneonic_code_txt3" translatable="false">请按顺序记录每个词，并妥善保管</string>

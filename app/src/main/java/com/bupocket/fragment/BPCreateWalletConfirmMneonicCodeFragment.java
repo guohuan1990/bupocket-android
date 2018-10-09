@@ -8,6 +8,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,8 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
     TextView mMnemonicCodeListSelected;
     @BindView(R.id.completeMnemonicCodeBtn)
     QMUIRoundButton mCompleteMnemonicCodeBtn;
+    @BindView(R.id.skipBackupBtn)
+    QMUIRoundButton mSkipBackupBtn;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
     private List<String> srcMnemonicCodeList = new ArrayList<>();
@@ -70,7 +73,16 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
                 }
                 sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode());
                 sharedPreferencesHelper.put("isFirstCreateWallet", "0");
+                sharedPreferencesHelper.put("mnemonicWordBackupState","0");
 //                getActivity().getSupportFragmentManager().popBackStack(new HomeFragment().getClass().getSimpleName(),0);
+                startFragment(new HomeFragment());
+            }
+        });
+
+        mSkipBackupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharedPreferencesHelper.put("isFirstCreateWallet", "0");
                 startFragment(new HomeFragment());
             }
         });

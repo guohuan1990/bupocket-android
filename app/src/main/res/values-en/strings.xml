@@ -43,6 +43,7 @@
     <string name="backup_wallet_txt1" translatable="false">Asset security cannot be guaranteed without proper backup. After deleting the program or logging out, you need to back up the file to restore your identity.</string>
     <string name="backup_wallet_txt2" translatable="false">Please make sure to back up in a safe environment with no people around and no camera.</string>
     <string name="backup_wallet_btn_txt" translatable="false">Back up mnemonic words</string>
+    <string name="skip_backup_mneonic_btn_code">Skip</string>
     <string name="view_title_backup_mneonic_code" translatable="false">Back up mnemonic words</string>
     <string name="backup_mneonic_code_txt1" translatable="false">Do not take a screenshot</string>
     <string name="backup_mneonic_code_txt2" translatable="false">Leaking mnemonic words will result in the loss of assets, please write down the mnemonic words and store them in a safe place.</string>

@@ -28,14 +28,35 @@
                     app:qmui_selected_border_color="?attr/qmui_config_color_gray_4"
                     app:qmui_selected_border_width="1px"
                     app:qmui_selected_mask_color="?attr/qmui_config_color_gray_8"/>
-            <TextView
+            <LinearLayout
+                android:id="@+id/userNickAndBackupBtnLt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+                <TextView
                     android:id="@+id/user_nick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/app_color_font"
-                    android:layout_marginTop="5dp"
                     android:text="阿木"
                     android:textSize="16sp"/>
+                <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                    android:id="@+id/assetBackupWalletBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="1dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/no_backup_tips_btn"
+                    app:qmui_borderColor="@color/app_btn_color_white"
+                    app:qmui_backgroundColor="@color/app_btn_color_white"
+                    app:qmui_radius="3dp"
+                    android:textColor="@color/app_btn_color_blue"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
             <LinearLayout
                     android:id="@+id/showMyAddressLv"
                     android:layout_width="wrap_content"

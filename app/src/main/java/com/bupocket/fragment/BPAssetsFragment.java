@@ -68,6 +68,8 @@ public class BPAssetsFragment extends BaseFragment {
     ListView tokenTxsListView;
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
+    @BindView(R.id.assetBackupWalletBtn)
+    QMUIRoundButton mAssetBackupWalletBtn;
 
     @BindView(R.id.accountBUBalanceTv)
     TextView mAccountBuBalanceTv;
@@ -91,6 +93,8 @@ public class BPAssetsFragment extends BaseFragment {
     TextView mUserBcAddressTv;
     @BindView(R.id.emptyView)
     QMUIEmptyView mEmptyView;
+    @BindView(R.id.userNickAndBackupBtnLt)
+    LinearLayout mUserNickAndBackupBtnLt;
 
     @BindView(R.id.assetsAvatarIv)
     QMUIRadiusImageView mAssetsAvatarIv;
@@ -105,6 +109,7 @@ public class BPAssetsFragment extends BaseFragment {
         initWalletInfoView();
         initMyTxListViews();
         showMyAddress();
+        backupState();
 
         mWalletScanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,8 +133,24 @@ public class BPAssetsFragment extends BaseFragment {
                 startFragment(bpUserInfoFragment);
             }
         });
-
+        mAssetBackupWalletBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle argz = new Bundle();
+                argz.putString("accName",currentAccNick);
+                BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
+                bpUserInfoFragment.setArguments(argz);
+                startFragment(bpUserInfoFragment);
+            }
+        });
         return root;
+    }
+
+    private void backupState() {
+        String state = sharedPreferencesHelper.getSharedPreference("mnemonicWordBackupState","").toString();
+        if(state.equals("0")){
+            mUserNickAndBackupBtnLt.removeView(mAssetBackupWalletBtn);
+        }
     }
 
     private void initData(){

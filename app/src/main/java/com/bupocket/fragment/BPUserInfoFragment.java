@@ -247,6 +247,7 @@ public class BPUserInfoFragment extends BaseFragment {
                             Wallet.getInstance().checkPwd(password,ciphertextSkeyData);
                             sharedPreferencesHelper.put("isFirstCreateWallet","");
                             sharedPreferencesHelper.put("createWalletStep","");
+                            sharedPreferencesHelper.put("mnemonicWordBackupState","");
                             tipDialog.dismiss();
                             startFragment(new BPCreateWalletFragment());
                         } catch (Exception e) {

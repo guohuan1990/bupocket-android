@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -29,6 +30,8 @@ import butterknife.ButterKnife;
 public class BPBackupWalletFragment extends BaseFragment {
     @BindView(R.id.backupWalletBtn)
     QMUIRoundButton mBackupWalletBtn;
+    @BindView(R.id.skipBackupBtn)
+    QMUIRoundButton mSkipBackupBtn;
 
     private List<String> mnemonicCodeList;
     private SharedPreferencesHelper sharedPreferencesHelper;
@@ -101,6 +104,14 @@ public class BPBackupWalletFragment extends BaseFragment {
                 }else{
                     go2BPCreateWalletShowMneonicCodeFragment();
                 }
+            }
+        });
+
+        mSkipBackupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharedPreferencesHelper.put("isFirstCreateWallet", "0");
+                startFragment(new HomeFragment());
             }
         });
         return root;

@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.fragment.home.HomeFragment;
+import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TO;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -31,17 +33,34 @@ public class BPCreateWalletShowMneonicCodeFragment extends BaseFragment {
 //    QMUIFloatLayout mShowMneonicCodeQMUIFl;
     @BindView(R.id.go2ConfirmMneonicCodeBtn)
     QMUIRoundButton mGo2ConfirmMneonicCodeBtn;
+    @BindView(R.id.skipBackupBtn)
+    QMUIRoundButton mSkipBackupBtn;
+
+    private SharedPreferencesHelper sharedPreferencesHelper;
+
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_create_wallet_show_mneonic_code, null);
         ButterKnife.bind(this, root);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         initTopBar();
+        initData();
         printMnemonicCode();
         submit();
+
+        mSkipBackupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharedPreferencesHelper.put("isFirstCreateWallet", "0");
+                startFragment(new HomeFragment());
+            }
+        });
         return root;
     }
 
+    private void initData() {
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+    }
 
 
     private void submit(){
