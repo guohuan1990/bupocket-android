@@ -44,17 +44,17 @@
                     android:id="@+id/assetBackupWalletBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="1dp"
+                    android:padding="3dp"
                     android:layout_marginLeft="5dp"
                     android:layout_gravity="center_vertical"
                     android:clickable="true"
                     android:focusable="true"
                     android:text="@string/no_backup_tips_btn"
-                    app:qmui_borderColor="@color/app_btn_color_white"
-                    app:qmui_backgroundColor="@color/app_btn_color_white"
-                    app:qmui_radius="3dp"
-                    android:textColor="@color/app_btn_color_blue"
-                    android:textSize="12sp"/>
+                    app:qmui_borderColor="@color/no_backup_tips_color"
+                    app:qmui_backgroundColor="@android:color/transparent"
+                    app:qmui_radius="6dp"
+                    android:textColor="@color/no_backup_tips_color"
+                    android:textSize="10sp"/>
             </LinearLayout>
 
             <LinearLayout

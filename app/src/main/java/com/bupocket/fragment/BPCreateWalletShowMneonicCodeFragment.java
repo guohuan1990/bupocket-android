@@ -33,8 +33,6 @@ public class BPCreateWalletShowMneonicCodeFragment extends BaseFragment {
 //    QMUIFloatLayout mShowMneonicCodeQMUIFl;
     @BindView(R.id.go2ConfirmMneonicCodeBtn)
     QMUIRoundButton mGo2ConfirmMneonicCodeBtn;
-    @BindView(R.id.skipBackupBtn)
-    QMUIRoundButton mSkipBackupBtn;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
 
@@ -47,14 +45,6 @@ public class BPCreateWalletShowMneonicCodeFragment extends BaseFragment {
         initData();
         printMnemonicCode();
         submit();
-
-        mSkipBackupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sharedPreferencesHelper.put("isFirstCreateWallet", "0");
-                startFragment(new HomeFragment());
-            }
-        });
         return root;
     }
 

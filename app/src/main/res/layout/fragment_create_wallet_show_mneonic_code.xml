@@ -118,26 +118,6 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:padding="10dp">
-                <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                    android:id="@+id/skipBackupBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="@string/skip_backup_mneonic_btn_code"
-                    app:qmui_borderColor="@color/app_btn_color_blue"
-                    app:qmui_backgroundColor="@color/app_btn_color_white"
-                    app:qmui_radius="5dp"
-                    android:textColor="@color/app_color_font_main"
-                    android:textSize="18sp"/>
-            </RelativeLayout>
         </LinearLayout>
 
     </LinearLayout>
