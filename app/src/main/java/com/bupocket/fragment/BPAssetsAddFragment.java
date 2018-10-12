@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.bupocket.utils.DrawableUtil;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
