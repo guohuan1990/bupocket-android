@@ -32,6 +32,7 @@ public class UpdateAppHttpUtil implements HttpManager {
                     System.out.println(respDto);
                 }catch (Exception e){
                     e.printStackTrace();
+                    callBack.onError("false");
                 }
             }
 

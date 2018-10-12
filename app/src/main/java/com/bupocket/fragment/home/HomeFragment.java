@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.BPAssetsFragment;
+import com.bupocket.fragment.BPAssetsHomeFragment;
 import com.bupocket.fragment.BPProfileFragment;
 import com.qmuiteam.qmui.widget.QMUIPagerAdapter;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
@@ -84,7 +85,7 @@ public class HomeFragment extends BaseFragment {
             protected Object hydrate(ViewGroup container, int position) {
                 switch (position) {
                     case 0:
-                        return new BPAssetsFragment();
+                        return new BPAssetsHomeFragment();
                     case 1:
                     default:
                         return new BPProfileFragment();

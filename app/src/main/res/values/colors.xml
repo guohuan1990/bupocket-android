@@ -46,4 +46,7 @@
     <color name="tx_status_success_txt_color">#999999</color>
     <color name="tx_status_failed_txt_color">#E46969</color>
     <color name="no_backup_tips_color">#CC9933</color>
+    <color name="asset_home_background_color">#f8f8f8</color>
+    <color name="token_list_view_background_color">#f7f7f7</color>
+    <color name="asset_price_txt_color">#999999</color>
 </resources>

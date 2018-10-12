@@ -4,7 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.bupocket.BPApplication;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class SharedPreferencesHelper {
@@ -117,5 +121,27 @@ public class SharedPreferencesHelper {
         } else if (value instanceof Integer) {
             mSp.edit().putInt(key, (Integer) value).commit();
         }
+    }
+
+    public <T> void setDataList(String tag, List<T> datalist) {
+        if (null == datalist || datalist.size() <= 0) return;
+        Gson gson = new Gson();
+        String strJson = gson.toJson(datalist);
+        editor.clear();
+        editor.putString(tag, strJson);
+        editor.commit();
+    }
+
+    public <T> List<T> getDataList(String tag) {
+        List<T> datalist = new ArrayList<T>();
+        String strJson = sharedPreferences.getString(tag, null);
+        if (null == strJson) {
+            return datalist;
+        }
+        Gson gson = new Gson();
+        datalist = gson.fromJson(strJson, new TypeToken<List<T>>() {
+        }.getType());
+        return datalist;
+
     }
 }

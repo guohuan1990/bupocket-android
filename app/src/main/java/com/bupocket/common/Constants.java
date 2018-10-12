@@ -1,12 +1,13 @@
 package com.bupocket.common;
 
 public class Constants {
-    public static final String WEB_SERVER_DOMAIN = "http://52.80.218.114:8081/";
+    //开发环境
+    public static final String WEB_SERVER_DOMAIN = "http://192.168.6.97:8081";
     public static final String BUMO_NODE_URL = "http://seed1.bumotest.io:26002";
-//
+    //测试环境
 //    public static final String WEB_SERVER_DOMAIN = "http://api-bp.bumotest.io/";
 //    public static final String BUMO_NODE_URL = "http://wallet-node.bumotest.io";
-
+    //生产环境
 //    public static final String WEB_SERVER_DOMAIN = "https://api-bp.bumo.io/";
 //    public static final String BUMO_NODE_URL = "http://wallet-node.bumo.io";
     public static final Integer SEND_TOKEN_NOTE_MAX_LENGTH = 20;

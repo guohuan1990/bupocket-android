@@ -3,10 +3,14 @@ package com.bupocket.utils;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.provider.Settings;
+import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -14,6 +18,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -650,5 +655,15 @@ public class CommonUtil {
             sb.append(hexString);
         }
         return sb.toString();
+    }
+
+    public static Bitmap base64ToBitmap(String base64Data) {
+        base64Data = base64Data.split(",")[1];
+        byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+    public static String formatDouble(String value) {
+        return new BigDecimal(value).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
     }
 }
