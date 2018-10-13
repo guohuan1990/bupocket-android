@@ -43,7 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class BPWalletHomeFragment extends BaseFragment {
+public class BPAssetsDetailFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
     @BindView(R.id.assetIconIv)
@@ -72,7 +72,7 @@ public class BPWalletHomeFragment extends BaseFragment {
 
     @Override
     protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_wallet_home, null);
+        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets_detail, null);
         ButterKnife.bind(this, root);
         initData();
         initTopBar();
@@ -235,7 +235,7 @@ public class BPWalletHomeFragment extends BaseFragment {
         Bundle bundle = getArguments();
         assetCode = bundle.get("assetCode").toString();
         issuer = bundle.get("issuer").toString();
-        if(bundle.get("icon") != null){
+        if(CommonUtil.isNull(bundle.get("icon").toString())){
             mAssetIconIv.setImageBitmap(CommonUtil.base64ToBitmap(bundle.get("icon").toString()));
         }else{
             mAssetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
