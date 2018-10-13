@@ -26,6 +26,7 @@ import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
@@ -260,6 +261,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 argz.putString("price",tokenInfo.getPrice());
                 argz.putString("issuer",tokenInfo.getIssuer());
                 argz.putString("decimals",tokenInfo.getDecimals()+"");
+                argz.putString("tokenType",tokenInfo.getType()+"");
                 BPAssetsDetailFragment bpAssetsDetailFragment = new BPAssetsDetailFragment();
                 bpAssetsDetailFragment.setArguments(argz);
                 startFragment(bpAssetsDetailFragment);
@@ -269,6 +271,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
     private void initData() {
+        QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
         currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();

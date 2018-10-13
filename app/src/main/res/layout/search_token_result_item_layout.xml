@@ -12,8 +12,8 @@
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/assetIconIv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:clickable="false"
             app:qmui_border_color="?attr/qmui_config_color_gray_6"
             app:qmui_border_width="1px"
@@ -33,30 +33,48 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/search_token_asset_code_txt_color"
+                android:text="BU"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/assetNameTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="BUMO"
                 android:textColor="@color/search_token_item_txt_color"
-                android:textSize="14sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/assetIssuerTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="buQcFKaRBmvmvUCC5WQxwaBQVSbkarBPLCv5"
                 android:textColor="@color/search_token_item_txt_color"
-                android:textSize="14sp" />
+                android:textSize="10sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_gravity="end"
-            android:gravity="end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:gravity="right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
+            >
+            <TextView
+                    android:id="@+id/tokenOptAddBtn"
+                    android:visibility="visible"
+                    android:paddingTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:text="添加"/>
+            <TextView
+                    android:id="@+id/tokenOptCancelCBtn"
+                    android:visibility="gone"
+                    android:paddingTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:text="取消"/>
         </LinearLayout>
 
     </LinearLayout>

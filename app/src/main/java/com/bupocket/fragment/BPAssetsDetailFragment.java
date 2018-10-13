@@ -9,7 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
@@ -22,11 +23,7 @@ import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetMyTxsRespDto;
 import com.bupocket.model.TokenTxInfo;
-import com.bupocket.utils.AddressUtil;
-import com.bupocket.utils.AmountUtil;
-import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.utils.TimeUtil;
+import com.bupocket.utils.*;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -37,17 +34,14 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class BPAssetsDetailFragment extends BaseFragment {
@@ -76,11 +70,13 @@ public class BPAssetsDetailFragment extends BaseFragment {
     private List<TokenTxInfo> tokenTxInfoList = new ArrayList<>();
     private MyTokenTxAdapter myTokenTxAdapter;
     private GetMyTxsRespDto.PageBean page;
-    private String pageSize = "50";
+    private String pageSize = "10";
     private Integer pageStart = 1;
     private String currentAccAddress;
     private String issuer;
     private String decimals;
+    private String tokenBalance;
+    private String tokenType;
 
     @Override
     protected View onCreateView() {
@@ -106,8 +102,11 @@ public class BPAssetsDetailFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Bundle argz = new Bundle();
-                argz.putString("assetCode",assetCode);
-                argz.putString("decimals",decimals);
+                argz.putString("tokenType",tokenType);
+                argz.putString("tokenCode",assetCode);
+                argz.putString("tokenDecimals",decimals);
+                argz.putString("tokenIssuer",issuer);
+                argz.putString("tokenBalance",tokenBalance);
                 BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
                 sendTokenFragment.setArguments(argz);
                 startFragment(sendTokenFragment);
@@ -274,14 +273,16 @@ public class BPAssetsDetailFragment extends BaseFragment {
         assetCode = bundle.getString("assetCode");
         issuer = bundle.getString("issuer");
         decimals = bundle.getString("decimals");
+        tokenBalance = bundle.get("amount").toString();
+        tokenType = bundle.getString("tokenType");
         if(!CommonUtil.isNull(bundle.getString("icon"))){
             mAssetIconIv.setImageBitmap(CommonUtil.base64ToBitmap(bundle.getString("icon")));
         }else{
             mAssetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
         }
-        mAssetAmountTv.setText(bundle.get("amount").toString() + " " + assetCode);
+        mAssetAmountTv.setText(tokenBalance + " " + assetCode);
         if(!bundle.get("price").toString().equals("~")){
-            mAssetValueTv.setText("≈￥" + AmountUtil.amountMultiplyAmount(bundle.get("amount").toString(),bundle.get("price").toString()));
+            mAssetValueTv.setText("≈￥" + AmountUtil.amountMultiplyAmount(tokenBalance,bundle.get("price").toString()));
         }else {
             mAssetValueTv.setText("~");
         }
@@ -320,8 +321,10 @@ public class BPAssetsDetailFragment extends BaseFragment {
 //                Toast.makeText(getActivity(), "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                 Bundle argz = new Bundle();
                 argz.putString("destAddress",result.getContents());
-                argz.putString("assetCode",assetCode);
-                argz.putString("decimals",decimals);
+                argz.putString("tokenCode",assetCode);
+                argz.putString("tokenDecimals",decimals);
+                argz.putString("tokenIssuer",issuer);
+                argz.putString("tokenBalance",tokenBalance);
                 BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
                 sendTokenFragment.setArguments(argz);
                 startFragment(sendTokenFragment);
