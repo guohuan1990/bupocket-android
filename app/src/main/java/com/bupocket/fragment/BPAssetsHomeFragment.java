@@ -164,7 +164,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
     private Handler handler = new Handler(){
         public void handleMessage(Message msg) {
-            mTotalAssetsValueTv.setText(msg.getData().get("assetValuation").toString());
+            mTotalAssetsValueTv.setText("≈" + msg.getData().get("assetValuation").toString());
         };
     };
 
@@ -234,7 +234,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
             }
 
             totalAssets = getResources().getString(R.string.prefix_total_asset) + CommonUtil.formatDouble(tokensRespDto.getTotalAmount());
-            System.out.println("BPAssetsHomeFragment.handleTokens: " + totalAssets);
             Message msg = Message.obtain();
             Bundle data = new Bundle();
             data.putString("assetValuation", tokensRespDto.getTotalAmount());
