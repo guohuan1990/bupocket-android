@@ -1,6 +1,5 @@
 package com.bupocket.adaptor;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,22 +7,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bupocket.R;
-import com.bupocket.model.TokenInfo;
+import com.bupocket.http.api.dto.resp.GetTokensRespDto;
 import com.bupocket.utils.CommonUtil;
 
 import java.util.List;
 
-import butterknife.BindView;
-import io.bumo.crypto.protobuf.Common;
-
 public class TokensAdapter extends BaseAdapter {
-    private List<TokenInfo> datas;
+    private List<GetTokensRespDto.TokenListBean> datas;
     private Context mContext;
     String mPrefixTokenPrice = "≈￥";
 
-    public TokensAdapter(List<TokenInfo> datas, Context mContext) {
+    public TokensAdapter(List<GetTokensRespDto.TokenListBean> datas, Context mContext) {
         this.datas = datas;
         this.mContext = mContext;
     }
@@ -64,7 +59,8 @@ public class TokensAdapter extends BaseAdapter {
             holder.priceTv.setText(datas.get(position).getPrice());
         }
         holder.amountTv.setText(CommonUtil.formatDouble(datas.get(position).getAmount()));
-        if(datas.get(position).getIcon() == null){
+        System.out.println("TokensAdapter.getView.assetCode: " + datas.get(position).getAssetCode());
+        if(CommonUtil.isNull(datas.get(position).getIcon())){
             holder.assetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
         }else{
             holder.assetIconIv.setImageBitmap(CommonUtil.base64ToBitmap(datas.get(position).getIcon()));
