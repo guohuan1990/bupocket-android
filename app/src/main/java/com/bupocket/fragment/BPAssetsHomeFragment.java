@@ -258,6 +258,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 argz.putString("icon",tokenInfo.getIcon());
                 argz.putString("amount",tokenInfo.getAmount());
                 argz.putString("price",tokenInfo.getPrice());
+                argz.putString("issuer",tokenInfo.getIssuer());
                 BPWalletHomeFragment bpWalletHomeFragment = new BPWalletHomeFragment();
                 bpWalletHomeFragment.setArguments(argz);
                 startFragment(bpWalletHomeFragment);
