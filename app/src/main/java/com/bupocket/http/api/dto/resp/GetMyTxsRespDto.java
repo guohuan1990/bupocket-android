@@ -12,6 +12,7 @@ public class GetMyTxsRespDto{
 
     private PageBean page;
     private List<TxRecordBean> txRecord;
+    private String tokenBalance;
 
     public PageBean getPage() {
         return page;
@@ -27,6 +28,14 @@ public class GetMyTxsRespDto{
 
     public void setTxRecord(List<TxRecordBean> txRecord) {
         this.txRecord = txRecord;
+    }
+
+    public String getTokenBalance() {
+        return tokenBalance;
+    }
+
+    public void setTokenBalance(String tokenBalance) {
+        this.tokenBalance = tokenBalance;
     }
 
     public static class PageBean {

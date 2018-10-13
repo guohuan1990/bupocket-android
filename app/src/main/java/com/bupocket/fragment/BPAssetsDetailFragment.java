@@ -217,6 +217,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
 
             refreshLayout.setEnableLoadMore(true);
 
+            mAssetAmountTv.setText(getMyTxsRespDto.getTokenBalance() + " " + assetCode);
             for (GetMyTxsRespDto.TxRecordBean obj : getMyTxsRespDto.getTxRecord()) {
 
                 String txAccountAddress = AddressUtil.anonymous((obj.getOutinType() == 0) ? obj.getToAddress() : obj.getFromAddress());
@@ -290,8 +291,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
     }
 
     private void initTopBar() {
-        QMUIStatusBarHelper.setStatusBarLightMode(getActivity());
-        mTopBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
+        mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popBackStack();
