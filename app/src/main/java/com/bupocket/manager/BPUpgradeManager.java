@@ -1,11 +1,9 @@
 package com.bupocket.manager;
 
 import android.app.Activity;
-
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.http.api.dto.resp.GetCurrentVersionRespDto;
-import com.bupocket.utils.CProgressDialogUtils;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.UpdateAppHttpUtil;
 import com.vector.update_app.UpdateAppBean;
@@ -68,7 +66,7 @@ public class BPUpgradeManager {
                      */
                     @Override
                     public void onBefore() {
-                        CProgressDialogUtils.showProgressDialog(mActivity);
+//                        CProgressDialogUtils.showProgressDialog(mActivity);
                     }
 
                     /**
@@ -76,7 +74,7 @@ public class BPUpgradeManager {
                      */
                     @Override
                     public void onAfter() {
-                        CProgressDialogUtils.cancelProgressDialog(mActivity);
+//                        CProgressDialogUtils.cancelProgressDialog(mActivity);
                     }
 
                 });

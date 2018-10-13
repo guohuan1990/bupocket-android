@@ -356,45 +356,6 @@
                                 >
 
                                 </LinearLayout>
-
-                                <!--<LinearLayout-->
-                                        <!--android:layout_width="match_parent"-->
-                                        <!--android:layout_height="wrap_content"-->
-                                        <!--android:padding="@dimen/view_padding"-->
-                                        <!--android:background="#F8F8F8"-->
-                                        <!--android:orientation="horizontal">-->
-                                    <!--<TextView-->
-                                            <!--android:layout_width="match_parent"-->
-                                            <!--android:layout_height="wrap_content"-->
-                                            <!--android:textColor="#888888"-->
-                                            <!--android:layout_weight="6"-->
-                                            <!--android:text="Public Key"/>-->
-                                    <!--<TextView-->
-                                            <!--android:layout_width="match_parent"-->
-                                            <!--android:layout_height="wrap_content"-->
-                                            <!--android:layout_weight="4"-->
-                                            <!--android:gravity="end"-->
-                                            <!--android:text="b001a205903185fb4d2be3b21ee3afe1a6eab8975499dc72c99ee6a8a891e4b4ee87f3cfceba"/>-->
-                                <!--</LinearLayout>-->
-                                <!--<LinearLayout-->
-                                        <!--android:layout_width="match_parent"-->
-                                        <!--android:layout_height="wrap_content"-->
-                                        <!--android:padding="@dimen/view_padding"-->
-                                        <!--android:background="#F8F8F8"-->
-                                        <!--android:orientation="horizontal">-->
-                                    <!--<TextView-->
-                                            <!--android:layout_width="match_parent"-->
-                                            <!--android:layout_height="wrap_content"-->
-                                            <!--android:textColor="#888888"-->
-                                            <!--android:layout_weight="6"-->
-                                            <!--android:text="Singed Data"/>-->
-                                    <!--<TextView-->
-                                            <!--android:layout_width="match_parent"-->
-                                            <!--android:layout_weight="4"-->
-                                            <!--android:layout_height="wrap_content"-->
-                                            <!--android:gravity="end"-->
-                                            <!--android:text="b001a205903185fb4d2be3b21ee3afe1a6eab8975499dc72c99ee6a8a891e4b4ee87f3cfceba"/>-->
-                                <!--</LinearLayout>-->
                             </LinearLayout>
 
 
