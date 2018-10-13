@@ -29,6 +29,7 @@ import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TimeUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -83,6 +84,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
 
     @Override
     protected View onCreateView() {
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets_detail, null);
         ButterKnife.bind(this, root);
         initData();
@@ -114,6 +116,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
     }
 
     private void initTxListView() {
+        mEmptyView.show(true);
         refreshLayout.setEnableLoadMore(false);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
