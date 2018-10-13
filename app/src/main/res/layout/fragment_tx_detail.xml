@@ -59,12 +59,13 @@
                                     android:textColor="#333333"
                                     android:text=""/>
                             <TextView
+                                    android:id="@+id/assetCodeTv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textSize="23sp"
                                     android:textColor="#bababa"
                                     android:paddingLeft="5dp"
-                                    android:paddingStart="5dp" android:text="BU"/>
+                                    android:paddingStart="5dp" />
                         </LinearLayout>
 
                         <TextView

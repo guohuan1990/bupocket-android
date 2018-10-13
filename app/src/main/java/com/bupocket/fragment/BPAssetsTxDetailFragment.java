@@ -83,6 +83,8 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
     TextView mTxDetailBlockInfoConsensusTimeTv;
     @BindView(R.id.emptyView)
     QMUIEmptyView mEmptyView;
+    @BindView(R.id.assetCodeTv)
+    TextView mAssetCodeTv;
 
     @BindView(R.id.txDetailLl)
     LinearLayout mTxDetailLl;
@@ -117,7 +119,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
         txHash = getTxHash();
         outinType = getArguments().getInt("outinType");
         assetCode = getArguments().getString("assetCode");
-
+        mAssetCodeTv.setText(assetCode);
     }
 
 
@@ -156,7 +158,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? "-" : "+") + txInfoRespBoBean.getAmount());
                     mTxFromAccAddrTv.setText(txDeatilRespBoBean.getSourceAddress());
                     mTxToAccAddrTv.setText(txDeatilRespBoBean.getDestAddress());
-                    mTxDetailFeeTv.setText(CommonUtil.addSuffix(txDeatilRespBoBean.getFee(),assetCode));
+                    mTxDetailFeeTv.setText(txDeatilRespBoBean.getFee() + " BU");
                     mTxDetailSendDateTv.setText(TimeUtil.timeStamp2Date(txDeatilRespBoBean.getApplyTimeDate().toString().substring(0,10),"yyyy.MM.dd HH:mm:ss"));
                     mTxDetailTXHashTv.setText(txInfoRespBoBean.getHash());
                     mTxDetailNoteTv.setText(txDeatilRespBoBean.getOriginalMetadata());
@@ -164,7 +166,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     mTxDetailTxInfoSourceAddressTv.setText(txInfoRespBoBean.getSourceAddress());
                     mTxDetailTxInfoDestAddressTv.setText(txInfoRespBoBean.getDestAddress());
                     mTxDetailTxInfoAmountTv.setText(CommonUtil.addSuffix(txInfoRespBoBean.getAmount(),assetCode));
-                    mTxDetailTxInfoTXFeeTv.setText(CommonUtil.addSuffix(txInfoRespBoBean.getFee(),assetCode));
+                    mTxDetailTxInfoTXFeeTv.setText(txInfoRespBoBean.getFee() + " BU");
                     mTxDetailTxInfoNonceTv.setText(txInfoRespBoBean.getNonce() + "");
                     mTxDetailTxInfoLedgerSeqTv.setText(txInfoRespBoBean.getLedgerSeq() + "");
 
