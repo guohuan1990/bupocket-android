@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,9 +8,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
+import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.MyTokenTxAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.TxStatusEnum;
@@ -24,9 +27,12 @@ import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TimeUtil;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -58,6 +64,10 @@ public class BPAssetsDetailFragment extends BaseFragment {
     QMUIEmptyView mEmptyView;
     @BindView(R.id.myTokenTxLv)
     ListView mMyTokenTxLv;
+    @BindView(R.id.walletScanBtn)
+    QMUIRoundButton mWalletScanBtn;
+    @BindView(R.id.walletSendBtn)
+    QMUIRoundButton mWalletSendBtn;
 
     protected SharedPreferencesHelper sharedPreferencesHelper;
     private String assetCode;
@@ -69,6 +79,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
     private Integer pageStart = 1;
     private String currentAccAddress;
     private String issuer;
+    private String decimals;
 
     @Override
     protected View onCreateView() {
@@ -77,7 +88,29 @@ public class BPAssetsDetailFragment extends BaseFragment {
         initData();
         initTopBar();
         initTxListView();
+        setListener();
         return root;
+    }
+
+    private void setListener() {
+        mWalletScanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startScan();
+            }
+        });
+
+        mWalletSendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle argz = new Bundle();
+                argz.putString("assetCode",assetCode);
+                argz.putString("decimals",decimals);
+                BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
+                sendTokenFragment.setArguments(argz);
+                startFragment(sendTokenFragment);
+            }
+        });
     }
 
     private void initTxListView() {
@@ -189,9 +222,9 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 String amountStr = null;
                 String txStartStr = null;
                 if(obj.getOutinType() == 0){
-                    amountStr = "-" + obj.getAmount() + " BU";
+                    amountStr = "-" + CommonUtil.addSuffix(obj.getAmount(),assetCode);
                 }else {
-                    amountStr = "+" + obj.getAmount() + " BU";
+                    amountStr = "+" + CommonUtil.addSuffix(obj.getAmount(),assetCode);
                 }
 
                 if(TxStatusEnum.SUCCESS.getCode().equals(obj.getTxStatus())){
@@ -224,6 +257,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 Bundle argz = new Bundle();
                 argz.putString("txHash", currentItem.getTxHash());
                 argz.putInt("outinType",currentItem.getOutinType());
+                argz.putString("assetCode",assetCode);
                 BPAssetsTxDetailFragment bpAssetsTxDetailFragment = new BPAssetsTxDetailFragment();
                 bpAssetsTxDetailFragment.setArguments(argz);
                 startFragment(bpAssetsTxDetailFragment);
@@ -233,10 +267,11 @@ public class BPAssetsDetailFragment extends BaseFragment {
 
     private void initData() {
         Bundle bundle = getArguments();
-        assetCode = bundle.get("assetCode").toString();
-        issuer = bundle.get("issuer").toString();
-        if(CommonUtil.isNull(bundle.get("icon").toString())){
-            mAssetIconIv.setImageBitmap(CommonUtil.base64ToBitmap(bundle.get("icon").toString()));
+        assetCode = bundle.getString("assetCode");
+        issuer = bundle.getString("issuer");
+        decimals = bundle.getString("decimals");
+        if(!CommonUtil.isNull(bundle.getString("icon"))){
+            mAssetIconIv.setImageBitmap(CommonUtil.base64ToBitmap(bundle.getString("icon")));
         }else{
             mAssetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
         }
@@ -259,5 +294,37 @@ public class BPAssetsDetailFragment extends BaseFragment {
             }
         });
         mTopBar.setTitle(assetCode);
+    }
+
+    private void startScan(){
+        IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(this);
+        intentIntegrator.setBeepEnabled(true);
+        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        intentIntegrator.setPrompt(getResources().getString(R.string.wallet_scan_notice));
+        intentIntegrator.setCaptureActivity(CaptureActivity.class);
+        // 开始扫描
+        intentIntegrator.initiateScan();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
+            } else {
+//                Toast.makeText(getActivity(), "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                Bundle argz = new Bundle();
+                argz.putString("destAddress",result.getContents());
+                argz.putString("assetCode",assetCode);
+                argz.putString("decimals",decimals);
+                BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
+                sendTokenFragment.setArguments(argz);
+                startFragment(sendTokenFragment);
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+
+        }
     }
 }

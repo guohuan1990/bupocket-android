@@ -666,4 +666,11 @@ public class CommonUtil {
     public static String formatDouble(String value) {
         return new BigDecimal(value).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
     }
+
+    /*
+     * add asset suffix
+     */
+    public static String addSuffix(String originalStr,String suffix){
+        return originalStr + " " + suffix;
+    }
 }

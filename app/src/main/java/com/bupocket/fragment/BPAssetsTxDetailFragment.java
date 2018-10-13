@@ -21,6 +21,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.TO;
 import com.bupocket.utils.TimeUtil;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -93,6 +94,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
 
     private String txHash;
     private Integer outinType;
+    private String assetCode;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_tx_detail, null);
@@ -114,6 +116,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
         mEmptyView.show(true);
         txHash = getTxHash();
         outinType = getArguments().getInt("outinType");
+        assetCode = getArguments().getString("assetCode");
 
     }
 
@@ -153,15 +156,15 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? "-" : "+") + txInfoRespBoBean.getAmount());
                     mTxFromAccAddrTv.setText(txDeatilRespBoBean.getSourceAddress());
                     mTxToAccAddrTv.setText(txDeatilRespBoBean.getDestAddress());
-                    mTxDetailFeeTv.setText(txDeatilRespBoBean.getFee() + " BU");
+                    mTxDetailFeeTv.setText(CommonUtil.addSuffix(txDeatilRespBoBean.getFee(),assetCode));
                     mTxDetailSendDateTv.setText(TimeUtil.timeStamp2Date(txDeatilRespBoBean.getApplyTimeDate().toString().substring(0,10),"yyyy.MM.dd HH:mm:ss"));
                     mTxDetailTXHashTv.setText(txInfoRespBoBean.getHash());
                     mTxDetailNoteTv.setText(txDeatilRespBoBean.getOriginalMetadata());
 
                     mTxDetailTxInfoSourceAddressTv.setText(txInfoRespBoBean.getSourceAddress());
                     mTxDetailTxInfoDestAddressTv.setText(txInfoRespBoBean.getDestAddress());
-                    mTxDetailTxInfoAmountTv.setText(txInfoRespBoBean.getAmount() + " BU");
-                    mTxDetailTxInfoTXFeeTv.setText(txInfoRespBoBean.getFee() + " BU");
+                    mTxDetailTxInfoAmountTv.setText(CommonUtil.addSuffix(txInfoRespBoBean.getAmount(),assetCode));
+                    mTxDetailTxInfoTXFeeTv.setText(CommonUtil.addSuffix(txInfoRespBoBean.getFee(),assetCode));
                     mTxDetailTxInfoNonceTv.setText(txInfoRespBoBean.getNonce() + "");
                     mTxDetailTxInfoLedgerSeqTv.setText(txInfoRespBoBean.getLedgerSeq() + "");
 
