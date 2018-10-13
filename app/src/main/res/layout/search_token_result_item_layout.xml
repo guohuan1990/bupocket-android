@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/assetIconIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            app:qmui_border_color="?attr/qmui_config_color_gray_6"
+            app:qmui_border_width="1px"
+            app:qmui_is_circle="true"
+            app:qmui_selected_border_color="?attr/qmui_config_color_gray_4"
+            app:qmui_selected_border_width="1px"
+            app:qmui_selected_mask_color="?attr/qmui_config_color_gray_8" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/assetCodeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/search_token_asset_code_txt_color"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/assetNameTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/search_token_item_txt_color"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/assetIssuerTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/search_token_item_txt_color"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

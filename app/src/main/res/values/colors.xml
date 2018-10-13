@@ -51,4 +51,6 @@
     <color name="asset_price_txt_color">#999999</color>
     <color name="scan_btn_background_color">#7488F5</color>
     <color name="tx_list_view_background_col">#f7f7f7</color>
+    <color name="search_token_asset_code_txt_color">#333333</color>
+    <color name="search_token_item_txt_color">#666666</color>
 </resources>
