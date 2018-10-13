@@ -216,6 +216,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
 
             refreshLayout.setEnableLoadMore(true);
 
+            mAssetAmountTv.setText(getMyTxsRespDto.getTokenBalance() + " " + assetCode);
             for (GetMyTxsRespDto.TxRecordBean obj : getMyTxsRespDto.getTxRecord()) {
 
                 String txAccountAddress = AddressUtil.anonymous((obj.getOutinType() == 0) ? obj.getToAddress() : obj.getFromAddress());
@@ -275,7 +276,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
         }else{
             mAssetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
         }
-        mAssetAmountTv.setText(CommonUtil.formatDouble(bundle.get("amount").toString()) + " " + assetCode);
+        mAssetAmountTv.setText(bundle.get("amount").toString() + " " + assetCode);
         if(!bundle.get("price").toString().equals("~")){
             mAssetValueTv.setText("≈￥" + AmountUtil.amountMultiplyAmount(bundle.get("amount").toString(),bundle.get("price").toString()));
         }else {
