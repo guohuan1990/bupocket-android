@@ -19,4 +19,5 @@ public class Constants {
     public static final double MAX_SEND_AMOUNT = 10000;
 
     public static final Integer TX_REQUEST_TIMEOUT_TIMES = 20;
+
 }

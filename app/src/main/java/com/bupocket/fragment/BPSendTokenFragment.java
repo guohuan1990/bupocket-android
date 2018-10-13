@@ -2,11 +2,7 @@ package com.bupocket.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
+import android.os.*;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,12 +12,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.TokenTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
@@ -40,16 +38,13 @@ import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Response;
 
 public class BPSendTokenFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -71,9 +66,19 @@ public class BPSendTokenFragment extends BaseFragment {
     QMUIRoundButton mCompleteMnemonicCodeBtn;
     @BindView(R.id.sendFormScanIv)
     ImageView mSendFormScanIv;
-    private String hash;
+    @BindView(R.id.tokenCodeTv)
+    TextView mTokenCodeTv;
 
-    private String availableBuBalance;
+    @BindView(R.id.sendTokenAmountLable)
+    TextView mSendTokenAmountLable;
+
+
+    private String hash;
+    String tokenCode;
+    String tokenType;
+    String tokenIssuer;
+    String tokenDecimals;
+    private String availableTokenBalance;
     QMUITipDialog txSendingTipDialog;
 
     private TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean;
@@ -137,7 +142,15 @@ public class BPSendTokenFragment extends BaseFragment {
     private void initData(){
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
-        getAccountBUBalance();
+
+        tokenCode = getArguments().getString("tokenCode");
+        tokenType = getArguments().getString("tokenType");
+        tokenIssuer = getArguments().getString("tokenIssuer");
+        tokenDecimals = getArguments().getString("tokenDecimals");
+        String tokenBalance = getArguments().getString("tokenBalance");
+        mTokenCodeTv.setText(tokenCode);
+        mSendTokenAmountLable.setText(getResources().getText(R.string.send_amount_title) + "（"+tokenCode+"）");
+        getAccountAvailableTokenBalance(tokenType, tokenBalance);
 
     }
     private void initTopBar() {
@@ -149,32 +162,19 @@ public class BPSendTokenFragment extends BaseFragment {
             }
         });
     }
-    private Handler handler = new Handler(){
-        public void handleMessage(Message msg) {
-            mAccountAvailableBalanceTv.setText(msg.getData().get("availableBuBalance").toString());
-        };
-    };
 
-    private void getAccountBUBalance(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String balance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
-                if(balance == null || Double.parseDouble(balance) < 0 || Double.parseDouble(balance) == 0){
-                    availableBuBalance = "0";
-                } else {
-                    availableBuBalance = String.valueOf(AmountUtil.availableSubtractionFee(balance,com.bupocket.common.Constants.RESERVE_AMOUNT));
-                }
-                if(availableBuBalance == null || Double.parseDouble(availableBuBalance) < 0) {
-                    availableBuBalance = "0";
-                }
-                Message msg = Message.obtain();
-                Bundle data = new Bundle();
-                data.putString("availableBuBalance", String.valueOf(availableBuBalance));
-                msg.setData(data);
-                handler.sendMessage(msg);
+    private void getAccountAvailableTokenBalance(String tokenType,String tokenBalance){
+
+        if(TokenTypeEnum.BU.getCode().equals(tokenType)){
+            if(tokenBalance == null || Double.parseDouble(tokenBalance) < 0 || Double.parseDouble(tokenBalance) == 0){
+                availableTokenBalance = "0";
+            } else {
+                availableTokenBalance = String.valueOf(AmountUtil.availableSubtractionFee(tokenBalance,com.bupocket.common.Constants.RESERVE_AMOUNT));
             }
-        }).start();
+        }else{
+            availableTokenBalance = tokenBalance;
+        }
+        mAccountAvailableBalanceTv.setText(availableTokenBalance);
     }
     private String getAccountBPData(){
         String data = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
@@ -336,7 +336,7 @@ public class BPSendTokenFragment extends BaseFragment {
                 addressTxt.setText(address);
 
                 TextView amountTxt = sheet.findViewById(R.id.sendAmount);
-                amountTxt.setText(sendAmount + " BU");
+                amountTxt.setText(sendAmount + " " + tokenCode);
 
                 TextView estimateCostTxt = sheet.findViewById(R.id.sendEstimateCost);
                 estimateCostTxt.setText(txFee + " BU");
@@ -392,7 +392,14 @@ public class BPSendTokenFragment extends BaseFragment {
                                         String accountBPData = getAccountBPData();
                                         String destAddess = getDestAccAddr();
                                         try {
-                                            hash = Wallet.getInstance().sendBu(password,accountBPData, currentAccAddress, destAddess, sendAmount, note,txFee);
+
+                                            if(TokenTypeEnum.BU.getCode().equals(tokenType)){
+                                                hash = Wallet.getInstance().sendBu(password,accountBPData, currentAccAddress, destAddess, sendAmount, note,txFee);
+                                            }else if(TokenTypeEnum.ATP10.getCode().equals(tokenType)){
+                                                hash = Wallet.getInstance().sendToken(password,accountBPData,currentAccAddress,destAddess,tokenCode,tokenIssuer, sendAmount,tokenDecimals,note, txFee);
+                                            }
+
+
                                         }catch (WalletException e){
                                             e.printStackTrace();
                                             Looper.prepare();
@@ -494,6 +501,7 @@ public class BPSendTokenFragment extends BaseFragment {
                                 argz.putString("destAccAddr",txDeatilRespBoBean.getDestAddress());
                                 argz.putString("sendAmount",txDeatilRespBoBean.getAmount());
                                 argz.putString("txFee",txDeatilRespBoBean.getFee());
+                                argz.putString("tokenCode",tokenCode);
                                 argz.putString("note",txDeatilRespBoBean.getOriginalMetadata());
                                 argz.putString("state",txDeatilRespBoBean.getStatus().toString());
                                 argz.putString("sendTime",txDeatilRespBoBean.getApplyTimeDate());

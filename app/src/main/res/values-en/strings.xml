@@ -84,15 +84,15 @@
     <string name="recover_wallet_reloading">Recovering</string>
     <string name="recover_wallet_error_tip">The mnemonic words entered are incorrect, please enter again</string>
 
-    <string name="view_title_wallet_sendBU">BU transfer</string>
+    <string name="view_title_wallet_sendBU">transfer</string>
     <string name="send_address_title">Recipient account (BU address)</string>
     <string name="send_note_title">Remark</string>
     <string name="send_fee_title">Maximum transaction fee (BU)</string>
     <string name="send_input_receiver_address_hint">Please enter the recipient address</string>
 
-    <string name="send_amount_title">Amount (BU)</string>
-    <string name="send_hint_txt1">Each BU transfer cannot exceed 10,000 BU</string>
-    <string name="send_hint_txt2">Please enter a note</string>
+    <string name="send_amount_title">Amount</string>
+    <string name="send_hint_txt1"></string>
+    <string name="send_hint_txt2">Notes limited to 20 characters</string>
     <string name="send_hint_txt3">Please enter the transaction fee</string>
     <string name="send_status_success_txt">Transferred successfully</string>
     <string name="send_status_target_addr">Recipient account</string>
@@ -151,7 +151,7 @@
     <string name="send_err1">You can\'t transfer BU to yourself</string>
     <string name="invalid_amount">Invalid transfer amount</string>
     <string name="amount_too_small">Each BU transfer cannot be less than 0.00000001 BU</string>
-    <string name="amount_too_big">Each BU transfer cannot exceed 10,000 BU</string>
+    <string name="amount_too_big">Each BU transfer cannot exceed 100,000,000 BU</string>
     <string name="invalid_tx_fee">The format of maximum payment transaction fee is incorrect. Please enter again</string>
     <string name="tx_fee_too_small">The maximum transaction fee cannot be less than 0.003 BU</string>
     <string name="balance_not_enough">Insufficient balance available</string>
@@ -240,7 +240,6 @@
     <string name="srl_header_secondary">Release To Second Floor</string>
     <string name="srl_header_update">\'Last Update\' M-d HH:mm</string>
     <string name="capture_activity_label">Customize scan interface</string>
-    <string name="tabbr_otc_txt">c2c</string>
     <string name="no_backup_tips_btn">Please backup</string>
     <string name="no_backup_mneonic_btn_code">Back up later</string>
 </resources>

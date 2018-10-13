@@ -56,7 +56,8 @@ public class BPSendStatusFragment extends BaseFragment {
 
         Drawable txStatusIconDrawable;
         String destAccAddr = getArguments().getString("destAccAddr");
-        String sendAmount = getArguments().getString("sendAmount") + " BU";
+        String tokenCode = getArguments().getString("tokenCode");
+        String sendAmount = getArguments().getString("sendAmount") + " " + tokenCode;
         String txFee = getArguments().getString("txFee") + " BU";
         String note = getArguments().getString("note");
         String sendTime = getArguments().getString("sendTime");

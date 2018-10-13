@@ -7,6 +7,7 @@ import com.bupocket.http.api.AccountService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
@@ -19,7 +20,10 @@ import io.bumo.encryption.crypto.mnemonic.Mnemonic;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.model.request.*;
+import io.bumo.model.request.operation.AccountActivateOperation;
+import io.bumo.model.request.operation.AssetSendOperation;
 import io.bumo.model.request.operation.BUSendOperation;
+import io.bumo.model.request.operation.BaseOperation;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.TransactionBuildBlobResult;
 import org.bitcoinj.crypto.MnemonicCode;
@@ -27,6 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -155,21 +160,7 @@ public class Wallet {
     public String sendBu(String password,String bPData, String fromAccAddr,String toAccAddr,String amount, String note, String fee) throws Exception {
         String hash = null;
         try {
-            String senderPrivateKey = null;
-            List<WalletBPData.AccountsBean> accountsBeans = JSON.parseArray(bPData, WalletBPData.AccountsBean.class);
-
-            if(accountsBeans.size()>0){
-                for (WalletBPData.AccountsBean accountsBean:accountsBeans
-                        ) {
-                    if(fromAccAddr.equals(accountsBean.getAddress())){
-                        senderPrivateKey = KeyStore.decodeMsg(password,JSON.parseObject(accountsBean.getSecret().toString(),BaseKeyStoreEntity.class));
-                        if(!senderPrivateKey.startsWith("priv")){
-                            throw new Exception();
-                        }
-                        break;
-                    }
-                }
-            }
+            String senderPrivateKey = getPKBYAccountPassword(password, bPData, fromAccAddr);
             // Init variable
             // The account address to receive bu
             String destAddress = toAccAddr;
@@ -234,6 +225,163 @@ public class Wallet {
             System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
         }
         return txHash;
+    }
+
+
+    public String sendToken(String password,String bPData, String fromAccAddr,String toAccAddr,String tokenCode,String tokenIssuer,String sendTokenAamount,String tokenDecimals, String note, String fee) throws Exception {
+        String hash = null;
+        try {
+            String senderPrivateKey = getPKBYAccountPassword(password, bPData, fromAccAddr);
+            hash = sendToken(senderPrivateKey,tokenIssuer,toAccAddr,tokenCode,sendTokenAamount,tokenDecimals,note,fee);
+        }catch (WalletException e){
+            throw new WalletException(e.getErrCode(),e.getErrMsg());
+        }catch (Exception e){
+            throw new Exception(e);
+        }
+        return hash;
+    }
+
+    private String getPKBYAccountPassword(String password, String bPData, String fromAccAddr) throws Exception {
+        String senderPrivateKey = null;
+        List<WalletBPData.AccountsBean> accountsBeans = JSON.parseArray(bPData, WalletBPData.AccountsBean.class);
+
+        if (accountsBeans.size() > 0) {
+            for (WalletBPData.AccountsBean accountsBean : accountsBeans
+            ) {
+                if (fromAccAddr.equals(accountsBean.getAddress())) {
+                    senderPrivateKey = KeyStore.decodeMsg(password, JSON.parseObject(accountsBean.getSecret().toString(), BaseKeyStoreEntity.class));
+                    if (!senderPrivateKey.startsWith("priv")) {
+                        throw new Exception();
+                    }
+                    break;
+                }
+            }
+        }
+        return senderPrivateKey;
+    }
+
+
+    private String sendToken(String senderPrivateKey, String issuerAddress,String destAddress ,String code ,String amount,String decimals, String note,String fee) throws Exception {
+        // The operation notes
+        String metadata = note;
+        // The fixed write 1000L, the unit is MO
+        Long gasPrice = 1000L;
+        // Set up the maximum cost 0.01BU
+        Long feeLimit = ToBaseUnit.BU2MO(fee);
+
+        // handle send token amount
+
+        Long sendTokenAmount = handleSendTokenAmount(amount, decimals);
+
+        // Transaction initiation account's Nonce + 1
+        String senderAddress = getAddressByPrivateKey(senderPrivateKey);
+        Long nonce = getAccountNonce(senderAddress) + 1;
+
+
+        List<BaseOperation> operations = new ArrayList<>();
+
+
+        String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
+
+        // Check whether the destination account is activated
+        if (!checkAccountActivated(destAddress)) {
+
+            AccountActivateOperation accountActivateOperation = new AccountActivateOperation();
+            accountActivateOperation.setSourceAddress(senderAddresss);
+            accountActivateOperation.setDestAddress(destAddress);
+            accountActivateOperation.setInitBalance(ToBaseUnit.BU2MO("0.02"));
+            accountActivateOperation.setMetadata("activate account");
+            operations.add(accountActivateOperation);
+        }
+
+        // Build asset operation
+        AssetSendOperation assetSendOperation = new AssetSendOperation();
+        assetSendOperation.setSourceAddress(senderAddresss);
+        assetSendOperation.setDestAddress(destAddress);
+        assetSendOperation.setCode(code);
+        assetSendOperation.setAmount(sendTokenAmount);
+        assetSendOperation.setIssuer(issuerAddress);
+        assetSendOperation.setMetadata(metadata);
+
+        operations.add(assetSendOperation);
+
+//        BaseOperation[] operations = {operation};
+        // Record txhash for subsequent confirmation of the real result of the transaction.
+        // After recommending five blocks, call again through txhash `Get the transaction information
+        // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
+        String txHash = submitTransaction(senderPrivateKey, senderAddresss, operations, nonce, gasPrice, feeLimit, "");
+        return txHash;
+    }
+
+
+    private Long handleSendTokenAmount(String srcAmount, String decimals){
+
+        return Long.parseLong(BigDecimal.valueOf(DecimalCalculate.mul(Double.parseDouble(srcAmount),Math.pow(10, Double.parseDouble(decimals)))).toPlainString());
+    }
+
+
+    private String submitTransaction(String senderPrivateKey, String senderAddresss, List<BaseOperation> operations, Long senderNonce, Long gasPrice, Long feeLimit, String transMetadata) {
+        // 1. Build transaction
+        TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
+        transactionBuildBlobRequest.setSourceAddress(senderAddresss);
+        transactionBuildBlobRequest.setNonce(senderNonce);
+        transactionBuildBlobRequest.setFeeLimit(feeLimit);
+        transactionBuildBlobRequest.setGasPrice(gasPrice);
+        for (int i = 0; i < operations.size(); i++) {
+            transactionBuildBlobRequest.addOperation(operations.get(i));
+        }
+
+        transactionBuildBlobRequest.setMetadata(transMetadata);
+
+        // 2. Build transaction BLob
+        String transactionBlob;
+        TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
+        if (transactionBuildBlobResponse.getErrorCode() != 0) {
+            System.out.println("error: " + transactionBuildBlobResponse.getErrorDesc());
+            return null;
+        }
+        TransactionBuildBlobResult transactionBuildBlobResult = transactionBuildBlobResponse.getResult();
+        transactionBlob = transactionBuildBlobResult.getTransactionBlob();
+
+        // 3. Sign transaction BLob
+        String[] signerPrivateKeyArr = {senderPrivateKey};
+        TransactionSignRequest transactionSignRequest = new TransactionSignRequest();
+        transactionSignRequest.setBlob(transactionBlob);
+        for (int i = 0; i < signerPrivateKeyArr.length; i++) {
+            transactionSignRequest.addPrivateKey(signerPrivateKeyArr[i]);
+        }
+        TransactionSignResponse transactionSignResponse = sdk.getTransactionService().sign(transactionSignRequest);
+        if (transactionSignResponse.getErrorCode() != 0) {
+            System.out.println("error: " + transactionSignResponse.getErrorDesc());
+            return null;
+        }
+
+        // 4. Broadcast transaction
+        String Hash = null;
+        TransactionSubmitRequest transactionSubmitRequest = new TransactionSubmitRequest();
+        transactionSubmitRequest.setTransactionBlob(transactionBlob);
+        transactionSubmitRequest.setSignatures(transactionSignResponse.getResult().getSignatures());
+        TransactionSubmitResponse transactionSubmitResponse = sdk.getTransactionService().submit(transactionSubmitRequest);
+        if (0 == transactionSubmitResponse.getErrorCode()) {
+            Hash = transactionSubmitResponse.getResult().getHash();
+        } else {
+            System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
+        }
+        return Hash;
+    }
+
+    /**
+     * Check whether an account is activated.\
+     */
+    private boolean checkAccountActivated(String address) {
+        AccountCheckActivatedRequst request = new AccountCheckActivatedRequst();
+        request.setAddress(address);
+
+        AccountCheckActivatedResponse response = sdk.getAccountService().checkActivated(request);
+        if (response.getErrorCode() != 0) {
+            return false;
+        }
+        return response.getResult().getIsActivated();
     }
 
     private String getAddressByPrivateKey(String privatekey) throws Exception {
