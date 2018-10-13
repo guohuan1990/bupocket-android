@@ -26,7 +26,6 @@ import com.bupocket.model.TokenTxInfo;
 import com.bupocket.utils.*;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -70,7 +69,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
     private List<TokenTxInfo> tokenTxInfoList = new ArrayList<>();
     private MyTokenTxAdapter myTokenTxAdapter;
     private GetMyTxsRespDto.PageBean page;
-    private String pageSize = "2";
+    private String pageSize = "10";
     private Integer pageStart = 1;
     private String currentAccAddress;
     private String issuer;
