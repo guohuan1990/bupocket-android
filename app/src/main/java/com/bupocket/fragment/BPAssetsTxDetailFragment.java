@@ -150,14 +150,18 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean = respDto.getData().getTxDeatilRespBo();
                     TxDetailRespDto.BlockInfoRespBoBean blockInfoRespBoBean = respDto.getData().getBlockInfoRespBo();
 
-                    Drawable txStatusIconDrawable;
-                    String txStatusStr;
+                    Drawable txStatusIconDrawable = null;
+                    String txStatusStr = null;
                     if(txDeatilRespBoBean.getStatus().equals(TxStatusEnum.SUCCESS.getCode())){
-                        txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()),R.mipmap.icon_send_success);
-                        txStatusStr = getResources().getString(R.string.tx_status_success_txt1);
+                        if(isAdded()){
+                            txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()),R.mipmap.icon_send_success);
+                            txStatusStr = getResources().getString(R.string.tx_status_success_txt1);
+                        }
                     }else{
-                        txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()),R.mipmap.icon_send_fail);
-                        txStatusStr = getResources().getString(R.string.tx_status_fail_txt1);
+                        if(isAdded()){
+                            txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()),R.mipmap.icon_send_fail);
+                            txStatusStr = getResources().getString(R.string.tx_status_fail_txt1);
+                        }
                     }
                     mTxStatusIcon.setImageDrawable(txStatusIconDrawable);
                     mTxStatusTv.setText(txStatusStr);
@@ -189,7 +193,9 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                         signatures.add(signature);
                     }
 
-                    loads(signatures);
+                    if(isAdded()){
+                        loads(signatures);
+                    }
 //                    txDetailSignatureAdapter = new TxDetailSignatureAdapter(signatures, getContext());
 //                    mTxDetailSignatureItemLv.setAdapter(txDetailSignatureAdapter);
 //                    setListViewHeightBasedOnChildren(mTxDetailSignatureItemLv);

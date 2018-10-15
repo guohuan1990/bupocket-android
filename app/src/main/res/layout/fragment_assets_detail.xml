@@ -17,6 +17,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="60dp"
+            app:qmui_border_color="@color/app_color_gray"
             app:qmui_is_circle="true" />
 
         <TextView
@@ -106,7 +107,8 @@
                         android:id="@+id/myTokenTxLv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:divider="@color/app_color_white"
+                        android:divider="@color/tx_list_view_background_col"
+                        android:dividerHeight="10dp"
                         android:scrollbars="none"
                         android:fadeScrollbars="false">
                     </ListView>
