@@ -67,6 +67,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
     TextView mTotalAssetsValueTv;
     @BindView(R.id.assetsAvatarIv)
     QMUIRadiusImageView mAssetsAvatarIv;
+    @BindView(R.id.userNickAndBackupBtnLt)
+    LinearLayout mUserNickAndBackupBtnLt;
 
     protected SharedPreferencesHelper sharedPreferencesHelper;
     private TokensAdapter mTokensAdapter;
@@ -86,6 +88,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         initData();
         initWalletInfoView();
         setListeners();
+        backupState();
         return root;
     }
 
@@ -123,6 +126,13 @@ public class BPAssetsHomeFragment extends BaseFragment {
             }
         });
 
+    }
+
+    private void backupState() {
+        String state = sharedPreferencesHelper.getSharedPreference("mnemonicWordBackupState","").toString();
+        if(state.equals("0")){
+            mUserNickAndBackupBtnLt.removeView(mAssetBackupWalletBtn);
+        }
     }
 
     private void showAccountAddressView() {
