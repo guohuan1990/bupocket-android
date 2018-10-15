@@ -58,8 +58,8 @@ public class Wallet {
             List<String> mnemonicCodes;
             BaseKeyStoreEntity baseKeyStoreEntity =  KeyStore.encryptMsg(password, sKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 1);
             List<String> hdPaths = new ArrayList<>();
-            hdPaths.add("M/44/80/0/0/0");
-            hdPaths.add("M/44/80/0/0/1");
+            hdPaths.add("M/44H/526H/0H/0/0");
+            hdPaths.add("M/44H/526H/1H/0/0");
             mnemonicCodes = new MnemonicCode().toMnemonic(HexFormat.hexStringToBytes(sKey));
             List<String> privateKeys = Mnemonic.generatePrivateKeys(mnemonicCodes,hdPaths);
 
