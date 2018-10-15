@@ -1,7 +1,9 @@
 package com.bupocket.fragment;
 
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class BPAssetsTxDetailFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -133,12 +136,15 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
         parmasMap.put("hash",txHash);
         Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetail(parmasMap);
         call.enqueue(new Callback<ApiResult<TxDetailRespDto>>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
+
 
                 ApiResult<TxDetailRespDto> respDto = response.body();
 
                 if(respDto.getData() != null){
+
                     mTxDetailLl.setVisibility(View.VISIBLE);
                     TxDetailRespDto.TxInfoRespBoBean txInfoRespBoBean = respDto.getData().getTxInfoRespBo();
                     TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean = respDto.getData().getTxDeatilRespBo();
@@ -147,10 +153,10 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     Drawable txStatusIconDrawable;
                     String txStatusStr;
                     if(txDeatilRespBoBean.getStatus().equals(TxStatusEnum.SUCCESS.getCode())){
-                        txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_send_success);
+                        txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()),R.mipmap.icon_send_success);
                         txStatusStr = getResources().getString(R.string.tx_status_success_txt1);
                     }else{
-                        txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_send_fail);
+                        txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()),R.mipmap.icon_send_fail);
                         txStatusStr = getResources().getString(R.string.tx_status_fail_txt1);
                     }
                     mTxStatusIcon.setImageDrawable(txStatusIconDrawable);
@@ -196,6 +202,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     mTxDetailBlockInfoPrevBlockHashTv.setText(blockInfoRespBoBean.getPreviousHash());
                     mTxDetailBlockInfoTXCountTv.setText(blockInfoRespBoBean.getTxCount() + "");
                     mTxDetailBlockInfoConsensusTimeTv.setText(TimeUtil.timeStamp2Date(blockInfoRespBoBean.getCloseTimeDate().toString().substring(0,10),"yyyy.MM.dd HH:mm:ss"));
+
 
                 }else{
                     mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);

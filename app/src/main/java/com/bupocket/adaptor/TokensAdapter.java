@@ -59,7 +59,7 @@ public class TokensAdapter extends BaseAdapter {
             holder.priceTv.setText(datas.get(position).getPrice());
         }
         holder.amountTv.setText(datas.get(position).getAmount());
-        System.out.println("TokensAdapter.getView.assetCode: " + datas.get(position).getAssetCode());
+//        System.out.println("TokensAdapter.getView.assetCode: " + datas.get(position).getAssetCode());
         if(CommonUtil.isNull(datas.get(position).getIcon())){
             holder.assetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
         }else{

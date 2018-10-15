@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Bu Pocket</string>
 
-    <string name="tabbar_assets_txt">Wallet</string>
+    <string name="tabbar_assets_txt">Assets</string>
     <string name="tabbar_discovery_txt">Discovery</string>
     <string name="tabbar_profile_txt">My Profile</string>
 
