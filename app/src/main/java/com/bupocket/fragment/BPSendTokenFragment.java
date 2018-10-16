@@ -242,7 +242,7 @@ public class BPSendTokenFragment extends BaseFragment {
                 }
                 if (Double.parseDouble(sendAmount) < com.bupocket.common.Constants.MIN_SEND_AMOUNT) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
-                            .setTipWord(getResources().getString(R.string.amount_too_small))
+                            .setTipWord(CommonUtil.addSuffix(getResources().getString(R.string.amount_too_small),tokenCode))
                             .create();
                     tipDialog.show();
                     sendAmountET.postDelayed(new Runnable() {
@@ -268,7 +268,7 @@ public class BPSendTokenFragment extends BaseFragment {
                 }
                 if (Double.parseDouble(sendAmount) > com.bupocket.common.Constants.MAX_SEND_AMOUNT) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
-                            .setTipWord(getResources().getString(R.string.amount_too_big))
+                            .setTipWord(CommonUtil.addSuffix(getResources().getString(R.string.amount_too_big),tokenCode))
                             .create();
                     tipDialog.show();
                     sendAmountET.postDelayed(new Runnable() {

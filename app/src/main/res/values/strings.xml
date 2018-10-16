@@ -151,8 +151,8 @@
     <string name="invalid_address" >BU 地址不正确，请重新输入</string>
     <string name="send_err1" >不能给自己转账</string>
     <string name="invalid_amount" >无效的转账数量</string>
-    <string name="amount_too_small" >转账数量单笔不可少于 0.00000001 BU</string>
-    <string name="amount_too_big" >转账数量单笔不可超过 100000000 BU</string>
+    <string name="amount_too_small" >转账数量单笔不可少于 0.00000001</string>
+    <string name="amount_too_big" >转账数量单笔不可超过 1000000000</string>
     <string name="invalid_tx_fee" >最多支付交易费用格式有误，请重新输入</string>
     <string name="tx_fee_too_small" >最多支付交易费用不可少于 0.003 BU</string>
     <string name="balance_not_enough" >可用余额不足</string>

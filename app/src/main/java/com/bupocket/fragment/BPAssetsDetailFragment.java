@@ -75,7 +75,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
     private String currentAccAddress;
     private String issuer;
     private String decimals;
-    private String tokenBalance;
+    private String tokenBalance = "~";
     private String tokenType;
 
     @Override
@@ -223,6 +223,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
             refreshLayout.setEnableLoadMore(true);
 
             mAssetAmountTv.setText(getMyTxsRespDto.getTokenBalance() + " " + assetCode);
+            tokenBalance = getMyTxsRespDto.getTokenBalance();
             for (GetMyTxsRespDto.TxRecordBean obj : getMyTxsRespDto.getTxRecord()) {
 
                 String txAccountAddress = AddressUtil.anonymous((obj.getOutinType() == 0) ? obj.getToAddress() : obj.getFromAddress());
@@ -277,7 +278,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
         assetCode = bundle.getString("assetCode");
         issuer = bundle.getString("issuer");
         decimals = bundle.getString("decimals");
-        tokenBalance = bundle.get("amount").toString();
+//        tokenBalance = bundle.get("amount").toString();
         tokenType = bundle.getString("tokenType");
         if(!CommonUtil.isNull(bundle.getString("icon"))){
             mAssetIconIv.setImageBitmap(CommonUtil.base64ToBitmap(bundle.getString("icon")));
@@ -286,7 +287,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
         }
         mAssetAmountTv.setText(tokenBalance + " " + assetCode);
         if(!bundle.get("price").toString().equals("~")){
-            mAssetValueTv.setText("≈￥" + AmountUtil.amountMultiplyAmount(tokenBalance,bundle.get("price").toString()));
+//            mAssetValueTv.setText("≈￥" + AmountUtil.amountMultiplyAmount(tokenBalance,bundle.get("price").toString()));
         }else {
             mAssetValueTv.setText("~");
         }
@@ -329,6 +330,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 argz.putString("tokenDecimals",decimals);
                 argz.putString("tokenIssuer",issuer);
                 argz.putString("tokenBalance",tokenBalance);
+                argz.putString("tokenType",tokenType);
                 BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
                 sendTokenFragment.setArguments(argz);
                 startFragment(sendTokenFragment);
