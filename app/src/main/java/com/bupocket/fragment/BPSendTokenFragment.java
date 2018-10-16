@@ -154,7 +154,11 @@ public class BPSendTokenFragment extends BaseFragment {
                 if(Wallet.getInstance().checkAccAddress(s.toString())){
                     if(!Wallet.getInstance().checkAccountActivated(s.toString())){
                         sendFormTxFeeEt.setText(getString(R.string.account_not_activated_fee));
+                    }else{
+                        sendFormTxFeeEt.setText(getString(R.string.account_activated_fee));
                     }
+                }else {
+                    sendFormTxFeeEt.setText(getString(R.string.account_activated_fee));
                 }
             }
         };
@@ -458,6 +462,7 @@ public class BPSendTokenFragment extends BaseFragment {
             String destAddress = getArguments().getString("destAddress");
             destAccountAddressEt.setText(destAddress);
             if(Wallet.getInstance().checkAccAddress(destAddress)){
+                System.out.println(Wallet.getInstance().checkAccountActivated(destAddress));
                 if(!Wallet.getInstance().checkAccountActivated(destAddress)){
                     sendFormTxFeeEt.setText(getString(R.string.account_not_activated_fee));
                 }else{

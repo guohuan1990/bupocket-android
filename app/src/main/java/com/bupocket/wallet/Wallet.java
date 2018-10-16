@@ -381,6 +381,7 @@ public class Wallet {
         if (response.getErrorCode() != 0) {
             return false;
         }
+        System.out.println(response.getResult().getIsActivated());
         return response.getResult().getIsActivated();
     }
 
