@@ -16,7 +16,7 @@ import java.util.List;
 public class TokensAdapter extends BaseAdapter {
     private List<GetTokensRespDto.TokenListBean> datas;
     private Context mContext;
-    String mPrefixTokenPrice = "≈￥";
+    String mPrefixTokenAmount = "≈￥";
 
     public TokensAdapter(List<GetTokensRespDto.TokenListBean> datas, Context mContext) {
         this.datas = datas;
@@ -47,16 +47,16 @@ public class TokensAdapter extends BaseAdapter {
             holder.assetCodeTv = convertView.findViewById(R.id.assetCodeTv);
             holder.amountTv = convertView.findViewById(R.id.amountTv);
             holder.assetIconIv = convertView.findViewById(R.id.assetIconIv);
-            holder.priceTv = convertView.findViewById(R.id.priceTv);
+            holder.assetAmount = convertView.findViewById(R.id.assetAmountTv);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.assetCodeTv.setText(datas.get(position).getAssetCode());
-        if(!datas.get(position).getPrice().equals("~")){
-            holder.priceTv.setText(mPrefixTokenPrice + CommonUtil.formatDouble(datas.get(position).getPrice()));
+        if(!datas.get(position).getAssetAmount().equals("~")){
+            holder.assetAmount.setText(mPrefixTokenAmount + CommonUtil.formatDouble(datas.get(position).getAssetAmount()));
         }else{
-            holder.priceTv.setText(datas.get(position).getPrice());
+            holder.assetAmount.setText(datas.get(position).getAssetAmount());
         }
         holder.amountTv.setText(datas.get(position).getAmount());
 //        System.out.println("TokensAdapter.getView.assetCode: " + datas.get(position).getAssetCode());
@@ -72,6 +72,6 @@ public class TokensAdapter extends BaseAdapter {
         private TextView assetCodeTv;
         private ImageView assetIconIv;
         private TextView amountTv;
-        private TextView priceTv;
+        private TextView assetAmount;
     }
 }

@@ -13,6 +13,7 @@ public class GetMyTxsRespDto{
     private PageBean page;
     private List<TxRecordBean> txRecord;
     private String tokenBalance;
+    private String assetAmount;
 
     public PageBean getPage() {
         return page;
@@ -36,6 +37,14 @@ public class GetMyTxsRespDto{
 
     public void setTokenBalance(String tokenBalance) {
         this.tokenBalance = tokenBalance;
+    }
+
+    public String getAssetAmount() {
+        return assetAmount;
+    }
+
+    public void setAssetAmount(String assetAmount) {
+        this.assetAmount = assetAmount;
     }
 
     public static class PageBean {

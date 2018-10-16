@@ -49,10 +49,10 @@ public class BPAssetsDetailFragment extends BaseFragment {
     QMUITopBar mTopBar;
     @BindView(R.id.assetIconIv)
     QMUIRadiusImageView mAssetIconIv;
+    @BindView(R.id.amountTv)
+    TextView mAmountTv;
     @BindView(R.id.assetAmountTv)
     TextView mAssetAmountTv;
-    @BindView(R.id.assetValueTv)
-    TextView mAssetValueTv;
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
     @BindView(R.id.emptyView)
@@ -76,6 +76,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
     private String issuer;
     private String decimals;
     private String tokenBalance = "~";
+    private String assetAmount = "~";
     private String tokenType;
 
     @Override
@@ -222,8 +223,11 @@ public class BPAssetsDetailFragment extends BaseFragment {
 
             refreshLayout.setEnableLoadMore(true);
 
-            mAssetAmountTv.setText(getMyTxsRespDto.getTokenBalance() + " " + assetCode);
             tokenBalance = getMyTxsRespDto.getTokenBalance();
+            assetAmount = getMyTxsRespDto.getAssetAmount();
+            mAmountTv.setText(tokenBalance + " " + assetCode);
+            mAssetAmountTv.setText("≈￥" + assetAmount);
+
             for (GetMyTxsRespDto.TxRecordBean obj : getMyTxsRespDto.getTxRecord()) {
 
                 String txAccountAddress = AddressUtil.anonymous((obj.getOutinType() == 0) ? obj.getToAddress() : obj.getFromAddress());
@@ -285,12 +289,12 @@ public class BPAssetsDetailFragment extends BaseFragment {
         }else{
             mAssetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
         }
-        mAssetAmountTv.setText(tokenBalance + " " + assetCode);
+/*        mAssetAmountTv.setText(tokenBalance + " " + assetCode);
         if(!bundle.get("price").toString().equals("~")){
-//            mAssetValueTv.setText("≈￥" + AmountUtil.amountMultiplyAmount(tokenBalance,bundle.get("price").toString()));
+            mAssetAmountTv.setText("≈￥" + AmountUtil.amountMultiplyAmount(tokenBalance,bundle.get("price").toString()));
         }else {
-            mAssetValueTv.setText("~");
-        }
+            mAssetAmountTv.setText("~");
+        }*/
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
         refreshData();

@@ -21,20 +21,18 @@
             app:qmui_is_circle="true" />
 
         <TextView
-            android:id="@+id/assetAmountTv"
+            android:id="@+id/amountTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="58.11111BU"
             android:textColor="@color/app_color_black"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/assetValueTv"
+            android:id="@+id/assetAmountTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="= ￥121.00"
             android:textColor="@color/send_confirm_gray_color" />
 
         <LinearLayout

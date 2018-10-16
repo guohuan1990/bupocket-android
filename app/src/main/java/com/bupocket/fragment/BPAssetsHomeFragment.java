@@ -276,6 +276,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 argz.putString("issuer",tokenInfo.getIssuer());
                 argz.putString("decimals",tokenInfo.getDecimals()+"");
                 argz.putString("tokenType",tokenInfo.getType()+"");
+                argz.putString("assetAmount",tokenInfo.getAssetAmount());
                 BPAssetsDetailFragment bpAssetsDetailFragment = new BPAssetsDetailFragment();
                 bpAssetsDetailFragment.setArguments(argz);
                 startFragment(bpAssetsDetailFragment);
