@@ -133,10 +133,32 @@ public class BPSendTokenFragment extends BaseFragment {
                 }
             }
         };
+
         destAccountAddressEt.addTextChangedListener(watcher);
         sendAmountET.addTextChangedListener(watcher);
         sendFormTxFeeEt.addTextChangedListener(watcher);
 
+        TextWatcher addressEtWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(Wallet.getInstance().checkAccAddress(s.toString())){
+                    if(!Wallet.getInstance().checkAccountActivated(s.toString())){
+                        sendFormTxFeeEt.setText(getString(R.string.account_not_activated_fee));
+                    }
+                }
+            }
+        };
+        destAccountAddressEt.addTextChangedListener(addressEtWatcher);
     }
 
     private void initData(){
@@ -227,7 +249,7 @@ public class BPSendTokenFragment extends BaseFragment {
 
 
                 final String sendAmount = sendAmountET.getText().toString().trim();
-                if(!CommonUtil.isBU(sendAmount) || CommonUtil.isNull(sendAmount)){
+                if(!CommonUtil.isBU(sendAmount) || CommonUtil.isNull(sendAmount) || CommonUtil.checkSendAmountDecimals(sendAmount,tokenDecimals)){
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.invalid_amount))
                             .create();
@@ -435,6 +457,15 @@ public class BPSendTokenFragment extends BaseFragment {
         if(bundle != null){
             String destAddress = getArguments().getString("destAddress");
             destAccountAddressEt.setText(destAddress);
+            if(Wallet.getInstance().checkAccAddress(destAddress)){
+                if(!Wallet.getInstance().checkAccountActivated(destAddress)){
+                    sendFormTxFeeEt.setText(getString(R.string.account_not_activated_fee));
+                }else{
+                    sendFormTxFeeEt.setText(getString(R.string.account_activated_fee));
+                }
+            }else{
+                sendFormTxFeeEt.setText(getString(R.string.account_activated_fee));
+            }
         }
     }
 

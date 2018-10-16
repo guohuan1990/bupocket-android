@@ -309,16 +309,15 @@ public class Wallet {
         // Record txhash for subsequent confirmation of the real result of the transaction.
         // After recommending five blocks, call again through txhash `Get the transaction information
         // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
-        String txHash = submitTransaction(senderPrivateKey, senderAddresss, operations, nonce, gasPrice, feeLimit, "");
+        String txHash = submitTransaction(senderPrivateKey, senderAddresss, operations, nonce, gasPrice, feeLimit, note);
         return txHash;
     }
 
 
     private Long handleSendTokenAmount(String srcAmount, String decimals){
 
-        return Long.parseLong(BigDecimal.valueOf(DecimalCalculate.mul(Double.parseDouble(srcAmount),Math.pow(10, Double.parseDouble(decimals)))).toPlainString());
+        return Long.parseLong(BigDecimal.valueOf(DecimalCalculate.mul(Double.parseDouble(srcAmount),Math.pow(10, Double.parseDouble(decimals)))).setScale(0).toPlainString());
     }
-
 
     private String submitTransaction(String senderPrivateKey, String senderAddresss, List<BaseOperation> operations, Long senderNonce, Long gasPrice, Long feeLimit, String transMetadata) {
         // 1. Build transaction
@@ -327,6 +326,7 @@ public class Wallet {
         transactionBuildBlobRequest.setNonce(senderNonce);
         transactionBuildBlobRequest.setFeeLimit(feeLimit);
         transactionBuildBlobRequest.setGasPrice(gasPrice);
+        transactionBuildBlobRequest.setMetadata(transMetadata);
         for (int i = 0; i < operations.size(); i++) {
             transactionBuildBlobRequest.addOperation(operations.get(i));
         }
@@ -373,7 +373,7 @@ public class Wallet {
     /**
      * Check whether an account is activated.\
      */
-    private boolean checkAccountActivated(String address) {
+    public boolean checkAccountActivated(String address) {
         AccountCheckActivatedRequst request = new AccountCheckActivatedRequst();
         request.setAddress(address);
 

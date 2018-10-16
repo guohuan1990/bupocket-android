@@ -26,6 +26,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.Inflater;
 
 /**
  * 通用工具类.
@@ -657,7 +658,7 @@ public class CommonUtil {
         return sb.toString();
     }
 
-    public static Bitmap base64ToBitmap(String base64Data) {
+    public static Bitmap base64ToBitmap(String base64Data) throws IllegalArgumentException{
         base64Data = base64Data.split(",")[1];
         byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -672,5 +673,19 @@ public class CommonUtil {
      */
     public static String addSuffix(String originalStr,String suffix){
         return originalStr + " " + suffix;
+    }
+
+    /*
+     *check number format
+     */
+    public static Boolean checkSendAmountDecimals(String srcAmount, String decimals){
+        BigDecimal value = BigDecimal.valueOf(DecimalCalculate.mul(Double.parseDouble(srcAmount),Math.pow(10, Double.parseDouble(decimals))));
+        System.out.println(value.toPlainString());
+        System.out.println(value.remainder(BigDecimal.ONE));
+        if(value.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0){
+            return false;
+        }else {
+            return true;
+        }
     }
 }

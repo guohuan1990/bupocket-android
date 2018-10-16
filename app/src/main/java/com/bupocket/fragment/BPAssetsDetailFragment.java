@@ -285,7 +285,12 @@ public class BPAssetsDetailFragment extends BaseFragment {
 //        tokenBalance = bundle.get("amount").toString();
         tokenType = bundle.getString("tokenType");
         if(!CommonUtil.isNull(bundle.getString("icon"))){
-            mAssetIconIv.setImageBitmap(CommonUtil.base64ToBitmap(bundle.getString("icon")));
+            try{
+                mAssetIconIv.setImageBitmap(CommonUtil.base64ToBitmap(bundle.getString("icon")));
+            }catch (IllegalArgumentException e){
+                mAssetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
+            }
+
         }else{
             mAssetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
         }

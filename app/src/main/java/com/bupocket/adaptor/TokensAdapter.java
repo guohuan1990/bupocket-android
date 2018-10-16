@@ -53,17 +53,26 @@ public class TokensAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.assetCodeTv.setText(datas.get(position).getAssetCode());
-        if(!datas.get(position).getAssetAmount().equals("~")){
-            holder.assetAmount.setText(mPrefixTokenAmount + CommonUtil.formatDouble(datas.get(position).getAssetAmount()));
+        if (datas.get(position).getAssetAmount() == null){
+            holder.assetAmount.setText("~");
         }else{
-            holder.assetAmount.setText(datas.get(position).getAssetAmount());
+            if(!datas.get(position).getAssetAmount().equals("~")){
+                holder.assetAmount.setText(mPrefixTokenAmount + CommonUtil.formatDouble(datas.get(position).getAssetAmount()));
+            }else{
+                holder.assetAmount.setText(datas.get(position).getAssetAmount());
+            }
         }
         holder.amountTv.setText(datas.get(position).getAmount());
 //        System.out.println("TokensAdapter.getView.assetCode: " + datas.get(position).getAssetCode());
+
         if(CommonUtil.isNull(datas.get(position).getIcon())){
             holder.assetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
         }else{
-            holder.assetIconIv.setImageBitmap(CommonUtil.base64ToBitmap(datas.get(position).getIcon()));
+            try{
+                holder.assetIconIv.setImageBitmap(CommonUtil.base64ToBitmap(datas.get(position).getIcon()));
+            }catch (IllegalArgumentException e){
+                holder.assetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
+            }
         }
         return convertView;
     }
