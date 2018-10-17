@@ -58,16 +58,18 @@ public class MyTokenTxAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.userAccAddrTV.setText(datas.get(i).getTxAccountAddress());
-        holder.txAmountTV.setText(datas.get(i).getTxAmount());
-        holder.txDateTV.setText(datas.get(i).getTxDate());
-        String status = datas.get(i).getTxStatus();
-        if(TxStatusEnum.SUCCESS.getName().equals(status)){
-            holder.txStatusTV.setText(R.string.tx_status_success_txt);
-            holder.txStatusTV.setTextColor(convertView.getResources().getColor(R.color.tx_status_success_txt_color));
-        }else {
-            holder.txStatusTV.setText(R.string.tx_status_fail_txt);
-            holder.txStatusTV.setTextColor(convertView.getResources().getColor(R.color.tx_status_failed_txt_color));
+        if(datas.size() != 0){
+            holder.userAccAddrTV.setText(datas.get(i).getTxAccountAddress());
+            holder.txAmountTV.setText(datas.get(i).getTxAmount());
+            holder.txDateTV.setText(datas.get(i).getTxDate());
+            String status = datas.get(i).getTxStatus();
+            if(TxStatusEnum.SUCCESS.getName().equals(status)){
+                holder.txStatusTV.setText(R.string.tx_status_success_txt);
+                holder.txStatusTV.setTextColor(convertView.getResources().getColor(R.color.tx_status_success_txt_color));
+            }else {
+                holder.txStatusTV.setText(R.string.tx_status_fail_txt);
+                holder.txStatusTV.setTextColor(convertView.getResources().getColor(R.color.tx_status_failed_txt_color));
+            }
         }
         return convertView;
     }

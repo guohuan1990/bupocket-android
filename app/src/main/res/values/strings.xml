@@ -249,6 +249,8 @@
     <string name="prefix_total_asset">≈</string>
     <string name="account_not_activated_fee">0.03</string>
     <string name="account_activated_fee">0.01</string>
+    <string name="add_token_btn_txt">添加</string>
+    <string name="delete_token_btn_txt">删除</string>
 
 
 </resources>

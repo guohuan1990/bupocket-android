@@ -51,8 +51,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
     QMUIEmptyView mAssetsHomeEmptyView;
     @BindView(R.id.tokenListLv)
     AssetsListView mTokenListLv;
-//    @BindView(R.id.addTokenIv)
-//    ImageView mAddTokenIv;
+    @BindView(R.id.addTokenIv)
+    ImageView mAddTokenIv;
     @BindView(R.id.userNick)
     TextView mUserNick;
     @BindView(R.id.assetBackupWalletBtn)
@@ -93,12 +93,12 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
     private void setListeners() {
-//        mAddTokenIv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startFragment(new BPAssetsAddFragment());
-//            }
-//        });
+        mAddTokenIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPAssetsAddFragment());
+            }
+        });
         mAssetBackupWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,7 +208,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
     private void loadAssetList() {
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
-        List<GetTokensRespDto.TokenListBean> mLocalTokenList = sharedPreferencesHelper.getDataList("tokens");
+        List<GetTokensRespDto.TokenListBean> mLocalTokenList = sharedPreferencesHelper.getDataList("myTokens");
         Map<String, Object> parmasMap = new HashMap<>();
         parmasMap.put("address",currentAccAddress);
         parmasMap.put("tokenList", mLocalTokenList);

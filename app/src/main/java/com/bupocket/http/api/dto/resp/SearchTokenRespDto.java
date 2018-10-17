@@ -24,8 +24,10 @@ public class SearchTokenRespDto {
          */
 
         private String assetCode;
+        private String assetName;
         private String icon;
         private String issuer;
+        private int recommend;
         private int type;
 
         public String getAssetCode() {
@@ -58,6 +60,22 @@ public class SearchTokenRespDto {
 
         public void setType(int type) {
             this.type = type;
+        }
+
+        public String getAssetName() {
+            return assetName;
+        }
+
+        public void setAssetName(String assetName) {
+            this.assetName = assetName;
+        }
+
+        public int getRecommend() {
+            return recommend;
+        }
+
+        public void setRecommend(int recommend) {
+            this.recommend = recommend;
         }
     }
 }

@@ -153,12 +153,12 @@
                             android:text="@string/my_assets_title_txt"
                             android:textSize="16sp" />
 
-                        <!--<ImageView
+                        <ImageView
                                 android:id="@+id/addTokenIv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@mipmap/icon_add_token"
-                                android:layout_alignParentRight="true"/>-->
+                                android:layout_alignParentRight="true"/>
                     </RelativeLayout>
 
                     <com.qmuiteam.qmui.widget.QMUIEmptyView

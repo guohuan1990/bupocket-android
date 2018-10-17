@@ -52,6 +52,7 @@ public class TokensAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
         holder.assetCodeTv.setText(datas.get(position).getAssetCode());
         if (datas.get(position).getAssetAmount() == null){
             holder.assetAmount.setText("~");
@@ -70,7 +71,7 @@ public class TokensAdapter extends BaseAdapter {
         }else{
             try{
                 holder.assetIconIv.setImageBitmap(CommonUtil.base64ToBitmap(datas.get(position).getIcon()));
-            }catch (IllegalArgumentException e){
+            }catch (Exception e){
                 holder.assetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
             }
         }

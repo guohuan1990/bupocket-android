@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
@@ -13,7 +14,10 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TokenService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.SearchTokenRespDto;
+import com.bupocket.model.MyTokens;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.view.DrawableEditText;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -22,6 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BPAssetsAddFragment extends BaseFragment {
@@ -35,15 +40,11 @@ public class BPAssetsAddFragment extends BaseFragment {
     QMUIEmptyView mEmptyView;
 
     @BindView(R.id.searchTokenEt)
-    EditText mSearchTokenEt;
+    DrawableEditText mSearchTokenEt;
 
-    @BindView(R.id.searchTokenBtn)
-    ImageView mSearchTokenBtn;
-
-
+    protected SharedPreferencesHelper sharedPreferencesHelper;
     SearchTokenAdapter searchTokenAdapter;
-
-
+    List<MyTokens.TokenListBean> tokenList;
 
     @Override
     protected View onCreateView() {
@@ -51,17 +52,35 @@ public class BPAssetsAddFragment extends BaseFragment {
         ButterKnife.bind(this, root);
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
+        initData();
 
-        mSearchTokenBtn.setOnClickListener(new View.OnClickListener() {
+        mSearchTokenEt.setOnDrawableClickListener(new DrawableEditText.OnDrawableClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onDrawableClick() {
                 String input = mSearchTokenEt.getText().toString();
                 if(CommonUtil.isNull(input)){return;}
+                mSearchTokenEt.clearFocus();
                 searchToken(input);
             }
         });
 
+        mSearchTokenEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                String input = mSearchTokenEt.getText().toString();
+                if(CommonUtil.isNull(input)){return false;}
+                searchToken(input);
+                mSearchTokenEt.clearFocus();
+                return true;
+            }
+        });
+
         return root;
+    }
+
+    private void initData() {
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+        tokenList = sharedPreferencesHelper.getDataList("myTokens");
     }
 
 
@@ -105,12 +124,18 @@ public class BPAssetsAddFragment extends BaseFragment {
         mSearchTokenListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            SearchTokenRespDto.TokenListBean currentItem = (SearchTokenRespDto.TokenListBean) searchTokenAdapter.getItem(position);
-            Toast.makeText(getContext(),JSON.toJSONString(currentItem),Toast.LENGTH_LONG).show();
+//                if(){
+//
+//                }
+
+                SearchTokenRespDto.TokenListBean searchTokenAdapterItem = (SearchTokenRespDto.TokenListBean) searchTokenAdapter.getItem(position);
+                String assetCode = searchTokenAdapterItem.getAssetCode();
+                String issuer = searchTokenAdapterItem.getIssuer();
+
             }
         });
-    }
 
+    }
 
     private void initTopBar() {
         mTopBar.setBackgroundDividerEnabled(false);
