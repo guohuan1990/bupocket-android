@@ -200,7 +200,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         refreshData();
                         refreshlayout.finishRefresh();
                         refreshlayout.setNoMoreData(false);
-                        initData();
+//                        initData();
                     }
                 }, 400);
 
@@ -303,15 +303,18 @@ public class BPAssetsHomeFragment extends BaseFragment {
         if(tokensCache != null){
             handleTokens(tokensCache);
         }
-        refreshData();
+
+        initTokensView();
+        refreshLayout.autoRefresh();
+//        refreshData();
     }
 
     private void refreshData(){
-        if(isFirstEnter){
-            isFirstEnter = false;
-            refreshLayout.autoRefresh();
-            initTokensView();
-        }
+//        if(isFirstEnter){
+//            isFirstEnter = false;
+//            initTokensView();
+//            refreshLayout.autoRefresh();
+//        }
         loadAssetList();
     }
 }

@@ -8,6 +8,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
+import com.bupocket.wallet.enums.BUChainExceptionEnum;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
@@ -266,8 +267,7 @@ public class Wallet {
         String metadata = note;
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
-        // Set up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO(fee);
+
 
         // handle send token amount
 
@@ -285,14 +285,20 @@ public class Wallet {
 
         // Check whether the destination account is activated
         if (!checkAccountActivated(destAddress)) {
-
+            if(Double.parseDouble(fee) - Constants.ACTIVE_AMOUNT_FEE <= 0){
+                throw new WalletException(ExceptionEnum.FEE_NOT_ENOUGH);
+            }
             AccountActivateOperation accountActivateOperation = new AccountActivateOperation();
             accountActivateOperation.setSourceAddress(senderAddresss);
             accountActivateOperation.setDestAddress(destAddress);
-            accountActivateOperation.setInitBalance(ToBaseUnit.BU2MO("0.02"));
+            accountActivateOperation.setInitBalance(ToBaseUnit.BU2MO(Constants.ACTIVE_AMOUNT_FEE+""));
             accountActivateOperation.setMetadata("activate account");
             operations.add(accountActivateOperation);
+            fee = DecimalCalculate.sub(Double.parseDouble(fee), Constants.ACTIVE_AMOUNT_FEE) + "";
         }
+
+        // Set up the maximum cost 0.01BU
+        Long feeLimit = ToBaseUnit.BU2MO(fee);
 
         // Build asset operation
         AssetSendOperation assetSendOperation = new AssetSendOperation();
@@ -319,7 +325,7 @@ public class Wallet {
         return Long.parseLong(BigDecimal.valueOf(DecimalCalculate.mul(Double.parseDouble(srcAmount),Math.pow(10, Double.parseDouble(decimals)))).setScale(0).toPlainString());
     }
 
-    private String submitTransaction(String senderPrivateKey, String senderAddresss, List<BaseOperation> operations, Long senderNonce, Long gasPrice, Long feeLimit, String transMetadata) {
+    private String submitTransaction(String senderPrivateKey, String senderAddresss, List<BaseOperation> operations, Long senderNonce, Long gasPrice, Long feeLimit, String transMetadata)throws Exception {
         // 1. Build transaction
         TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
         transactionBuildBlobRequest.setSourceAddress(senderAddresss);
@@ -365,6 +371,9 @@ public class Wallet {
         if (0 == transactionSubmitResponse.getErrorCode()) {
             Hash = transactionSubmitResponse.getResult().getHash();
         } else {
+            if(BUChainExceptionEnum.ERRCODE_FEE_NOT_ENOUGH.getCode().equals(transactionSubmitResponse.getErrorCode())){
+                throw new WalletException(ExceptionEnum.FEE_NOT_ENOUGH);
+            }
             System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
         }
         return Hash;

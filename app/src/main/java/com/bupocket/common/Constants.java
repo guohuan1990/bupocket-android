@@ -2,7 +2,7 @@ package com.bupocket.common;
 
 public class Constants {
     //开发环境
-    public static final String WEB_SERVER_DOMAIN = "http://192.168.6.97:8081";
+    public static final String WEB_SERVER_DOMAIN = "http://52.80.218.114:8081";
     public static final String BUMO_NODE_URL = "http://seed1.bumotest.io:26002";
     //测试环境
 //    public static final String WEB_SERVER_DOMAIN = "http://api-bp.bumotest.io/";
@@ -15,6 +15,7 @@ public class Constants {
     public static final Integer HELP_FEEDBACK_CONTACT_LENGTH = 20;
     public static final double MIN_FEE = 0.003;
     public static final double RESERVE_AMOUNT = 0.02;
+    public static final Double ACTIVE_AMOUNT_FEE = 0.02;
     public static final double MIN_SEND_AMOUNT = 0.00000001;
     public static final double MAX_SEND_AMOUNT = 1000000000;
 
