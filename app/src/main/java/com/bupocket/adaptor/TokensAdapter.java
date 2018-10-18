@@ -58,7 +58,7 @@ public class TokensAdapter extends BaseAdapter {
             holder.assetAmount.setText("~");
         }else{
             if(!datas.get(position).getAssetAmount().equals("~")){
-                holder.assetAmount.setText(mPrefixTokenAmount + CommonUtil.formatDouble(datas.get(position).getAssetAmount()));
+                holder.assetAmount.setText(mPrefixTokenAmount + datas.get(position).getAssetAmount());
             }else{
                 holder.assetAmount.setText(datas.get(position).getAssetAmount());
             }

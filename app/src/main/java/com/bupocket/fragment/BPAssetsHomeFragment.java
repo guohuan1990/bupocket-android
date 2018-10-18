@@ -223,9 +223,13 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 mAssetsHomeEmptyView.show(null,null);
                 ApiResult<GetTokensRespDto> respDtoApiResult = response.body();
                 // 更新缓存
-                sharedPreferencesHelper.put("tokensInfoCache", JSON.toJSONString(respDtoApiResult.getData()));
-                if(isAdded()){
-                    handleTokens(respDtoApiResult.getData());
+                if(respDtoApiResult != null){
+                    sharedPreferencesHelper.put("tokensInfoCache", JSON.toJSONString(respDtoApiResult.getData()));
+                    if(isAdded()){
+                        handleTokens(respDtoApiResult.getData());
+                    }
+                }else {
+                    mAssetsHomeEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
                 }
             }
 

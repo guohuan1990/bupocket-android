@@ -85,7 +85,11 @@ public class BPAssetsAddFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ApiResult<SearchTokenRespDto>> call, Response<ApiResult<SearchTokenRespDto>> response) {
                 ApiResult<SearchTokenRespDto> respDto = response.body();
-                handleSearchTokenData(respDto.getData());
+                if(respDto != null){
+                    handleSearchTokenData(respDto.getData());
+                }else {
+                    mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data),null);
+                }
             }
 
             @Override
