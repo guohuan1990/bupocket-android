@@ -245,9 +245,10 @@ public class BPUserInfoFragment extends BaseFragment {
                         String ciphertextSkeyData = getSkeyStr();
                         try {
                             Wallet.getInstance().checkPwd(password,ciphertextSkeyData);
-                            sharedPreferencesHelper.put("isFirstCreateWallet","");
-                            sharedPreferencesHelper.put("createWalletStep","");
-                            sharedPreferencesHelper.put("mnemonicWordBackupState","");
+//                            sharedPreferencesHelper.put("isFirstCreateWallet","");
+//                            sharedPreferencesHelper.put("createWalletStep","");
+//                            sharedPreferencesHelper.put("mnemonicWordBackupState","");
+                            sharedPreferencesHelper.clear();
                             tipDialog.dismiss();
                             startFragment(new BPCreateWalletFragment());
                         } catch (Exception e) {
