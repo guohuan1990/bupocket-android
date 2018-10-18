@@ -470,7 +470,14 @@ public class BPSendTokenFragment extends BaseFragment {
                                             txSendingTipDialog.dismiss();
                                             Looper.loop();
                                         }finally {
-                                            timer.schedule(timerTask,
+                                            timer.schedule(new TimerTask() {
+                                                               @Override
+                                                               public void run() {
+                                                                   if(hash != null && !hash.equals("")){
+                                                                       mHanlder.sendEmptyMessage(1);
+                                                                   }
+                                                               }
+                                                           },
                                                     1 * 1000,//延迟1秒执行
                                                     1000);
                                         }
