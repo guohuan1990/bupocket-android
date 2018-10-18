@@ -14,7 +14,6 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TokenService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.SearchTokenRespDto;
-import com.bupocket.model.MyTokens;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.view.DrawableEditText;
@@ -42,9 +41,7 @@ public class BPAssetsAddFragment extends BaseFragment {
     @BindView(R.id.searchTokenEt)
     DrawableEditText mSearchTokenEt;
 
-    protected SharedPreferencesHelper sharedPreferencesHelper;
     SearchTokenAdapter searchTokenAdapter;
-    List<MyTokens.TokenListBean> tokenList;
 
     @Override
     protected View onCreateView() {
@@ -52,7 +49,6 @@ public class BPAssetsAddFragment extends BaseFragment {
         ButterKnife.bind(this, root);
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
-        initData();
 
         mSearchTokenEt.setOnDrawableClickListener(new DrawableEditText.OnDrawableClickListener() {
             @Override
@@ -77,12 +73,6 @@ public class BPAssetsAddFragment extends BaseFragment {
 
         return root;
     }
-
-    private void initData() {
-        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        tokenList = sharedPreferencesHelper.getDataList("myTokens");
-    }
-
 
     private void searchToken(String assetCode){
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
@@ -121,19 +111,17 @@ public class BPAssetsAddFragment extends BaseFragment {
 
         searchTokenAdapter = new SearchTokenAdapter(searchTokenRespDto.getTokenList(), getContext());
         mSearchTokenListView.setAdapter(searchTokenAdapter);
-        mSearchTokenListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*mSearchTokenListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if(){
-//
-//                }
 
                 SearchTokenRespDto.TokenListBean searchTokenAdapterItem = (SearchTokenRespDto.TokenListBean) searchTokenAdapter.getItem(position);
                 String assetCode = searchTokenAdapterItem.getAssetCode();
                 String issuer = searchTokenAdapterItem.getIssuer();
+                System.out.println(issuer);
 
             }
-        });
+        });*/
 
     }
 

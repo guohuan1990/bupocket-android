@@ -214,6 +214,10 @@ public class BPAssetsDetailFragment extends BaseFragment {
 
         if(getMyTxsRespDto != null){
             page = getMyTxsRespDto.getPage();
+            tokenBalance = getMyTxsRespDto.getTokenBalance();
+            assetAmount = getMyTxsRespDto.getAssetAmount();
+            mAmountTv.setText(tokenBalance + " " + assetCode);
+            mAssetAmountTv.setText("≈￥" + assetAmount);
             if(getMyTxsRespDto.getTxRecord() == null || getMyTxsRespDto.getTxRecord().size() == 0) {
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
                 return;
@@ -222,11 +226,6 @@ public class BPAssetsDetailFragment extends BaseFragment {
             }
 
             refreshLayout.setEnableLoadMore(true);
-
-            tokenBalance = getMyTxsRespDto.getTokenBalance();
-            assetAmount = getMyTxsRespDto.getAssetAmount();
-            mAmountTv.setText(tokenBalance + " " + assetCode);
-            mAssetAmountTv.setText("≈￥" + assetAmount);
 
             for (GetMyTxsRespDto.TxRecordBean obj : getMyTxsRespDto.getTxRecord()) {
 

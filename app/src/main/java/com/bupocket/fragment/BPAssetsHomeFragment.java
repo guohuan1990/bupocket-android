@@ -39,6 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +78,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     private String currentAccNick;
     private MaterialHeader mMaterialHeader;
     private static boolean isFirstEnter = true;
+    List<GetTokensRespDto.TokenListBean> mLocalTokenList = new ArrayList<>();
 
     @BindView(R.id.assetsSv)
     ScrollView assetsSv;
@@ -208,7 +210,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
     private void loadAssetList() {
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
-        List<GetTokensRespDto.TokenListBean> mLocalTokenList = sharedPreferencesHelper.getDataList("myTokens");
+        if(JSON.parseObject(sharedPreferencesHelper.getSharedPreference("myTokens", "").toString(), GetTokensRespDto.class) != null){
+            mLocalTokenList = JSON.parseObject(sharedPreferencesHelper.getSharedPreference("myTokens", "").toString(), GetTokensRespDto.class).getTokenList();
+        }
         Map<String, Object> parmasMap = new HashMap<>();
         parmasMap.put("address",currentAccAddress);
         parmasMap.put("tokenList", mLocalTokenList);
