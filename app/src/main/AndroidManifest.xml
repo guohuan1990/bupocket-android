@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
 package="com.bupocket"
+android:versionCode="110"
+android:versionName="v1.1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools">
 
+<uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
 <application
@@ -12,6 +15,7 @@ xmlns:tools="http://schemas.android.com/tools">
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
     <meta-data
@@ -29,6 +33,7 @@ xmlns:tools="http://schemas.android.com/tools">
     <activity
             android:name=".BPMainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
     <activity
@@ -41,11 +46,9 @@ xmlns:tools="http://schemas.android.com/tools">
     </activity>
 
     <activity
-            android:name=".activity.TranslucentActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
-    </activity>
+        android:name="com.bupocket.activity.CaptureActivity"
+        android:label="@string/capture_activity_label"
+        android:screenOrientation="portrait"/>
 
 </application>
 

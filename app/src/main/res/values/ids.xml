@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="bupocket" type="id"/>
+
+    <item name="topbar_left_arrow" type="id"/>
 </resources>

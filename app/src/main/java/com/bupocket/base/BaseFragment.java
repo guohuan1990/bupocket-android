@@ -12,9 +12,12 @@ public abstract class BaseFragment extends QMUIFragment {
         return QMUIDisplayHelper.dp2px(getContext(), 100);
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
-//        QDUpgradeManager.getInstance(getContext()).runUpgradeTipTaskIfExist(getActivity());
+
+//        BPUpgradeManager.getInstance(getContext()).runUpgradeTipTaskIfExist(getActivity());
     }
+
 }

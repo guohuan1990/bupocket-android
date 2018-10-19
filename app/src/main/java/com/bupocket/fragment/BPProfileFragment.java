@@ -1,25 +1,95 @@
 package com.bupocket.fragment;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.SharedPreferencesHelper;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
-public class BPProfileFragment extends BaseFragment {
-    @BindView(R.id.topbar)
-    QMUITopBarLayout mTopBar;
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class BPProfileFragment extends BaseFragment{
+    private SharedPreferencesHelper sharedPreferencesHelper;
+    private String currentAccNick;
+
+    @BindString(R.string.qr_copy_success_message)
+    String copySuccessMessage;
+    @BindView(R.id.userNick)
+    TextView userNickTx;
+    @BindView(R.id.changePwdRL)
+    RelativeLayout mChangePwdRL;
+    @BindView(R.id.helpFeedbackRL)
+    RelativeLayout mHelpRL;
+    @BindView(R.id.languageRL)
+    RelativeLayout mLanguageRL;
+    @BindView(R.id.versionNameTv)
+    TextView mVersionNameTv;
+    @BindView(R.id.profileAvatarIv)
+    QMUIRadiusImageView mProfileAvatarIv;
+
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_profile, null);
         ButterKnife.bind(this, root);
-        initTopBar();
+        initData();
+        mChangePwdRL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoChangePwdFragment();
+            }
+        });
+        mHelpRL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoHelpFeedbackFragment();
+            }
+        });
+        mLanguageRL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoLanguageFragment();
+            }
+        });
+        mProfileAvatarIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle argz = new Bundle();
+                argz.putString("accName",currentAccNick);
+                BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
+                bpUserInfoFragment.setArguments(argz);
+                startFragment(bpUserInfoFragment);
+            }
+        });
         return root;
     }
 
-    private void initTopBar() {
-        mTopBar.setTitle(getResources().getString(R.string.tabbar_profile_txt));
+    private void initData(){
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+        currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
+
+        userNickTx.setText(currentAccNick);
+
+        mVersionNameTv.setText(CommonUtil.packageName(getContext()));
+    }
+
+
+    private void gotoChangePwdFragment(){
+        startFragment(new BPChangePwdFragment());
+    }
+
+    private void gotoHelpFeedbackFragment(){
+        startFragment(new BPHelpFeedbackFragment());
+    }
+
+    private void gotoLanguageFragment(){
+        startFragment(new BPLanguageFragment());
     }
 }

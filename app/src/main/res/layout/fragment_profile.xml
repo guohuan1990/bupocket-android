@@ -1,75 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent">
+
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="60dp"
-            android:orientation="vertical"
-            android:background="@color/app_color_blue"
-            android:fitsSystemWindows="true">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="30dp"
-                android:paddingLeft="10dp">
+            android:id="@+id/meLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:background="@mipmap/ic_me_header_bg"
+            android:fitsSystemWindows="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:clickable="false"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@mipmap/avatar"
-                    android:layout_marginRight="15dp"
-                    app:qmui_border_color="?attr/qmui_config_color_gray_6"
-                    app:qmui_border_width="1px"
-                    app:qmui_is_circle="true"
-                    app:qmui_selected_border_color="?attr/qmui_config_color_gray_4"
-                    app:qmui_selected_border_width="1px"
-                    app:qmui_selected_mask_color="?attr/qmui_config_color_gray_8"/>
-            <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical">
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ffffff"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:text="区块小钱包"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#cecece"
-                        android:textSize="16sp"
-                        android:text="137***@qq.com"/>
-            </LinearLayout>
+                android:id="@+id/profileAvatarIv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:clickable="false"
+                android:src="@mipmap/avatar"
+                app:qmui_border_color="?attr/qmui_config_color_gray_6"
+                app:qmui_border_width="1px"
+                app:qmui_is_circle="true"
+                app:qmui_selected_border_color="?attr/qmui_config_color_gray_4"
+                app:qmui_selected_border_width="1px"
+                app:qmui_selected_mask_color="?attr/qmui_config_color_gray_8" />
+
+            <TextView
+                android:id="@+id/userNick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/app_color_font"
+                android:textSize="16sp" />
 
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="190dp"
-            android:background="@color/qmui_config_color_white"
-            android:orientation="vertical"
-            android:padding="25dp">
 
-    <TextView
-            style="@style/QDCommonTitle"
-            android:ellipsize="end"
-            android:text="@string/function_opening"/>
-    </LinearLayout>
-    <com.qmuiteam.qmui.widget.QMUITopBarLayout
-            android:id="@+id/topbar"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"/>
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/changePwdRL"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:id="@+id/pwdicon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
+                    android:background="@mipmap/icon_profile_item_pwd" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginStart="13dp"
+                    android:layout_toEndOf="@id/pwdicon"
+                    android:layout_toRightOf="@id/pwdicon"
+                    android:text="@string/change_the_password_txt"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="17.5dp"
+                    android:layout_marginRight="17.5dp"
+                    android:background="@mipmap/icon_right_arrow" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/helpFeedbackRL"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:id="@+id/helpIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
+                    android:background="@mipmap/icon_profile_item_help" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginStart="13dp"
+                    android:layout_toEndOf="@id/helpIcon"
+                    android:layout_toRightOf="@id/helpIcon"
+                    android:text="@string/help_txt"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="17.5dp"
+                    android:layout_marginRight="17.5dp"
+                    android:background="@mipmap/icon_right_arrow" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/languageRL"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:id="@+id/languageIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
+                    android:background="@mipmap/icon_profile_item_language" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginStart="13dp"
+                    android:layout_toEndOf="@id/languageIcon"
+                    android:layout_toRightOf="@id/languageIcon"
+                    android:text="@string/language_txt"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="17.5dp"
+                    android:layout_marginRight="17.5dp"
+                    android:background="@mipmap/icon_right_arrow" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/versionRL"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:id="@+id/versionIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
+                    android:background="@mipmap/icon_profile_item_version" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginStart="13dp"
+                    android:layout_toEndOf="@id/versionIcon"
+                    android:layout_toRightOf="@id/versionIcon"
+                    android:text="@string/version_txt"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/versionNameTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="17.5dp"
+                    android:layout_marginRight="17.5dp"
+                    android:text="" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

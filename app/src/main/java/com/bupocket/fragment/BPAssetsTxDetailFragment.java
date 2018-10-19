@@ -1,88 +1,294 @@
 package com.bupocket.fragment;
 
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.os.Handler;
+import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
+import com.bupocket.adaptor.TxDetailSignatureAdapter;
 import com.bupocket.base.BaseFragment;
-import com.qmuiteam.qmui.widget.QMUILoadingView;
+import com.bupocket.enums.OutinTypeEnum;
+import com.bupocket.enums.TxStatusEnum;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.TxService;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.http.api.dto.resp.TxDetailRespDto;
+import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.TO;
+import com.bupocket.utils.TimeUtil;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+import com.qmuiteam.qmui.widget.QMUIEmptyView;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
-import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class BPAssetsTxDetailFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
-    @BindView(R.id.txDetailGroupListView)
-    QMUIGroupListView mGroupListView;
+
+    @BindView(R.id.txStatusIcon)
+    QMUIRadiusImageView mTxStatusIcon;
+    @BindView(R.id.sendAmountTv)
+    TextView mSendAmountTv;
+    @BindView(R.id.txStatusTv)
+    TextView mTxStatusTv;
+    @BindView(R.id.txFromAccAddrTv)
+    TextView mTxFromAccAddrTv;
+    @BindView(R.id.txToAccAddrTv)
+    TextView mTxToAccAddrTv;
+    @BindView(R.id.txDetailFeeTv)
+    TextView mTxDetailFeeTv;
+    @BindView(R.id.txDetailSendDateTv)
+    TextView mTxDetailSendDateTv;
+    @BindView(R.id.txDetailNoteTv)
+    TextView mTxDetailNoteTv;
+    @BindView(R.id.txDetailTXHashTv)
+    TextView mTxDetailTXHashTv;
+    @BindView(R.id.txDetailTxInfoSourceAddressTv)
+    TextView mTxDetailTxInfoSourceAddressTv;
+    @BindView(R.id.txDetailTxInfoDestAddressTv)
+    TextView mTxDetailTxInfoDestAddressTv;
+    @BindView(R.id.txDetailTxInfoAmountTv)
+    TextView mTxDetailTxInfoAmountTv;
+    @BindView(R.id.txDetailTxInfoTXFeeTv)
+    TextView mTxDetailTxInfoTXFeeTv;
+    @BindView(R.id.txDetailTxInfoNonceTv)
+    TextView mTxDetailTxInfoNonceTv;
+    @BindView(R.id.txDetailTxInfoLedgerSeqTv)
+    TextView mTxDetailTxInfoLedgerSeqTv;
+    @BindView(R.id.txDetailBlockInfoBlockHeightTv)
+    TextView mTxDetailBlockInfoBlockHeightTv;
+    @BindView(R.id.txDetailBlockInfoBlockHashTv)
+    TextView mTxDetailBlockInfoBlockHashTv;
+    @BindView(R.id.txDetailBlockInfoPrevBlockHashTv)
+    TextView mTxDetailBlockInfoPrevBlockHashTv;
+    @BindView(R.id.txDetailBlockInfoTXCountTv)
+    TextView mTxDetailBlockInfoTXCountTv;
+    @BindView(R.id.txDetailBlockInfoConsensusTimeTv)
+    TextView mTxDetailBlockInfoConsensusTimeTv;
+    @BindView(R.id.emptyView)
+    QMUIEmptyView mEmptyView;
+    @BindView(R.id.assetCodeTv)
+    TextView mAssetCodeTv;
+
+    @BindView(R.id.txDetailLl)
+    LinearLayout mTxDetailLl;
+
+    @BindView(R.id.txDetailSignatureListLl)
+    LinearLayout txDetailSignatureListLl;
+
+    TxDetailSignatureAdapter txDetailSignatureAdapter;
+
+    private String txHash;
+    private Integer outinType;
+    private String assetCode;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_tx_detail, null);
         ButterKnife.bind(this, root);
         initTopBar();
-        initGroupListView();
+        initData();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initTxDetailView();
+            }
+        },10);
+
         return root;
     }
 
-    private void initGroupListView() {
-        QMUICommonListItemView normalItem = mGroupListView.createItemView("Item 1");
-        normalItem.setOrientation(QMUICommonListItemView.VERTICAL);
+    private void initData(){
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
+        mEmptyView.show(true);
+        txHash = getTxHash();
+        outinType = getArguments().getInt("outinType");
+        assetCode = getArguments().getString("assetCode");
+        mAssetCodeTv.setText(assetCode);
+    }
 
-        QMUICommonListItemView itemWithDetail = mGroupListView.createItemView("Item 2");
-        itemWithDetail.setDetailText("在右方的详细信息");
 
-        QMUICommonListItemView itemWithDetailBelow = mGroupListView.createItemView("Item 3");
-        itemWithDetailBelow.setOrientation(QMUICommonListItemView.VERTICAL);
-        itemWithDetailBelow.setDetailText("在标题下方的详细信息");
+    private String getTxHash(){
+        return getArguments().getString("txHash");
+    }
 
-        QMUICommonListItemView itemWithChevron = mGroupListView.createItemView("Item 4");
-        itemWithChevron.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-
-        QMUICommonListItemView itemWithSwitch = mGroupListView.createItemView("Item 5");
-        itemWithSwitch.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
-        itemWithSwitch.getSwitch().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    private void initTxDetailView() {
+        TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
+        Map<String, Object> parmasMap = new HashMap<>();
+        parmasMap.put("hash",txHash);
+        Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetail(parmasMap);
+        call.enqueue(new Callback<ApiResult<TxDetailRespDto>>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(getActivity(), "checked = " + isChecked, Toast.LENGTH_SHORT).show();
-            }
-        });
+            public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
 
-        QMUICommonListItemView itemWithCustom = mGroupListView.createItemView("Item 6");
-        itemWithCustom.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
-        QMUILoadingView loadingView = new QMUILoadingView(getActivity());
-        itemWithCustom.addAccessoryCustomView(loadingView);
 
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v instanceof QMUICommonListItemView) {
-                    CharSequence text = ((QMUICommonListItemView) v).getText();
-                    Toast.makeText(getActivity(), text + " is Clicked", Toast.LENGTH_SHORT).show();
+                ApiResult<TxDetailRespDto> respDto = response.body();
+
+                if(respDto.getData() != null){
+
+                    mTxDetailLl.setVisibility(View.VISIBLE);
+                    TxDetailRespDto.TxInfoRespBoBean txInfoRespBoBean = respDto.getData().getTxInfoRespBo();
+                    TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean = respDto.getData().getTxDeatilRespBo();
+                    TxDetailRespDto.BlockInfoRespBoBean blockInfoRespBoBean = respDto.getData().getBlockInfoRespBo();
+
+                    Drawable txStatusIconDrawable = null;
+                    String txStatusStr = null;
+                    if(txDeatilRespBoBean.getStatus().equals(TxStatusEnum.SUCCESS.getCode())){
+                        if(isAdded()){
+                            txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()),R.mipmap.icon_send_success);
+                            txStatusStr = getResources().getString(R.string.tx_status_success_txt1);
+                        }
+                    }else{
+                        if(isAdded()){
+                            txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()),R.mipmap.icon_send_fail);
+                            txStatusStr = getResources().getString(R.string.tx_status_fail_txt1);
+                        }
+                    }
+                    mTxStatusIcon.setImageDrawable(txStatusIconDrawable);
+                    mTxStatusTv.setText(txStatusStr);
+                    mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? "-" : "+") + txInfoRespBoBean.getAmount());
+                    mTxFromAccAddrTv.setText(txDeatilRespBoBean.getSourceAddress());
+                    mTxToAccAddrTv.setText(txDeatilRespBoBean.getDestAddress());
+                    mTxDetailFeeTv.setText(txDeatilRespBoBean.getFee() + " BU");
+                    mTxDetailSendDateTv.setText(TimeUtil.timeStamp2Date(txDeatilRespBoBean.getApplyTimeDate().toString().substring(0,10),"yyyy.MM.dd HH:mm:ss"));
+                    mTxDetailTXHashTv.setText(txInfoRespBoBean.getHash());
+                    mTxDetailNoteTv.setText(txDeatilRespBoBean.getOriginalMetadata());
+
+                    mTxDetailTxInfoSourceAddressTv.setText(txInfoRespBoBean.getSourceAddress());
+                    mTxDetailTxInfoDestAddressTv.setText(txInfoRespBoBean.getDestAddress());
+                    mTxDetailTxInfoAmountTv.setText(CommonUtil.addSuffix(txInfoRespBoBean.getAmount(),assetCode));
+                    mTxDetailTxInfoTXFeeTv.setText(txInfoRespBoBean.getFee() + " BU");
+                    mTxDetailTxInfoNonceTv.setText(txInfoRespBoBean.getNonce() + "");
+                    mTxDetailTxInfoLedgerSeqTv.setText(txInfoRespBoBean.getLedgerSeq() + "");
+
+                    String signatureStr = txInfoRespBoBean.getSignatureStr();
+                    JSONArray signatureArr = JSON.parseArray(signatureStr);
+                    JSONObject signatureObj = null;
+                    List<TxDetailSignatureAdapter.Signature> signatures = new ArrayList<>();
+                    TxDetailSignatureAdapter.Signature signature = null;
+                    for (int i = 0; i < signatureArr.size(); i++) {
+                        signatureObj = JSON.parseObject(signatureArr.getString(i));
+                        signature = new TxDetailSignatureAdapter.Signature();
+                        signature.setPublicKey(signatureObj.getString("publicKey"));
+                        signature.setSignData(signatureObj.getString("signData"));
+                        signatures.add(signature);
+                    }
+
+                    if(isAdded()){
+                        loads(signatures);
+                    }
+//                    txDetailSignatureAdapter = new TxDetailSignatureAdapter(signatures, getContext());
+//                    mTxDetailSignatureItemLv.setAdapter(txDetailSignatureAdapter);
+//                    setListViewHeightBasedOnChildren(mTxDetailSignatureItemLv);
+
+//                    mTxDetailTxInfoTxSignaturePkTv.setText(signatureObj.getString("publicKey"));
+//                    mTxDetailTxInfoTxSignatureSdTv.setText(signatureObj.getString("signData"));
+
+                    mTxDetailBlockInfoBlockHeightTv.setText(blockInfoRespBoBean.getSeq() + "");
+                    mTxDetailBlockInfoBlockHashTv.setText(blockInfoRespBoBean.getHash());
+                    mTxDetailBlockInfoPrevBlockHashTv.setText(blockInfoRespBoBean.getPreviousHash());
+                    mTxDetailBlockInfoTXCountTv.setText(blockInfoRespBoBean.getTxCount() + "");
+                    mTxDetailBlockInfoConsensusTimeTv.setText(TimeUtil.timeStamp2Date(blockInfoRespBoBean.getCloseTimeDate().toString().substring(0,10),"yyyy.MM.dd HH:mm:ss"));
+
+
+                }else{
+                    mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
                 }
             }
-        };
 
-        QMUIGroupListView.newSection(getContext())
-                .setTitle("Section 1: 默认提供的样式")
-                .setDescription("Section 1 的描述")
-                .addItemView(normalItem, onClickListener)
-                .addItemView(itemWithDetail, onClickListener)
-                .addItemView(itemWithDetailBelow, onClickListener)
-                .addItemView(itemWithChevron, onClickListener)
-                .addItemView(itemWithSwitch, onClickListener)
-                .addTo(mGroupListView);
+            @Override
+            public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
+                t.printStackTrace();
+                mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
+            }
+        });
+    }
 
-        QMUIGroupListView.newSection(getContext())
-                .setTitle("Section 2: 自定义右侧 View")
-                .addItemView(itemWithCustom, onClickListener)
-                .addTo(mGroupListView);
+    private void loads(List<TxDetailSignatureAdapter.Signature> signatures){
+
+        for (TxDetailSignatureAdapter.Signature signature: signatures
+             ) {
+            LinearLayout layout = new LinearLayout(getContext());
+            layout.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            layoutParams.setMargins(10, 10, 10, 30);
+            layout.setLayoutParams(layoutParams);
+
+            LinearLayout pkLayout = new LinearLayout(getContext());
+            pkLayout.setOrientation(LinearLayout.VERTICAL);
+
+            pkLayout.setBackgroundColor(0xFFF8F8F8);
+            LinearLayout.LayoutParams LP_MM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            pkLayout.setLayoutParams(LP_MM);
+
+
+            TextView pkLabelTv = new TextView(getContext());
+            pkLabelTv.setText("Public Key");
+            pkLabelTv.setTextColor(0xFF888888);
+            pkLabelTv.setPadding(20,10,10,20);
+
+            pkLayout.addView(pkLabelTv);
+
+            TextView pkVTv = new TextView(getContext());
+            pkVTv.setText(signature.getPublicKey());
+            pkVTv.setPadding(20,10,20,20);
+            pkLayout.addView(pkVTv);
+
+
+
+            LinearLayout skLayout = new LinearLayout(getContext());
+            skLayout.setOrientation(LinearLayout.VERTICAL);
+            skLayout.setBackgroundColor(0xFFF8F8F8);
+            skLayout.setLayoutParams(LP_MM);
+
+
+            TextView sdLabelTv = new TextView(getContext());
+            sdLabelTv.setText("Singed Data");
+            sdLabelTv.setPadding(20,10,10,20);
+            sdLabelTv.setTextColor(0xFF888888);
+
+            skLayout.addView(sdLabelTv);
+
+            TextView sdVTv = new TextView(getContext());
+            sdVTv.setText(signature.getSignData());
+            sdVTv.setPadding(20,10,20,20);
+            skLayout.addView(sdVTv);
+
+
+            layout.addView(pkLayout);
+            layout.addView(skLayout);
+
+            txDetailSignatureListLl.addView(layout);
+        }
+
+
+
+
     }
 
     private void initTopBar() {
-        mTopBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
+        mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popBackStack();

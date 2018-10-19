@@ -3,11 +3,15 @@
 buildscript {
     
     repositories {
+
         google()
-        jcenter()
+//        jcenter()
+        repositories {
+            maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0+'
+        classpath 'com.android.tools.build:gradle:3.3.0-alpha03'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
     }
@@ -17,11 +21,14 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "http://maven.bumo.io/content/groups/public/"}
+        maven { url "https://jitpack.io" }
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
     }
 
     ext {
         buildToolsVersion = "28.0.2"
-        minSdkVersion = 14
+        minSdkVersion = 15
         targetSdkVersion = 28
         compileSdkVersion = 28
         supportVersion = "27.1.1"

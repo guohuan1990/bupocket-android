@@ -5,15 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.bupocket.base.RecyclerViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author cginechen
- * @date 2016-10-19
- */
 
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerViewHolder> {
     private final List<T> mData;

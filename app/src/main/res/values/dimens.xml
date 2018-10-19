@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="home_tab_height">49dp</dimen>
+    <dimen name="qmui_topbar_height">30dp</dimen>
     <dimen name="common_content_spacing">@dimen/qmui_content_spacing_horizontal</dimen>
 
     <!-- ListView -->
@@ -25,4 +26,9 @@
     <!-- Span Utils 各种 Span 工具 -->
     <dimen name="spanUtils_column_marginBottom">35dp</dimen>
     <dimen name="spanUtils_common_textSize">16sp</dimen>
+
+    <dimen name="bp_btn_hight">45dp</dimen>
+    <dimen name="bp_btn_text_size">16sp</dimen>
+    <dimen name="view_padding">10dp</dimen>
+    <dimen name="mnemonic_word_view_padding">15dp</dimen>
 </resources>

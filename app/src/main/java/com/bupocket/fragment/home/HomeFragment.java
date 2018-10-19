@@ -9,25 +9,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import android.widget.Toast;
+
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.bupocket.fragment.BPAssetsFragment;
-import com.bupocket.fragment.BPDiscoveryFragment;
+import com.bupocket.fragment.BPAssetsHomeFragment;
 import com.bupocket.fragment.BPProfileFragment;
 import com.qmuiteam.qmui.widget.QMUIPagerAdapter;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class HomeFragment extends BaseFragment {
-    private final static String TAG = HomeFragment.class.getSimpleName();
 
     @BindView(R.id.pager)
     ViewPager mViewPager;
     @BindView(R.id.tabs)
     QMUITabSegment mTabSegment;
-
     @Override
     protected View onCreateView() {
         FrameLayout layout = (FrameLayout) LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null);
@@ -38,32 +38,19 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void initTabs() {
-//        int normalColor = QMUIResHelper.getAttrColor(getActivity(), R.attr.qmui_config_color_gray_6);
-//        int selectColor = QMUIResHelper.getAttrColor(getActivity(), R.attr.qmui_config_color_blue);
-//        mTabSegment.setDefaultNormalColor(normalColor);
-//        mTabSegment.setDefaultSelectedColor(selectColor);
-//        mTabSegment.setDefaultTabIconPosition(QMUITabSegment.ICON_POSITION_BOTTOM);
-
         QMUITabSegment.Tab assets = new QMUITabSegment.Tab(
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_component),
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_component_selected),
-                getResources().getString(R.string.tabbar_assets_txt), true
-        );
-
-        QMUITabSegment.Tab discovery = new QMUITabSegment.Tab(
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_util),
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_util_selected),
-                getResources().getString(R.string.tabbar_discovery_txt), true
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_wallet),
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_wallet_selected),
+                getResources().getString(R.string.tabbar_assets_txt), false
         );
         QMUITabSegment.Tab profile = new QMUITabSegment.Tab(
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_lab),
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_lab_selected),
-                getResources().getString(R.string.tabbar_profile_txt), true
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_profile),
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_profile_selected),
+                getResources().getString(R.string.tabbar_profile_txt), false
         );
         mTabSegment.addTab(assets);
-        mTabSegment.addTab(discovery);
         mTabSegment.addTab(profile);
-        mTabSegment.notifyDataChanged();
+        mTabSegment.setDefaultSelectedColor(0xFF36B3FF);
 
     }
 
@@ -79,7 +66,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public int getCount() {
-                return 3;
+                return 2;
             }
 
             @Override
@@ -88,8 +75,6 @@ public class HomeFragment extends BaseFragment {
                     case 0:
                         return getResources().getString(R.string.tabbr_wallet_txt);
                     case 1:
-                        return getResources().getString(R.string.tabbr_c2c_txt);
-                    case 2:
                     default:
                         return getResources().getString(R.string.tabbar_profile_txt);
                 }
@@ -99,15 +84,10 @@ public class HomeFragment extends BaseFragment {
             protected Object hydrate(ViewGroup container, int position) {
                 switch (position) {
                     case 0:
-                        BPAssetsFragment bpAssetsFragment = new BPAssetsFragment();
-                        return bpAssetsFragment;
+                        return new BPAssetsHomeFragment();
                     case 1:
-                        BPDiscoveryFragment bpDiscoveryFragment = new BPDiscoveryFragment();
-                        return bpDiscoveryFragment;
-                    case 2:
                     default:
-                        BPProfileFragment bpProfileFragment = new BPProfileFragment();
-                        return bpProfileFragment;
+                        return new BPProfileFragment();
                 }
             }
 
@@ -125,14 +105,6 @@ public class HomeFragment extends BaseFragment {
                 } else {
                     fragment = (Fragment) item;
                     mCurrentTransaction.add(container.getId(), fragment, name);
-//                    startFragment(new BPAssetsFragment());
-//                    try {
-//                        String className = fragment.getClass().getName();
-//                        Class clazz = Class.forName(className);
-//                        startFragment((BaseFragment)clazz.newInstance());
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
                 }
                 if (fragment != mCurrentPrimaryItem) {
                     fragment.setMenuVisibility(false);
@@ -183,15 +155,27 @@ public class HomeFragment extends BaseFragment {
             }
 
             private String makeFragmentName(int viewId, long id) {
+
                 return "HomeFragment:" + viewId + ":" + id;
             }
         };
         mViewPager.setAdapter(pagerAdapter);
-        mTabSegment.setupWithViewPager(mViewPager);
+        mTabSegment.setupWithViewPager(mViewPager,false, true);
     }
 
     @Override
     protected boolean canDragBack() {
         return false;
+    }
+
+    private long exitTime = 0;
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(getContext(), getResources().getText(R.string.next_key_down_err), Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            getActivity().finish();
+        }
+
     }
 }
