@@ -696,4 +696,17 @@ public class CommonUtil {
         return one.divide(ten.pow(Integer.valueOf(decimalsStr))).toPlainString();
     }
 
+    public static String rvZeroAndDot(String s){
+        if (s.isEmpty()) {
+            return null;
+        }
+        if(s.indexOf(".") > 0){
+            //去掉多余的0
+            s = s.replaceAll("0+?$", "");
+            //如最后一位是.则去掉
+            s = s.replaceAll("[.]$", "");
+        }
+        return s;
+    }
+
 }
