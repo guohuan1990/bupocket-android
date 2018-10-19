@@ -281,7 +281,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
         assetCode = bundle.getString("assetCode");
         issuer = bundle.getString("issuer");
         decimals = bundle.getString("decimals");
-//        tokenBalance = bundle.get("amount").toString();
+        tokenBalance = bundle.getString("amount");
         tokenType = bundle.getString("tokenType");
         if(!CommonUtil.isNull(bundle.getString("icon"))){
             try{

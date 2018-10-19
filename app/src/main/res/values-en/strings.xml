@@ -151,10 +151,10 @@
     <string name="invalid_address">BU address is incorrect, please enter again</string>
     <string name="send_err1">You can\'t transfer BU to yourself</string>
     <string name="invalid_amount">Invalid transfer amount</string>
-    <string name="amount_too_small">Each BU transfer cannot be less than 0.00000001</string>
+    <string name="amount_too_small">Each BU transfer cannot be less than</string>
     <string name="amount_too_big">Each BU transfer cannot exceed 100,000,000</string>
     <string name="invalid_tx_fee">The format of maximum payment transaction fee is incorrect. Please enter again</string>
-    <string name="tx_fee_too_small">The maximum transaction fee cannot be less than 0.003 BU</string>
+    <string name="tx_fee_too_small">The maximum transaction fee cannot be less than 0.005 BU</string>
     <string name="balance_not_enough">Insufficient balance available</string>
     <string name="send_token_note_too_long">Remarks can\'t exceed 20 characters</string>
     <string name="send_loading">Processing...</string>
@@ -253,4 +253,5 @@
     <string name="account_activated_fee">0.01</string>
     <string name="add_token_btn_txt">Add</string>
     <string name="delete_token_btn_txt">Delete</string>
+    <string name="tx_fee_too_big">The maximum transaction fee cannot be greater than 10 BU</string>
 </resources>
