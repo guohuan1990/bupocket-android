@@ -27,6 +27,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
@@ -42,6 +43,7 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -227,7 +229,7 @@ public class BPSendTokenFragment extends BaseFragment {
             if(tokenBalance == null || Double.parseDouble(tokenBalance) < 0 || Double.parseDouble(tokenBalance) == 0){
                 availableTokenBalance = "0";
             } else {
-                availableTokenBalance = String.valueOf(AmountUtil.availableSubtractionFee(tokenBalance,com.bupocket.common.Constants.RESERVE_AMOUNT));
+                availableTokenBalance = new BigDecimal(AmountUtil.availableSubtractionFee(tokenBalance,com.bupocket.common.Constants.RESERVE_AMOUNT)).toPlainString();
             }
         }else{
             availableTokenBalance = tokenBalance;
@@ -300,7 +302,7 @@ public class BPSendTokenFragment extends BaseFragment {
                 }
                 if (Double.parseDouble(sendAmount) < com.bupocket.common.Constants.MIN_SEND_AMOUNT) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
-                            .setTipWord(CommonUtil.addSuffix(getResources().getString(R.string.amount_too_small) + CommonUtil.calculateMinSendAmount(tokenDecimals),tokenCode))
+                            .setTipWord(CommonUtil.addSuffix(CommonUtil.addSuffix(getResources().getString(R.string.amount_too_small),CommonUtil.calculateMinSendAmount(tokenDecimals)),tokenCode))
                             .create();
                     tipDialog.show();
                     sendAmountET.postDelayed(new Runnable() {
