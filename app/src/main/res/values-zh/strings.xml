@@ -252,5 +252,6 @@
     <string name="account_activated_fee">0.01</string>
     <string name="add_token_btn_txt">添加</string>
     <string name="delete_token_btn_txt">删除</string>
+    <string name="tx_fee_too_big">最多支付交易费用不可大于 10 BU</string>
 
 </resources>

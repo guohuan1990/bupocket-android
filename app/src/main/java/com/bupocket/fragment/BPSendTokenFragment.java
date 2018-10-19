@@ -229,7 +229,7 @@ public class BPSendTokenFragment extends BaseFragment {
             if(tokenBalance == null || Double.parseDouble(tokenBalance) < 0 || Double.parseDouble(tokenBalance) == 0){
                 availableTokenBalance = "0";
             } else {
-                availableTokenBalance = new BigDecimal(AmountUtil.availableSubtractionFee(tokenBalance,com.bupocket.common.Constants.RESERVE_AMOUNT)).toPlainString();
+                availableTokenBalance = new BigDecimal(AmountUtil.availableSubtractionFee(tokenBalance,com.bupocket.common.Constants.RESERVE_AMOUNT)).setScale(Integer.valueOf(tokenDecimals),BigDecimal.ROUND_HALF_UP).toPlainString();
             }
         }else{
             availableTokenBalance = tokenBalance;
@@ -374,6 +374,19 @@ public class BPSendTokenFragment extends BaseFragment {
                 if (Double.parseDouble(txFee) < com.bupocket.common.Constants.MIN_FEE) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.tx_fee_too_small))
+                            .create();
+                    tipDialog.show();
+                    sendFormTxFeeEt.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            tipDialog.dismiss();
+                        }
+                    }, 1500);
+                    return;
+                }
+                if(Double.parseDouble(txFee) > Constants.MAX_FEE){
+                    tipDialog = new QMUITipDialog.Builder(getContext())
+                            .setTipWord(getResources().getString(R.string.tx_fee_too_big))
                             .create();
                     tipDialog.show();
                     sendFormTxFeeEt.postDelayed(new Runnable() {

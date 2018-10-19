@@ -253,4 +253,5 @@
     <string name="account_activated_fee">0.01</string>
     <string name="add_token_btn_txt">Add</string>
     <string name="delete_token_btn_txt">Delete</string>
+    <string name="tx_fee_too_big">The maximum transaction fee cannot be greater than 10 BU</string>
 </resources>
