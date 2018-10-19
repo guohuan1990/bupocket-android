@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.v4.math.MathUtils;
 import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
@@ -680,12 +681,19 @@ public class CommonUtil {
      */
     public static Boolean checkSendAmountDecimals(String srcAmount, String decimals){
         BigDecimal value = BigDecimal.valueOf(DecimalCalculate.mul(Double.parseDouble(srcAmount),Math.pow(10, Double.parseDouble(decimals))));
-        System.out.println(value.toPlainString());
-        System.out.println(value.remainder(BigDecimal.ONE));
+//        System.out.println(value.toPlainString());
+//        System.out.println(value.remainder(BigDecimal.ONE));
         if(value.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0){
             return false;
         }else {
             return true;
         }
     }
+
+    public static String calculateMinSendAmount(String decimalsStr){
+        BigDecimal one = new BigDecimal(1);
+        BigDecimal ten = new BigDecimal(10);
+        return one.divide(ten.pow(Integer.valueOf(decimalsStr))).toPlainString();
+    }
+
 }

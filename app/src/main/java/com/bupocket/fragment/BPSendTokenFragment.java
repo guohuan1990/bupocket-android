@@ -300,7 +300,7 @@ public class BPSendTokenFragment extends BaseFragment {
                 }
                 if (Double.parseDouble(sendAmount) < com.bupocket.common.Constants.MIN_SEND_AMOUNT) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
-                            .setTipWord(CommonUtil.addSuffix(getResources().getString(R.string.amount_too_small),tokenCode))
+                            .setTipWord(CommonUtil.addSuffix(getResources().getString(R.string.amount_too_small) + CommonUtil.calculateMinSendAmount(tokenDecimals),tokenCode))
                             .create();
                     tipDialog.show();
                     sendAmountET.postDelayed(new Runnable() {
