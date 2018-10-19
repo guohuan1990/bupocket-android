@@ -1,11 +1,13 @@
 package com.bupocket.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.*;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -27,7 +29,6 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
@@ -458,6 +459,18 @@ public class BPSendTokenFragment extends BaseFragment {
                                         .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
                                         .create();
                                 txSendingTipDialog.show();
+                                txSendingTipDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                                    @Override
+                                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+
+                                        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+                                            return true;
+                                        }
+                                        return false;
+                                    }
+                                });
+
+
                                 new Thread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -478,6 +491,8 @@ public class BPSendTokenFragment extends BaseFragment {
                                             Looper.prepare();
                                             if(ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())){
                                                 Toast.makeText(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT).show();
+                                            }else if(ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())){
+                                                Toast.makeText(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT).show();
                                             }else {
                                                 Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
                                             }

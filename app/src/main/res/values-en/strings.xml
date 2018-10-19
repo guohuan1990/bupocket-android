@@ -100,6 +100,7 @@
     <string name="send_tx_handleing_txt">Processing...</string>
     <string name="send_status_fee">Estimated maximum payment</string>
     <string name="send_tx_fee_not_enough">Transaction not enough</string>
+    <string name="send_tx_bu_not_enough" >BU not enough</string>
     <string name="tx_timeout_err">Transaction timeout</string>
     <string name="send_status_note">Remark</string>
     <string name="send_status_time">Time</string>
