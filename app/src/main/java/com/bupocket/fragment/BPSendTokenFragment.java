@@ -156,46 +156,41 @@ public class BPSendTokenFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(final Editable s) {
-                @SuppressLint("HandlerLeak")
-                final Handler handler = new Handler(){
-                    @Override
-                    public void handleMessage(Message msg) {
-                        super.handleMessage(msg);
-                        Bundle data = msg.getData();
-                        String fee = data.getString("fee");
-                        sendFormTxFeeEt.setText(fee);
-                        /*if(Wallet.getInstance().checkAccAddress(s.toString())){
-                            if(!Wallet.getInstance().checkAccountActivated(s.toString())){
-                                sendFormTxFeeEt.setText(getString(R.string.account_not_activated_fee));
-                            }else{
-                                sendFormTxFeeEt.setText(getString(R.string.account_activated_fee));
-                            }
-                        }else {
-                            sendFormTxFeeEt.setText(getString(R.string.account_activated_fee));
-                        }*/
-                    }
-                };
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        String fee;
-                        if(Wallet.getInstance().checkAccAddress(s.toString())){
-                            if(!Wallet.getInstance().checkAccountActivated(s.toString())){
-                                fee = getContext().getString(R.string.account_not_activated_fee);
-                            }else{
+
+                if(!TokenTypeEnum.BU.getCode().equals(tokenType)){
+                    @SuppressLint("HandlerLeak")
+                    final Handler handler = new Handler(){
+                        @Override
+                        public void handleMessage(Message msg) {
+                            super.handleMessage(msg);
+                            Bundle data = msg.getData();
+                            String fee = data.getString("fee");
+                            sendFormTxFeeEt.setText(fee);
+                        }
+                    };
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            String fee;
+                            if(Wallet.getInstance().checkAccAddress(s.toString())){
+                                if(!Wallet.getInstance().checkAccountActivated(s.toString())){
+                                    fee = getContext().getString(R.string.account_not_activated_fee);
+                                }else{
+                                    fee = getContext().getString(R.string.account_activated_fee);
+                                }
+                            }else {
                                 fee = getContext().getString(R.string.account_activated_fee);
                             }
-                        }else {
-                            fee = getContext().getString(R.string.account_activated_fee);
+                            Message message = new Message();
+                            Bundle data = new Bundle();
+                            data.putString("fee",fee);
+                            message.setData(data);
+                            handler.sendMessage(message);
                         }
-                        Message message = new Message();
-                        Bundle data = new Bundle();
-                        data.putString("fee",fee);
-                        message.setData(data);
-                        handler.sendMessage(message);
-                    }
-                };
-                new Thread(runnable).start();
+                    };
+                    new Thread(runnable).start();
+                }
+
             }
         };
         destAccountAddressEt.addTextChangedListener(addressEtWatcher);
@@ -231,7 +226,12 @@ public class BPSendTokenFragment extends BaseFragment {
             if(tokenBalance == null || Double.parseDouble(tokenBalance) < 0 || Double.parseDouble(tokenBalance) == 0){
                 availableTokenBalance = "0";
             } else {
-                availableTokenBalance = CommonUtil.rvZeroAndDot(new BigDecimal(DecimalCalculate.sub(Double.parseDouble(tokenBalance),com.bupocket.common.Constants.RESERVE_AMOUNT)).setScale(Integer.valueOf(tokenDecimals),BigDecimal.ROUND_HALF_UP).toPlainString());
+                Double doubleAvailableTokenBalance = DecimalCalculate.sub(Double.parseDouble(tokenBalance),com.bupocket.common.Constants.RESERVE_AMOUNT);
+                if(doubleAvailableTokenBalance < 0){
+                    availableTokenBalance = "0";
+                }else {
+                    availableTokenBalance = CommonUtil.rvZeroAndDot(new BigDecimal(DecimalCalculate.sub(Double.parseDouble(tokenBalance),com.bupocket.common.Constants.RESERVE_AMOUNT)).setScale(Integer.valueOf(tokenDecimals),BigDecimal.ROUND_HALF_UP).toPlainString());
+                }
 //                availableTokenBalance = CommonUtil.rvZeroAndDot(new BigDecimal(AmountUtil.availableSubtractionFee(tokenBalance,com.bupocket.common.Constants.RESERVE_AMOUNT)).setScale(Integer.valueOf(tokenDecimals),BigDecimal.ROUND_HALF_UP).toPlainString());
             }
         }else{
@@ -529,37 +529,41 @@ public class BPSendTokenFragment extends BaseFragment {
         if(bundle != null){
             final String destAddress = getArguments().getString("destAddress");
             destAccountAddressEt.setText(destAddress);
-            @SuppressLint("HandlerLeak")
-            final Handler handler = new Handler(){
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    Bundle data = msg.getData();
-                    String fee = data.getString("fee");
-                    sendFormTxFeeEt.setText(fee);
-                }
-            };
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    String fee;
-                    if(Wallet.getInstance().checkAccAddress(destAddress)){
-                        if(!Wallet.getInstance().checkAccountActivated(destAddress)){
-                            fee = getContext().getString(R.string.account_not_activated_fee);
-                        }else{
+
+            if(!TokenTypeEnum.BU.getCode().equals(tokenType)){
+                @SuppressLint("HandlerLeak")
+                final Handler handler = new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        Bundle data = msg.getData();
+                        String fee = data.getString("fee");
+                        sendFormTxFeeEt.setText(fee);
+                    }
+                };
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        String fee;
+                        if(Wallet.getInstance().checkAccAddress(destAddress)){
+                            if(!Wallet.getInstance().checkAccountActivated(destAddress)){
+                                fee = getContext().getString(R.string.account_not_activated_fee);
+                            }else{
+                                fee = getContext().getString(R.string.account_activated_fee);
+                            }
+                        }else {
                             fee = getContext().getString(R.string.account_activated_fee);
                         }
-                    }else {
-                        fee = getContext().getString(R.string.account_activated_fee);
+                        Message message = new Message();
+                        Bundle data = new Bundle();
+                        data.putString("fee",fee);
+                        message.setData(data);
+                        handler.sendMessage(message);
                     }
-                    Message message = new Message();
-                    Bundle data = new Bundle();
-                    data.putString("fee",fee);
-                    message.setData(data);
-                    handler.sendMessage(message);
-                }
-            };
-            new Thread(runnable).start();
+                };
+                new Thread(runnable).start();
+            }
+
         }
     }
 
