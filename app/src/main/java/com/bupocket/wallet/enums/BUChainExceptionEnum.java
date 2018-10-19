@@ -1,7 +1,8 @@
 package com.bupocket.wallet.enums;
 
 public enum BUChainExceptionEnum {
-    ERRCODE_FEE_NOT_ENOUGH(111,"Fee not enough");
+    ERRCODE_FEE_NOT_ENOUGH(111,"Fee not enough"),
+    ERRCODE_ACCOUNT_LOW_RESERVE(100,"account low reserve");
 
     private final Integer code;
     private final String message;
