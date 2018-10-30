@@ -19,7 +19,7 @@ public class Constants {
     public static final Double ACTIVE_AMOUNT_FEE = 0.02;
     public static final double MIN_SEND_AMOUNT = 0.00000001;
     public static final double MAX_SEND_AMOUNT = 1000000000;
-    public static final String SOCKET_URL = "http://192.168.9.120:3100/";
+    public static final String SOCKET_URL = "http://192.168.6.98:3100/";
 
     public static final Integer TX_REQUEST_TIMEOUT_TIMES = 20;
 

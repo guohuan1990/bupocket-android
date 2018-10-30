@@ -12,6 +12,7 @@ import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.model.RegisterTokenInfo;
 import com.bupocket.utils.RSAUtil;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -32,8 +33,24 @@ public class BPRegisterTokenFragment extends BaseFragment {
     QMUIRoundButton mRegisterConfirmBtn;
     @BindView(R.id.registerCancelBtn)
     QMUIRoundButton mRegisterCancelBtn;
+    @BindView(R.id.tokenNameTv)
+    TextView mTokenNameTv;
+    @BindView(R.id.tokenCodeTv)
+    TextView mTokenCodeTv;
+    @BindView(R.id.tokenAmountTv)
+    TextView mTokenAmountTv;
+    @BindView(R.id.regisgerFeeTv)
+    TextView mRegisgerFeeTv;
+    @BindView(R.id.issueTypeTv)
+    TextView mIssueTypeTv;
 
     private Socket mSocket;
+    private String tokenName;
+    private String tokenCode;
+    private String issueAmount;
+    private String decimals;
+    private String desc;
+    private String issueType;
 
     public BPRegisterTokenFragment(){
         super();
@@ -45,13 +62,49 @@ public class BPRegisterTokenFragment extends BaseFragment {
         ButterKnife.bind(this, root);
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopbar();
+        initdata();
+
         setListener();
         return root;
+    }
+
+    private void initdata() {
+        Bundle bundle = getArguments();
+        String data = bundle.getString("tokenData");
+        RegisterTokenInfo registerTokenInfo = RegisterTokenInfo.objectFromData(data);
+        tokenName = registerTokenInfo.getName();
+        tokenCode = registerTokenInfo.getCode();
+        issueAmount = registerTokenInfo.getAmount();
+        decimals = registerTokenInfo.getDecimals();
+        desc = registerTokenInfo.getDesc();
+        issueType = registerTokenInfo.getType();
+        mTokenNameTv.setText(tokenName);
+        mTokenCodeTv.setText(tokenCode);
+        mTokenAmountTv.setText(issueAmount);
+        mRegisgerFeeTv.setText("0.01");
+        switch (issueType){
+            case "0":{
+                mIssueTypeTv.setText(getString(R.string.issue_type_disposable_txt));
+                break;
+            }
+            case "1":{
+                mIssueTypeTv.setText(getString(R.string.issue_type_increment_txt));
+                break;
+            }
+            case "2":{
+                mIssueTypeTv.setText(getString(R.string.issue_type_unlimited_txt));
+                break;
+            }
+        }
+
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        final String uuID = bundle.getString("uuID");
+
         BPApplication application = (BPApplication)getActivity().getApplication();
         mSocket = application.getSocket();
         mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
@@ -59,7 +112,8 @@ public class BPRegisterTokenFragment extends BaseFragment {
             @Override
             public void call(Object... args) {
                 System.out.println("socket id :" + mSocket.id());
-//                            mSocket.disconnect();
+                mSocket.emit("token.register.join",uuID);
+//                mSocket.disconnect();
             }
 
         }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
@@ -68,7 +122,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
             public void call(Object... args) {}
 
         });
-        mSocket.emit("test","scan success");
+        mSocket.emit("token.register.scanSuccess","");
         mSocket.connect();
     }
 
@@ -82,13 +136,13 @@ public class BPRegisterTokenFragment extends BaseFragment {
         mRegisterConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSocket.emit("test1","comfirm");
                 showPasswordComfirmDialog();
             }
         });
         mRegisterCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mSocket.emit("token.register.cancel","");
                 startFragment(new BPAssetsHomeFragment());
             }
         });

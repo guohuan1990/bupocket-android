@@ -170,7 +170,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="@string/token_info_amount_txt"
+                        android:text="@string/token_info_description_txt"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="15sp" />
 
@@ -179,7 +179,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="10dp"
-                        android:text="@string/token_info_amount_txt"
+                        android:text="@string/token_info_description_txt"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
                 </LinearLayout>
@@ -203,7 +203,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="@string/issue_token_fee_txt"
+                        android:text="@string/practical_tx_fee_txt"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="15sp" />
 
@@ -211,7 +211,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="@string/issue_token_fee_txt"
+                        android:text="@string/practical_tx_fee_txt"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
                 </RelativeLayout>
@@ -226,7 +226,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="@string/issue_token_fee_txt"
+                        android:text="@string/issue_address_txt"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="15sp" />
 
@@ -235,7 +235,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="10dp"
-                        android:text="@string/issue_token_fee_txt"
+                        android:text="@string/issue_address_txt"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
                 </LinearLayout>
@@ -249,7 +249,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="@string/issue_token_fee_txt"
+                        android:text="@string/tx_hash_txt"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="15sp" />
 
@@ -258,7 +258,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="10dp"
-                        android:text="@string/issue_token_fee_txt"
+                        android:text="@string/tx_hash_txt"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
                 </LinearLayout>

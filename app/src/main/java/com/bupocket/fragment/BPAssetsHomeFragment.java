@@ -5,9 +5,11 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.session.MediaSession;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
@@ -15,15 +17,19 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.TokensAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.enums.TokenActionTypeEnum;
 import com.bupocket.fragment.components.AssetsListView;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TokenService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
+import com.bupocket.model.IssueTokenInfo;
+import com.bupocket.model.RegisterTokenInfo;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
@@ -43,6 +49,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -349,8 +356,33 @@ public class BPAssetsHomeFragment extends BaseFragment {
             if (result.getContents() == null) {
                 Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
             } else {
-                if(true){
-                    startFragment(new BPRegisterTokenFragment());
+                if(!result.getContents().substring(0,2).equals("bu")){
+                    if(CommonUtil.checkIsBase64(result.getContents())){
+                        String jsonStr = null;
+                        try {
+                            jsonStr = new String(Base64.decode(result.getContents().getBytes("UTF-8"), Base64.DEFAULT));
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        Object object = JSON.parseObject(jsonStr);
+                        String action = ((JSONObject) object).getString("action");
+                        String uuID = ((JSONObject) object).getString("uuID");
+                        String tokenData = ((JSONObject) object).getString("data");
+                        Bundle argz = new Bundle();
+                        argz.putString("uuID",uuID);
+                        argz.putString("tokenData",tokenData);
+                        if(action.equals(TokenActionTypeEnum.ISSUE.getCode())){
+                            BPIssueTokenFragment bpIssueTokenFragment = new BPIssueTokenFragment();
+                            bpIssueTokenFragment.setArguments(argz);
+                            startFragment(bpIssueTokenFragment);
+                        }else if(action.equals(TokenActionTypeEnum.REGISTER.getCode())){
+                            BPRegisterTokenFragment bpRegisterTokenFragment = new BPRegisterTokenFragment();
+                            bpRegisterTokenFragment.setArguments(argz);
+                            startFragment(bpRegisterTokenFragment);
+                        }
+                    }else {
+                        Toast.makeText(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT).show();
+                    }
                 }else{
                     Bundle argz = new Bundle();
                     argz.putString("destAddress",result.getContents());
@@ -366,7 +398,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
-
         }
     }
 }

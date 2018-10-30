@@ -259,7 +259,8 @@
     <string name="token_info_name_txt">Token名称</string>
     <string name="token_info_code_txt">Token代码</string>
     <string name="token_info_amount_txt">Token总量</string>
-    <string name="issue_token_fee_txt">发行费用</string>
+    <string name="issue_token_fee_txt">预估交易费</string>
+    <string name="register_token_fee_txt">预估交易费</string>
     <string name="confirm_register_token_btn_txt">确认登记</string>
     <string name="register_token_password_confirm_txt">请填写钱包密码</string>
     <string name="register_token_success_txt">登记成功</string>
@@ -274,7 +275,16 @@
     <string name="issue_token_success_txt">发行成功</string>
     <string name="issue_token_failure_txt">发行失败</string>
     <string name="issue_token_timeout_txt">发行超时</string>
+    <string name="issue_token_type_txt">发行方式</string>
     <string name="issue_token_balance_insufficient_message_txt">您的余额不足，发行资产失败！</string>
-
-
+    <string name="error_qr_message_txt">无效的二维码</string>
+    <string name="issue_type_disposable_txt">一次性发行</string>
+    <string name="issue_type_increment_txt">增量发行</string>
+    <string name="issue_type_unlimited_txt">无限制发行</string>
+    <string name="practical_tx_fee_txt">实际交易费</string>
+    <string name="issue_address_txt">发行方地址</string>
+    <string name="tx_hash_txt">哈希</string>
+    <string name="this_time_issue_amount_txt">本次发行量</string>
+    <string name="accumulative_issue_amount_txt">累计发行量</string>
+    <string name="total_issue_amount_txt">发行总量</string>
 </resources>
