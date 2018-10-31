@@ -112,6 +112,7 @@ public class TxDetailRespDto {
         private String sourceAddress;
         private Integer status;
         private String originalMetadata;
+        private String errorMsg;
 
         public String getAmount() {
             return amount;
@@ -167,6 +168,14 @@ public class TxDetailRespDto {
 
         public void setOriginalMetadata(String originalMetadata) {
             this.originalMetadata = originalMetadata;
+        }
+
+        public String getErrorMsg() {
+            return errorMsg;
+        }
+
+        public void setErrorMsg(String errorMsg) {
+            this.errorMsg = errorMsg;
         }
     }
 

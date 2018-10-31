@@ -290,4 +290,5 @@
     <string name="register_token_balance_insufficient_message_txt">您的BU余额不足，无法登记资产，请充值</string>
     <string name="register_already_have_message_txt">您已登记过该资产</string>
     <string name="token_version">ATP10</string>
+    <string name="error_issue_amount_message_txt">无效的发行量</string>
 </resources>
