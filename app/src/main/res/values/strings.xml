@@ -256,9 +256,9 @@
     <string name="delete_token_btn_txt">删除</string>
     <string name="register_token_page_title">登记资产确认</string>
     <string name="please_confirm_register_token_info_txt">请确认以下登记资产信息</string>
-    <string name="token_info_name_txt">Token名称</string>
-    <string name="token_info_code_txt">Token代码</string>
-    <string name="token_info_amount_txt">Token总量</string>
+    <string name="token_info_name_txt">资产名称</string>
+    <string name="token_info_code_txt">资产代码</string>
+    <string name="token_info_amount_txt">资产总量</string>
     <string name="issue_token_fee_txt">预估交易费</string>
     <string name="register_token_fee_txt">预估交易费</string>
     <string name="confirm_register_token_btn_txt">确认登记</string>
@@ -266,9 +266,9 @@
     <string name="register_token_success_txt">登记成功</string>
     <string name="register_token_failure_txt">登记失败</string>
     <string name="register_token_timeout_txt">登记超时</string>
-    <string name="token_info_decimals_txt">Token小数位数</string>
+    <string name="token_info_decimals_txt">资产小数位数</string>
     <string name="token_info_atp_version_txt">ATP版本</string>
-    <string name="token_info_description_txt">Token描述</string>
+    <string name="token_info_description_txt">资产描述</string>
     <string name="issue_token_page_title">发行资产确认</string>
     <string name="please_confirm_issue_token_info_txt">请确认以下发行资产信息</string>
     <string name="confirm_issue_token_btn_txt">确认发行</string>
@@ -287,4 +287,7 @@
     <string name="this_time_issue_amount_txt">本次发行量</string>
     <string name="accumulative_issue_amount_txt">累计发行量</string>
     <string name="total_issue_amount_txt">发行总量</string>
+    <string name="register_token_balance_insufficient_message_txt">您的BU余额不足，无法登记资产，请充值</string>
+    <string name="register_already_have_message_txt">您已登记过该资产</string>
+    <string name="token_version">ATP10</string>
 </resources>

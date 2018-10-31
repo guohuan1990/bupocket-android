@@ -1,30 +1,62 @@
 package com.bupocket.fragment;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Base64;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.AssetTypeEnum;
+import com.bupocket.enums.TxStatusEnum;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.TokenService;
+import com.bupocket.http.api.TxService;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.http.api.dto.resp.GetTokenDetailRespDto;
+import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.model.RegisterTokenInfo;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.RSAUtil;
+import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.bupocket.enums.AssetTypeEnum.*;
 
 public class BPRegisterTokenFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -39,18 +71,27 @@ public class BPRegisterTokenFragment extends BaseFragment {
     TextView mTokenCodeTv;
     @BindView(R.id.tokenAmountTv)
     TextView mTokenAmountTv;
-    @BindView(R.id.regisgerFeeTv)
-    TextView mRegisgerFeeTv;
+    @BindView(R.id.registerFeeTv)
+    TextView mRegisterFeeTv;
     @BindView(R.id.issueTypeTv)
     TextView mIssueTypeTv;
+    @BindView(R.id.registerLl)
+    LinearLayout mRegisterLl;
 
     private Socket mSocket;
     private String tokenName;
     private String tokenCode;
     private String issueAmount;
-    private String decimals;
+    private Integer decimals;
     private String desc;
     private String issueType;
+    private String issueAddress;
+    private String getTokenDetailErrorCode;
+    private String balance = "51";
+    protected SharedPreferencesHelper sharedPreferencesHelper;
+    QMUITipDialog txSendingTipDialog;
+    private String hash;
+    private TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean;
 
     public BPRegisterTokenFragment(){
         super();
@@ -63,40 +104,76 @@ public class BPRegisterTokenFragment extends BaseFragment {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopbar();
         initdata();
-
         setListener();
         return root;
     }
 
     private void initdata() {
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         Bundle bundle = getArguments();
         String data = bundle.getString("tokenData");
         RegisterTokenInfo registerTokenInfo = RegisterTokenInfo.objectFromData(data);
         tokenName = registerTokenInfo.getName();
         tokenCode = registerTokenInfo.getCode();
         issueAmount = registerTokenInfo.getAmount();
-        decimals = registerTokenInfo.getDecimals();
+        decimals = Integer.valueOf(registerTokenInfo.getDecimals());
         desc = registerTokenInfo.getDesc();
         issueType = registerTokenInfo.getType();
         mTokenNameTv.setText(tokenName);
         mTokenCodeTv.setText(tokenCode);
         mTokenAmountTv.setText(issueAmount);
-        mRegisgerFeeTv.setText("0.01");
-        switch (issueType){
-            case "0":{
-                mIssueTypeTv.setText(getString(R.string.issue_type_disposable_txt));
-                break;
-            }
-            case "1":{
-                mIssueTypeTv.setText(getString(R.string.issue_type_increment_txt));
-                break;
-            }
-            case "2":{
-                mIssueTypeTv.setText(getString(R.string.issue_type_unlimited_txt));
-                break;
-            }
+        mRegisterFeeTv.setText("0.01 BU");
+        issueAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
+        if(issueType.equals(AssetTypeEnum.ATP_FIXED.getCode())){
+            mIssueTypeTv.setText(getString(R.string.issue_type_disposable_txt));
+        }else if(issueType.equals(AssetTypeEnum.ATP_ADD.getCode())){
+            mIssueTypeTv.setText(getString(R.string.issue_type_increment_txt));
+        }else if(issueType.equals(AssetTypeEnum.ATP_INFINITE.getCode())){
+            mIssueTypeTv.setText(getString(R.string.issue_type_unlimited_txt));
+            mRegisterLl.removeView(mRegisterLl.findViewById(R.id.tokenAmountRl));
         }
 
+        @SuppressLint("HandlerLeak")
+        final Handler handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                Bundle data = msg.getData();
+                balance = data.getString("balance");
+                System.out.print("-------balance:" + balance);
+            }
+        };
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                String balance = Wallet.getInstance().getAccountBUBalance(issueAddress);
+                System.out.print("+++++++balance:" + balance);
+                Message message = new Message();
+                Bundle data = new Bundle();
+                data.putString("balance",balance);
+                message.setData(data);
+                handler.sendMessage(message);
+            }
+        };
+        new Thread(runnable).start();
+        System.out.println(balance);
+
+        TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
+        Map<String, Object> parmasMap = new HashMap<>();
+        parmasMap.put("assetCode",tokenCode);
+        parmasMap.put("issueAddress",issueAddress);
+        Call<ApiResult<GetTokenDetailRespDto>> call = tokenService.getTokenDetail(parmasMap);
+        call.enqueue(new Callback<ApiResult<GetTokenDetailRespDto>>() {
+            @Override
+            public void onResponse(Call<ApiResult<GetTokenDetailRespDto>> call, Response<ApiResult<GetTokenDetailRespDto>> response) {
+                getTokenDetailErrorCode = response.body().getErrCode();
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<GetTokenDetailRespDto>> call, Throwable t) {
+                Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -136,7 +213,13 @@ public class BPRegisterTokenFragment extends BaseFragment {
         mRegisterConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPasswordComfirmDialog();
+                if(Double.valueOf(balance) < 0.01){
+                    Toast.makeText(getActivity(), R.string.register_token_balance_insufficient_message_txt, Toast.LENGTH_SHORT).show();
+                }else if(getTokenDetailErrorCode.equals("0")){
+                    Toast.makeText(getActivity(), R.string.register_already_have_message_txt, Toast.LENGTH_SHORT).show();
+                }else{
+                    showPasswordComfirmDialog();
+                }
             }
         });
         mRegisterCancelBtn.setOnClickListener(new View.OnClickListener() {
@@ -164,8 +247,51 @@ public class BPRegisterTokenFragment extends BaseFragment {
         mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
+                final String password = mPasswordConfirmEt.getText().toString().trim();
+                txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                        .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                        .create();
+                txSendingTipDialog.show();
+                txSendingTipDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                    @Override
+                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+
+                        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String accountBPData = getAccountBPData();
+                        try {
+                            hash = Wallet.getInstance().registerATP10Token(password,accountBPData,issueAddress,tokenName,tokenCode,decimals,desc);
+                        } catch (WalletException e){
+                            e.printStackTrace();
+                            Looper.prepare();
+                            txSendingTipDialog.dismiss();
+                            Looper.loop();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Looper.prepare();
+                            Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                            txSendingTipDialog.dismiss();
+                            Looper.loop();
+                        } finally {
+                            timer.schedule(timerTask,
+                                    1 * 1000,//延迟1秒执行
+                                    1000);
+                        }
+                    }
+                }).start();
+
                 qmuiDialog.dismiss();
-                startFragment(new BPRegisterTokenStatusFragment());
             }
         });
 
@@ -176,6 +302,103 @@ public class BPRegisterTokenFragment extends BaseFragment {
             }
         });
     }
+
+    private String getAccountBPData(){
+        String data = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
+        return data;
+    }
+
+    private int timerTimes = 0;
+    private final Timer timer = new Timer();
+    @SuppressLint("HandlerLeak")
+    private Handler mHanlder = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    if(timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES){
+                        timerTask.cancel();
+                        txSendingTipDialog.dismiss();
+                        Bundle argz = new Bundle();
+                        argz.putString("txStatus","timeout");
+                        argz.putString("tokenName",tokenName);
+                        argz.putString("tokenCode",tokenCode);
+                        argz.putString("issueType",issueType);
+                        argz.putString("issueAmount",issueAmount);
+                        argz.putString("decimals",decimals.toString());
+                        argz.putString("desc",desc);
+                        BPRegisterTokenStatusFragment bpRegisterTokenStatusFragment = new BPRegisterTokenStatusFragment();
+                        bpRegisterTokenStatusFragment.setArguments(argz);
+                        startFragmentAndDestroyCurrent(bpRegisterTokenStatusFragment);
+                        return;
+                    }
+                    timerTimes++;
+                    System.out.println("timerTimes:" + timerTimes);
+                    TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
+                    Map<String, Object> parmasMap = new HashMap<>();
+                    parmasMap.put("hash",hash);
+                    Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetail(parmasMap);
+                    call.enqueue(new retrofit2.Callback<ApiResult<TxDetailRespDto>>(){
+
+                        @Override
+                        public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
+                            ApiResult<TxDetailRespDto> resp = response.body();
+                            System.out.println(JSON.toJSONString(resp));
+                            if(!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())){
+                                return;
+                            }else{
+                                txDeatilRespBoBean = resp.getData().getTxDeatilRespBo();
+                                timerTask.cancel();
+                                txSendingTipDialog.dismiss();
+                                Bundle argz = new Bundle();
+                                argz.putString("txStatus",txDeatilRespBoBean.getStatus().toString());
+                                argz.putString("tokenName",tokenName);
+                                argz.putString("tokenCode",tokenCode);
+                                argz.putString("issueType",issueType);
+                                argz.putString("issueAmount",issueAmount);
+                                argz.putString("decimals",decimals.toString());
+                                argz.putString("desc",desc);
+                                argz.putString("issueAddress",issueAddress);
+                                argz.putString("txHash",hash);
+                                argz.putString("txFee",txDeatilRespBoBean.getFee());
+                                BPRegisterTokenStatusFragment bpRegisterTokenStatusFragment = new BPRegisterTokenStatusFragment();
+                                bpRegisterTokenStatusFragment.setArguments(argz);
+                                startFragmentAndDestroyCurrent(bpRegisterTokenStatusFragment);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
+                            Bundle argz = new Bundle();
+                            argz.putString("txStatus","timeout");
+                            argz.putString("tokenName",tokenName);
+                            argz.putString("tokenCode",tokenCode);
+                            argz.putString("issueType",issueType);
+                            argz.putString("issueAmount",issueAmount);
+                            argz.putString("decimals",decimals.toString());
+                            argz.putString("desc",desc);
+                            BPRegisterTokenStatusFragment bpRegisterTokenStatusFragment = new BPRegisterTokenStatusFragment();
+                            bpRegisterTokenStatusFragment.setArguments(argz);
+                            startFragmentAndDestroyCurrent(bpRegisterTokenStatusFragment);
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+
+
+    private TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() {
+            if(hash != null && !hash.equals("")){
+                mHanlder.sendEmptyMessage(1);
+            }
+        }
+    };
 
     private void initTopbar() {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {

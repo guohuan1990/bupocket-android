@@ -465,7 +465,7 @@ public class Wallet {
     /**
      * issue asset
      */
-    private String issuelimitedAtp10Token(String password, String bPData, String fromAccAddr, String name, String code, Integer decimals, String description) throws Exception {
+    public String issuelimitedAtp10Token(String password, String bPData, String fromAccAddr, String name, String code, Integer decimals, String description) throws Exception {
         // The account private key to issue atp1.0 token
         String issuerPrivateKey = getPKBYAccountPassword(password,bPData,fromAccAddr);
         // The apt token version
@@ -578,7 +578,7 @@ public class Wallet {
         return Hash;
     }
 
-    private String registerATP10Token(String password, String bPData, String fromAccAddr, String name, String code, Integer decimals, String description) throws Exception{
+    public String registerATP10Token(String password, String bPData, String fromAccAddr, String name, String code, Integer decimals, String description) throws Exception{
         // The account private key to issue atp1.0 token
         String issuerPrivateKey = getPKBYAccountPassword(password,bPData,fromAccAddr);
         // The apt token version

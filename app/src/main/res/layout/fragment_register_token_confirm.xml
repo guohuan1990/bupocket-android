@@ -27,6 +27,7 @@
             android:textColor="@color/app_txt_color_gray"/>
         
         <LinearLayout
+            android:id="@+id/registerLl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -80,6 +81,7 @@
                     android:textSize="15sp"/>
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/tokenAmountRl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp">
@@ -139,7 +141,7 @@
                     android:textColor="@color/app_txt_color_gray"/>
 
                 <TextView
-                    android:id="@+id/regisgerFeeTv"
+                    android:id="@+id/registerFeeTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/register_token_fee_txt"
