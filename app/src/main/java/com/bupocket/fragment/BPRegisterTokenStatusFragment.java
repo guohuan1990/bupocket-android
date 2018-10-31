@@ -65,10 +65,10 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_register_token_status, null);
         ButterKnife.bind(this, root);
-        initTopbar();
-        initData();
         BPApplication application = (BPApplication)getActivity().getApplication();
         mSocket = application.getSocket();
+        initTopbar();
+        initData();
         return root;
     }
 
@@ -83,7 +83,7 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
         String decimals = bundle.getString("decimals");
         String desc = bundle.getString("desc");
 
-        RegisterStatusInfo.DataBean registerData = registerStatusInfo.getData();
+        RegisterStatusInfo.DataBean registerData = new RegisterStatusInfo.DataBean();
         registerData.setName(tokenName);
         registerData.setCode(tokenCode);
         registerData.setType(issueType);
@@ -94,7 +94,7 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
 
         Drawable txStatusIconDrawable;
         String txStatusStr;
-        if(txStatus.equals(TxStatusEnum.SUCCESS.getCode())){
+        if(txStatus.equals(TxStatusEnum.SUCCESS.getCode().toString())){
             String txFee = bundle.getString("txFee");
             String txHash = bundle.getString("txHash");
             String issueAddress = bundle.getString("issueAddress");
@@ -112,9 +112,10 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
             txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_send_success);
             txStatusStr = getResources().getString(R.string.register_token_success_txt);
         }else if(txStatus.equals("timeout")){
-            RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
+//            RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
             registerStatusInfo.setErrorCode(2);
             registerStatusInfo.setErrorMsg(getString(R.string.register_token_timeout_txt));
+            registerStatusInfo.setData(registerData);
             mSocket.emit("token.register.timeout",JSON.toJSON(registerStatusInfo).toString());
             txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_issue_timeout);
             txStatusStr = getResources().getString(R.string.register_token_timeout_txt);
@@ -138,6 +139,15 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
             txStatusStr = getResources().getString(R.string.register_token_failure_txt);
         }
 
+        mRegisterStatusIv.setImageDrawable(txStatusIconDrawable);
+        mRegisterStatusTv.setText(txStatusStr);
+        mTokenNameTv.setText(tokenName);
+        mTokenCodeTv.setText(tokenCode);
+        mTokenVersionTv.setText(getString(R.string.token_version));
+        mTokenDescTv.setText(desc);
+        mTokenDecimalsTv.setText(decimals);
+        mTokenAmountTv.setText(issueAmount);
+
         if(issueType.equals(AssetTypeEnum.ATP_FIXED.getCode())){
             mIssueTypeTv.setText(getString(R.string.issue_type_disposable_txt));
         }else if(issueType.equals(AssetTypeEnum.ATP_ADD.getCode())){
@@ -146,6 +156,8 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
             mIssueTypeTv.setText(getString(R.string.issue_type_unlimited_txt));
             mRegisterTokenInfoLl.removeView(mRegisterTokenInfoLl.findViewById(R.id.tokenAmountRl));
         }
+
+
     }
 
     private void initTopbar() {

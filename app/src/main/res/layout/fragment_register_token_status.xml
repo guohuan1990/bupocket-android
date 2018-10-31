@@ -30,8 +30,7 @@
                     <ImageView
                         android:id="@+id/registerStatusIv"
                         android:layout_width="57dp"
-                        android:layout_height="57dp"
-                        android:background="@mipmap/icon_send_success" />
+                        android:layout_height="57dp" />
 
                     <TextView
                         android:id="@+id/registerStatusTv"

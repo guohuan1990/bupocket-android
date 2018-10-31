@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.enums.AssetTypeEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TokenService;
@@ -17,6 +19,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetTokenDetailRespDto;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
 import com.bupocket.model.IssueTokenInfo;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -87,7 +90,7 @@ public class BPIssueTokenFragment extends BaseFragment {
             @Override
             public void call(Object... args) {
                 System.out.println("socket id :" + mSocket.id());
-                mSocket.emit("token.register.join",uuID);
+                mSocket.emit("token.issue.join",uuID);
 //                mSocket.disconnect();
             }
 
@@ -96,8 +99,13 @@ public class BPIssueTokenFragment extends BaseFragment {
             @Override
             public void call(Object... args) {}
 
+        }).on(Socket.EVENT_RECONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                mSocket.emit("token.issue.join",uuID);
+            }
         });
-        mSocket.emit("token.register.scanSuccess","");
+        mSocket.emit("token.issue.scanSuccess","");
         mSocket.connect();
     }
 
@@ -121,7 +129,9 @@ public class BPIssueTokenFragment extends BaseFragment {
                 ApiResult<GetTokenDetailRespDto> respDto = response.body();
                 String errorCode = respDto.getErrCode();
                 if(errorCode.equals("500004")){
-
+                    startFragmentAndDestroyCurrent(new BPAssetsHomeFragment());
+                    @SuppressLint("StringFormatMatches") String msg = String.format(getString(R.string.error_issue_unregistered_message_txt,assetCode));
+                    Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
                 }else{
                     GetTokenDetailRespDto.DataBean tokenDetail = respDto.getData().getData();
                     tokenType = tokenDetail.getTokenType();
@@ -135,7 +145,7 @@ public class BPIssueTokenFragment extends BaseFragment {
 
                     mTokenCodeTv.setText(assetCode);
                     mThisTimeIssueAmountTv.setText(issueAmount);
-                    mIssueFeeTv.setText("51 BU");
+                    mIssueFeeTv.setText(CommonUtil.addSuffix(Constants.ISSUE_TOKEN_FEE,"BU"));
 
                     if(tokenType.equals(AssetTypeEnum.ATP_FIXED.getCode())){
                         mIssueTypeTv.setText(getString(R.string.issue_type_disposable_txt));

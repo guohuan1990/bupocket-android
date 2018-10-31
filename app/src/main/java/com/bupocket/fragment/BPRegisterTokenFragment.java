@@ -88,7 +88,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
     private String issueType;
     private String issueAddress;
     private String getTokenDetailErrorCode;
-    private String balance = "51";
+    private String balance;
     protected SharedPreferencesHelper sharedPreferencesHelper;
     QMUITipDialog txSendingTipDialog;
     private String hash;
@@ -136,29 +136,29 @@ public class BPRegisterTokenFragment extends BaseFragment {
             issueAmount = "0";
         }
 
-        @SuppressLint("HandlerLeak")
-        final Handler handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                Bundle data = msg.getData();
-                balance = data.getString("balance");
-                System.out.print("-------balance:" + balance);
-            }
-        };
-        Runnable runnable = new Runnable() {
+//        @SuppressLint("HandlerLeak")
+//        final Handler getBalanceHandler = new Handler(){
+//            @Override
+//            public void handleMessage(Message msg) {
+//                super.handleMessage(msg);
+//                Bundle data = msg.getData();
+//                balance = data.getString("balance");
+//                System.out.print("-------balance:" + balance);
+//            }
+//        };
+        Runnable getBalanceRunnable = new Runnable() {
             @Override
             public void run() {
-                String balance = Wallet.getInstance().getAccountBUBalance(issueAddress);
+                balance = Wallet.getInstance().getAccountBUBalance(issueAddress);
                 System.out.print("+++++++balance:" + balance);
-                Message message = new Message();
-                Bundle data = new Bundle();
-                data.putString("balance",balance);
-                message.setData(data);
-                handler.sendMessage(message);
+//                Message message = new Message();
+//                Bundle data = new Bundle();
+//                data.putString("balance",balance);
+//                message.setData(data);
+//                getBalanceHandler.sendMessage(message);
             }
         };
-        new Thread(runnable).start();
+        new Thread(getBalanceRunnable).start();
         System.out.println(balance);
 
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
@@ -291,40 +291,40 @@ public class BPRegisterTokenFragment extends BaseFragment {
                     public void run() {
                         String accountBPData = getAccountBPData();
                         try {
-                            hash = Wallet.getInstance().registerATP10Token(password,accountBPData,issueAddress,tokenName,tokenCode,decimals,desc,Constants.REGISTER_TOKEN_FEE,issueAmount);
+                            hash = Wallet.getInstance().registerATP10Token(password,accountBPData,issueAddress,tokenName,tokenCode,decimals,desc,Constants.REGISTER_TOKEN_FEE,issueAmount,issueType);
                         } catch (WalletException e){
                             e.printStackTrace();
                             Looper.prepare();
-                            /*RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
+                            RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
                             registerStatusInfo.setErrorCode(1);
                             registerStatusInfo.setErrorMsg(e.getErrMsg());
                             registerData.setHash(hash);
                             registerStatusInfo.setData(registerData);
-                            mSocket.emit("token.register.failure",JSON.toJSON(registerStatusInfo).toString());*/
+                            mSocket.emit("token.register.failure",JSON.toJSON(registerStatusInfo).toString());
                             txSendingTipDialog.dismiss();
                             Looper.loop();
                         } catch (NumberFormatException e){
                             e.printStackTrace();
                             Looper.prepare();
                             Toast.makeText(getActivity(), R.string.error_issue_amount_message_txt, Toast.LENGTH_SHORT).show();
-                            /*RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
+                            RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
                             registerStatusInfo.setErrorCode(1);
                             registerStatusInfo.setErrorMsg(getString(R.string.error_issue_amount_message_txt));
                             registerData.setHash(hash);
                             registerStatusInfo.setData(registerData);
-                            mSocket.emit("token.register.failure",JSON.toJSON(registerStatusInfo).toString());*/
+                            mSocket.emit("token.register.failure",JSON.toJSON(registerStatusInfo).toString());
                             txSendingTipDialog.dismiss();
                             Looper.loop();
                         } catch (Exception e) {
                             e.printStackTrace();
                             Looper.prepare();
                             Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
-                            /*RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
+                            RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
                             registerStatusInfo.setErrorCode(1);
                             registerStatusInfo.setErrorMsg(getString(R.string.checking_password_error));
                             registerData.setHash(hash);
                             registerStatusInfo.setData(registerData);
-                            mSocket.emit("token.register.failure",JSON.toJSON(registerStatusInfo).toString());*/
+                            mSocket.emit("token.register.failure",JSON.toJSON(registerStatusInfo).toString());
                             txSendingTipDialog.dismiss();
                             Looper.loop();
                         } finally {

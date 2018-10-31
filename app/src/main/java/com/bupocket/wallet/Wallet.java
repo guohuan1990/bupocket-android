@@ -578,7 +578,7 @@ public class Wallet {
         return Hash;
     }
 
-    public String registerATP10Token(String password, String bPData, String fromAccAddr, String name, String code, String decimals, String description, String fee, String tokenAmount) throws Exception{
+    public String registerATP10Token(String password, String bPData, String fromAccAddr, String name, String code, String decimals, String description, String fee, String tokenAmount, String tokenType) throws Exception{
         // The account private key to issue atp1.0 token
         String issuerPrivateKey = getPKBYAccountPassword(password,bPData,fromAccAddr);
         // The apt token version
@@ -606,6 +606,7 @@ public class Wallet {
         atp10Json.put("totalSupply", totalSupply);
         atp10Json.put("icon", icon);
         atp10Json.put("version", version);
+        atp10Json.put("tokenType",tokenType);
 
         String key = "asset_property_" + code;
         String value = atp10Json.toJSONString();
