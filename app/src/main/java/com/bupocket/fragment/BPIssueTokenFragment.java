@@ -268,7 +268,9 @@ public class BPIssueTokenFragment extends BaseFragment {
                     startFragmentAndDestroyCurrent(new BPAssetsHomeFragment());
                     @SuppressLint("StringFormatMatches") String msg = String.format(getString(R.string.error_issue_unregistered_message_txt,assetCode));
                     Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-                }else{
+                }else if(!errorCode.equals("0")){
+                    Toast.makeText(getActivity(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
+                } else{
                     GetTokenDetailRespDto tokenDetail = respDto.getData();
 //                    tokenType = tokenDetail.getTokenType();
 

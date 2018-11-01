@@ -147,7 +147,12 @@ public class BPRegisterTokenFragment extends BaseFragment {
         call.enqueue(new Callback<ApiResult<GetTokenDetailRespDto>>() {
             @Override
             public void onResponse(Call<ApiResult<GetTokenDetailRespDto>> call, Response<ApiResult<GetTokenDetailRespDto>> response) {
-                getTokenDetailErrorCode = response.body().getErrCode();
+                ApiResult<GetTokenDetailRespDto> respDto = response.body();
+                if(!respDto.getErrCode().equals(0)){
+                    Toast.makeText(getActivity(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
+                }else {
+                    getTokenDetailErrorCode = response.body().getErrCode();
+                }
             }
 
             @Override
