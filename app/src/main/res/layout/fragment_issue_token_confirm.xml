@@ -38,9 +38,31 @@
             android:background="@drawable/bg_layout_border">
 
             <RelativeLayout
-                android:id="@+id/tokenCodeRl"
+                android:id="@+id/tokenNameRl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/token_info_name_txt"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="15sp"
+                    android:textColor="@color/app_txt_color_gray"/>
+
+                <TextView
+                    android:id="@+id/tokenNameTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/app_txt_color_gray_2"
+                    android:textSize="15sp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/tokenCodeRl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -54,7 +76,6 @@
                     android:id="@+id/tokenCodeTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/token_info_code_txt"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/app_txt_color_gray_2"
                     android:textSize="15sp"/>
@@ -78,7 +99,6 @@
                     android:id="@+id/thisTimeIssueAmountTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/this_time_issue_amount_txt"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/app_txt_color_gray_2"
                     android:textSize="15sp"/>
@@ -102,7 +122,6 @@
                     android:id="@+id/accumulativeIssueAmountTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/accumulative_issue_amount_txt"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/app_txt_color_gray_2"
                     android:textSize="15sp"/>
@@ -125,7 +144,6 @@
                     android:id="@+id/totalIssueAmountTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/total_issue_amount_txt"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/app_txt_color_gray_2"
                     android:textSize="15sp"/>
@@ -148,7 +166,6 @@
                     android:id="@+id/issueFeeTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/issue_token_fee_txt"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/app_txt_color_gray_2"
                     android:textSize="15sp"/>

@@ -14,11 +14,16 @@ import com.alibaba.fastjson.JSON;
 import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.model.IssueStatusInfo;
 import com.bupocket.model.RegisterStatusInfo;
+import com.bupocket.utils.AmountUtil;
+import com.bupocket.utils.CommonUtil;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.subgraph.orchid.RelayCell;
+
+import java.math.BigDecimal;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -119,16 +124,14 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
         if (txStatus.equals(TxStatusEnum.SUCCESS.getCode().toString())){
             String actualSupply = bundle.getString("actualSupply");
             if(totalSupply.equals("0")){
-                Double accumulativeIssueAmount = (Double.valueOf(actualSupply)+Double.valueOf(issueAmount));
-                mAccumulativeIssueAmountTv.setText(accumulativeIssueAmount.toString());
+                mAccumulativeIssueAmountTv.setText(AmountUtil.amountAddition(actualSupply,issueAmount));
             }else {
                 mAccumulativeIssueAmountTitleTv.setText(getString(R.string.surplus_issue_amount_txt));
-                Double surplusAmount = Double.valueOf(totalSupply) - (Double.valueOf(actualSupply)+Double.valueOf(issueAmount));
-                mAccumulativeIssueAmountTv.setText(surplusAmount.toString());
+                mAccumulativeIssueAmountTv.setText(AmountUtil.amountSubtraction(totalSupply,AmountUtil.amountAddition(actualSupply,issueAmount)));
             }
             String txHash = bundle.getString("txHash");
             String txFee = bundle.getString("txFee");
-            mTxFeeTv.setText(txFee);
+            mTxFeeTv.setText(CommonUtil.addSuffix(txFee,"BU"));
             mTxHashTv.setText(txHash);
             mIssueAddressTv.setText(issueAddress);
             issueData.setFee(txFee);
@@ -160,7 +163,7 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
             String txHash = bundle.getString("txHash");
             String txFee = bundle.getString("txFee");
             String errorMsg = bundle.getString("errorMsg");
-            mTxFeeTv.setText(txFee);
+            mTxFeeTv.setText(CommonUtil.addSuffix(txFee,"BU"));
             mTxHashTv.setText(txHash);
             mIssueAddressTv.setText(issueAddress);
             issueData.setFee(txFee);

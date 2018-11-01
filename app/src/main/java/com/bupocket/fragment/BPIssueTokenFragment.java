@@ -75,6 +75,8 @@ public class BPIssueTokenFragment extends BaseFragment {
     QMUIRoundButton mIssueCancelBtn;
     @BindView(R.id.issueTokenInfoLl)
     LinearLayout mIssueTokenInfoLl;
+    @BindView(R.id.tokenNameTv)
+    TextView mTokenNameTv;
 
 
     private Socket mSocket;
@@ -254,6 +256,10 @@ public class BPIssueTokenFragment extends BaseFragment {
         issueAmount = issueTokenInfo.getAmount();
         issueAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
         balance = bundle.getString("buBalance");
+        getTokenDetail();
+    }
+
+    private void getTokenDetail() {
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         Map<String, Object> parmasMap = new HashMap<>();
         parmasMap.put("assetCode",assetCode);
@@ -265,7 +271,6 @@ public class BPIssueTokenFragment extends BaseFragment {
                 ApiResult<GetTokenDetailRespDto> respDto = response.body();
                 String errorCode = respDto.getErrCode();
                 if(errorCode.equals("500004")){
-                    startFragmentAndDestroyCurrent(new BPAssetsHomeFragment());
                     @SuppressLint("StringFormatMatches") String msg = String.format(getString(R.string.error_issue_unregistered_message_txt,assetCode));
                     Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
                 }else if(!errorCode.equals("0")){
@@ -281,6 +286,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                     totalSupply = tokenDetail.getTotalSupply();
                     version = tokenDetail.getVersion();
 
+                    mTokenNameTv.setText(assetName);
                     mTokenCodeTv.setText(assetCode);
                     mThisTimeIssueAmountTv.setText(issueAmount);
                     mIssueFeeTv.setText(CommonUtil.addSuffix(Constants.ISSUE_TOKEN_FEE,"BU"));
@@ -303,7 +309,6 @@ public class BPIssueTokenFragment extends BaseFragment {
                 Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private String getAccountBPData(){
@@ -359,7 +364,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                                 argz.putString("assetCode",assetCode);
                                 argz.putString("issueAmount",issueAmount);
                                 argz.putString("totalSupply",totalSupply);
-                                argz.putString("decimals",decimals);
+                                argz.putString("tokenDecimals",decimals);
                                 argz.putString("tokenDescription",tokenDescription);
                                 argz.putString("txStatus",txDeatilRespBoBean.getStatus().toString());
                                 argz.putString("issueAddress",issueAddress);
@@ -381,7 +386,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                             argz.putString("assetCode",assetCode);
                             argz.putString("issueAmount",issueAmount);
                             argz.putString("totalSupply",totalSupply);
-                            argz.putString("decimals",decimals);
+                            argz.putString("tokenDecimals",decimals);
                             argz.putString("tokenDescription",tokenDescription);
                             argz.putString("issueAddress",issueAddress);
                             BPIssueTokenStatusFragment bpIssueTokenStatusFragment = new BPIssueTokenStatusFragment();

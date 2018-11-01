@@ -17,6 +17,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.AssetTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.model.RegisterStatusInfo;
+import com.bupocket.utils.CommonUtil;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 
@@ -99,7 +100,7 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
             String txFee = bundle.getString("txFee");
             String txHash = bundle.getString("txHash");
 
-            mTxFeeTv.setText(txFee);
+            mTxFeeTv.setText(CommonUtil.addSuffix(txFee,"BU"));
             mTxHashTv.setText(txHash);
             mIssueAddressTv.setText(issueAddress);
             registerData.setFee(txFee);
@@ -124,7 +125,7 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
             String txFee = bundle.getString("txFee");
             String txHash = bundle.getString("txHash");
             String errorMsg = bundle.getString("errorMsg");
-            mTxFeeTv.setText(txFee);
+            mTxFeeTv.setText(CommonUtil.addSuffix(txFee,"BU"));
             mTxHashTv.setText(txHash);
             mIssueAddressTv.setText(issueAddress);
             registerData.setFee(txFee);

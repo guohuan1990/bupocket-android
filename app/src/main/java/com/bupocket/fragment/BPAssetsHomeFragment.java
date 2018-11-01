@@ -368,7 +368,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
             if (result.getContents() == null) {
                 Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
             } else {
-                if(!result.getContents().substring(0,2).equals("bu")){
+                if(!CommonUtil.isBU(result.getContents())){
                     if(CommonUtil.checkIsBase64(result.getContents())){
                         String jsonStr = null;
                         try {
