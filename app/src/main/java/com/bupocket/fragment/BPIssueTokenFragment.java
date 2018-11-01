@@ -94,6 +94,7 @@ public class BPIssueTokenFragment extends BaseFragment {
     String totalSupply;
     String version;
     String errorMsg;
+    String balance;
     QMUITipDialog txSendingTipDialog;
     private String hash;
     private TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean;
@@ -114,7 +115,9 @@ public class BPIssueTokenFragment extends BaseFragment {
         mIssueConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!CommonUtil.isNull(errorMsg)){
+                if(Double.valueOf(balance) < Double.valueOf(Constants.ISSUE_TOKEN_FEE)){
+                    Toast.makeText(getActivity(), R.string.register_token_balance_insufficient_message_txt, Toast.LENGTH_SHORT).show();
+                }else if(!CommonUtil.isNull(errorMsg)){
                     Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
                 }else{
                     showPasswordComfirmDialog();
@@ -149,7 +152,6 @@ public class BPIssueTokenFragment extends BaseFragment {
 
                 EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
                 final String password = mPasswordConfirmEt.getText().toString().trim();
-                mSocket.emit("token.register.processing","");
                 txSendingTipDialog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                         .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
@@ -196,6 +198,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                             txSendingTipDialog.dismiss();
                             Looper.loop();
                         } finally {
+                            mSocket.emit("token.issue.processing","");
                             timer.schedule(timerTask,
                                     1 * 1000,//延迟1秒执行
                                     1000);
@@ -255,7 +258,7 @@ public class BPIssueTokenFragment extends BaseFragment {
         assetCode = issueTokenInfo.getCode();
         issueAmount = issueTokenInfo.getAmount();
         issueAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
-
+        balance = bundle.getString("buBalance");
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         Map<String, Object> parmasMap = new HashMap<>();
         parmasMap.put("assetCode",assetCode);
@@ -295,27 +298,6 @@ public class BPIssueTokenFragment extends BaseFragment {
                             errorMsg = getString(R.string.error_issue_issue_amount_overflow_message_txt);
                         }
                     }
-
-                    /*if(tokenType.equals(AssetTypeEnum.ATP_FIXED.getCode())){
-                        mIssueTypeTv.setText(getString(R.string.issue_type_disposable_txt));
-                        mTotalIssueAmountTv.setText(totalSupply);
-                        if(actualSupply.equals(totalSupply)){
-                            errorMsg = getString(R.string.error_issue_already_issue_message_txt);
-                        }else if(!issueAmount.equals(totalSupply)){
-                            errorMsg = getString(R.string.error_issue_total_issue_amount_unequal_message_txt);
-                        }
-                    }else if(tokenType.equals(AssetTypeEnum.ATP_ADD.getCode())){
-                        if(Double.parseDouble(actualSupply) + Double.parseDouble(issueAmount) > Double.parseDouble(totalSupply)){
-                            errorMsg = getString(R.string.error_issue_issue_amount_overflow_message_txt);
-                        }
-                        mIssueTypeTv.setText(getString(R.string.issue_type_increment_txt));
-                        mTotalIssueAmountTv.setText(totalSupply);
-                        mAccumulativeIssueAmountTv.setText(actualSupply);
-                    }else if(tokenType.equals(AssetTypeEnum.ATP_INFINITE.getCode())){
-                        mIssueTypeTv.setText(getString(R.string.issue_type_unlimited_txt));
-                        mAccumulativeIssueAmountTv.setText(actualSupply);
-                    }*/
-
                 }
             }
 
@@ -369,6 +351,17 @@ public class BPIssueTokenFragment extends BaseFragment {
                             ApiResult<TxDetailRespDto> resp = response.body();
                             System.out.println(JSON.toJSONString(resp));
                             if(!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())){
+                                Bundle argz = new Bundle();
+                                argz.putString("txStatus","timeout");
+                                argz.putString("assetName",assetName);
+                                argz.putString("assetCode",assetCode);
+                                argz.putString("issueAmount",issueAmount);
+                                argz.putString("decimals",decimals);
+                                argz.putString("tokenDescription",tokenDescription);
+                                argz.putString("issueAddress",issueAddress);
+                                BPIssueTokenStatusFragment bpIssueTokenStatusFragment = new BPIssueTokenStatusFragment();
+                                bpIssueTokenStatusFragment.setArguments(argz);
+                                startFragmentAndDestroyCurrent(bpIssueTokenStatusFragment);
                                 return;
                             }else{
                                 txDeatilRespBoBean = resp.getData().getTxDeatilRespBo();

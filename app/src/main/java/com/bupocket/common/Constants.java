@@ -21,7 +21,7 @@ public class Constants {
     public static final double MAX_SEND_AMOUNT = 1000000000;
     public static final String PUSH_MESSAGE_SOCKET_URL = "http://192.168.6.98:3100/";
     public static final String REGISTER_TOKEN_FEE = "0.01";
-    public static final String ISSUE_TOKEN_FEE = "51";
+    public static final String ISSUE_TOKEN_FEE = "50.01";
 
     public static final Integer TX_REQUEST_TIMEOUT_TIMES = 20;
 

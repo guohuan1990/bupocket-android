@@ -86,7 +86,7 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
         RegisterStatusInfo.DataBean registerData = new RegisterStatusInfo.DataBean();
         registerData.setName(tokenName);
         registerData.setCode(tokenCode);
-        registerData.setType(issueType);
+//        registerData.setType(issueType);
         registerData.setTotal(issueAmount);
         registerData.setDecimals(decimals);
         registerData.setVersion(getString(R.string.token_version));

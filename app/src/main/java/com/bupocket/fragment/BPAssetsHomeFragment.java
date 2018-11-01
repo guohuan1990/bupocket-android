@@ -34,6 +34,7 @@ import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.wallet.Wallet;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -233,6 +234,17 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
     private void loadAssetList() {
+        tokenBalance = sharedPreferencesHelper.getSharedPreference("tokenBalance","0").toString();
+        Runnable getBalanceRunnable = new Runnable() {
+            @Override
+            public void run() {
+                tokenBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
+                sharedPreferencesHelper.put("tokenBalance",tokenBalance);
+            }
+        };
+        new Thread(getBalanceRunnable).start();
+
+
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         if(JSON.parseObject(sharedPreferencesHelper.getSharedPreference("myTokens", "").toString(), GetTokensRespDto.class) != null){
             mLocalTokenList = JSON.parseObject(sharedPreferencesHelper.getSharedPreference("myTokens", "").toString(), GetTokensRespDto.class).getTokenList();
@@ -371,6 +383,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         Bundle argz = new Bundle();
                         argz.putString("uuID",uuID);
                         argz.putString("tokenData",tokenData);
+                        argz.putString("buBalance",tokenBalance);
                         if(action.equals(TokenActionTypeEnum.ISSUE.getCode())){
                             BPIssueTokenFragment bpIssueTokenFragment = new BPIssueTokenFragment();
                             bpIssueTokenFragment.setArguments(argz);

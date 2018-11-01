@@ -127,6 +127,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
         }
         mRegisterFeeTv.setText(CommonUtil.addSuffix(Constants.REGISTER_TOKEN_FEE,"BU"));
         issueAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
+        balance = bundle.getString("buBalance");
 //        if(issueType.equals(AssetTypeEnum.ATP_FIXED.getCode())){
 //            mIssueTypeTv.setText(getString(R.string.issue_type_disposable_txt));
 //        }else if(issueType.equals(AssetTypeEnum.ATP_ADD.getCode())){
@@ -137,14 +138,6 @@ public class BPRegisterTokenFragment extends BaseFragment {
 //            issueAmount = "0";
 //        }
 
-        Runnable getBalanceRunnable = new Runnable() {
-            @Override
-            public void run() {
-                balance = Wallet.getInstance().getAccountBUBalance(issueAddress);
-            }
-        };
-        new Thread(getBalanceRunnable).start();
-        System.out.println(balance);
 
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         Map<String, Object> parmasMap = new HashMap<>();
@@ -217,7 +210,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
         mRegisterConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Double.valueOf(balance) < 0.01){
+                if(Double.valueOf(balance) < Double.valueOf(Constants.REGISTER_TOKEN_FEE)){
                     Toast.makeText(getActivity(), R.string.register_token_balance_insufficient_message_txt, Toast.LENGTH_SHORT).show();
                 }else if(getTokenDetailErrorCode.equals("0")){
                     Toast.makeText(getActivity(), R.string.register_already_have_message_txt, Toast.LENGTH_SHORT).show();
@@ -254,7 +247,6 @@ public class BPRegisterTokenFragment extends BaseFragment {
 
                 EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
                 final String password = mPasswordConfirmEt.getText().toString().trim();
-                mSocket.emit("token.register.processing","");
                 txSendingTipDialog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                         .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
@@ -302,6 +294,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
                             txSendingTipDialog.dismiss();
                             Looper.loop();
                         } finally {
+                            mSocket.emit("token.register.processing","");
                             timer.schedule(timerTask,
                                     1 * 1000,//延迟1秒执行
                                     1000);

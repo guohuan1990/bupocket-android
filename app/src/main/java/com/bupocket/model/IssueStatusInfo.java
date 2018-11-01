@@ -2,21 +2,21 @@ package com.bupocket.model;
 
 import com.google.gson.Gson;
 
-public class RegisterStatusInfo {
+public class IssueStatusInfo {
 
     /**
      * errorCode : 0
      * errorMsg :
-     * data : {"name":"资产名称","code":"资产代码","type":"登记方式","total":"资产总量","decimals":"资产精度","version":"ATP版本","desc":"资产描述","fee":"实际交易费用","hash":"哈希","address":"登记方地址"}
+     * data : {"name":"资产名称","code":"资产代码","type":"登记方式","total":"登记资产总量","decimals":"资产精度","version":"ATP版本","desc":"资产描述","fee":"实际交易费用","hash":"哈希","address":"发行方地址","issueTotal":"资产发行量"}
      */
 
     private int errorCode;
     private String errorMsg;
     private DataBean data;
 
-    public static RegisterStatusInfo objectFromData(String str) {
+    public static IssueStatusInfo objectFromData(String str) {
 
-        return new Gson().fromJson(str, RegisterStatusInfo.class);
+        return new Gson().fromJson(str, IssueStatusInfo.class);
     }
 
     public int getErrorCode() {
@@ -48,13 +48,14 @@ public class RegisterStatusInfo {
          * name : 资产名称
          * code : 资产代码
          * type : 登记方式
-         * total : 资产总量
+         * total : 登记资产总量
          * decimals : 资产精度
          * version : ATP版本
          * desc : 资产描述
          * fee : 实际交易费用
          * hash : 哈希
-         * address : 登记方地址
+         * address : 发行方地址
+         * issueTotal : 资产发行量
          */
 
         private String name;
@@ -67,6 +68,7 @@ public class RegisterStatusInfo {
         private String fee;
         private String hash;
         private String address;
+        private String issueTotal;
 
         public static DataBean objectFromData(String str) {
 
@@ -151,6 +153,14 @@ public class RegisterStatusInfo {
 
         public void setAddress(String address) {
             this.address = address;
+        }
+
+        public String getIssueTotal() {
+            return issueTotal;
+        }
+
+        public void setIssueTotal(String issueTotal) {
+            this.issueTotal = issueTotal;
         }
     }
 }
