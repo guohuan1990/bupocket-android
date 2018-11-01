@@ -33,9 +33,9 @@ import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.model.RegisterStatusInfo;
 import com.bupocket.model.RegisterTokenInfo;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.RSAUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -45,7 +45,6 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -56,8 +55,6 @@ import io.socket.emitter.Emitter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.bupocket.enums.AssetTypeEnum.*;
 
 public class BPRegisterTokenFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -85,7 +82,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
     private String issueAmount;
     private String decimals;
     private String desc;
-    private String issueType;
+//    private String issueType;
     private String issueAddress;
     private String getTokenDetailErrorCode;
     private String balance;
@@ -120,21 +117,25 @@ public class BPRegisterTokenFragment extends BaseFragment {
         issueAmount = registerTokenInfo.getAmount();
         decimals = registerTokenInfo.getDecimals();
         desc = registerTokenInfo.getDesc();
-        issueType = registerTokenInfo.getType();
+//        issueType = registerTokenInfo.getType();
         mTokenNameTv.setText(tokenName);
         mTokenCodeTv.setText(tokenCode);
-        mTokenAmountTv.setText(issueAmount);
+        if(issueAmount.equals("0")){
+            mTokenAmountTv.setText(getString(R.string.issue_unlimited_amount_txt));
+        }else{
+            mTokenAmountTv.setText(issueAmount);
+        }
         mRegisterFeeTv.setText(CommonUtil.addSuffix(Constants.REGISTER_TOKEN_FEE,"BU"));
         issueAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
-        if(issueType.equals(AssetTypeEnum.ATP_FIXED.getCode())){
-            mIssueTypeTv.setText(getString(R.string.issue_type_disposable_txt));
-        }else if(issueType.equals(AssetTypeEnum.ATP_ADD.getCode())){
-            mIssueTypeTv.setText(getString(R.string.issue_type_increment_txt));
-        }else if(issueType.equals(AssetTypeEnum.ATP_INFINITE.getCode())){
-            mIssueTypeTv.setText(getString(R.string.issue_type_unlimited_txt));
-            mRegisterLl.removeView(mRegisterLl.findViewById(R.id.tokenAmountRl));
-            issueAmount = "0";
-        }
+//        if(issueType.equals(AssetTypeEnum.ATP_FIXED.getCode())){
+//            mIssueTypeTv.setText(getString(R.string.issue_type_disposable_txt));
+//        }else if(issueType.equals(AssetTypeEnum.ATP_ADD.getCode())){
+//            mIssueTypeTv.setText(getString(R.string.issue_type_increment_txt));
+//        }else if(issueType.equals(AssetTypeEnum.ATP_INFINITE.getCode())){
+//            mIssueTypeTv.setText(getString(R.string.issue_type_unlimited_txt));
+//            mRegisterLl.removeView(mRegisterLl.findViewById(R.id.tokenAmountRl));
+//            issueAmount = "0";
+//        }
 
         Runnable getBalanceRunnable = new Runnable() {
             @Override
@@ -164,7 +165,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
 
         registerData.setName(tokenName);
         registerData.setCode(tokenCode);
-        registerData.setType(issueType);
+//        registerData.setType(issueType);
         registerData.setTotal(issueAmount);
         registerData.setDecimals(decimals);
         registerData.setVersion(getString(R.string.token_version));
@@ -275,40 +276,29 @@ public class BPRegisterTokenFragment extends BaseFragment {
                     public void run() {
                         String accountBPData = getAccountBPData();
                         try {
-                            hash = Wallet.getInstance().registerATP10Token(password,accountBPData,issueAddress,tokenName,tokenCode,decimals,desc,Constants.REGISTER_TOKEN_FEE,issueAmount,issueType);
+                            hash = Wallet.getInstance().registerATP10Token(password,accountBPData,issueAddress,tokenName,tokenCode,decimals,desc,Constants.REGISTER_TOKEN_FEE,issueAmount);
                         } catch (WalletException e){
                             e.printStackTrace();
                             Looper.prepare();
-                            RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
-                            registerStatusInfo.setErrorCode(1);
-                            registerStatusInfo.setErrorMsg(e.getErrMsg());
-                            registerData.setHash(hash);
-                            registerStatusInfo.setData(registerData);
-                            mSocket.emit("token.register.failure",JSON.toJSON(registerStatusInfo).toString());
+                            if(ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())){
+                                Toast.makeText(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT).show();
+                            }else if(ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())){
+                                Toast.makeText(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
+                            }
                             txSendingTipDialog.dismiss();
                             Looper.loop();
                         } catch (NumberFormatException e){
                             e.printStackTrace();
                             Looper.prepare();
                             Toast.makeText(getActivity(), R.string.error_issue_amount_message_txt, Toast.LENGTH_SHORT).show();
-                            RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
-                            registerStatusInfo.setErrorCode(1);
-                            registerStatusInfo.setErrorMsg(getString(R.string.error_issue_amount_message_txt));
-                            registerData.setHash(hash);
-                            registerStatusInfo.setData(registerData);
-                            mSocket.emit("token.register.failure",JSON.toJSON(registerStatusInfo).toString());
                             txSendingTipDialog.dismiss();
                             Looper.loop();
                         } catch (Exception e) {
                             e.printStackTrace();
                             Looper.prepare();
                             Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
-                            RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
-                            registerStatusInfo.setErrorCode(1);
-                            registerStatusInfo.setErrorMsg(getString(R.string.checking_password_error));
-                            registerData.setHash(hash);
-                            registerStatusInfo.setData(registerData);
-                            mSocket.emit("token.register.failure",JSON.toJSON(registerStatusInfo).toString());
                             txSendingTipDialog.dismiss();
                             Looper.loop();
                         } finally {
@@ -351,7 +341,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
                         argz.putString("txStatus","timeout");
                         argz.putString("tokenName",tokenName);
                         argz.putString("tokenCode",tokenCode);
-                        argz.putString("issueType",issueType);
+//                        argz.putString("issueType",issueType);
                         argz.putString("issueAmount",issueAmount);
                         argz.putString("decimals",decimals);
                         argz.putString("desc",desc);
@@ -387,7 +377,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
                                 argz.putString("txStatus",txDeatilRespBoBean.getStatus().toString());
                                 argz.putString("tokenName",tokenName);
                                 argz.putString("tokenCode",tokenCode);
-                                argz.putString("issueType",issueType);
+//                                argz.putString("issueType",issueType);
                                 argz.putString("issueAmount",issueAmount);
                                 argz.putString("decimals",decimals);
                                 argz.putString("desc",desc);
@@ -407,7 +397,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
                             argz.putString("txStatus","timeout");
                             argz.putString("tokenName",tokenName);
                             argz.putString("tokenCode",tokenCode);
-                            argz.putString("issueType",issueType);
+//                            argz.putString("issueType",issueType);
                             argz.putString("issueAmount",issueAmount);
                             argz.putString("decimals",decimals);
                             argz.putString("desc",desc);

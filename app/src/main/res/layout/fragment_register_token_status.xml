@@ -98,36 +98,11 @@
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
                 </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="23dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:text="@string/issue_token_type_txt"
-                        android:textColor="@color/app_txt_color_gray"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/issueTypeTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:text="@string/issue_token_type_txt"
-                        android:textColor="@color/app_txt_color_gray_2"
-                        android:textSize="15sp" />
-                </RelativeLayout>
-
                 <RelativeLayout
                     android:id="@+id/tokenAmountRl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="23dp">
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -135,7 +110,6 @@
                         android:text="@string/token_info_amount_txt"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="15sp" />
-
                     <TextView
                         android:id="@+id/tokenAmountTv"
                         android:layout_width="wrap_content"
@@ -145,7 +119,6 @@
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
                 </RelativeLayout>
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

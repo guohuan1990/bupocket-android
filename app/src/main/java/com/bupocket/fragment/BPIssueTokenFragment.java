@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import com.bupocket.model.RegisterStatusInfo;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -61,8 +63,8 @@ public class BPIssueTokenFragment extends BaseFragment {
     QMUITopBarLayout mTopBar;
     @BindView(R.id.tokenCodeTv)
     TextView mTokenCodeTv;
-    @BindView(R.id.issueTypeTv)
-    TextView mIssueTypeTv;
+//    @BindView(R.id.issueTypeTv)
+//    TextView mIssueTypeTv;
     @BindView(R.id.thisTimeIssueAmountTv)
     TextView mThisTimeIssueAmountTv;
     @BindView(R.id.totalIssueAmountTv)
@@ -75,6 +77,8 @@ public class BPIssueTokenFragment extends BaseFragment {
     QMUIRoundButton mIssueConfirmBtn;
     @BindView(R.id.issueCancelBtn)
     QMUIRoundButton mIssueCancelBtn;
+    @BindView(R.id.issueTokenInfoLl)
+    LinearLayout mIssueTokenInfoLl;
 
 
     private Socket mSocket;
@@ -86,7 +90,7 @@ public class BPIssueTokenFragment extends BaseFragment {
     String assetName;
     String decimals;
     String tokenDescription;
-    String tokenType;
+//    String tokenType;
     String totalSupply;
     String version;
     String errorMsg;
@@ -171,35 +175,24 @@ public class BPIssueTokenFragment extends BaseFragment {
                         } catch (WalletException e){
                             e.printStackTrace();
                             Looper.prepare();
-                            RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
-                            registerStatusInfo.setErrorCode(1);
-                            registerStatusInfo.setErrorMsg(e.getErrMsg());
-                            registerData.setHash(hash);
-                            registerStatusInfo.setData(registerData);
-                            mSocket.emit("token.issue.failure",JSON.toJSON(registerStatusInfo).toString());
+                            if(ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())){
+                                Toast.makeText(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT).show();
+                            }else if(ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())){
+                                Toast.makeText(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
+                            }
                             txSendingTipDialog.dismiss();
                             Looper.loop();
                         } catch (NumberFormatException e){
                             e.printStackTrace();
                             Looper.prepare();
                             Toast.makeText(getActivity(), R.string.error_issue_amount_message_txt, Toast.LENGTH_SHORT).show();
-                            RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
-                            registerStatusInfo.setErrorCode(1);
-                            registerStatusInfo.setErrorMsg(getString(R.string.error_issue_amount_message_txt));
-                            registerData.setHash(hash);
-                            registerStatusInfo.setData(registerData);
-                            mSocket.emit("token.issue.failure",JSON.toJSON(registerStatusInfo).toString());
                             txSendingTipDialog.dismiss();
                         } catch (Exception e) {
                             e.printStackTrace();
                             Looper.prepare();
                             Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
-                            RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
-                            registerStatusInfo.setErrorCode(1);
-                            registerStatusInfo.setErrorMsg(getString(R.string.checking_password_error));
-                            registerData.setHash(hash);
-                            registerStatusInfo.setData(registerData);
-                            mSocket.emit("token.issue.failure",JSON.toJSON(registerStatusInfo).toString());
                             txSendingTipDialog.dismiss();
                             Looper.loop();
                         } finally {
@@ -279,7 +272,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                     Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
                 }else{
                     GetTokenDetailRespDto tokenDetail = respDto.getData();
-                    tokenType = tokenDetail.getTokenType();
+//                    tokenType = tokenDetail.getTokenType();
 
                     actualSupply = tokenDetail.getActualSupply();
                     assetName = tokenDetail.getAssetName();
@@ -292,7 +285,18 @@ public class BPIssueTokenFragment extends BaseFragment {
                     mThisTimeIssueAmountTv.setText(issueAmount);
                     mIssueFeeTv.setText(CommonUtil.addSuffix(Constants.ISSUE_TOKEN_FEE,"BU"));
 
-                    if(tokenType.equals(AssetTypeEnum.ATP_FIXED.getCode())){
+                    if(totalSupply.equals("0")){
+                        mAccumulativeIssueAmountTv.setText(actualSupply);
+                        mIssueTokenInfoLl.removeView(mIssueTokenInfoLl.findViewById(R.id.totalIssueAmountTv));
+                    }else {
+                        mTotalIssueAmountTv.setText(totalSupply);
+                        mAccumulativeIssueAmountTv.setText(actualSupply);
+                        if(Double.parseDouble(actualSupply) + Double.parseDouble(issueAmount) > Double.parseDouble(totalSupply)){
+                            errorMsg = getString(R.string.error_issue_issue_amount_overflow_message_txt);
+                        }
+                    }
+
+                    /*if(tokenType.equals(AssetTypeEnum.ATP_FIXED.getCode())){
                         mIssueTypeTv.setText(getString(R.string.issue_type_disposable_txt));
                         mTotalIssueAmountTv.setText(totalSupply);
                         if(actualSupply.equals(totalSupply)){
@@ -310,7 +314,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                     }else if(tokenType.equals(AssetTypeEnum.ATP_INFINITE.getCode())){
                         mIssueTypeTv.setText(getString(R.string.issue_type_unlimited_txt));
                         mAccumulativeIssueAmountTv.setText(actualSupply);
-                    }
+                    }*/
 
                 }
             }

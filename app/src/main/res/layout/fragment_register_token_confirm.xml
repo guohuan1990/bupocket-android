@@ -112,29 +112,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/issue_token_type_txt"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="15sp"
-                    android:textColor="@color/app_txt_color_gray"
-                    />
-
-                <TextView
-                    android:id="@+id/issueTypeTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/issue_token_type_txt"
-                    android:layout_alignParentRight="true"
-                    android:textColor="@color/app_txt_color_gray_2"
-                    android:textSize="15sp"/>
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="23dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="@string/register_token_fee_txt"
                     android:layout_alignParentLeft="true"
                     android:textSize="15sp"

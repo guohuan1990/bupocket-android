@@ -27,6 +27,7 @@
             android:textColor="@color/app_txt_color_gray"/>
 
         <LinearLayout
+            android:id="@+id/issueTokenInfoLl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -54,29 +55,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/token_info_code_txt"
-                    android:layout_alignParentRight="true"
-                    android:textColor="@color/app_txt_color_gray_2"
-                    android:textSize="15sp"/>
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/issueTypeRl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="23dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/issue_token_type_txt"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="15sp"
-                    android:textColor="@color/app_txt_color_gray"/>
-
-                <TextView
-                    android:id="@+id/issueTypeTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/issue_token_type_txt"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/app_txt_color_gray_2"
                     android:textSize="15sp"/>

@@ -491,27 +491,8 @@ public class Wallet {
         assetIssueOperation.setAmount(nowSupply);
         assetIssueOperation.setMetadata(operationMetadata);
 
-        // 3. If this is an atp 1.0 token, you must set metadata like this
-        /*JSONObject atp10Json = new JSONObject();
-        atp10Json.put("name", name);
-        atp10Json.put("code", code);
-        atp10Json.put("description", description);
-        atp10Json.put("decimals", decimals);
-        atp10Json.put("totalSupply", totalSupply);
-        atp10Json.put("icon", icon);
-        atp10Json.put("version", version);
-
-        String key = "asset_property_" + code;
-        String value = atp10Json.toJSONString();*/
-
-        // 4. Build setMetadata
-        /*AccountSetMetadataOperation accountSetMetadataOperation = new AccountSetMetadataOperation();
-        accountSetMetadataOperation.setSourceAddress(issuerAddresss);
-        accountSetMetadataOperation.setKey(key);
-        accountSetMetadataOperation.setValue(value);
-        accountSetMetadataOperation.setMetadata(operationMetadata);*/
-
-        BaseOperation[] operations = {assetIssueOperation};
+        List<BaseOperation> operations = new ArrayList<>();
+        operations.add(assetIssueOperation);
         // Record txhash for subsequent confirmation of the real result of the transaction.
         // After recommending five blocks, call again through txhash `Get the transaction information
         // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
@@ -522,57 +503,8 @@ public class Wallet {
         return txHash;
     }
 
-    private String submitTransaction(String senderPrivateKey, String senderAddresss, BaseOperation[] operations, Long senderNonce, Long gasPrice, Long feeLimit, String transMetadata) {
-        // 1. Build transaction
-        TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
-        transactionBuildBlobRequest.setSourceAddress(senderAddresss);
-        transactionBuildBlobRequest.setNonce(senderNonce);
-        transactionBuildBlobRequest.setFeeLimit(feeLimit);
-        transactionBuildBlobRequest.setGasPrice(gasPrice);
-        for (int i = 0; i < operations.length; i++) {
-            transactionBuildBlobRequest.addOperation(operations[i]);
-        }
 
-        transactionBuildBlobRequest.setMetadata(transMetadata);
-
-        // 2. Build transaction BLob
-        String transactionBlob;
-        TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
-        if (transactionBuildBlobResponse.getErrorCode() != 0) {
-            System.out.println("error: " + transactionBuildBlobResponse.getErrorDesc());
-            return null;
-        }
-        TransactionBuildBlobResult transactionBuildBlobResult = transactionBuildBlobResponse.getResult();
-        transactionBlob = transactionBuildBlobResult.getTransactionBlob();
-
-        // 3. Sign transaction BLob
-        String[] signerPrivateKeyArr = {senderPrivateKey};
-        TransactionSignRequest transactionSignRequest = new TransactionSignRequest();
-        transactionSignRequest.setBlob(transactionBlob);
-        for (int i = 0; i < signerPrivateKeyArr.length; i++) {
-            transactionSignRequest.addPrivateKey(signerPrivateKeyArr[i]);
-        }
-        TransactionSignResponse transactionSignResponse = sdk.getTransactionService().sign(transactionSignRequest);
-        if (transactionSignResponse.getErrorCode() != 0) {
-            System.out.println("error: " + transactionSignResponse.getErrorDesc());
-            return null;
-        }
-
-        // 4. Broadcast transaction
-        String Hash = null;
-        TransactionSubmitRequest transactionSubmitRequest = new TransactionSubmitRequest();
-        transactionSubmitRequest.setTransactionBlob(transactionBlob);
-        transactionSubmitRequest.setSignatures(transactionSignResponse.getResult().getSignatures());
-        TransactionSubmitResponse transactionSubmitResponse = sdk.getTransactionService().submit(transactionSubmitRequest);
-        if (0 == transactionSubmitResponse.getErrorCode()) {
-            Hash = transactionSubmitResponse.getResult().getHash();
-        } else {
-            System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
-        }
-        return Hash;
-    }
-
-    public String registerATP10Token(String password, String bPData, String fromAccAddr, String name, String code, String decimals, String description, String fee, String tokenAmount, String tokenType) throws Exception{
+    public String registerATP10Token(String password, String bPData, String fromAccAddr, String name, String code, String decimals, String description, String fee, String tokenAmount) throws Exception{
         // The account private key to issue atp1.0 token
         String issuerPrivateKey = getPKBYAccountPassword(password,bPData,fromAccAddr);
         // The apt token version
@@ -610,8 +542,8 @@ public class Wallet {
         accountSetMetadataOperation.setKey(key);
         accountSetMetadataOperation.setValue(value);
         accountSetMetadataOperation.setMetadata(operationMetadata);
-
-        BaseOperation[] operations = { accountSetMetadataOperation};
+        List<BaseOperation> operations = new ArrayList<>();
+        operations.add(accountSetMetadataOperation);
 
         String txHash = submitTransaction(issuerPrivateKey,fromAccAddr,operations,nonce,gasPrice,feeLimit,transMetadata);
         return txHash;

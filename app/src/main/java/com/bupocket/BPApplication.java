@@ -26,7 +26,7 @@ public class BPApplication extends Application {
     private Socket mSocket;
     {
         try {
-            mSocket = IO.socket(Constants.SOCKET_URL);
+            mSocket = IO.socket(Constants.PUSH_MESSAGE_SOCKET_URL);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
