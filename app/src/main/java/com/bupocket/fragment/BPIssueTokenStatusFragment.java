@@ -15,6 +15,7 @@ import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.TxStatusEnum;
+import com.bupocket.model.IssueStatusInfo;
 import com.bupocket.model.RegisterStatusInfo;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.subgraph.orchid.RelayCell;
@@ -35,10 +36,10 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
     ImageView mIssueStatusIv;
     @BindView(R.id.issueStatusTv)
     TextView mIssueStatusTv;
-    @BindView(R.id.assetNameTv)
-    TextView mAssetNameTv;
-    @BindView(R.id.assetCodeTv)
-    TextView mAssetCodeTv;
+    @BindView(R.id.tokenNameTv)
+    TextView mTokenNameTv;
+    @BindView(R.id.tokenCodeTv)
+    TextView mTokenCodeTv;
     @BindView(R.id.tokenDecimalsTv)
     TextView mTokenDecimalsTv;
     @BindView(R.id.assetAmountTv)
@@ -55,10 +56,18 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
     LinearLayout mIssueStatusLl;
     @BindView(R.id.assetAmountRl)
     RelativeLayout mAssetAmountRl;
+    @BindView(R.id.amountRl)
+    RelativeLayout mAmountRl;
+    @BindView(R.id.accumulativeIssueAmountTitleTv)
+    TextView mAccumulativeIssueAmountTitleTv;
+    @BindView(R.id.accumulativeIssueAmountTv)
+    TextView mAccumulativeIssueAmountTv;
+    @BindView(R.id.issueStatusTotalLl)
+    LinearLayout mIssueStatusTotalLl;
 
 
     private io.socket.client.Socket mSocket;
-    private RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
+    private IssueStatusInfo issueStatusInfo = new IssueStatusInfo();
 
     @Override
     protected View onCreateView() {
@@ -82,62 +91,92 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
         String decimals = bundle.getString("decimals");
         String tokenDescription = bundle.getString("tokenDescription");
 
-        RegisterStatusInfo.DataBean registerData = new RegisterStatusInfo.DataBean();
-        registerData.setName(assetName);
-        registerData.setCode(assetCode);
-        registerData.setTotal(issueAmount);
-        registerData.setDecimals(decimals);
-        registerData.setVersion(getString(R.string.token_version));
-        registerData.setDesc(tokenDescription);
+        IssueStatusInfo.DataBean issueData = new IssueStatusInfo.DataBean();
+        issueData.setName(assetName);
+        issueData.setCode(assetCode);
+        issueData.setTotal(totalSupply);
+        issueData.setDecimals(decimals);
+        issueData.setVersion(getString(R.string.token_version));
+        issueData.setDesc(tokenDescription);
+        issueData.setIssueTotal(issueAmount);
+
+        mTokenNameTv.setText(assetName);
+        mTokenCodeTv.setText(assetCode);
+        mTokenVersionTv.setText(getString(R.string.token_version));
+        mAssetDescTv.setText(tokenDescription);
+        mTokenDecimalsTv.setText(decimals);
+        mIssueAmountTv.setText(issueAmount);
+        if(totalSupply.equals("0")){
+            mAssetAmountTv.setText(getString(R.string.issue_unlimited_amount_txt));
+        }else {
+            mAssetAmountTv.setText(totalSupply);
+        }
 
         Drawable txStatusIconDrawable;
         String txStatusStr;
         if (txStatus.equals(TxStatusEnum.SUCCESS.getCode().toString())){
+            String actualSupply = bundle.getString("actualSupply");
+            if(totalSupply.equals("0")){
+                Double accumulativeIssueAmount = (Double.valueOf(actualSupply)+Double.valueOf(issueAmount));
+                mAccumulativeIssueAmountTv.setText(accumulativeIssueAmount.toString());
+            }else {
+                mAccumulativeIssueAmountTitleTv.setText(getString(R.string.surplus_issue_amount_txt));
+                Double surplusAmount = Double.valueOf(totalSupply) - (Double.valueOf(actualSupply)+Double.valueOf(issueAmount));
+                mAccumulativeIssueAmountTv.setText(surplusAmount.toString());
+            }
             String issueAddress = bundle.getString("issueAddress");
-            String txHash = bundle.getString("hash");
+            String txHash = bundle.getString("txHash");
             String txFee = bundle.getString("txFee");
             mTxFeeTv.setText(txFee);
             mTxHashTv.setText(txHash);
             mIssueAddressTv.setText(issueAddress);
-            registerData.setAddress(issueAddress);
-            registerData.setFee(txFee);
-            registerData.setHash(txHash);
-            registerStatusInfo.setErrorCode(0);
-            registerStatusInfo.setErrorMsg("");
-            registerStatusInfo.setData(registerData);
-            mSocket.emit("token.issue.success",JSON.toJSON(registerStatusInfo).toString());
+            issueData.setAddress(issueAddress);
+            issueData.setFee(txFee);
+            issueData.setHash(txHash);
+            issueStatusInfo.setErrorCode(0);
+            issueStatusInfo.setData(issueData);
+            mSocket.emit("token.issue.success",JSON.toJSON(issueStatusInfo).toString());
             txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_send_success);
             txStatusStr = getResources().getString(R.string.issue_token_success_txt);
         }else if(txStatus.equals("timeout")) {
-            registerStatusInfo.setErrorCode(2);
-            registerStatusInfo.setErrorMsg(getString(R.string.register_token_timeout_txt));
-            registerStatusInfo.setData(registerData);
-            mSocket.emit("token.issue.timeout",JSON.toJSON(registerStatusInfo).toString());
+            issueStatusInfo.setErrorCode(2);
+            issueStatusInfo.setErrorMsg(getString(R.string.issue_token_timeout_txt));
+            issueStatusInfo.setData(issueData);
+            mIssueStatusLl.removeView(mIssueStatusLl.findViewById(R.id.amountRl));
+            mIssueStatusTotalLl.removeView(mIssueStatusTotalLl.findViewById(R.id.issueTxInfolL));
+            mSocket.emit("token.issue.timeout",JSON.toJSON(issueStatusInfo).toString());
             txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_issue_timeout);
             txStatusStr = getResources().getString(R.string.issue_token_timeout_txt);
         }else {
+            String actualSupply = bundle.getString("actualSupply");
+            if(totalSupply.equals("0")){
+                Double accumulativeIssueAmount = Double.valueOf(actualSupply);
+                mAccumulativeIssueAmountTv.setText(accumulativeIssueAmount.toString());
+            }else {
+                mAccumulativeIssueAmountTitleTv.setText(getString(R.string.surplus_issue_amount_txt));
+                Double surplusAmount = Double.valueOf(totalSupply) - Double.valueOf(actualSupply);
+                mAccumulativeIssueAmountTv.setText(surplusAmount.toString());
+            }
             String issueAddress = bundle.getString("issueAddress");
-            String txHash = bundle.getString("hash");
+            String txHash = bundle.getString("txHash");
             String txFee = bundle.getString("txFee");
             String errorMsg = bundle.getString("errorMsg");
             mTxFeeTv.setText(txFee);
             mTxHashTv.setText(txHash);
             mIssueAddressTv.setText(issueAddress);
-            mSocket.emit("token.issue.failure",JSON.toJSON(registerStatusInfo).toString());
+            issueData.setAddress(issueAddress);
+            issueData.setFee(txFee);
+            issueData.setHash(txHash);
+            issueStatusInfo.setErrorCode(1);
+            issueStatusInfo.setErrorMsg(errorMsg);
+            issueStatusInfo.setData(issueData);
+            mSocket.emit("token.issue.failure",JSON.toJSON(issueStatusInfo).toString());
             txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_send_fail);
             txStatusStr = getResources().getString(R.string.issue_token_failure_txt);
         }
 
         mIssueStatusIv.setImageDrawable(txStatusIconDrawable);
         mIssueStatusTv.setText(txStatusStr);
-
-        mAssetNameTv.setText(assetName);
-        mAssetCodeTv.setText(assetCode);
-        mTokenVersionTv.setText(getString(R.string.token_version));
-        mAssetDescTv.setText(tokenDescription);
-        mTokenDecimalsTv.setText(decimals);
-        mIssueAmountTv.setText(issueAmount);
-        mAssetAmountTv.setText(totalSupply);
     }
 
     private void initTopbar() {

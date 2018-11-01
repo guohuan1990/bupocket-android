@@ -10,6 +10,7 @@
         android:scrollbars="none">
 
         <LinearLayout
+            android:id="@+id/issueStatusTotalLl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -146,6 +147,31 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/amountRl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="23dp">
+
+                    <TextView
+                        android:id="@+id/accumulativeIssueAmountTitleTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/accumulative_issue_amount_txt"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/accumulativeIssueAmountTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="@string/accumulative_issue_amount_txt"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="23dp">
@@ -241,6 +267,7 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/txFeeTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -264,6 +291,7 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/issueAddressTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -287,6 +315,7 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/txHashTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"

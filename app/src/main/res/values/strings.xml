@@ -287,6 +287,7 @@
     <string name="tx_hash_txt">哈希</string>
     <string name="this_time_issue_amount_txt">本次发行量</string>
     <string name="accumulative_issue_amount_txt">累计发行量</string>
+    <string name="surplus_issue_amount_txt">剩余未发行量</string>
     <string name="total_issue_amount_txt">发行总量</string>
     <string name="register_token_balance_insufficient_message_txt">您的BU余额不足，无法登记资产，请充值</string>
     <string name="register_already_have_message_txt">您已登记过该资产</string>
@@ -297,4 +298,5 @@
     <string name="error_issue_total_issue_amount_unequal_message_txt">您发行的资产总量与登记总量不符</string>
     <string name="error_issue_issue_amount_overflow_message_txt">您发行的资产的总量超过了登记总量</string>
     <string name="error_issue_balance_insufficient_message_txt">您的BU余额不足，无法发行资产，请充值</string>
+
 </resources>

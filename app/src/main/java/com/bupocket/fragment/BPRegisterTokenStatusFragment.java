@@ -146,7 +146,11 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
         mTokenVersionTv.setText(getString(R.string.token_version));
         mTokenDescTv.setText(desc);
         mTokenDecimalsTv.setText(decimals);
-        mTokenAmountTv.setText(issueAmount);
+        if(issueAmount.equals(0)){
+            mTokenAmountTv.setText(getString(R.string.issue_unlimited_amount_txt));
+        }else {
+            mTokenAmountTv.setText(issueAmount);
+        }
 
 //        if(issueType.equals(AssetTypeEnum.ATP_FIXED.getCode())){
 //            mIssueTypeTv.setText(getString(R.string.issue_type_disposable_txt));

@@ -21,17 +21,14 @@ import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
-import com.bupocket.enums.AssetTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TokenService;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetTokenDetailRespDto;
-import com.bupocket.http.api.dto.resp.GetTokensRespDto;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.model.IssueTokenInfo;
-import com.bupocket.model.RegisterStatusInfo;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
@@ -43,7 +40,6 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -98,7 +94,6 @@ public class BPIssueTokenFragment extends BaseFragment {
     QMUITipDialog txSendingTipDialog;
     private String hash;
     private TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean;
-    private RegisterStatusInfo.DataBean registerData = new RegisterStatusInfo.DataBean();
 
     @Override
     protected View onCreateView() {
@@ -116,7 +111,7 @@ public class BPIssueTokenFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 if(Double.valueOf(balance) < Double.valueOf(Constants.ISSUE_TOKEN_FEE)){
-                    Toast.makeText(getActivity(), R.string.register_token_balance_insufficient_message_txt, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.error_issue_balance_insufficient_message_txt, Toast.LENGTH_SHORT).show();
                 }else if(!CommonUtil.isNull(errorMsg)){
                     Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
                 }else{
@@ -351,17 +346,6 @@ public class BPIssueTokenFragment extends BaseFragment {
                             ApiResult<TxDetailRespDto> resp = response.body();
                             System.out.println(JSON.toJSONString(resp));
                             if(!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())){
-                                Bundle argz = new Bundle();
-                                argz.putString("txStatus","timeout");
-                                argz.putString("assetName",assetName);
-                                argz.putString("assetCode",assetCode);
-                                argz.putString("issueAmount",issueAmount);
-                                argz.putString("decimals",decimals);
-                                argz.putString("tokenDescription",tokenDescription);
-                                argz.putString("issueAddress",issueAddress);
-                                BPIssueTokenStatusFragment bpIssueTokenStatusFragment = new BPIssueTokenStatusFragment();
-                                bpIssueTokenStatusFragment.setArguments(argz);
-                                startFragmentAndDestroyCurrent(bpIssueTokenStatusFragment);
                                 return;
                             }else{
                                 txDeatilRespBoBean = resp.getData().getTxDeatilRespBo();
@@ -379,6 +363,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                                 argz.putString("txHash",hash);
                                 argz.putString("txFee",txDeatilRespBoBean.getFee());
                                 argz.putString("errorMsg",txDeatilRespBoBean.getErrorMsg());
+                                argz.putString("actualSupply",actualSupply);
                                 BPIssueTokenStatusFragment bpIssueTokenStatusFragment = new BPIssueTokenStatusFragment();
                                 bpIssueTokenStatusFragment.setArguments(argz);
                                 startFragmentAndDestroyCurrent(bpIssueTokenStatusFragment);
