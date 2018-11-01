@@ -5,152 +5,111 @@ import com.google.gson.Gson;
 public class GetTokenDetailRespDto {
 
     /**
-     * data : {"actualSupply":"0","assetCode":"HAN","assetName":"Demon Token HAN","decimals":"4","isOverFlow":0,"issueAddress":"buQWESXjdgXSFFajEZfkwi5H4fuAyTGgzkje","tokenDescription":"This is HAN Token","tokenType":"2","totalSupply":"10000000000000000","version":"1.0"}
-     * errCode : 0
-     * msg : 成功
+     * actualSupply : 0
+     * assetCode : HAN
+     * assetName : Demon Token HAN
+     * decimals : 4
+     * isOverFlow : 0
+     * issueAddress : buQWESXjdgXSFFajEZfkwi5H4fuAyTGgzkje
+     * tokenDescription : This is HAN Token
+     * tokenType : 2
+     * totalSupply : 10000000000000000
+     * version : 1.0
      */
 
-    private DataBean data;
-    private String errCode;
-    private String msg;
+    private String actualSupply;
+    private String assetCode;
+    private String assetName;
+    private String decimals;
+    private int isOverFlow;
+    private String issueAddress;
+    private String tokenDescription;
+    private String tokenType;
+    private String totalSupply;
+    private String version;
 
     public static GetTokenDetailRespDto objectFromData(String str) {
 
         return new Gson().fromJson(str, GetTokenDetailRespDto.class);
     }
 
-    public DataBean getData() {
-        return data;
+    public String getActualSupply() {
+        return actualSupply;
     }
 
-    public void setData(DataBean data) {
-        this.data = data;
+    public void setActualSupply(String actualSupply) {
+        this.actualSupply = actualSupply;
     }
 
-    public String getErrCode() {
-        return errCode;
+    public String getAssetCode() {
+        return assetCode;
     }
 
-    public void setErrCode(String errCode) {
-        this.errCode = errCode;
+    public void setAssetCode(String assetCode) {
+        this.assetCode = assetCode;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getAssetName() {
+        return assetName;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setAssetName(String assetName) {
+        this.assetName = assetName;
     }
 
-    public static class DataBean {
-        /**
-         * actualSupply : 0
-         * assetCode : HAN
-         * assetName : Demon Token HAN
-         * decimals : 4
-         * isOverFlow : 0
-         * issueAddress : buQWESXjdgXSFFajEZfkwi5H4fuAyTGgzkje
-         * tokenDescription : This is HAN Token
-         * tokenType : 2
-         * totalSupply : 10000000000000000
-         * version : 1.0
-         */
+    public String getDecimals() {
+        return decimals;
+    }
 
-        private String actualSupply;
-        private String assetCode;
-        private String assetName;
-        private String decimals;
-        private int isOverFlow;
-        private String issueAddress;
-        private String tokenDescription;
-        private String tokenType;
-        private String totalSupply;
-        private String version;
+    public void setDecimals(String decimals) {
+        this.decimals = decimals;
+    }
 
-        public static DataBean objectFromData(String str) {
+    public int getIsOverFlow() {
+        return isOverFlow;
+    }
 
-            return new Gson().fromJson(str, DataBean.class);
-        }
+    public void setIsOverFlow(int isOverFlow) {
+        this.isOverFlow = isOverFlow;
+    }
 
-        public String getActualSupply() {
-            return actualSupply;
-        }
+    public String getIssueAddress() {
+        return issueAddress;
+    }
 
-        public void setActualSupply(String actualSupply) {
-            this.actualSupply = actualSupply;
-        }
+    public void setIssueAddress(String issueAddress) {
+        this.issueAddress = issueAddress;
+    }
 
-        public String getAssetCode() {
-            return assetCode;
-        }
+    public String getTokenDescription() {
+        return tokenDescription;
+    }
 
-        public void setAssetCode(String assetCode) {
-            this.assetCode = assetCode;
-        }
+    public void setTokenDescription(String tokenDescription) {
+        this.tokenDescription = tokenDescription;
+    }
 
-        public String getAssetName() {
-            return assetName;
-        }
+    public String getTokenType() {
+        return tokenType;
+    }
 
-        public void setAssetName(String assetName) {
-            this.assetName = assetName;
-        }
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
+    }
 
-        public String getDecimals() {
-            return decimals;
-        }
+    public String getTotalSupply() {
+        return totalSupply;
+    }
 
-        public void setDecimals(String decimals) {
-            this.decimals = decimals;
-        }
+    public void setTotalSupply(String totalSupply) {
+        this.totalSupply = totalSupply;
+    }
 
-        public int getIsOverFlow() {
-            return isOverFlow;
-        }
+    public String getVersion() {
+        return version;
+    }
 
-        public void setIsOverFlow(int isOverFlow) {
-            this.isOverFlow = isOverFlow;
-        }
-
-        public String getIssueAddress() {
-            return issueAddress;
-        }
-
-        public void setIssueAddress(String issueAddress) {
-            this.issueAddress = issueAddress;
-        }
-
-        public String getTokenDescription() {
-            return tokenDescription;
-        }
-
-        public void setTokenDescription(String tokenDescription) {
-            this.tokenDescription = tokenDescription;
-        }
-
-        public String getTokenType() {
-            return tokenType;
-        }
-
-        public void setTokenType(String tokenType) {
-            this.tokenType = tokenType;
-        }
-
-        public String getTotalSupply() {
-            return totalSupply;
-        }
-
-        public void setTotalSupply(String totalSupply) {
-            this.totalSupply = totalSupply;
-        }
-
-        public String getVersion() {
-            return version;
-        }
-
-        public void setVersion(String version) {
-            this.version = version;
-        }
+    public void setVersion(String version) {
+        this.version = version;
     }
 }

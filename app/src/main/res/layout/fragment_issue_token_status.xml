@@ -27,21 +27,23 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/issueStatusIv"
                         android:layout_width="57dp"
-                        android:layout_height="57dp"
-                        android:background="@mipmap/icon_send_success" />
+                        android:layout_height="57dp" />
 
                     <TextView
+                        android:id="@+id/issueStatusTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="17.5dp"
                         android:layout_marginBottom="20dp"
-                        android:text="@string/register_token_success_txt"
+                        android:text="@string/issue_token_success_txt"
                         android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/issueStatusLl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
@@ -64,6 +66,7 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/tokenNameTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -86,6 +89,7 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/tokenCodeTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -95,6 +99,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/assetAmountRl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="23dp">
@@ -108,10 +113,34 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/assetAmountTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:text="@string/token_info_amount_txt"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="23dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/this_time_issue_amount_txt"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/issueAmountTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="@string/this_time_issue_amount_txt"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
                 </RelativeLayout>
@@ -130,6 +159,7 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/tokenDecimalsTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -152,6 +182,7 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/tokenVersionTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -170,22 +201,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="@string/token_info_amount_txt"
+                        android:text="@string/token_info_description_txt"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/assetDescTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="10dp"
-                        android:text="@string/token_info_amount_txt"
+                        android:text="@string/token_info_description_txt"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/issueTxInfolL"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="12dp"
@@ -203,7 +236,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="@string/issue_token_fee_txt"
+                        android:text="@string/practical_tx_fee_txt"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="15sp" />
 
@@ -211,7 +244,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="@string/issue_token_fee_txt"
+                        android:text="@string/practical_tx_fee_txt"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
                 </RelativeLayout>
@@ -226,7 +259,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="@string/issue_token_fee_txt"
+                        android:text="@string/issue_address_txt"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="15sp" />
 
@@ -235,7 +268,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="10dp"
-                        android:text="@string/issue_token_fee_txt"
+                        android:text="@string/issue_address_txt"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
                 </LinearLayout>
@@ -249,7 +282,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="@string/issue_token_fee_txt"
+                        android:text="@string/tx_hash_txt"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="15sp" />
 
@@ -258,7 +291,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="10dp"
-                        android:text="@string/issue_token_fee_txt"
+                        android:text="@string/tx_hash_txt"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
                 </LinearLayout>

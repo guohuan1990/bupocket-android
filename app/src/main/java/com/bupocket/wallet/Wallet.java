@@ -465,27 +465,21 @@ public class Wallet {
     /**
      * issue asset
      */
-    public String issuelimitedAtp10Token(String password, String bPData, String fromAccAddr, String name, String code, Integer decimals, String description) throws Exception {
+    public String issueAtp10Token(String password, String bPData, String fromAccAddr, String code, String decimals, String issueAmount, String fee) throws Exception {
         // The account private key to issue atp1.0 token
         String issuerPrivateKey = getPKBYAccountPassword(password,bPData,fromAccAddr);
-        // The apt token version
-        String version = "1.0";
-        // The apt token icon
-        String icon = "";
-        // The token total supply number
-        Long totalSupply = 100000000000L;
         // The token now supply number
-        Long nowSupply = 1000000000L;
+        Long nowSupply = handleSendTokenAmount(issueAmount,decimals);;
         // The operation note
         String operationMetadata = "";
         // The transaction note
         String transMetadata = "";
         // Transaction initiation account's Nonce + 1
-        Long nonce = 114L;
+        Long nonce = getAccountNonce(fromAccAddr) + 1;
         // The fixed write 1000L, the unit is MO
         Long gasPrice = 1000L;
         // Set up the maximum cost 0.01BU
-        Long feeLimit = ToBaseUnit.BU2MO("50.03");
+        Long feeLimit = ToBaseUnit.BU2MO(fee);
 
         // 1. Get the account address to send this transaction
         String issuerAddresss = getAddressByPrivateKey(issuerPrivateKey);
@@ -498,7 +492,7 @@ public class Wallet {
         assetIssueOperation.setMetadata(operationMetadata);
 
         // 3. If this is an atp 1.0 token, you must set metadata like this
-        JSONObject atp10Json = new JSONObject();
+        /*JSONObject atp10Json = new JSONObject();
         atp10Json.put("name", name);
         atp10Json.put("code", code);
         atp10Json.put("description", description);
@@ -508,16 +502,16 @@ public class Wallet {
         atp10Json.put("version", version);
 
         String key = "asset_property_" + code;
-        String value = atp10Json.toJSONString();
+        String value = atp10Json.toJSONString();*/
 
         // 4. Build setMetadata
-        AccountSetMetadataOperation accountSetMetadataOperation = new AccountSetMetadataOperation();
+        /*AccountSetMetadataOperation accountSetMetadataOperation = new AccountSetMetadataOperation();
         accountSetMetadataOperation.setSourceAddress(issuerAddresss);
         accountSetMetadataOperation.setKey(key);
         accountSetMetadataOperation.setValue(value);
-        accountSetMetadataOperation.setMetadata(operationMetadata);
+        accountSetMetadataOperation.setMetadata(operationMetadata);*/
 
-        BaseOperation[] operations = {assetIssueOperation, accountSetMetadataOperation};
+        BaseOperation[] operations = {assetIssueOperation};
         // Record txhash for subsequent confirmation of the real result of the transaction.
         // After recommending five blocks, call again through txhash `Get the transaction information
         // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
@@ -588,9 +582,9 @@ public class Wallet {
         // The token total supply number
         Long totalSupply = handleSendTokenAmount(tokenAmount,decimals);
         // The operation note
-        String operationMetadata = "test the unlimited issuance of apt1.0 token";
+        String operationMetadata = "";
         // The transaction note
-        String transMetadata = "test the unlimited issuance of apt1.0 token";
+        String transMetadata = "";
         // Transaction initiation account's Nonce + 1
         Long nonce = getAccountNonce(fromAccAddr) + 1;
         // The fixed write 1000L, the unit is MO
@@ -606,7 +600,7 @@ public class Wallet {
         atp10Json.put("totalSupply", totalSupply);
         atp10Json.put("icon", icon);
         atp10Json.put("version", version);
-        atp10Json.put("tokenType",tokenType);
+//        atp10Json.put("tokenType",tokenType);
 
         String key = "asset_property_" + code;
         String value = atp10Json.toJSONString();

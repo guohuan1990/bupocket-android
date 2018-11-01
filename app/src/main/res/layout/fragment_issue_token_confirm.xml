@@ -186,7 +186,7 @@
             android:layout_marginRight="12dp">
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                android:id="@+id/registerConfirmBtn"
+                android:id="@+id/issueConfirmBtn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bp_btn_hight"
                 android:layout_centerInParent="true"
@@ -201,7 +201,7 @@
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:id="@+id/registerCancelBtn"
+                android:id="@+id/issueCancelBtn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bp_btn_hight"
                 android:layout_centerInParent="true"

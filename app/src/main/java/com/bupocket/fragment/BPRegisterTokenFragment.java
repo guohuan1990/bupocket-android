@@ -105,12 +105,12 @@ public class BPRegisterTokenFragment extends BaseFragment {
         ButterKnife.bind(this, root);
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopbar();
-        initdata();
+        initData();
         setListener();
         return root;
     }
 
-    private void initdata() {
+    private void initData() {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         Bundle bundle = getArguments();
         String data = bundle.getString("tokenData");
@@ -136,26 +136,10 @@ public class BPRegisterTokenFragment extends BaseFragment {
             issueAmount = "0";
         }
 
-//        @SuppressLint("HandlerLeak")
-//        final Handler getBalanceHandler = new Handler(){
-//            @Override
-//            public void handleMessage(Message msg) {
-//                super.handleMessage(msg);
-//                Bundle data = msg.getData();
-//                balance = data.getString("balance");
-//                System.out.print("-------balance:" + balance);
-//            }
-//        };
         Runnable getBalanceRunnable = new Runnable() {
             @Override
             public void run() {
                 balance = Wallet.getInstance().getAccountBUBalance(issueAddress);
-                System.out.print("+++++++balance:" + balance);
-//                Message message = new Message();
-//                Bundle data = new Bundle();
-//                data.putString("balance",balance);
-//                message.setData(data);
-//                getBalanceHandler.sendMessage(message);
             }
         };
         new Thread(getBalanceRunnable).start();
