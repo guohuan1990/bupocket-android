@@ -71,8 +71,8 @@ public class BPRegisterTokenFragment extends BaseFragment {
     TextView mTokenAmountTv;
     @BindView(R.id.registerFeeTv)
     TextView mRegisterFeeTv;
-    @BindView(R.id.issueTypeTv)
-    TextView mIssueTypeTv;
+//    @BindView(R.id.issueTypeTv)
+//    TextView mIssueTypeTv;
     @BindView(R.id.registerLl)
     LinearLayout mRegisterLl;
 

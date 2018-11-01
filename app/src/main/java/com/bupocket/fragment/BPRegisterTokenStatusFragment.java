@@ -34,8 +34,8 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
     TextView mTokenNameTv;
     @BindView(R.id.tokenCodeTv)
     TextView mTokenCodeTv;
-    @BindView(R.id.issueTypeTv)
-    TextView mIssueTypeTv;
+//    @BindView(R.id.issueTypeTv)
+//    TextView mIssueTypeTv;
     @BindView(R.id.tokenAmountRl)
     RelativeLayout mTokenAmountRl;
     @BindView(R.id.tokenAmountTv)
@@ -148,14 +148,14 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
         mTokenDecimalsTv.setText(decimals);
         mTokenAmountTv.setText(issueAmount);
 
-        if(issueType.equals(AssetTypeEnum.ATP_FIXED.getCode())){
-            mIssueTypeTv.setText(getString(R.string.issue_type_disposable_txt));
-        }else if(issueType.equals(AssetTypeEnum.ATP_ADD.getCode())){
-            mIssueTypeTv.setText(getString(R.string.issue_type_increment_txt));
-        }else if(issueType.equals(AssetTypeEnum.ATP_INFINITE.getCode())){
-            mIssueTypeTv.setText(getString(R.string.issue_type_unlimited_txt));
-            mRegisterTokenInfoLl.removeView(mRegisterTokenInfoLl.findViewById(R.id.tokenAmountRl));
-        }
+//        if(issueType.equals(AssetTypeEnum.ATP_FIXED.getCode())){
+//            mIssueTypeTv.setText(getString(R.string.issue_type_disposable_txt));
+//        }else if(issueType.equals(AssetTypeEnum.ATP_ADD.getCode())){
+//            mIssueTypeTv.setText(getString(R.string.issue_type_increment_txt));
+//        }else if(issueType.equals(AssetTypeEnum.ATP_INFINITE.getCode())){
+//            mIssueTypeTv.setText(getString(R.string.issue_type_unlimited_txt));
+//            mRegisterTokenInfoLl.removeView(mRegisterTokenInfoLl.findViewById(R.id.tokenAmountRl));
+//        }
 
 
     }
