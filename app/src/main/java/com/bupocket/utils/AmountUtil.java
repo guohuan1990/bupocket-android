@@ -54,7 +54,15 @@ public class AmountUtil {
 	public static String amountDivision10For8(String amount){
 		return (new BigDecimal(amount).divide(new BigDecimal(100000000)).setScale(8, BigDecimal.ROUND_HALF_UP)).toString();
 	}
-	
+
+	public static String amountAddition(String amount,String amount2){
+		return new BigDecimal(amount).add(new BigDecimal(amount2)).stripTrailingZeros().toPlainString();
+	}
+
+	public static String amountSubtraction(String amount,String amount2){
+		return new BigDecimal(amount).subtract(new BigDecimal(amount2)).stripTrailingZeros().toPlainString();
+	}
+
 	public static void main(String[] args) {
 		System.out.println(amountMultiplyAmount("1.268","234.56"));
 	}

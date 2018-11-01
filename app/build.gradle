@@ -80,6 +80,12 @@ dependencies {
     implementation 'com.qianwen:update-app:3.5.2'
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
     implementation 'com.qianwen:okhttp-utils:3.8.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
+    implementation ('io.socket:socket.io-client:1.0.0') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+    }
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //leak
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'

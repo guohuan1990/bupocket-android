@@ -2,6 +2,7 @@ package com.bupocket.http.api;
 
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetMyTxsRespDto;
+import com.bupocket.http.api.dto.resp.GetTokenDetailRespDto;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
 import com.bupocket.http.api.dto.resp.SearchTokenRespDto;
 import retrofit2.Call;
@@ -17,4 +18,6 @@ public interface TokenService {
     Call<ApiResult<SearchTokenRespDto>> queryTokens(@Body Map<String,Object> map);
     @POST("wallet/token/tx/list")
     Call<ApiResult<GetMyTxsRespDto>> getTokenTxs(@Body Map<String,Object> map);
+    @POST("wallet/token/detail")
+    Call<ApiResult<GetTokenDetailRespDto>> getTokenDetail(@Body Map<String,Object> map);
 }

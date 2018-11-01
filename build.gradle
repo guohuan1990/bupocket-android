@@ -19,6 +19,8 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenCentral()
+        maven { url 'https://maven.google.com' }
         google()
         jcenter()
         maven { url "http://maven.bumo.io/content/groups/public/"}

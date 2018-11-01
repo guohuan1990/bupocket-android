@@ -36,11 +36,20 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
+                    <ImageView
+                        android:id="@+id/homeScanBtn"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/icon_scan_white"/>
+
                     <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                         android:id="@+id/assetsAvatarIv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="10dp"
                         android:clickable="false"
                         android:src="@mipmap/avatar"
                         app:qmui_border_color="?attr/qmui_config_color_gray_6"
