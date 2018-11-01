@@ -81,6 +81,7 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
         String issueAmount = bundle.getString("issueAmount");
         String tokenDecimals = bundle.getString("tokenDecimals");
         String tokenDesc = bundle.getString("tokenDesc");
+        String issueAddress = bundle.getString("issueAddress");
 
         RegisterStatusInfo.DataBean registerData = new RegisterStatusInfo.DataBean();
         registerData.setName(tokenName);
@@ -90,17 +91,17 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
         registerData.setDecimals(tokenDecimals);
         registerData.setVersion(getString(R.string.token_version));
         registerData.setDesc(tokenDesc);
+        registerData.setAddress(issueAddress);
 
         Drawable txStatusIconDrawable;
         String txStatusStr;
         if(txStatus.equals(TxStatusEnum.SUCCESS.getCode().toString())){
             String txFee = bundle.getString("txFee");
             String txHash = bundle.getString("txHash");
-            String issueAddress = bundle.getString("issueAddress");
+
             mTxFeeTv.setText(txFee);
             mTxHashTv.setText(txHash);
             mIssueAddressTv.setText(issueAddress);
-            registerData.setAddress(issueAddress);
             registerData.setFee(txFee);
             registerData.setHash(txHash);
             registerStatusInfo.setErrorCode(0);
@@ -122,12 +123,10 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
         }else {
             String txFee = bundle.getString("txFee");
             String txHash = bundle.getString("txHash");
-            String issueAddress = bundle.getString("issueAddress");
             String errorMsg = bundle.getString("errorMsg");
             mTxFeeTv.setText(txFee);
             mTxHashTv.setText(txHash);
             mIssueAddressTv.setText(issueAddress);
-            registerData.setAddress(issueAddress);
             registerData.setFee(txFee);
             registerData.setHash(txHash);
             registerStatusInfo.setErrorCode(1);

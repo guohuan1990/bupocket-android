@@ -330,6 +330,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                         argz.putString("totalSupply",totalSupply);
                         argz.putString("tokenDecimals",decimals);
                         argz.putString("tokenDescription",tokenDescription);
+                        argz.putString("issueAddress",issueAddress);
                         BPIssueTokenStatusFragment bpIssueTokenStatusFragment = new BPIssueTokenStatusFragment();
                         bpIssueTokenStatusFragment.setArguments(argz);
                         startFragmentAndDestroyCurrent(bpIssueTokenStatusFragment);
@@ -382,6 +383,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                             argz.putString("totalSupply",totalSupply);
                             argz.putString("decimals",decimals);
                             argz.putString("tokenDescription",tokenDescription);
+                            argz.putString("issueAddress",issueAddress);
                             BPIssueTokenStatusFragment bpIssueTokenStatusFragment = new BPIssueTokenStatusFragment();
                             bpIssueTokenStatusFragment.setArguments(argz);
                             startFragmentAndDestroyCurrent(bpIssueTokenStatusFragment);

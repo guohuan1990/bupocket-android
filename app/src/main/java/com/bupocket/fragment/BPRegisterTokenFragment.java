@@ -395,6 +395,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
                             argz.putString("issueAmount",issueAmount);
                             argz.putString("tokenDecimals",decimals);
                             argz.putString("tokenDesc",desc);
+                            argz.putString("issueAddress",issueAddress);
                             /*RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
                             registerStatusInfo.setErrorCode(2);
                             registerStatusInfo.setErrorMsg(getString(R.string.register_token_timeout_txt));

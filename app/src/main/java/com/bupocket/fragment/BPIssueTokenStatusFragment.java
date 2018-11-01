@@ -90,6 +90,7 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
         String totalSupply = bundle.getString("totalSupply");
         String tokenDecimals = bundle.getString("tokenDecimals");
         String tokenDescription = bundle.getString("tokenDescription");
+        String issueAddress = bundle.getString("issueAddress");
 
         IssueStatusInfo.DataBean issueData = new IssueStatusInfo.DataBean();
         issueData.setName(assetName);
@@ -99,6 +100,7 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
         issueData.setVersion(getString(R.string.token_version));
         issueData.setDesc(tokenDescription);
         issueData.setIssueTotal(issueAmount);
+        issueData.setAddress(issueAddress);
 
         mTokenNameTv.setText(assetName);
         mTokenCodeTv.setText(assetCode);
@@ -124,13 +126,11 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
                 Double surplusAmount = Double.valueOf(totalSupply) - (Double.valueOf(actualSupply)+Double.valueOf(issueAmount));
                 mAccumulativeIssueAmountTv.setText(surplusAmount.toString());
             }
-            String issueAddress = bundle.getString("issueAddress");
             String txHash = bundle.getString("txHash");
             String txFee = bundle.getString("txFee");
             mTxFeeTv.setText(txFee);
             mTxHashTv.setText(txHash);
             mIssueAddressTv.setText(issueAddress);
-            issueData.setAddress(issueAddress);
             issueData.setFee(txFee);
             issueData.setHash(txHash);
             issueStatusInfo.setErrorCode(0);
@@ -157,14 +157,12 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
                 Double surplusAmount = Double.valueOf(totalSupply) - Double.valueOf(actualSupply);
                 mAccumulativeIssueAmountTv.setText(surplusAmount.toString());
             }
-            String issueAddress = bundle.getString("issueAddress");
             String txHash = bundle.getString("txHash");
             String txFee = bundle.getString("txFee");
             String errorMsg = bundle.getString("errorMsg");
             mTxFeeTv.setText(txFee);
             mTxHashTv.setText(txHash);
             mIssueAddressTv.setText(issueAddress);
-            issueData.setAddress(issueAddress);
             issueData.setFee(txFee);
             issueData.setHash(txHash);
             issueStatusInfo.setErrorCode(1);
