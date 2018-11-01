@@ -239,7 +239,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
             @Override
             public void run() {
                 tokenBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
-                sharedPreferencesHelper.put("tokenBalance",tokenBalance);
+                if(!CommonUtil.isNull(tokenBalance)){
+                    sharedPreferencesHelper.put("tokenBalance",tokenBalance);
+                }
             }
         };
         new Thread(getBalanceRunnable).start();

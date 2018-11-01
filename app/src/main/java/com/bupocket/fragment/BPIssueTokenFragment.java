@@ -29,6 +29,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetTokenDetailRespDto;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.model.IssueTokenInfo;
+import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
@@ -41,6 +42,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -273,6 +275,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                 if(errorCode.equals("500004")){
                     @SuppressLint("StringFormatMatches") String msg = String.format(getString(R.string.error_issue_unregistered_message_txt,assetCode));
                     Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+                    errorMsg = msg;
                 }else if(!errorCode.equals("0")){
                     Toast.makeText(getActivity(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
                 } else{
@@ -293,11 +296,11 @@ public class BPIssueTokenFragment extends BaseFragment {
 
                     if(totalSupply.equals("0")){
                         mAccumulativeIssueAmountTv.setText(actualSupply);
-                        mIssueTokenInfoLl.removeView(mIssueTokenInfoLl.findViewById(R.id.totalIssueAmountTv));
+                        mIssueTokenInfoLl.removeView(mIssueTokenInfoLl.findViewById(R.id.totalIssueAmountRl));
                     }else {
                         mTotalIssueAmountTv.setText(totalSupply);
                         mAccumulativeIssueAmountTv.setText(actualSupply);
-                        if(Double.parseDouble(actualSupply) + Double.parseDouble(issueAmount) > Double.parseDouble(totalSupply)){
+                        if(new BigDecimal(AmountUtil.amountAddition(actualSupply,issueAmount)).compareTo(new BigDecimal(totalSupply))==1){
                             errorMsg = getString(R.string.error_issue_issue_amount_overflow_message_txt);
                         }
                     }
