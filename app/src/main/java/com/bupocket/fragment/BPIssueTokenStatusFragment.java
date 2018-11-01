@@ -88,14 +88,14 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
         String assetCode = bundle.getString("assetCode");
         String issueAmount = bundle.getString("issueAmount");
         String totalSupply = bundle.getString("totalSupply");
-        String decimals = bundle.getString("decimals");
+        String tokenDecimals = bundle.getString("tokenDecimals");
         String tokenDescription = bundle.getString("tokenDescription");
 
         IssueStatusInfo.DataBean issueData = new IssueStatusInfo.DataBean();
         issueData.setName(assetName);
         issueData.setCode(assetCode);
         issueData.setTotal(totalSupply);
-        issueData.setDecimals(decimals);
+        issueData.setDecimals(tokenDecimals);
         issueData.setVersion(getString(R.string.token_version));
         issueData.setDesc(tokenDescription);
         issueData.setIssueTotal(issueAmount);
@@ -104,7 +104,7 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
         mTokenCodeTv.setText(assetCode);
         mTokenVersionTv.setText(getString(R.string.token_version));
         mAssetDescTv.setText(tokenDescription);
-        mTokenDecimalsTv.setText(decimals);
+        mTokenDecimalsTv.setText(tokenDecimals);
         mIssueAmountTv.setText(issueAmount);
         if(totalSupply.equals("0")){
             mAssetAmountTv.setText(getString(R.string.issue_unlimited_amount_txt));

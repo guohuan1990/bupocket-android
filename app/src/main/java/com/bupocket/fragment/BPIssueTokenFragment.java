@@ -328,7 +328,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                         argz.putString("assetCode",assetCode);
                         argz.putString("issueAmount",issueAmount);
                         argz.putString("totalSupply",totalSupply);
-                        argz.putString("decimals",decimals);
+                        argz.putString("tokenDecimals",decimals);
                         argz.putString("tokenDescription",tokenDescription);
                         BPIssueTokenStatusFragment bpIssueTokenStatusFragment = new BPIssueTokenStatusFragment();
                         bpIssueTokenStatusFragment.setArguments(argz);

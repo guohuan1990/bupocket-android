@@ -341,8 +341,8 @@ public class BPRegisterTokenFragment extends BaseFragment {
                         argz.putString("tokenCode",tokenCode);
 //                        argz.putString("issueType",issueType);
                         argz.putString("issueAmount",issueAmount);
-                        argz.putString("decimals",decimals);
-                        argz.putString("desc",desc);
+                        argz.putString("tokenDecimals",decimals);
+                        argz.putString("tokenDesc",desc);
                         argz.putString("issueAddress",issueAddress);
                         /*RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
                         registerStatusInfo.setErrorCode(2);
@@ -377,8 +377,8 @@ public class BPRegisterTokenFragment extends BaseFragment {
                                 argz.putString("tokenCode",tokenCode);
 //                                argz.putString("issueType",issueType);
                                 argz.putString("issueAmount",issueAmount);
-                                argz.putString("decimals",decimals);
-                                argz.putString("desc",desc);
+                                argz.putString("tokenDecimals",decimals);
+                                argz.putString("tokenDesc",desc);
                                 argz.putString("issueAddress",issueAddress);
                                 argz.putString("txHash",hash);
                                 argz.putString("txFee",txDeatilRespBoBean.getFee());
@@ -397,8 +397,8 @@ public class BPRegisterTokenFragment extends BaseFragment {
                             argz.putString("tokenCode",tokenCode);
 //                            argz.putString("issueType",issueType);
                             argz.putString("issueAmount",issueAmount);
-                            argz.putString("decimals",decimals);
-                            argz.putString("desc",desc);
+                            argz.putString("tokenDecimals",decimals);
+                            argz.putString("tokenDesc",desc);
                             /*RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
                             registerStatusInfo.setErrorCode(2);
                             registerStatusInfo.setErrorMsg(getString(R.string.register_token_timeout_txt));

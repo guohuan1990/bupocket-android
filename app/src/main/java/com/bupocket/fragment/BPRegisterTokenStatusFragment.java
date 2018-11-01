@@ -78,19 +78,18 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
         String txStatus = bundle.getString("txStatus");
         String tokenName = bundle.getString("tokenName");
         String tokenCode = bundle.getString("tokenCode");
-        String issueType = bundle.getString("issueType");
         String issueAmount = bundle.getString("issueAmount");
-        String decimals = bundle.getString("decimals");
-        String desc = bundle.getString("desc");
+        String tokenDecimals = bundle.getString("tokenDecimals");
+        String tokenDesc = bundle.getString("tokenDesc");
 
         RegisterStatusInfo.DataBean registerData = new RegisterStatusInfo.DataBean();
         registerData.setName(tokenName);
         registerData.setCode(tokenCode);
 //        registerData.setType(issueType);
         registerData.setTotal(issueAmount);
-        registerData.setDecimals(decimals);
+        registerData.setDecimals(tokenDecimals);
         registerData.setVersion(getString(R.string.token_version));
-        registerData.setDesc(desc);
+        registerData.setDesc(tokenDesc);
 
         Drawable txStatusIconDrawable;
         String txStatusStr;
@@ -144,8 +143,8 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
         mTokenNameTv.setText(tokenName);
         mTokenCodeTv.setText(tokenCode);
         mTokenVersionTv.setText(getString(R.string.token_version));
-        mTokenDescTv.setText(desc);
-        mTokenDecimalsTv.setText(decimals);
+        mTokenDescTv.setText(tokenDesc);
+        mTokenDecimalsTv.setText(tokenDecimals);
         if(issueAmount.equals(0)){
             mTokenAmountTv.setText(getString(R.string.issue_unlimited_amount_txt));
         }else {
