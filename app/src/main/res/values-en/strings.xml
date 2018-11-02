@@ -259,13 +259,13 @@
     <string name="please_confirm_register_token_info_txt">Please confirm the following information of tokens to be registered.</string>
     <string name="token_info_name_txt">Token name</string>
     <string name="token_info_code_txt">Token code</string>
-    <string name="token_info_amount_txt">Total token</string>
+    <string name="token_info_amount_txt">Total tokens</string>
     <string name="issue_token_fee_txt">Estimated transaction fee</string>
     <string name="register_token_fee_txt">Estimated transaction fee</string>
     <string name="confirm_register_token_btn_txt">Confirm to register</string>
     <string name="register_token_password_confirm_txt">Please fill in your wallet password</string>
     <string name="register_token_success_txt">Registration is successful</string>
-    <string name="register_token_failure_txt">Registration is failed</string>
+    <string name="register_token_failure_txt">Registration failed</string>
     <string name="register_token_timeout_txt">Registration is overtime</string>
     <string name="token_info_decimals_txt">Token decimals</string>
     <string name="token_info_atp_version_txt">ATP version </string>
@@ -276,7 +276,7 @@
     <string name="issue_token_success_txt">Issuing of tokens is successful</string>
     <string name="issue_token_failure_txt">Failed to issue tokens</string>
     <string name="issue_token_timeout_txt">Issuing of tokens is overtime</string>
-    <string name="issue_token_type_txt">The way you issuing your tokens</string>
+    <string name="issue_token_type_txt">The method to issue your tokens</string>
     <string name="issue_token_balance_insufficient_message_txt">Your balance is insufficient,so your operation of issuing tokens is failed.</string>
     <string name="error_qr_message_txt">Invalid QR code</string>
     <string name="issue_type_disposable_txt">One-time issuance</string>
@@ -290,13 +290,13 @@
     <string name="accumulative_issue_amount_txt">Cumulative circulation</string>
     <string name="surplus_issue_amount_txt">Unissued volume</string>
     <string name="total_issue_amount_txt">Total circulation</string>
-    <string name="register_token_balance_insufficient_message_txt">Your balance of BU is insufficient, so your tokens cannot be registered, please recharge.</string>
-    <string name="register_already_have_message_txt">You have already registered the tokens</string>
+    <string name="register_token_balance_insufficient_message_txt">Your BU balance is insufficient, so you cannot register tokens, please recharge.</string>
+    <string name="register_already_have_message_txt">You have already registered the token</string>
     <string name="token_version">ATP10</string>
     <string name="error_issue_amount_message_txt">Invalid circulation</string>
     <string name="error_issue_unregistered_message_txt">The code of your issued tokens:%1$s has not been registered yet, so it cannot be issued.</string>
-    <string name="error_issue_already_issue_message_txt">You have already issued the tokens</string>
+    <string name="error_issue_already_issue_message_txt">You have already issued the token</string>
     <string name="error_issue_total_issue_amount_unequal_message_txt">The total amount of tokens you issued does not match the number you have registered.</string>
     <string name="error_issue_issue_amount_overflow_message_txt">The total amount of tokens you issued exceeds the number you have registered.</string>
-    <string name="error_issue_balance_insufficient_message_txt">Your balance of BU is insufficient, so you cannot issue tokens, please recharge.</string>
+    <string name="error_issue_balance_insufficient_message_txt">Your BU balance is insufficient, so you cannot issue tokens, please recharge.</string>
 </resources>

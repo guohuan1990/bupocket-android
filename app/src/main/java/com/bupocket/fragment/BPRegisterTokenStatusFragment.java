@@ -145,7 +145,7 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
         mTokenVersionTv.setText(getString(R.string.token_version));
         mTokenDescTv.setText(tokenDesc);
         mTokenDecimalsTv.setText(tokenDecimals);
-        if(issueAmount.equals(0)){
+        if(issueAmount.equals("0")){
             mTokenAmountTv.setText(getString(R.string.issue_unlimited_amount_txt));
         }else {
             mTokenAmountTv.setText(issueAmount);

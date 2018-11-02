@@ -24,6 +24,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.AssetTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TokenService;
 import com.bupocket.http.api.TxService;
@@ -173,6 +174,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         final String uuID = bundle.getString("uuID");
+        System.out.println(uuID);
 
         BPApplication application = (BPApplication)getActivity().getApplication();
         mSocket = application.getSocket();
@@ -223,7 +225,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 mSocket.emit("token.register.cancel","");
-                startFragment(new BPAssetsHomeFragment());
+                startFragment(new HomeFragment());
             }
         });
     }

@@ -282,7 +282,7 @@
     <string name="issue_type_increment_txt">增量发行</string>
     <string name="issue_type_unlimited_txt">无限制发行</string>
     <string name="issue_unlimited_amount_txt">无限制</string>
-    <string name="practical_tx_fee_txt">实际交易费</string>
+    <string name="practical_tx_fee_txt">实际交易费用</string>
     <string name="issue_address_txt">发行方地址</string>
     <string name="tx_hash_txt">哈希</string>
     <string name="this_time_issue_amount_txt">本次发行量</string>

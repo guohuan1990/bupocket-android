@@ -22,6 +22,7 @@ import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.TxStatusEnum;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TokenService;
 import com.bupocket.http.api.TxService;
@@ -90,7 +91,6 @@ public class BPIssueTokenFragment extends BaseFragment {
     String assetName;
     String decimals;
     String tokenDescription;
-//    String tokenType;
     String totalSupply;
     String version;
     String errorMsg;
@@ -127,7 +127,7 @@ public class BPIssueTokenFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 mSocket.emit("token.issue.cancel","");
-                startFragment(new BPAssetsHomeFragment());
+                startFragment(new HomeFragment());
             }
         });
     }
@@ -222,7 +222,7 @@ public class BPIssueTokenFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         final String uuID = bundle.getString("uuID");
-
+        System.out.println(uuID);
         BPApplication application = (BPApplication)getActivity().getApplication();
         mSocket = application.getSocket();
         mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
@@ -247,6 +247,12 @@ public class BPIssueTokenFragment extends BaseFragment {
         });
         mSocket.emit("token.issue.scanSuccess","");
         mSocket.connect();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mSocket.disconnect();
     }
 
     private void initData() {
@@ -275,6 +281,13 @@ public class BPIssueTokenFragment extends BaseFragment {
                 if(errorCode.equals("500004")){
                     @SuppressLint("StringFormatMatches") String msg = String.format(getString(R.string.error_issue_unregistered_message_txt,assetCode));
                     Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+                    String inexistenceStr = "--";
+                    mTokenNameTv.setText(inexistenceStr);
+                    mTotalIssueAmountTv.setText(inexistenceStr);
+                    mTokenCodeTv.setText(assetCode);
+                    mThisTimeIssueAmountTv.setText(issueAmount);
+                    mAccumulativeIssueAmountTv.setText(inexistenceStr);
+                    mIssueFeeTv.setText(inexistenceStr);
                     errorMsg = msg;
                 }else if(!errorCode.equals("0")){
                     Toast.makeText(getActivity(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();

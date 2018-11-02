@@ -43,6 +43,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/tokenNameTitleTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/token_info_name_txt"
@@ -51,6 +52,9 @@
                     android:textColor="@color/app_txt_color_gray"/>
 
                 <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/tokenNameTitleTv"
+                    android:gravity="right"
                     android:id="@+id/tokenNameTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -65,6 +69,7 @@
                 android:layout_marginTop="23dp">
 
                 <TextView
+                    android:id="@+id/tokenCodeTitleTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/token_info_code_txt"
@@ -73,6 +78,9 @@
                     android:textColor="@color/app_txt_color_gray"/>
 
                 <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/tokenCodeTitleTv"
+                    android:gravity="right"
                     android:id="@+id/tokenCodeTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -87,15 +95,18 @@
                 android:layout_marginTop="23dp">
 
                 <TextView
+                    android:id="@+id/thisTimeIssueAmountTitleTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/this_time_issue_amount_txt"
                     android:layout_alignParentLeft="true"
                     android:textSize="15sp"
-                    android:textColor="@color/app_txt_color_gray"
-                    />
+                    android:textColor="@color/app_txt_color_gray" />
 
                 <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/thisTimeIssueAmountTitleTv"
+                    android:gravity="right"
                     android:id="@+id/thisTimeIssueAmountTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -110,15 +121,18 @@
                 android:layout_marginTop="23dp">
 
                 <TextView
+                    android:id="@+id/accumulativeIssueAmountTitleTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/accumulative_issue_amount_txt"
                     android:layout_alignParentLeft="true"
                     android:textSize="15sp"
-                    android:textColor="@color/app_txt_color_gray"
-                    />
+                    android:textColor="@color/app_txt_color_gray" />
 
                 <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/accumulativeIssueAmountTitleTv"
+                    android:gravity="right"
                     android:id="@+id/accumulativeIssueAmountTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -133,6 +147,7 @@
                 android:layout_marginTop="23dp">
 
                 <TextView
+                    android:id="@+id/totalIssueAmountTitleTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/total_issue_amount_txt"
@@ -141,6 +156,9 @@
                     android:textColor="@color/app_txt_color_gray" />
 
                 <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/totalIssueAmountTitleTv"
+                    android:gravity="right"
                     android:id="@+id/totalIssueAmountTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -190,7 +208,7 @@
                 android:textColor="@color/app_color_font"
                 android:textSize="@dimen/bp_btn_text_size"
                 app:qmui_backgroundColor="@color/app_btn_color_blue"
-                app:qmui_borderColor="@color/disabled_btn_color"
+                app:qmui_borderColor="@color/app_btn_color_blue"
                 app:qmui_radius="5dp" />
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
@@ -205,7 +223,7 @@
                 android:textColor="@color/app_color_font"
                 android:textSize="@dimen/bp_btn_text_size"
                 app:qmui_backgroundColor="@color/app_btn_color_purple"
-                app:qmui_borderColor="@color/disabled_btn_color"
+                app:qmui_borderColor="@color/app_btn_color_purple"
                 app:qmui_radius="5dp" />
         </LinearLayout>
     </LinearLayout>
