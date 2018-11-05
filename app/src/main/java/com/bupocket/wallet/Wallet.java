@@ -329,7 +329,7 @@ public class Wallet {
     }
 
 
-    private Long handleSendTokenAmount(String srcAmount, String decimals){
+    private static Long handleSendTokenAmount(String srcAmount, String decimals){
 
         return Long.parseLong(BigDecimal.valueOf(DecimalCalculate.mul(Double.parseDouble(srcAmount),Math.pow(10, Double.parseDouble(decimals)))).setScale(0).toPlainString());
     }
@@ -462,6 +462,11 @@ public class Wallet {
         return HexFormat.byteToHex(PrivateKey.sign(message.getBytes(), sk));
     }
 
+    private static Long handleTokenAmount(String srcAmount, String decimals){
+
+        return Long.parseLong(new BigDecimal(srcAmount).multiply(new BigDecimal(Math.pow(10, Double.parseDouble(decimals)))).setScale(0).toPlainString());
+    }
+
     /**
      * issue asset
      */
@@ -469,7 +474,7 @@ public class Wallet {
         // The account private key to issue atp1.0 token
         String issuerPrivateKey = getPKBYAccountPassword(password,bPData,fromAccAddr);
         // The token now supply number
-        Long nowSupply = handleSendTokenAmount(issueAmount,decimals);;
+        Long nowSupply = handleTokenAmount(issueAmount,decimals);;
         // The operation note
         String operationMetadata = "";
         // The transaction note
@@ -512,7 +517,7 @@ public class Wallet {
         // The apt token icon
         String icon = "";
         // The token total supply number
-        Long totalSupply = handleSendTokenAmount(tokenAmount,decimals);
+        Long totalSupply = handleTokenAmount(tokenAmount,decimals);
         // The operation note
         String operationMetadata = "";
         // The transaction note

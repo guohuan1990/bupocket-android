@@ -241,6 +241,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 tokenBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
                 if(!CommonUtil.isNull(tokenBalance)){
                     sharedPreferencesHelper.put("tokenBalance",tokenBalance);
+                }else {
+                    tokenBalance = "0";
                 }
             }
         };

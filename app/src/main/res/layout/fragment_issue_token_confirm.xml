@@ -10,7 +10,8 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/qmui_topbar_height"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:background="@color/app_color_white">
 
         <ImageView
             android:layout_marginTop="40dp"
@@ -66,7 +67,7 @@
                 android:id="@+id/tokenCodeRl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="23dp">
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:id="@+id/tokenCodeTitleTv"
@@ -92,7 +93,7 @@
                 android:id="@+id/thisTimeIssueAmountRl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="23dp">
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:id="@+id/thisTimeIssueAmountTitleTv"
@@ -118,7 +119,7 @@
                 android:id="@+id/accumulativeIssueAmountRl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="23dp">
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:id="@+id/accumulativeIssueAmountTitleTv"
@@ -144,7 +145,7 @@
                 android:id="@+id/totalIssueAmountRl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="23dp">
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:id="@+id/totalIssueAmountTitleTv"
@@ -170,7 +171,7 @@
                 android:id="@+id/issueFeeRl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="23dp">
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"

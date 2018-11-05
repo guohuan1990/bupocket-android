@@ -39,6 +39,7 @@ import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -119,7 +120,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                 }else if(!CommonUtil.isNull(errorMsg)){
                     Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
                 }else{
-                    showPasswordComfirmDialog();
+                    showPasswordConfirmDialog();
                 }
             }
         });
@@ -132,7 +133,7 @@ public class BPIssueTokenFragment extends BaseFragment {
         });
     }
 
-    private void showPasswordComfirmDialog() {
+    private void showPasswordConfirmDialog() {
         final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.password_comfirm_layout);
@@ -280,7 +281,15 @@ public class BPIssueTokenFragment extends BaseFragment {
                 String errorCode = respDto.getErrCode();
                 if(errorCode.equals("500004")){
                     @SuppressLint("StringFormatMatches") String msg = String.format(getString(R.string.error_issue_unregistered_message_txt,assetCode));
-                    Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+                    new QMUIDialog.MessageDialogBuilder(getActivity())
+                            .setMessage(msg)
+                            .addAction(getString(R.string.i_knew_btn_txt), new QMUIDialogAction.ActionListener() {
+                                @Override
+                                public void onClick(QMUIDialog dialog, int index) {
+                                    dialog.dismiss();
+                                    startFragment(new HomeFragment());
+                                }
+                            }).create().show();
                     String inexistenceStr = "--";
                     mTokenNameTv.setText(inexistenceStr);
                     mTotalIssueAmountTv.setText(inexistenceStr);
