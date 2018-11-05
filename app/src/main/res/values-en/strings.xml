@@ -285,6 +285,7 @@
     <string name="issue_unlimited_amount_txt">Unlimited</string>
     <string name="practical_tx_fee_txt">Actual transaction fee</string>
     <string name="issue_address_txt">Address of issuer</string>
+    <string name="register_address_txt">Address of registrant</string>
     <string name="tx_hash_txt">Hash</string>
     <string name="this_time_issue_amount_txt">Circulation of this time</string>
     <string name="accumulative_issue_amount_txt">Cumulative circulation</string>

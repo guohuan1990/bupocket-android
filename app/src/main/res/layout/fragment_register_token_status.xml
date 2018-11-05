@@ -240,7 +240,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="@string/issue_address_txt"
+                        android:text="@string/register_address_txt"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="15sp" />
 

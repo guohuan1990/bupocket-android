@@ -284,6 +284,7 @@
     <string name="issue_unlimited_amount_txt">无限制</string>
     <string name="practical_tx_fee_txt">实际交易费用</string>
     <string name="issue_address_txt">发行方地址</string>
+    <string name="register_address_txt">登记方地址</string>
     <string name="tx_hash_txt">哈希</string>
     <string name="this_time_issue_amount_txt">本次发行量</string>
     <string name="accumulative_issue_amount_txt">累计发行量</string>
