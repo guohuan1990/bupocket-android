@@ -14,16 +14,11 @@ import com.alibaba.fastjson.JSON;
 import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.bupocket.common.Constants;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.model.IssueStatusInfo;
-import com.bupocket.model.RegisterStatusInfo;
 import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.subgraph.orchid.RelayCell;
-
-import java.math.BigDecimal;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

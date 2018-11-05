@@ -14,7 +14,6 @@ import com.alibaba.fastjson.JSON;
 import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.bupocket.enums.AssetTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.model.RegisterStatusInfo;
 import com.bupocket.utils.CommonUtil;
@@ -35,8 +34,6 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
     TextView mTokenNameTv;
     @BindView(R.id.tokenCodeTv)
     TextView mTokenCodeTv;
-//    @BindView(R.id.issueTypeTv)
-//    TextView mIssueTypeTv;
     @BindView(R.id.tokenAmountRl)
     RelativeLayout mTokenAmountRl;
     @BindView(R.id.tokenAmountTv)
@@ -87,7 +84,6 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
         RegisterStatusInfo.DataBean registerData = new RegisterStatusInfo.DataBean();
         registerData.setName(tokenName);
         registerData.setCode(tokenCode);
-//        registerData.setType(issueType);
         registerData.setTotal(issueAmount);
         registerData.setDecimals(tokenDecimals);
         registerData.setVersion(getString(R.string.token_version));
@@ -99,7 +95,6 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
         if(txStatus.equals(TxStatusEnum.SUCCESS.getCode().toString())){
             String txFee = bundle.getString("txFee");
             String txHash = bundle.getString("txHash");
-
             mTxFeeTv.setText(CommonUtil.addSuffix(txFee,"BU"));
             mTxHashTv.setText(txHash);
             mIssueAddressTv.setText(issueAddress);
@@ -109,11 +104,9 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
             registerStatusInfo.setErrorMsg("");
             registerStatusInfo.setData(registerData);
             mSocket.emit("token.register.success",JSON.toJSON(registerStatusInfo).toString());
-
             txStatusIconDrawable = ContextCompat.getDrawable(getContext(),R.mipmap.icon_send_success);
             txStatusStr = getResources().getString(R.string.register_token_success_txt);
         }else if(txStatus.equals("timeout")){
-//            RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
             registerStatusInfo.setErrorCode(2);
             registerStatusInfo.setErrorMsg(getString(R.string.register_token_timeout_txt));
             registerStatusInfo.setData(registerData);
@@ -150,17 +143,6 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
         }else {
             mTokenAmountTv.setText(issueAmount);
         }
-
-//        if(issueType.equals(AssetTypeEnum.ATP_FIXED.getCode())){
-//            mIssueTypeTv.setText(getString(R.string.issue_type_disposable_txt));
-//        }else if(issueType.equals(AssetTypeEnum.ATP_ADD.getCode())){
-//            mIssueTypeTv.setText(getString(R.string.issue_type_increment_txt));
-//        }else if(issueType.equals(AssetTypeEnum.ATP_INFINITE.getCode())){
-//            mIssueTypeTv.setText(getString(R.string.issue_type_unlimited_txt));
-//            mRegisterTokenInfoLl.removeView(mRegisterTokenInfoLl.findViewById(R.id.tokenAmountRl));
-//        }
-
-
     }
 
     private void initTopbar() {

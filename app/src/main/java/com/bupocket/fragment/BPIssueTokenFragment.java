@@ -140,10 +140,10 @@ public class BPIssueTokenFragment extends BaseFragment {
         QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
         ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
         TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
-        TextView mPpasswordConfirmTitle = qmuiDialog.findViewById(R.id.passwordConfirmTitle);
+        TextView mPasswordConfirmTitle = qmuiDialog.findViewById(R.id.passwordConfirmTitle);
 
         mPasswordConfirmNotice.setText(getString(R.string.register_token_password_confirm_txt));
-        mPpasswordConfirmTitle.setText(getString(R.string.password_comfirm_dialog_title));
+        mPasswordConfirmTitle.setText(getString(R.string.password_comfirm_dialog_title));
 
         mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -293,7 +293,6 @@ public class BPIssueTokenFragment extends BaseFragment {
                     Toast.makeText(getActivity(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
                 } else{
                     GetTokenDetailRespDto tokenDetail = respDto.getData();
-//                    tokenType = tokenDetail.getTokenType();
 
                     actualSupply = tokenDetail.getActualSupply();
                     assetName = tokenDetail.getAssetName();
