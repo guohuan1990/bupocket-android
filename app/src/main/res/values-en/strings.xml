@@ -248,7 +248,7 @@
     <string name="total_assets_title_txt">Total Assets(￥)</string>
     <string name="assets_add_txt">Add assets</string>
     <string name="my_assets_title_txt">My assets</string>
-    <string name="add_token_search_hint">Please input the complete TOKEN name</string>
+    <string name="add_token_search_hint">Please input the complete TOKEN code</string>
     <string name="prefix_total_asset">≈</string>
     <string name="account_not_activated_fee">0.03</string>
     <string name="account_activated_fee">0.01</string>

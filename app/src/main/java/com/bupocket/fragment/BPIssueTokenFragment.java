@@ -128,6 +128,7 @@ public class BPIssueTokenFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 mSocket.emit("token.issue.cancel","");
+                mSocket.disconnect();
                 startFragment(new HomeFragment());
             }
         });
@@ -191,6 +192,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                             Looper.prepare();
                             Toast.makeText(getActivity(), R.string.error_issue_amount_message_txt, Toast.LENGTH_SHORT).show();
                             txSendingTipDialog.dismiss();
+                            Looper.loop();
                         } catch (Exception e) {
                             e.printStackTrace();
                             Looper.prepare();
@@ -287,6 +289,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                                 @Override
                                 public void onClick(QMUIDialog dialog, int index) {
                                     dialog.dismiss();
+                                    mSocket.disconnect();
                                     startFragment(new HomeFragment());
                                 }
                             }).create().show();

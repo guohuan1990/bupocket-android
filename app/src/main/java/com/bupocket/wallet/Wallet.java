@@ -329,7 +329,7 @@ public class Wallet {
     }
 
 
-    private static Long handleSendTokenAmount(String srcAmount, String decimals){
+    private Long handleSendTokenAmount(String srcAmount, String decimals){
 
         return Long.parseLong(BigDecimal.valueOf(DecimalCalculate.mul(Double.parseDouble(srcAmount),Math.pow(10, Double.parseDouble(decimals)))).setScale(0).toPlainString());
     }
@@ -462,8 +462,7 @@ public class Wallet {
         return HexFormat.byteToHex(PrivateKey.sign(message.getBytes(), sk));
     }
 
-    private static Long handleTokenAmount(String srcAmount, String decimals){
-
+    private Long handleTokenAmount(String srcAmount, String decimals){
         return Long.parseLong(new BigDecimal(srcAmount).multiply(new BigDecimal(Math.pow(10, Double.parseDouble(decimals)))).setScale(0).toPlainString());
     }
 

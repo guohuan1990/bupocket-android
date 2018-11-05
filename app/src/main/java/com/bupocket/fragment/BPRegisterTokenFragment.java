@@ -208,6 +208,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 mSocket.emit("token.register.cancel","");
+                mSocket.disconnect();
                 startFragment(new HomeFragment());
             }
         });
