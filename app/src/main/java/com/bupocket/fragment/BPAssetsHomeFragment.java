@@ -46,6 +46,8 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import io.bumo.encryption.key.PublicKey;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -372,7 +374,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
             if (result.getContents() == null) {
                 Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
             } else {
-                if(!CommonUtil.isBU(result.getContents())){
+                if(!PublicKey.isAddressValid(result.getContents())){
                     if(CommonUtil.checkIsBase64(result.getContents())){
                         String jsonStr = null;
                         try {

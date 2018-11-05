@@ -68,14 +68,13 @@ public class CommonUtil {
     }
 
     public static boolean isBU(String str){
-        return PublicKey.isAddressValid(str);
-        /*Pattern pattern = Pattern.compile("^(([1-9]{1}\\d*)|([0]{1}))(\\.(\\d){0,8})?$"); // 判断小数点后2位的数字的正则表达式
+        Pattern pattern = Pattern.compile("^(([1-9]{1}\\d*)|([0]{1}))(\\.(\\d){0,8})?$"); // 判断小数点后2位的数字的正则表达式
         Matcher match= pattern.matcher(str);
         if(match.matches()==false) {
             return false;
         }else{
             return true;
-        }*/
+        }
     }
 
 
