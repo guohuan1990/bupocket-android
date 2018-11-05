@@ -89,15 +89,15 @@ public class BPIssueTokenFragment extends BaseFragment {
     String issueAmount;
     String actualSupply;
     String assetName;
-    String decimals;
+    String tokenDecimals;
     String tokenDescription;
     String totalSupply;
     String version;
     String errorMsg;
-    String balance;
+    String buBalance;
     QMUITipDialog txSendingTipDialog;
     private String hash;
-    private TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean;
+    private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
 
     @Override
     protected View onCreateView() {
@@ -114,7 +114,7 @@ public class BPIssueTokenFragment extends BaseFragment {
         mIssueConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Double.valueOf(balance) < Double.valueOf(Constants.ISSUE_TOKEN_FEE)){
+                if(Double.valueOf(buBalance) < Double.valueOf(Constants.ISSUE_TOKEN_FEE)){
                     Toast.makeText(getActivity(), R.string.error_issue_balance_insufficient_message_txt, Toast.LENGTH_SHORT).show();
                 }else if(!CommonUtil.isNull(errorMsg)){
                     Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
@@ -172,7 +172,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                     public void run() {
                         String accountBPData = getAccountBPData();
                         try {
-                            hash = Wallet.getInstance().issueAtp10Token(password,accountBPData,issueAddress,assetCode,decimals,issueAmount,Constants.ISSUE_TOKEN_FEE);
+                            hash = Wallet.getInstance().issueAtp10Token(password,accountBPData,issueAddress,assetCode,tokenDecimals,issueAmount,Constants.ISSUE_TOKEN_FEE);
                         } catch (WalletException e){
                             e.printStackTrace();
                             Looper.prepare();
@@ -263,7 +263,7 @@ public class BPIssueTokenFragment extends BaseFragment {
         assetCode = issueTokenInfo.getCode();
         issueAmount = issueTokenInfo.getAmount();
         issueAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
-        balance = bundle.getString("buBalance");
+        buBalance = bundle.getString("buBalance");
         getTokenDetail();
     }
 
@@ -297,7 +297,7 @@ public class BPIssueTokenFragment extends BaseFragment {
 
                     actualSupply = tokenDetail.getActualSupply();
                     assetName = tokenDetail.getAssetName();
-                    decimals = tokenDetail.getDecimals();
+                    tokenDecimals = tokenDetail.getDecimals();
                     tokenDescription = tokenDetail.getTokenDescription();
                     totalSupply = tokenDetail.getTotalSupply();
                     version = tokenDetail.getVersion();
@@ -349,7 +349,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                         argz.putString("assetCode",assetCode);
                         argz.putString("issueAmount",issueAmount);
                         argz.putString("totalSupply",totalSupply);
-                        argz.putString("tokenDecimals",decimals);
+                        argz.putString("tokenDecimals",tokenDecimals);
                         argz.putString("tokenDescription",tokenDescription);
                         argz.putString("issueAddress",issueAddress);
                         BPIssueTokenStatusFragment bpIssueTokenStatusFragment = new BPIssueTokenStatusFragment();
@@ -372,7 +372,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                             if(!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())){
                                 return;
                             }else{
-                                txDeatilRespBoBean = resp.getData().getTxDeatilRespBo();
+                                txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
                                 timerTask.cancel();
                                 txSendingTipDialog.dismiss();
                                 Bundle argz = new Bundle();
@@ -380,13 +380,13 @@ public class BPIssueTokenFragment extends BaseFragment {
                                 argz.putString("assetCode",assetCode);
                                 argz.putString("issueAmount",issueAmount);
                                 argz.putString("totalSupply",totalSupply);
-                                argz.putString("tokenDecimals",decimals);
+                                argz.putString("tokenDecimals",tokenDecimals);
                                 argz.putString("tokenDescription",tokenDescription);
-                                argz.putString("txStatus",txDeatilRespBoBean.getStatus().toString());
+                                argz.putString("txStatus",txDetailRespBoBean.getStatus().toString());
                                 argz.putString("issueAddress",issueAddress);
                                 argz.putString("txHash",hash);
-                                argz.putString("txFee",txDeatilRespBoBean.getFee());
-                                argz.putString("errorMsg",txDeatilRespBoBean.getErrorMsg());
+                                argz.putString("txFee",txDetailRespBoBean.getFee());
+                                argz.putString("errorMsg",txDetailRespBoBean.getErrorMsg());
                                 argz.putString("actualSupply",actualSupply);
                                 BPIssueTokenStatusFragment bpIssueTokenStatusFragment = new BPIssueTokenStatusFragment();
                                 bpIssueTokenStatusFragment.setArguments(argz);
@@ -402,7 +402,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                             argz.putString("assetCode",assetCode);
                             argz.putString("issueAmount",issueAmount);
                             argz.putString("totalSupply",totalSupply);
-                            argz.putString("tokenDecimals",decimals);
+                            argz.putString("tokenDecimals",tokenDecimals);
                             argz.putString("tokenDescription",tokenDescription);
                             argz.putString("issueAddress",issueAddress);
                             BPIssueTokenStatusFragment bpIssueTokenStatusFragment = new BPIssueTokenStatusFragment();

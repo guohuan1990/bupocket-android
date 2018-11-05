@@ -81,16 +81,16 @@ public class BPRegisterTokenFragment extends BaseFragment {
     private String tokenName;
     private String tokenCode;
     private String issueAmount;
-    private String decimals;
-    private String desc;
+    private String tokenDecimals;
+    private String tokenDesc;
 //    private String issueType;
     private String issueAddress;
     private String getTokenDetailErrorCode;
-    private String balance;
+    private String buBalance;
     protected SharedPreferencesHelper sharedPreferencesHelper;
     QMUITipDialog txSendingTipDialog;
     private String hash;
-    private TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean;
+    private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
 
     public BPRegisterTokenFragment(){
         super();
@@ -116,8 +116,8 @@ public class BPRegisterTokenFragment extends BaseFragment {
         tokenName = registerTokenInfo.getName();
         tokenCode = registerTokenInfo.getCode();
         issueAmount = registerTokenInfo.getAmount();
-        decimals = registerTokenInfo.getDecimals();
-        desc = registerTokenInfo.getDesc();
+        tokenDecimals = registerTokenInfo.getDecimals();
+        tokenDesc = registerTokenInfo.getDesc();
 //        issueType = registerTokenInfo.getType();
         mTokenNameTv.setText(tokenName);
         mTokenCodeTv.setText(tokenCode);
@@ -128,7 +128,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
         }
         mRegisterFeeTv.setText(CommonUtil.addSuffix(Constants.REGISTER_TOKEN_FEE,"BU"));
         issueAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
-        balance = bundle.getString("buBalance");
+        buBalance = bundle.getString("buBalance");
 //        if(issueType.equals(AssetTypeEnum.ATP_FIXED.getCode())){
 //            mIssueTypeTv.setText(getString(R.string.issue_type_disposable_txt));
 //        }else if(issueType.equals(AssetTypeEnum.ATP_ADD.getCode())){
@@ -161,9 +161,9 @@ public class BPRegisterTokenFragment extends BaseFragment {
         registerData.setCode(tokenCode);
 //        registerData.setType(issueType);
         registerData.setTotal(issueAmount);
-        registerData.setDecimals(decimals);
+        registerData.setDecimals(tokenDecimals);
         registerData.setVersion(getString(R.string.token_version));
-        registerData.setDesc(desc);
+        registerData.setDesc(tokenDesc);
         registerData.setAddress(issueAddress);
         registerData.setFee(Constants.REGISTER_TOKEN_FEE);
 
@@ -212,7 +212,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
         mRegisterConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Double.valueOf(balance) < Double.valueOf(Constants.REGISTER_TOKEN_FEE)){
+                if(Double.valueOf(buBalance) < Double.valueOf(Constants.REGISTER_TOKEN_FEE)){
                     Toast.makeText(getActivity(), R.string.register_token_balance_insufficient_message_txt, Toast.LENGTH_SHORT).show();
                 }else if(getTokenDetailErrorCode.equals("0")){
                     Toast.makeText(getActivity(), R.string.register_already_have_message_txt, Toast.LENGTH_SHORT).show();
@@ -270,7 +270,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
                     public void run() {
                         String accountBPData = getAccountBPData();
                         try {
-                            hash = Wallet.getInstance().registerATP10Token(password,accountBPData,issueAddress,tokenName,tokenCode,decimals,desc,Constants.REGISTER_TOKEN_FEE,issueAmount);
+                            hash = Wallet.getInstance().registerATP10Token(password,accountBPData,issueAddress,tokenName,tokenCode,tokenDecimals,tokenDesc,Constants.REGISTER_TOKEN_FEE,issueAmount);
                         } catch (WalletException e){
                             e.printStackTrace();
                             Looper.prepare();
@@ -338,8 +338,8 @@ public class BPRegisterTokenFragment extends BaseFragment {
                         argz.putString("tokenCode",tokenCode);
 //                        argz.putString("issueType",issueType);
                         argz.putString("issueAmount",issueAmount);
-                        argz.putString("tokenDecimals",decimals);
-                        argz.putString("tokenDesc",desc);
+                        argz.putString("tokenDecimals",tokenDecimals);
+                        argz.putString("tokenDesc",tokenDesc);
                         argz.putString("issueAddress",issueAddress);
                         /*RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
                         registerStatusInfo.setErrorCode(2);
@@ -365,21 +365,21 @@ public class BPRegisterTokenFragment extends BaseFragment {
                             if(!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())){
                                 return;
                             }else{
-                                txDeatilRespBoBean = resp.getData().getTxDeatilRespBo();
+                                txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
                                 timerTask.cancel();
                                 txSendingTipDialog.dismiss();
                                 Bundle argz = new Bundle();
-                                argz.putString("txStatus",txDeatilRespBoBean.getStatus().toString());
+                                argz.putString("txStatus",txDetailRespBoBean.getStatus().toString());
                                 argz.putString("tokenName",tokenName);
                                 argz.putString("tokenCode",tokenCode);
 //                                argz.putString("issueType",issueType);
                                 argz.putString("issueAmount",issueAmount);
-                                argz.putString("tokenDecimals",decimals);
-                                argz.putString("tokenDesc",desc);
+                                argz.putString("tokenDecimals",tokenDecimals);
+                                argz.putString("tokenDesc",tokenDesc);
                                 argz.putString("issueAddress",issueAddress);
                                 argz.putString("txHash",hash);
-                                argz.putString("txFee",txDeatilRespBoBean.getFee());
-                                argz.putString("errorMsg",txDeatilRespBoBean.getErrorMsg());
+                                argz.putString("txFee",txDetailRespBoBean.getFee());
+                                argz.putString("errorMsg",txDetailRespBoBean.getErrorMsg());
                                 BPRegisterTokenStatusFragment bpRegisterTokenStatusFragment = new BPRegisterTokenStatusFragment();
                                 bpRegisterTokenStatusFragment.setArguments(argz);
                                 startFragmentAndDestroyCurrent(bpRegisterTokenStatusFragment);
@@ -394,8 +394,8 @@ public class BPRegisterTokenFragment extends BaseFragment {
                             argz.putString("tokenCode",tokenCode);
 //                            argz.putString("issueType",issueType);
                             argz.putString("issueAmount",issueAmount);
-                            argz.putString("tokenDecimals",decimals);
-                            argz.putString("tokenDesc",desc);
+                            argz.putString("tokenDecimals",tokenDecimals);
+                            argz.putString("tokenDesc",tokenDesc);
                             argz.putString("issueAddress",issueAddress);
                             /*RegisterStatusInfo registerStatusInfo = new RegisterStatusInfo();
                             registerStatusInfo.setErrorCode(2);
