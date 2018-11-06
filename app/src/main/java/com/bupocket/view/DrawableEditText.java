@@ -36,10 +36,7 @@ public class DrawableEditText extends AppCompatEditText {
         if (event.getAction() == MotionEvent.ACTION_UP) {
             Drawable drawableRight = getCompoundDrawables()[DRAWABLE_RIGHT];
             if (drawableRight != null) {
-                //本次点击事件的x轴坐标，如果>当前控件宽度-控件右间距-drawable实际展示大小
                 if (event.getX() >= (getWidth() - getPaddingRight() - drawableRight.getIntrinsicWidth())) {
-                    //设置点击EditText右侧图标EditText失去焦点，
-                    // 防止点击EditText右侧图标EditText获得焦点，软键盘弹出
                     setFocusableInTouchMode(false);
                     setFocusable(false);
                     if (OnDrawableClickListener != null) {

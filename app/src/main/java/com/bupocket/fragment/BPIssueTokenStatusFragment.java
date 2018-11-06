@@ -107,11 +107,11 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
         mTokenVersionTv.setText(getString(R.string.token_version));
         mAssetDescTv.setText(tokenDescription);
         mTokenDecimalsTv.setText(tokenDecimals);
-        mIssueAmountTv.setText(issueAmount);
+        mIssueAmountTv.setText(CommonUtil.thousandSeparator(issueAmount));
         if(totalSupply.equals("0")){
             mAssetAmountTv.setText(getString(R.string.issue_unlimited_amount_txt));
         }else {
-            mAssetAmountTv.setText(totalSupply);
+            mAssetAmountTv.setText(CommonUtil.thousandSeparator(totalSupply));
         }
 
         Drawable txStatusIconDrawable;
@@ -119,10 +119,10 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
         if (txStatus.equals(TxStatusEnum.SUCCESS.getCode().toString())){
             String actualSupply = bundle.getString("actualSupply");
             if(totalSupply.equals("0")){
-                mAccumulativeIssueAmountTv.setText(AmountUtil.amountAddition(actualSupply,issueAmount));
+                mAccumulativeIssueAmountTv.setText(CommonUtil.thousandSeparator(AmountUtil.amountAddition(actualSupply,issueAmount)));
             }else {
                 mAccumulativeIssueAmountTitleTv.setText(getString(R.string.surplus_issue_amount_txt));
-                mAccumulativeIssueAmountTv.setText(AmountUtil.amountSubtraction(totalSupply,AmountUtil.amountAddition(actualSupply,issueAmount)));
+                mAccumulativeIssueAmountTv.setText(CommonUtil.thousandSeparator(AmountUtil.amountSubtraction(totalSupply,AmountUtil.amountAddition(actualSupply,issueAmount))));
             }
             String txHash = bundle.getString("txHash");
             String txFee = bundle.getString("txFee");
@@ -148,12 +148,14 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
         }else {
             String actualSupply = bundle.getString("actualSupply");
             if(totalSupply.equals("0")){
-                Double accumulativeIssueAmount = Double.valueOf(actualSupply);
-                mAccumulativeIssueAmountTv.setText(accumulativeIssueAmount.toString());
+//                Double accumulativeIssueAmount = Double.valueOf(actualSupply);
+//                mAccumulativeIssueAmountTv.setText(accumulativeIssueAmount.toString());
+                mAccumulativeIssueAmountTv.setText(CommonUtil.thousandSeparator(actualSupply));
             }else {
                 mAccumulativeIssueAmountTitleTv.setText(getString(R.string.surplus_issue_amount_txt));
-                Double surplusAmount = Double.valueOf(totalSupply) - Double.valueOf(actualSupply);
-                mAccumulativeIssueAmountTv.setText(surplusAmount.toString());
+//                Double surplusAmount = Double.valueOf(totalSupply) - Double.valueOf(actualSupply);
+//                mAccumulativeIssueAmountTv.setText(surplusAmount.toString());
+                mAccumulativeIssueAmountTv.setText(CommonUtil.thousandSeparator(AmountUtil.amountSubtraction(totalSupply,actualSupply)));
             }
             String txHash = bundle.getString("txHash");
             String txFee = bundle.getString("txFee");

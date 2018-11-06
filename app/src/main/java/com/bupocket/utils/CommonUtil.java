@@ -715,4 +715,9 @@ public class CommonUtil {
         String base64Pattern = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$";
         return Pattern.matches(base64Pattern, str);
     }
+
+    public static String thousandSeparator(String str) {
+        DecimalFormat df = new DecimalFormat("###,###.########");
+        return df.format(new BigDecimal(str));
+    }
 }

@@ -115,17 +115,6 @@ public class BPAssetsAddFragment extends BaseFragment {
 
         searchTokenAdapter = new SearchTokenAdapter(searchTokenRespDto.getTokenList(), getContext());
         mSearchTokenListView.setAdapter(searchTokenAdapter);
-        /*mSearchTokenListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                SearchTokenRespDto.TokenListBean searchTokenAdapterItem = (SearchTokenRespDto.TokenListBean) searchTokenAdapter.getItem(position);
-                String assetCode = searchTokenAdapterItem.getAssetCode();
-                String issuer = searchTokenAdapterItem.getIssuer();
-                System.out.println(issuer);
-
-            }
-        });*/
 
     }
 

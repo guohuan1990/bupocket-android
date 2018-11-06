@@ -297,7 +297,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                     mTokenNameTv.setText(inexistenceStr);
                     mTotalIssueAmountTv.setText(inexistenceStr);
                     mTokenCodeTv.setText(assetCode);
-                    mThisTimeIssueAmountTv.setText(issueAmount);
+                    mThisTimeIssueAmountTv.setText(CommonUtil.thousandSeparator(issueAmount));
                     mAccumulativeIssueAmountTv.setText(inexistenceStr);
                     mIssueFeeTv.setText(inexistenceStr);
                     errorMsg = msg;
@@ -315,15 +315,15 @@ public class BPIssueTokenFragment extends BaseFragment {
 
                     mTokenNameTv.setText(assetName);
                     mTokenCodeTv.setText(assetCode);
-                    mThisTimeIssueAmountTv.setText(issueAmount);
+                    mThisTimeIssueAmountTv.setText(CommonUtil.thousandSeparator(issueAmount));
                     mIssueFeeTv.setText(CommonUtil.addSuffix(Constants.ISSUE_TOKEN_FEE,"BU"));
 
                     if(totalSupply.equals("0")){
-                        mAccumulativeIssueAmountTv.setText(actualSupply);
+                        mAccumulativeIssueAmountTv.setText(CommonUtil.thousandSeparator(actualSupply));
                         mIssueTokenInfoLl.removeView(mIssueTokenInfoLl.findViewById(R.id.totalIssueAmountRl));
                     }else {
-                        mTotalIssueAmountTv.setText(totalSupply);
-                        mAccumulativeIssueAmountTv.setText(actualSupply);
+                        mTotalIssueAmountTv.setText(CommonUtil.thousandSeparator(totalSupply));
+                        mAccumulativeIssueAmountTv.setText(CommonUtil.thousandSeparator(actualSupply));
                         if(new BigDecimal(AmountUtil.amountAddition(actualSupply,issueAmount)).compareTo(new BigDecimal(totalSupply))==1){
                             errorMsg = getString(R.string.error_issue_issue_amount_overflow_message_txt);
                         }

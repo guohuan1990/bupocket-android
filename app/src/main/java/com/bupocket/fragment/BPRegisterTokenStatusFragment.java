@@ -141,7 +141,7 @@ public class BPRegisterTokenStatusFragment extends BaseFragment {
         if(issueAmount.equals("0")){
             mTokenAmountTv.setText(getString(R.string.issue_unlimited_amount_txt));
         }else {
-            mTokenAmountTv.setText(issueAmount);
+            mTokenAmountTv.setText(CommonUtil.thousandSeparator(issueAmount));
         }
     }
 
