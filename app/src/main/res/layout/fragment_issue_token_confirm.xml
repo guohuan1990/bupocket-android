@@ -25,6 +25,8 @@
             android:text="@string/please_confirm_issue_token_info_txt"
             android:textSize="14sp"
             android:layout_marginTop="15dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:textColor="@color/app_txt_color_gray"/>
 
         <LinearLayout
