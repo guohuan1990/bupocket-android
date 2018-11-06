@@ -292,7 +292,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                                     mSocket.disconnect();
                                     startFragment(new HomeFragment());
                                 }
-                            }).create().show();
+                            }).setCanceledOnTouchOutside(false).create().show();
                     String inexistenceStr = "--";
                     mTokenNameTv.setText(inexistenceStr);
                     mTotalIssueAmountTv.setText(inexistenceStr);
