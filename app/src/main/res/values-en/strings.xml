@@ -300,4 +300,5 @@
     <string name="error_issue_total_issue_amount_unequal_message_txt">The total amount of tokens you issued does not match the number you have registered.</string>
     <string name="error_issue_issue_amount_overflow_message_txt">The total amount of tokens you issued exceeds the number you have registered.</string>
     <string name="error_issue_balance_insufficient_message_txt">Your BU balance is insufficient, so you cannot issue tokens, please recharge.</string>
+    <string name="error_issue_overflow_message_txt">Your total assets to be issued exceed the upper limit</string>
 </resources>

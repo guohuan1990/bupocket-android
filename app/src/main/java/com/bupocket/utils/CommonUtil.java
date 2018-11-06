@@ -720,4 +720,13 @@ public class CommonUtil {
         DecimalFormat df = new DecimalFormat("###,###.########");
         return df.format(new BigDecimal(str));
     }
+
+    public static Boolean checkIssueAmount(String issueAmount,String decimals){
+        try{
+            Long.parseLong(new BigDecimal(issueAmount).multiply(new BigDecimal(Math.pow(10, Double.parseDouble(decimals)))).setScale(0).toPlainString());
+        }catch (NumberFormatException e){
+            return false;
+        }
+        return true;
+    }
 }

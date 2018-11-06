@@ -321,6 +321,9 @@ public class BPIssueTokenFragment extends BaseFragment {
                     if(totalSupply.equals("0")){
                         mAccumulativeIssueAmountTv.setText(CommonUtil.thousandSeparator(actualSupply));
                         mIssueTokenInfoLl.removeView(mIssueTokenInfoLl.findViewById(R.id.totalIssueAmountRl));
+                        if(!CommonUtil.checkIssueAmount(AmountUtil.amountAddition(actualSupply,issueAmount),tokenDecimals)){
+                            errorMsg = getString(R.string.error_issue_overflow_message_txt);
+                        }
                     }else {
                         mTotalIssueAmountTv.setText(CommonUtil.thousandSeparator(totalSupply));
                         mAccumulativeIssueAmountTv.setText(CommonUtil.thousandSeparator(actualSupply));
