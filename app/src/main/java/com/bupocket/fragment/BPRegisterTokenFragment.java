@@ -366,6 +366,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
 
                         @Override
                         public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
+                            timerTask.cancel();
                             Bundle argz = new Bundle();
                             argz.putString("txStatus","timeout");
                             argz.putString("tokenName",tokenName);
