@@ -63,8 +63,6 @@ public class BPIssueTokenFragment extends BaseFragment {
     QMUITopBarLayout mTopBar;
     @BindView(R.id.tokenCodeTv)
     TextView mTokenCodeTv;
-//    @BindView(R.id.issueTypeTv)
-//    TextView mIssueTypeTv;
     @BindView(R.id.thisTimeIssueAmountTv)
     TextView mThisTimeIssueAmountTv;
     @BindView(R.id.totalIssueAmountTv)
@@ -85,17 +83,17 @@ public class BPIssueTokenFragment extends BaseFragment {
 
     private Socket mSocket;
     protected SharedPreferencesHelper sharedPreferencesHelper;
-    String assetCode;
-    String issueAddress;
-    String issueAmount;
-    String actualSupply;
-    String assetName;
-    String tokenDecimals;
-    String tokenDescription;
-    String totalSupply;
-    String version;
-    String errorMsg;
-    String buBalance;
+    private String assetCode;
+    private String issueAddress;
+    private String issueAmount;
+    private String actualSupply;
+    private String assetName;
+    private String tokenDecimals;
+    private String tokenDescription;
+    private String totalSupply;
+    private String tokenVersion;
+    private String errorMsg;
+    private String buBalance;
     QMUITipDialog txSendingTipDialog;
     private String hash;
     private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
@@ -225,16 +223,13 @@ public class BPIssueTokenFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         final String uuID = bundle.getString("uuID");
-        System.out.println(uuID);
         BPApplication application = (BPApplication)getActivity().getApplication();
         mSocket = application.getSocket();
         mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
 
             @Override
             public void call(Object... args) {
-                System.out.println("socket id :" + mSocket.id());
                 mSocket.emit("token.issue.join",uuID);
-//                mSocket.disconnect();
             }
 
         }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
@@ -311,7 +306,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                     tokenDecimals = tokenDetail.getDecimals();
                     tokenDescription = tokenDetail.getTokenDescription();
                     totalSupply = tokenDetail.getTotalSupply();
-                    version = tokenDetail.getVersion();
+                    tokenVersion = tokenDetail.getVersion();
 
                     mTokenNameTv.setText(assetName);
                     mTokenCodeTv.setText(assetCode);

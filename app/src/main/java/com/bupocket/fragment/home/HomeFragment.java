@@ -73,7 +73,7 @@ public class HomeFragment extends BaseFragment {
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return getResources().getString(R.string.tabbr_wallet_txt);
+                        return getResources().getString(R.string.tabbar_assets_txt);
                     case 1:
                     default:
                         return getResources().getString(R.string.tabbar_profile_txt);

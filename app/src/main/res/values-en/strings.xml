@@ -53,7 +53,7 @@
     <string name="confirm_mneonic_code_txt">Please click the mnemonic words in order to confirm that you backed up correctly.</string>
     <string name="confirm_mneonic_code_btn_txt">Done</string>
     <string name="wallet_password_confirm_title">Confirm password</string>
-    <string name="wallet_password_confirm_txt1">Please enter the wallet password to confirm the backup</string>
+    <string name="wallet_password_confirm_txt1">Please enter the identity password to confirm the backup</string>
     <string name="hint_wallet_passwrod_confirm_txt1">8~20 letters and numbers</string>
     <string name="hint_wallet_passwrod_confirm_submit_btn">Confirm</string>
     <string name="wallet_send_txt">Transfer</string>
@@ -68,13 +68,13 @@
     <string name="tx_timeout_txt1">Request timeout</string>
 
     <string name="password_comfirm_dialog_title">Confirm password</string>
-    <string name="password_comfirm_dialog_sub_txt">Please enter the wallet password to confirm the transfer</string>
-    <string name="password_comfirm_dialog_to_backup">Please enter the wallet password to confirm the backup</string>
+    <string name="password_comfirm_dialog_sub_txt">Please enter the identity password to confirm the transfer</string>
+    <string name="password_comfirm_dialog_to_backup">Please enter the identity password to confirm the backup</string>
     <!-- 恢复身份 -->
     <string name="recover_wallet_title">Recover identity</string>
     <string name="recover_edit_mneonic_code_hint">Please enter mnemonic words, separated by a space</string>
     <string name="recover_mneonic_input_error">The mnemonic words entered are incorrect, please enter again</string>
-    <string name="recover_edit_new_wallet_name_hint">Please enter a name for the new wallet</string>
+    <string name="recover_edit_new_wallet_name_hint">Please enter a name for the new identity</string>
     <string name="recover_input_wallet_name_error">Only letters, numerals, and underscores are allowed and it cannot exceed 20 characters</string>
     <string name="recover_set_pwd_hint">Please set a password</string>
     <string name="recover_set_pwd_error">The password consists of letters and numerals, the length of which is 8~20 characters</string>
@@ -197,8 +197,8 @@
     <string name="user_info_logout">Log out the current identity</string>
     <string name="user_info_logout_loading">Logging out</string>
     <string name="user_info_backup_loading">Loading</string>
-    <string name="user_info_logout_notice">The identity and imported wallet will be removed. Please make sure the wallet is backed up</string>
-    <string name="user_info_logout_warning">Warning: If you do not back up properly, you will not be able to retrieve your wallet after you log out. Please handle this operation carefully.</string>
+    <string name="user_info_logout_notice">The identity will be removed. Please make sure the identity is backed up</string>
+    <string name="user_info_logout_warning">Warning: If you do not back up properly, you will not be able to retrieve your identity after you log out. Please handle this operation carefully.</string>
 
     <string name="common_dialog_cancel">Cancel</string>
     <string name="common_dialog_confirm">Confirm</string>
