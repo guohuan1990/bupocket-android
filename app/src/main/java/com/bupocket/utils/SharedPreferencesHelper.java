@@ -122,26 +122,4 @@ public class SharedPreferencesHelper {
             mSp.edit().putInt(key, (Integer) value).commit();
         }
     }
-
-    public <T> void setDataList(String tag, List<T> datalist) {
-        if (null == datalist || datalist.size() <= 0) return;
-        Gson gson = new Gson();
-        String strJson = gson.toJson(datalist);
-        editor.clear();
-        editor.putString(tag, strJson);
-        editor.commit();
-    }
-
-    public <T> List<T> getDataList(String tag) {
-        List<T> datalist = new ArrayList<T>();
-        String strJson = sharedPreferences.getString(tag, null);
-        if (null == strJson) {
-            return datalist;
-        }
-        Gson gson = new Gson();
-        datalist = gson.fromJson(strJson, new TypeToken<List<T>>() {
-        }.getType());
-        return datalist;
-
-    }
 }

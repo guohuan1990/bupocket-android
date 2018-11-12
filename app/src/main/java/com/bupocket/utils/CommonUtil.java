@@ -10,6 +10,9 @@ import android.provider.Settings;
 import android.support.v4.math.MathUtils;
 import android.util.Base64;
 
+import com.bupocket.common.Constants;
+import com.bupocket.enums.BumoNodeEnum;
+
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
@@ -721,12 +724,21 @@ public class CommonUtil {
         return df.format(new BigDecimal(str));
     }
 
-    public static Boolean checkIssueAmount(String issueAmount,String decimals){
+    public static Boolean checkAmount(String issueAmount,String decimals){
         try{
             Long.parseLong(new BigDecimal(issueAmount).multiply(new BigDecimal(Math.pow(10, Double.parseDouble(decimals)))).setScale(0).toPlainString());
         }catch (NumberFormatException e){
             return false;
         }
         return true;
+    }
+
+    public static String getWebServerUrl(){
+        int nodeCode = SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
+        if(BumoNodeEnum.TEST.getCode() == nodeCode){
+            return Constants.WEB_SERVER_TEST_DOMAIN;
+        }else {
+            return Constants.WEB_SERVER_DOMAIN;
+        }
     }
 }

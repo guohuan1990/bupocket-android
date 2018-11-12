@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
@@ -69,7 +70,7 @@ public class BPUserInfoFragment extends BaseFragment {
         String identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
         String accName = getArguments().getString("accName");
         mUserInfoAccNameTv.setText(accName);
-        mIdentityIdTv.setText(identityId);
+        mIdentityIdTv.setText(AddressUtil.anonymous(identityId));
     }
 
     private void eventListeners() {

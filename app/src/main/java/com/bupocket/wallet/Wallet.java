@@ -4,11 +4,13 @@ import android.content.Context;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.http.api.AccountService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
+import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.enums.BUChainExceptionEnum;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
@@ -44,7 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Wallet {
-    SDK sdk = SDK.getInstance(Constants.BUMO_NODE_URL);
+    SDK sdk = SDK.getInstance(getNodeUrl());
     private static Wallet wallet;
 
     private Wallet(){}
@@ -52,7 +54,6 @@ public class Wallet {
     public static Wallet getInstance(){
         if(wallet == null){
             wallet = new Wallet();
-
         }
         return wallet;
     }
@@ -553,5 +554,12 @@ public class Wallet {
         return txHash;
     }
 
-
+    public String getNodeUrl(){
+        int nodeCode = SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
+        if(BumoNodeEnum.TEST.getCode() == nodeCode){
+            return Constants.BUMO_TEST_NODE_URL;
+        }else {
+            return Constants.BUMO_NODE_URL;
+        }
+    }
 }

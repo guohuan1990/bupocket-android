@@ -31,7 +31,7 @@ public class BPUpgradeManager {
                 .Builder()
                 .setActivity(mActivity)
                 .setThemeColor(0xFF36B3FF)
-                .setUpdateUrl(com.bupocket.common.Constants.WEB_SERVER_DOMAIN)
+                .setUpdateUrl(CommonUtil.getWebServerUrl())
                 .setHttpManager(new UpdateAppHttpUtil())
                 .setTopPic(R.mipmap.upgrade_dialog_bg)
                 .build()
