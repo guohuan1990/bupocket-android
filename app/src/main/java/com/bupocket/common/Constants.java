@@ -27,7 +27,7 @@ public class Constants {
     public static final double MAX_SEND_AMOUNT = 1000000000;
     public static final String REGISTER_TOKEN_FEE = "0.02";
     public static final String ISSUE_TOKEN_FEE = "50.01";
-    public static final Integer DEFAULT_BUMO_NODE = 0;
+    public static final Integer DEFAULT_BUMO_NODE = 1;
 
     public static final Integer TX_REQUEST_TIMEOUT_TIMES = 20;
 

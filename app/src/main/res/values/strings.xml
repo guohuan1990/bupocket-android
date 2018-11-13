@@ -301,4 +301,7 @@
     <string name="error_issue_balance_insufficient_message_txt">您的BU余额不足，无法发行资产，请充值</string>
     <string name="error_issue_overflow_message_txt">您的资产发行总量超过了最大上限</string>
 
+    <string name="profile_setting_txt">设置</string>
+    <string name="switch_node_title_txt">切换测试网</string>
+
 </resources>

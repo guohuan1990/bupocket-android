@@ -28,8 +28,8 @@ public class BPProfileFragment extends BaseFragment{
     RelativeLayout mChangePwdRL;
     @BindView(R.id.helpFeedbackRL)
     RelativeLayout mHelpRL;
-    @BindView(R.id.languageRL)
-    RelativeLayout mLanguageRL;
+    @BindView(R.id.settingRL)
+    RelativeLayout mSettingRL;
     @BindView(R.id.versionNameTv)
     TextView mVersionNameTv;
     @BindView(R.id.profileAvatarIv)
@@ -52,10 +52,10 @@ public class BPProfileFragment extends BaseFragment{
                 gotoHelpFeedbackFragment();
             }
         });
-        mLanguageRL.setOnClickListener(new View.OnClickListener() {
+        mSettingRL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoLanguageFragment();
+                gotoSettingFragment();
             }
         });
         mProfileAvatarIv.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +89,7 @@ public class BPProfileFragment extends BaseFragment{
         startFragment(new BPHelpFeedbackFragment());
     }
 
-    private void gotoLanguageFragment(){
-        startFragment(new BPLanguageFragment());
+    private void gotoSettingFragment(){
+        startFragment(new BPSettingFragment());
     }
 }
