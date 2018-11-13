@@ -94,9 +94,9 @@ public class BPSettingFragment extends BaseFragment {
         QMUICommonListItemView monetary = mSettingLv.createItemView(getString(R.string.monetary_title_txt));
         monetary.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
         monetary.setImageDrawable(getResources().getDrawable(R.mipmap.icon_monetary_unit));
-        ImageView rightArrow = new ImageView(getContext());
-        rightArrow.setImageDrawable(getResources().getDrawable(R.mipmap.icon_right_arrow));
-        monetary.addAccessoryCustomView(rightArrow);
+        ImageView monetaryRightArrow = new ImageView(getContext());
+        monetaryRightArrow.setImageDrawable(getResources().getDrawable(R.mipmap.icon_right_arrow));
+        monetary.addAccessoryCustomView(monetaryRightArrow);
         monetary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
