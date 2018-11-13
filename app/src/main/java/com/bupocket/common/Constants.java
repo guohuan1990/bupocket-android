@@ -1,13 +1,19 @@
 package com.bupocket.common;
 
 public class Constants {
+
+    public static String WEB_SERVER_DOMAIN = MainNetConfig.WEB_SERVER_DOMAIN.getValue();
+    public static String BUMO_NODE_URL = MainNetConfig.BUMO_NODE_URL.getValue();
+    public static String PUSH_MESSAGE_SOCKET_URL = MainNetConfig.PUSH_MESSAGE_SOCKET_URL.getValue();
+
+
     //开发环境
-    public static final String WEB_SERVER_DOMAIN = "https://api-bp.bumo.io/";
-    public static final String WEB_SERVER_TEST_DOMAIN = "http://52.80.218.114:8081/";
-    public static final String BUMO_NODE_URL = "http://wallet-node.bumo.io";
-    public static final String BUMO_TEST_NODE_URL = "http://wallet-node.bumotest.io";
-    public static final String PUSH_MESSAGE_SOCKET_URL = "https://ws-tools.bumo.io";
-    public static final String PUSH_MESSAGE_SOCKET_TEST_URL = "https://ws-tools.bumotest.io";
+//    public static final String WEB_SERVER_DOMAIN = "https://api-bp.bumo.io/";
+//    public static final String WEB_SERVER_TEST_DOMAIN = "http://52.80.218.114:8081/";
+//    public static final String BUMO_NODE_URL = "http://wallet-node.bumo.io";
+//    public static final String BUMO_TEST_NODE_URL = "http://wallet-node.bumotest.io";
+//    public static final String PUSH_MESSAGE_SOCKET_URL = "https://ws-tools.bumo.io";
+//    public static final String PUSH_MESSAGE_SOCKET_TEST_URL = "https://ws-tools.bumotest.io";
     //测试环境
 //    public static final String WEB_SERVER_DOMAIN = "http://api-bp.bumotest.io/";
 //    public static final String BUMO_NODE_URL = "http://wallet-node.bumotest.io";
@@ -30,5 +36,36 @@ public class Constants {
     public static final Integer DEFAULT_BUMO_NODE = 1;
 
     public static final Integer TX_REQUEST_TIMEOUT_TIMES = 20;
+
+
+//    Map<String,String> mainnetConfig = new
+
+    public static enum MainNetConfig {
+        WEB_SERVER_DOMAIN("http://api-bp.bumo.io/"),
+        BUMO_NODE_URL("http://wallet-node.bumo.io"),
+        PUSH_MESSAGE_SOCKET_URL("https://ws-tools.bumo.io");
+        private String value;
+        MainNetConfig(String value){
+            this.value = value;
+        }
+        public String getValue() {
+            return value;
+        }
+    }
+
+    public static enum TestNetConfig {
+        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
+        BUMO_NODE_URL("http://wallet-node.bumotest.io"),
+        PUSH_MESSAGE_SOCKET_URL("https://ws-tools.bumotest.io");
+        private String value;
+        TestNetConfig(String value){
+            this.value = value;
+        }
+        public String getValue() {
+            return value;
+        }
+    }
+
+
 
 }
