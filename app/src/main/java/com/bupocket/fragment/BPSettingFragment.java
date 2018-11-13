@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
@@ -13,6 +14,7 @@ import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.utils.KillSelfService;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+import com.qmuiteam.qmui.util.QMUIViewHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
@@ -25,7 +27,6 @@ public class BPSettingFragment extends BaseFragment {
     QMUITopBarLayout mTopBar;
     @BindView(R.id.settingLv)
     QMUIGroupListView mSettingLv;
-
 
     @Override
     protected View onCreateView() {
@@ -52,11 +53,10 @@ public class BPSettingFragment extends BaseFragment {
 
     private void initGroupListView() {
 
-
         // switch node item
         QMUICommonListItemView switchNode = mSettingLv.createItemView(getString(R.string.switch_node_title_txt));
         switchNode.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
-        switchNode.setImageDrawable(getResources().getDrawable(R.mipmap.icon_scan_blue));
+        switchNode.setImageDrawable(getResources().getDrawable(R.mipmap.icon_switch_node));
         // get bumoNode and set checked
         if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()){
             switchNode.getSwitch().setChecked(true);
@@ -76,9 +76,39 @@ public class BPSettingFragment extends BaseFragment {
             }
         });
 
+        // multi-language item
+        QMUICommonListItemView language = mSettingLv.createItemView(getString(R.string.language_txt));
+        language.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
+        language.setImageDrawable(getResources().getDrawable(R.mipmap.icon_profile_item_language));
+        ImageView languageRightArrow = new ImageView(getContext());
+        languageRightArrow.setImageDrawable(getResources().getDrawable(R.mipmap.icon_right_arrow));
+        language.addAccessoryCustomView(languageRightArrow);
+        language.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPLanguageFragment());
+            }
+        });
+
+        // monetary unit item
+        QMUICommonListItemView monetary = mSettingLv.createItemView(getString(R.string.monetary_title_txt));
+        monetary.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
+        monetary.setImageDrawable(getResources().getDrawable(R.mipmap.icon_monetary_unit));
+        ImageView rightArrow = new ImageView(getContext());
+        rightArrow.setImageDrawable(getResources().getDrawable(R.mipmap.icon_right_arrow));
+        monetary.addAccessoryCustomView(rightArrow);
+        monetary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         QMUIGroupListView.newSection(getContext())
                 .setSeparatorDrawableRes(R.color.app_color_white)
                 .setSeparatorDrawableRes(R.color.app_color_white,R.color.app_color_white,R.color.app_color_white,R.color.app_color_white)
+                .addItemView(monetary,null)
+                .addItemView(language,null)
                 .addItemView(switchNode,null)
                 .addTo(mSettingLv);
     }

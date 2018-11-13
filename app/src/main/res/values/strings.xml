@@ -303,5 +303,6 @@
 
     <string name="profile_setting_txt">设置</string>
     <string name="switch_node_title_txt">切换测试网</string>
+    <string name="monetary_title_txt">货币单位</string>
 
 </resources>
