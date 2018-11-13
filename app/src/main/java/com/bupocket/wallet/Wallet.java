@@ -4,13 +4,11 @@ import android.content.Context;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.common.Constants;
-import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.http.api.AccountService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
-import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.enums.BUChainExceptionEnum;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
@@ -18,19 +16,13 @@ import com.bupocket.wallet.model.WalletBPData;
 import com.bupocket.wallet.utils.KeyStore;
 import com.bupocket.wallet.utils.keystore.BaseKeyStoreEntity;
 import com.bupocket.wallet.utils.keystore.KeyStoreEntity;
-
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.encryption.crypto.mnemonic.Mnemonic;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.model.request.*;
-import io.bumo.model.request.operation.AccountActivateOperation;
-import io.bumo.model.request.operation.AccountSetMetadataOperation;
-import io.bumo.model.request.operation.AssetIssueOperation;
-import io.bumo.model.request.operation.AssetSendOperation;
-import io.bumo.model.request.operation.BUSendOperation;
-import io.bumo.model.request.operation.BaseOperation;
+import io.bumo.model.request.operation.*;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.TransactionBuildBlobResult;
 import org.bitcoinj.crypto.MnemonicCode;
@@ -46,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Wallet {
-    SDK sdk = SDK.getInstance(getNodeUrl());
+    SDK sdk = SDK.getInstance(Constants.BUMO_NODE_URL);
     private static Wallet wallet;
 
     private Wallet(){}
@@ -554,12 +546,4 @@ public class Wallet {
         return txHash;
     }
 
-    public String getNodeUrl(){
-        int nodeCode = SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
-        if(BumoNodeEnum.TEST.getCode() == nodeCode){
-            return Constants.BUMO_TEST_NODE_URL;
-        }else {
-            return Constants.BUMO_NODE_URL;
-        }
-    }
 }

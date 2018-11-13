@@ -5,28 +5,18 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.util.Log;
-
 import com.bupocket.common.Constants;
-import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LocaleUtil;
-import com.bupocket.utils.SharedPreferencesHelper;
 import com.squareup.leakcanary.LeakCanary;
-
-import java.net.URISyntaxException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import okhttp3.OkHttpClient;
+
+import javax.net.ssl.*;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 public class BPApplication extends Application {
     @SuppressLint("StaticFieldLeak")
@@ -52,51 +42,53 @@ public class BPApplication extends Application {
         LeakCanary.install(this);
         LocaleUtil.changeAppLanguage(context);
 
-        {
-            try {
-                String socketUrl = getPushMessageSocketUrl(context);
-                HostnameVerifier hostnameVerifier = new HostnameVerifier() {
-                    @Override
-                    public boolean verify(String hostname, SSLSession session) {
-                        return true;
-                    }
-                };
-                TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
-                    @Override
-                    public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+        initSocketConfig();
+    }
 
-                    }
+    private void initSocketConfig() {
+        try {
+            String socketUrl = Constants.PUSH_MESSAGE_SOCKET_URL;
+            HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
+            TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+                @Override
+                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
 
-                    @Override
-                    public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+                }
 
-                    }
+                @Override
+                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {
 
-                    @Override
-                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                        return new java.security.cert.X509Certificate[0];
-                    }
-                }};
-                X509TrustManager trustManager = (X509TrustManager) trustAllCerts[0];
+                }
 
-                SSLContext sslContext = SSLContext.getInstance("SSL");
-                sslContext.init(null, trustAllCerts, null);
-                SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+                @Override
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return new java.security.cert.X509Certificate[0];
+                }
+            }};
+            X509TrustManager trustManager = (X509TrustManager) trustAllCerts[0];
 
-                OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                        .hostnameVerifier(hostnameVerifier)
-                        .sslSocketFactory(sslSocketFactory, trustManager)
-                        .build();
+            SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, null);
+            SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
-                IO.Options opts = new IO.Options();
-                opts.callFactory = okHttpClient;
-                opts.webSocketFactory = okHttpClient;
-                mSocket = IO.socket(socketUrl, opts);
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(e);
-            } catch (NoSuchAlgorithmException | KeyManagementException e) {
-                e.printStackTrace();
-            }
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .hostnameVerifier(hostnameVerifier)
+                    .sslSocketFactory(sslSocketFactory, trustManager)
+                    .build();
+
+            IO.Options opts = new IO.Options();
+            opts.callFactory = okHttpClient;
+            opts.webSocketFactory = okHttpClient;
+            mSocket = IO.socket(socketUrl, opts);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
+            e.printStackTrace();
         }
     }
 
@@ -107,12 +99,33 @@ public class BPApplication extends Application {
         LocaleUtil.setLanguage(context, newConfig);
     }
 
-    public String getPushMessageSocketUrl(Context context){
-        int nodeCode = new SharedPreferencesHelper(context,"buPocket").getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
-        if(BumoNodeEnum.TEST.getCode() == nodeCode){
-            return Constants.PUSH_MESSAGE_SOCKET_TEST_URL;
+
+
+    public static void switchNetConfig(String netType){
+        Boolean isMainNetConfig = false;
+        if(CommonUtil.isNull(netType)){
+            isMainNetConfig = true;
+        }else if("mainnet".equals(netType)){
+            isMainNetConfig = true;
+        }
+
+        if(isMainNetConfig){
+            Constants.BUMO_NODE_URL = Constants.MainNetConfig.BUMO_NODE_URL.getValue();
+            Constants.PUSH_MESSAGE_SOCKET_URL = Constants.MainNetConfig.PUSH_MESSAGE_SOCKET_URL.getValue();
+            Constants.WEB_SERVER_DOMAIN = Constants.MainNetConfig.WEB_SERVER_DOMAIN.getValue();
         }else {
-            return Constants.PUSH_MESSAGE_SOCKET_URL;
+            Constants.BUMO_NODE_URL = Constants.TestNetConfig.BUMO_NODE_URL.getValue();
+            Constants.PUSH_MESSAGE_SOCKET_URL = Constants.TestNetConfig.PUSH_MESSAGE_SOCKET_URL.getValue();
+            Constants.WEB_SERVER_DOMAIN = Constants.TestNetConfig.WEB_SERVER_DOMAIN.getValue();
         }
     }
+
+//    public String getPushMessageSocketUrl(Context context){
+//        int nodeCode = new SharedPreferencesHelper(context,"buPocket").getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
+//        if(BumoNodeEnum.TEST.getCode() == nodeCode){
+//            return Constants.PUSH_MESSAGE_SOCKET_TEST_URL;
+//        }else {
+//            return Constants.PUSH_MESSAGE_SOCKET_URL;
+//        }
+//    }
 }

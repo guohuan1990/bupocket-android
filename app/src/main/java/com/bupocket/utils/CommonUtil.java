@@ -7,11 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.v4.math.MathUtils;
 import android.util.Base64;
-
-import com.bupocket.common.Constants;
-import com.bupocket.enums.BumoNodeEnum;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -30,9 +26,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.Inflater;
-
-import io.bumo.encryption.key.PublicKey;
 
 /**
  * 通用工具类.
@@ -733,12 +726,4 @@ public class CommonUtil {
         return true;
     }
 
-    public static String getWebServerUrl(){
-        int nodeCode = SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
-        if(BumoNodeEnum.TEST.getCode() == nodeCode){
-            return Constants.WEB_SERVER_TEST_DOMAIN;
-        }else {
-            return Constants.WEB_SERVER_DOMAIN;
-        }
-    }
 }

@@ -1,10 +1,8 @@
 package com.bupocket.http.api;
 
 import com.bupocket.common.Constants;
-import com.bupocket.utils.CommonUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -32,7 +30,7 @@ public class RetrofitFactory {
                 .create();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(CommonUtil.getWebServerUrl())
+                .baseUrl(Constants.WEB_SERVER_DOMAIN)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
