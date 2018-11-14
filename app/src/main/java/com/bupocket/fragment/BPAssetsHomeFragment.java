@@ -86,24 +86,20 @@ public class BPAssetsHomeFragment extends BaseFragment {
     LinearLayout mUserNickAndBackupBtnLt;
     @BindView(R.id.homeScanBtn)
     ImageView mHomeScanBtn;
+    @BindView(R.id.assetsSv)
+    ScrollView assetsSv;
+    @BindView(R.id.currencyTypeTv)
+    TextView mCurrencyTypeTv;
 
     protected SharedPreferencesHelper sharedPreferencesHelper;
     private TokensAdapter mTokensAdapter;
-    private String totalAssets = "~~";
     private String currentAccAddress;
     private String currentAccNick;
     private MaterialHeader mMaterialHeader;
-    private static boolean isFirstEnter = true;
     List<GetTokensRespDto.TokenListBean> mLocalTokenList = new ArrayList<>();
 
-    private String assetCode = "BU";
-    private String decimals = "8";
-    private String issuer = "";
     private String tokenBalance;
-    private String tokenType = "0";
-
-    @BindView(R.id.assetsSv)
-    ScrollView assetsSv;
+    private String currencyType;
 
     @Override
     protected View onCreateView() {
@@ -232,6 +228,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
             }
         });
+        mCurrencyTypeTv.setText(currencyType);
     }
 
     private void loadAssetList() {
@@ -254,8 +251,10 @@ public class BPAssetsHomeFragment extends BaseFragment {
         if(JSON.parseObject(sharedPreferencesHelper.getSharedPreference("myTokens", "").toString(), GetTokensRespDto.class) != null){
             mLocalTokenList = JSON.parseObject(sharedPreferencesHelper.getSharedPreference("myTokens", "").toString(), GetTokensRespDto.class).getTokenList();
         }
+        String currencyType = sharedPreferencesHelper.getSharedPreference("currencyType","CNY").toString();
         Map<String, Object> parmasMap = new HashMap<>();
         parmasMap.put("address",currentAccAddress);
+        parmasMap.put("currencyType",currencyType);
         parmasMap.put("tokenList", mLocalTokenList);
         Call<ApiResult<GetTokensRespDto>> call = tokenService.getTokens(parmasMap);
         call.enqueue(new Callback<ApiResult<GetTokensRespDto>>() {
@@ -294,7 +293,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 mAssetsHomeEmptyView.show("","");
             }
 
-            totalAssets = getResources().getString(R.string.prefix_total_asset) + CommonUtil.formatDouble(tokensRespDto.getTotalAmount());
             Message msg = Message.obtain();
             Bundle data = new Bundle();
             data.putString("assetValuation", tokensRespDto.getTotalAmount());
@@ -336,7 +334,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
         currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
-
+        currencyType = sharedPreferencesHelper.getSharedPreference("currencyType","CNY").toString();
         GetTokensRespDto tokensCache = JSON.parseObject(sharedPreferencesHelper.getSharedPreference("tokensInfoCache", "").toString(), GetTokensRespDto.class);
         if(tokensCache != null){
             handleTokens(tokensCache);
@@ -398,11 +396,11 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 }else{
                     Bundle argz = new Bundle();
                     argz.putString("destAddress",result.getContents());
-                    argz.putString("tokenCode",assetCode);
-                    argz.putString("tokenDecimals",decimals);
-                    argz.putString("tokenIssuer",issuer);
+                    argz.putString("tokenCode","BU");
+                    argz.putString("tokenDecimals","8");
+                    argz.putString("tokenIssuer","");
                     argz.putString("tokenBalance",tokenBalance);
-                    argz.putString("tokenType",tokenType);
+                    argz.putString("tokenType","0");
                     BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
                     sendTokenFragment.setArguments(argz);
                     startFragment(sendTokenFragment);

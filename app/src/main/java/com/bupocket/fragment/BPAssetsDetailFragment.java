@@ -78,6 +78,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
     private String tokenBalance = "~";
     private String assetAmount = "~";
     private String tokenType;
+    private String currencyType;
 
     @Override
     protected View onCreateView() {
@@ -179,6 +180,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
             parmasMap.put("walletAddress",currentAccAddress);
             parmasMap.put("startPage", pageStart);
             parmasMap.put("pageSize", pageSize);
+            parmasMap.put("currencyType", currencyType);
             call = txService.getMyTxs(parmasMap);
         }else {
             Map<String, Object> parmasMap = new HashMap<>();
@@ -187,6 +189,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
             parmasMap.put("address",currentAccAddress);
             parmasMap.put("startPage", pageStart);
             parmasMap.put("pageSize", pageSize);
+            parmasMap.put("currencyType", currencyType);
             call = tokenService.getTokenTxs(parmasMap);
         }
         call.enqueue(new Callback<ApiResult<GetMyTxsRespDto>>() {
@@ -217,7 +220,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
             tokenBalance = getMyTxsRespDto.getTokenBalance();
             assetAmount = getMyTxsRespDto.getAssetAmount();
             mAmountTv.setText(tokenBalance + " " + assetCode);
-            mAssetAmountTv.setText("≈￥" + assetAmount);
+            mAssetAmountTv.setText(CommonUtil.addCurrencySymbol(assetAmount,currencyType));
             if(getMyTxsRespDto.getTxRecord() == null || getMyTxsRespDto.getTxRecord().size() == 0) {
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
                 return;
@@ -293,14 +296,9 @@ public class BPAssetsDetailFragment extends BaseFragment {
         }else{
             mAssetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
         }
-/*        mAssetAmountTv.setText(tokenBalance + " " + assetCode);
-        if(!bundle.get("price").toString().equals("~")){
-            mAssetAmountTv.setText("≈￥" + AmountUtil.amountMultiplyAmount(tokenBalance,bundle.get("price").toString()));
-        }else {
-            mAssetAmountTv.setText("~");
-        }*/
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
+        currencyType = sharedPreferencesHelper.getSharedPreference("currencyType","CNY").toString();
         refreshData();
     }
 

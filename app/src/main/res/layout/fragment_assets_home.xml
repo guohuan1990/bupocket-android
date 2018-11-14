@@ -121,19 +121,35 @@
                         android:orientation="vertical"
                         android:paddingLeft="12dp">
 
-                        <TextView
-                            android:id="@+id/totalAssetsValueTv"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="≈0.00"
-                            android:textColor="@color/app_color_white"
-                            android:textSize="32sp" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/totalAssetsValueTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="≈0"
+                                android:textColor="@color/app_color_white"
+                                android:textSize="32sp" />
+
+                            <TextView
+                                android:id="@+id/currencyTypeTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:textColor="@color/app_color_white"
+                                android:textSize="16sp"/>
+
+                        </LinearLayout>
 
                         <TextView
                             android:id="@+id/totalAssetsTitleTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
+                            android:layout_marginBottom="15dp"
                             android:text="@string/total_assets_title_txt"
                             android:textColor="@color/app_color_white"
                             android:textSize="15sp" />

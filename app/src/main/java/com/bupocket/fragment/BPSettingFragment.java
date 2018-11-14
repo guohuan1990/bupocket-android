@@ -1,7 +1,5 @@
 package com.bupocket.fragment;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -39,12 +37,7 @@ public class BPSettingFragment extends BaseFragment {
     }
 
     private void init() {
-        initData();
         initUI();
-    }
-
-    private void initData() {
-
     }
 
     private void initUI() {
@@ -57,6 +50,7 @@ public class BPSettingFragment extends BaseFragment {
 
         // switch node item
         QMUICommonListItemView switchNode = mSettingLv.createItemView(getString(R.string.switch_node_title_txt));
+        switchNode.getTextView().setTextColor(getResources().getColor(R.color.app_txt_color_gray_2));
         switchNode.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
         switchNode.setImageDrawable(getResources().getDrawable(R.mipmap.icon_switch_node));
         // get bumoNode and set checked
@@ -84,6 +78,7 @@ public class BPSettingFragment extends BaseFragment {
 
         // multi-language item
         QMUICommonListItemView language = mSettingLv.createItemView(getString(R.string.language_txt));
+        language.getTextView().setTextColor(getResources().getColor(R.color.app_txt_color_gray_2));
         language.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
         language.setImageDrawable(getResources().getDrawable(R.mipmap.icon_profile_item_language));
         ImageView languageRightArrow = new ImageView(getContext());
@@ -98,6 +93,7 @@ public class BPSettingFragment extends BaseFragment {
 
         // monetary unit item
         QMUICommonListItemView monetary = mSettingLv.createItemView(getString(R.string.monetary_title_txt));
+        monetary.getTextView().setTextColor(getResources().getColor(R.color.app_txt_color_gray_2));
         monetary.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
         monetary.setImageDrawable(getResources().getDrawable(R.mipmap.icon_monetary_unit));
         ImageView monetaryRightArrow = new ImageView(getContext());
@@ -106,7 +102,7 @@ public class BPSettingFragment extends BaseFragment {
         monetary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startFragment(new BPCurrencyFragment());
             }
         });
 

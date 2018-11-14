@@ -10,13 +10,15 @@ import android.widget.TextView;
 import com.bupocket.R;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.SharedPreferencesHelper;
 
 import java.util.List;
 
 public class TokensAdapter extends BaseAdapter {
     private List<GetTokensRespDto.TokenListBean> datas;
     private Context mContext;
-    String mPrefixTokenAmount = "≈￥";
+
+    protected SharedPreferencesHelper sharedPreferencesHelper;
 
     public TokensAdapter(List<GetTokensRespDto.TokenListBean> datas, Context mContext) {
         this.datas = datas;
@@ -53,18 +55,20 @@ public class TokensAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        sharedPreferencesHelper = new SharedPreferencesHelper(convertView.getContext(),"buPocket");
+        String currencyType = sharedPreferencesHelper.getSharedPreference("currencyType","CNY").toString();
+
         holder.assetCodeTv.setText(datas.get(position).getAssetCode());
         if (datas.get(position).getAssetAmount() == null){
             holder.assetAmount.setText("~");
         }else{
             if(!datas.get(position).getAssetAmount().equals("~")){
-                holder.assetAmount.setText(mPrefixTokenAmount + datas.get(position).getAssetAmount());
+                holder.assetAmount.setText(CommonUtil.addCurrencySymbol(datas.get(position).getAssetAmount(),currencyType));
             }else{
                 holder.assetAmount.setText(datas.get(position).getAssetAmount());
             }
         }
         holder.amountTv.setText(datas.get(position).getAmount());
-//        System.out.println("TokensAdapter.getView.assetCode: " + datas.get(position).getAssetCode());
 
         if(CommonUtil.isNull(datas.get(position).getIcon())){
             holder.assetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
