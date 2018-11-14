@@ -38,17 +38,25 @@ import java.util.List;
 import java.util.Map;
 
 public class Wallet {
-    SDK sdk = SDK.getInstance(Constants.BUMO_NODE_URL);
+    private static SDK sdk = null;
     private static Wallet wallet;
 
-    private Wallet(){}
+    private Wallet(){
+        init();
+    }
 
-    public static Wallet getInstance(){
+    private void init() {
+        sdk = SDK.getInstance(Constants.BUMO_NODE_URL);
+    }
+
+    public synchronized static Wallet getInstance(){
         if(wallet == null){
             wallet = new Wallet();
         }
         return wallet;
     }
+
+    public void setNull4Wallet() {wallet = null;}
 
     private WalletBPData create(String password, String sKey,Context context) throws WalletException {
         try {
@@ -130,6 +138,7 @@ public class Wallet {
     }
 
     public String getAccountBUBalance(String accountAddress){
+        System.out.print(Constants.BUMO_NODE_URL);
         AccountGetBalanceRequest request = new AccountGetBalanceRequest();
         request.setAddress(accountAddress);
         AccountGetBalanceResponse response = sdk.getAccountService().getBalance(request);

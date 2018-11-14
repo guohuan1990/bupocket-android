@@ -33,6 +33,7 @@ import com.bupocket.model.IssueTokenInfo;
 import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.SocketUtil;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
@@ -223,8 +224,7 @@ public class BPIssueTokenFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         final String uuID = bundle.getString("uuID");
-        BPApplication application = (BPApplication)getActivity().getApplication();
-        mSocket = application.getSocket();
+        mSocket = SocketUtil.getInstance().getSocket();
         mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
 
             @Override

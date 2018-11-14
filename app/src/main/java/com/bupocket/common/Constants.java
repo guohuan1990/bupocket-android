@@ -37,11 +37,8 @@ public class Constants {
 
     public static final Integer TX_REQUEST_TIMEOUT_TIMES = 20;
 
-
-//    Map<String,String> mainnetConfig = new
-
     public static enum MainNetConfig {
-        WEB_SERVER_DOMAIN("http://api-bp.bumo.io/"),
+        WEB_SERVER_DOMAIN("https://api-bp.bumo.io/"),
         BUMO_NODE_URL("http://wallet-node.bumo.io"),
         PUSH_MESSAGE_SOCKET_URL("https://ws-tools.bumo.io");
         private String value;
@@ -54,7 +51,7 @@ public class Constants {
     }
 
     public static enum TestNetConfig {
-        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
+        WEB_SERVER_DOMAIN("http://52.80.218.114:8081/"),
         BUMO_NODE_URL("http://wallet-node.bumotest.io"),
         PUSH_MESSAGE_SOCKET_URL("https://ws-tools.bumotest.io");
         private String value;

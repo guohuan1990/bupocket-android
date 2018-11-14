@@ -9,12 +9,17 @@ import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.bupocket.utils.KillSelfService;
+import com.bupocket.common.Constants;
+import com.bupocket.enums.BumoNodeEnum;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.SocketUtil;
+import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-import com.qmuiteam.qmui.util.QMUIViewHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
@@ -55,22 +60,24 @@ public class BPSettingFragment extends BaseFragment {
         switchNode.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
         switchNode.setImageDrawable(getResources().getDrawable(R.mipmap.icon_switch_node));
         // get bumoNode and set checked
-//        if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()){
-//            switchNode.getSwitch().setChecked(true);
-//        }else {
-//            switchNode.getSwitch().setChecked(false);
-//        }
+        System.out.print(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE));
+        if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()){
+            switchNode.getSwitch().setChecked(true);
+        }else {
+            switchNode.getSwitch().setChecked(false);
+        }
         switchNode.getSwitch().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    BPApplication.switchNetConfig("mainnet");
-//                    SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
-//                    restartApp(getContext());
+                RetrofitFactory.getInstance().setNull4Retrofit();
+                Wallet.getInstance().setNull4Wallet();
+                SocketUtil.getInstance().SetNull4SocketUtil();
+                if(!isChecked){
+                    SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.MAIN.getCode());
+                    BPApplication.switchNetConfig(BumoNodeEnum.MAIN.getName());
                 }else {
-//                    SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.MAIN.getCode());
-//                    restartApp(getContext());
-                    BPApplication.switchNetConfig("mainnet");
+                    SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
+                    BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
                 }
             }
         });
@@ -110,19 +117,6 @@ public class BPSettingFragment extends BaseFragment {
                 .addItemView(language,null)
                 .addItemView(switchNode,null)
                 .addTo(mSettingLv);
-    }
-
-    public void restartApp(Context context) {
-//        Intent intent = new Intent(context, BPMainActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(intent);
-//        android.os.Process.killProcess(android.os.Process.myPid());
-        Intent intent1=new Intent(context,KillSelfService.class);
-        intent1.putExtra("PackageName",context.getPackageName());
-        intent1.putExtra("Delayed",200);
-        context.startService(intent1);
-
-        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     private void initTopBar() {

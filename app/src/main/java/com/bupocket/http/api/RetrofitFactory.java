@@ -23,6 +23,7 @@ public class RetrofitFactory {
     public Retrofit getRetrofit(){
         return retrofit;
     }
+    public void setNull4Retrofit() {factory = null;}
 
     private void init(){
         Gson gson = new GsonBuilder()

@@ -227,7 +227,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         refreshData();
                         refreshlayout.finishRefresh();
                         refreshlayout.setNoMoreData(false);
-//                        initData();
                     }
                 }, 400);
 
@@ -345,15 +344,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
         initTokensView();
         refreshLayout.autoRefresh();
-//        refreshData();
     }
 
     private void refreshData(){
-//        if(isFirstEnter){
-//            isFirstEnter = false;
-//            initTokensView();
-//            refreshLayout.autoRefresh();
-//        }
         loadAssetList();
     }
 

@@ -304,5 +304,9 @@
     <string name="profile_setting_txt">设置</string>
     <string name="switch_node_title_txt">切换测试网</string>
     <string name="monetary_title_txt">货币单位</string>
+    <string name="currency_cny_txt">CNY</string>
+    <string name="currency_usd_txt">USD</string>
+    <string name="currency_jpy_txt">JPY</string>
+    <string name="currency_krw_txt">KRW</string>
 
 </resources>

@@ -50,9 +50,6 @@ xmlns:tools="http://schemas.android.com/tools">
         android:name="com.bupocket.activity.CaptureActivity"
         android:label="@string/capture_activity_label"
         android:screenOrientation="portrait"/>
-    <service
-        android:name="com.bupocket.utils.KillSelfService"
-        />
 </application>
 
 

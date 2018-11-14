@@ -33,6 +33,7 @@ import com.bupocket.model.RegisterStatusInfo;
 import com.bupocket.model.RegisterTokenInfo;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.SocketUtil;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
@@ -157,17 +158,13 @@ public class BPRegisterTokenFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         final String uuID = bundle.getString("uuID");
-        System.out.println(uuID);
 
-        BPApplication application = (BPApplication)getActivity().getApplication();
-        mSocket = application.getSocket();
+        mSocket = SocketUtil.getInstance().getSocket();
         mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
 
             @Override
             public void call(Object... args) {
-                System.out.println("socket id :" + mSocket.id());
                 mSocket.emit("token.register.join",uuID);
-//                mSocket.disconnect();
             }
 
         }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {

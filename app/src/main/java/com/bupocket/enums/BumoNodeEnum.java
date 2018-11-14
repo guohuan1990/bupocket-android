@@ -1,19 +1,19 @@
 package com.bupocket.enums;
 
 public enum BumoNodeEnum {
-    TEST(0,"BUMO_TEST_NODE_URL"),
-    MAIN(1,"BUMO_NODE_URL")
+    TEST(0,"TEST"),
+    MAIN(1,"MAIN")
     ;
     private int code;
-    private String url;
+    private String name;
 
-    private BumoNodeEnum(int code,String url) {
+    private BumoNodeEnum(int code,String name) {
         this.code = code;
-        this.url = url;
+        this.name = name;
     }
 
-    public String getUrl() {
-        return url;
+    public String getName() {
+        return name;
     }
 
     public int getCode() {
