@@ -729,25 +729,11 @@ public class CommonUtil {
     }
 
     public static String addCurrencySymbol(String assetAmount,String currencyType){
-        String currencySymbol = "";
-        switch (currencyType){
-            case "CNY":{
-                currencySymbol = CurrencyTypeEnum.CNY.getSymbol();
-                break;
-            }
-            case "USD":{
-                currencySymbol = CurrencyTypeEnum.USD.getSymbol();
-                break;
-            }
-            case "JPY":{
-                currencySymbol = CurrencyTypeEnum.JPY.getSymbol();
-                break;
-            }
-            case "KRW":{
-                currencySymbol = CurrencyTypeEnum.KRW.getSymbol();
-                break;
+        for(CurrencyTypeEnum currencyTypeEnum : CurrencyTypeEnum.values()){
+            if(currencyTypeEnum.getName().equals(currencyType)){
+                return "≈" + currencyTypeEnum.getSymbol() + assetAmount;
             }
         }
-        return "≈" + currencySymbol + assetAmount;
+        return null;
     }
 }

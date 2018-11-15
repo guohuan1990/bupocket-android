@@ -329,7 +329,6 @@ public class BPAssetsDetailFragment extends BaseFragment {
             if (result.getContents() == null) {
                 Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
             } else {
-//                Toast.makeText(getActivity(), "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                 Bundle argz = new Bundle();
                 argz.putString("destAddress",result.getContents());
                 argz.putString("tokenCode",assetCode);
