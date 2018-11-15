@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
+import com.bupocket.common.Constants;
+import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.TokenTypeEnum;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
 import com.bupocket.http.api.dto.resp.SearchTokenRespDto;
@@ -53,8 +55,14 @@ public class SearchTokenAdapter extends BaseAdapter {
     public View getView(int i, View convertView, ViewGroup parent) {
 
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-//        tokenList = JSON.parseObject(sharedPreferencesHelper.getSharedPreference("myTokens","").toString(),MyTokens.class).getTokenList();
-        getTokensRespDto = JSON.parseObject(sharedPreferencesHelper.getSharedPreference("myTokens", "").toString(), GetTokensRespDto.class);
+        Integer bumoNodeType = sharedPreferencesHelper.getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
+        final String localTokenListSharedPreferenceKey;
+        if(BumoNodeEnum.TEST.getCode() == bumoNodeType){
+            localTokenListSharedPreferenceKey = BumoNodeEnum.TEST.getLocalTokenListSharedPreferenceKey();
+        }else {
+            localTokenListSharedPreferenceKey = BumoNodeEnum.MAIN.getLocalTokenListSharedPreferenceKey();
+        }
+        getTokensRespDto = JSON.parseObject(sharedPreferencesHelper.getSharedPreference(localTokenListSharedPreferenceKey, "").toString(), GetTokensRespDto.class);
         if(getTokensRespDto != null) {
             tokenList = getTokensRespDto.getTokenList();
         }
@@ -112,7 +120,7 @@ public class SearchTokenAdapter extends BaseAdapter {
                         tokenList.add(tokenListBean);
                         getTokensRespDto = new GetTokensRespDto();
                         getTokensRespDto.setTokenList(tokenList);
-                        sharedPreferencesHelper.put("myTokens",JSON.toJSONString(getTokensRespDto));
+                        sharedPreferencesHelper.put(localTokenListSharedPreferenceKey,JSON.toJSONString(getTokensRespDto));
                         holder.tokenOptAddBtn.setVisibility(View.GONE);
                         holder.tokenOptCancelCBtn.setVisibility(View.VISIBLE);
                     }
@@ -126,7 +134,7 @@ public class SearchTokenAdapter extends BaseAdapter {
                                 tokenList.remove(i);
                                 getTokensRespDto = new GetTokensRespDto();
                                 getTokensRespDto.setTokenList(tokenList);
-                                sharedPreferencesHelper.put("myTokens",JSON.toJSONString(getTokensRespDto));
+                                sharedPreferencesHelper.put(localTokenListSharedPreferenceKey,JSON.toJSONString(getTokensRespDto));
                             }
 
                         }

@@ -18,6 +18,7 @@ import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.model.IssueStatusInfo;
 import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.SocketUtil;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import butterknife.BindView;
@@ -73,8 +74,7 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_issue_token_status, null);
         ButterKnife.bind(this, root);
-        BPApplication application = (BPApplication)getActivity().getApplication();
-        mSocket = application.getSocket();
+        mSocket = SocketUtil.getInstance().getSocket();
         initData();
         initTopbar();
         return root;

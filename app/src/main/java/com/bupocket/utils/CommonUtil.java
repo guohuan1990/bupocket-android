@@ -7,8 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.v4.math.MathUtils;
 import android.util.Base64;
+
+import com.bupocket.enums.CurrencyTypeEnum;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -27,9 +28,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.Inflater;
-
-import io.bumo.encryption.key.PublicKey;
 
 /**
  * 通用工具类.
@@ -721,12 +719,21 @@ public class CommonUtil {
         return df.format(new BigDecimal(str));
     }
 
-    public static Boolean checkIssueAmount(String issueAmount,String decimals){
+    public static Boolean checkAmount(String issueAmount,String decimals){
         try{
             Long.parseLong(new BigDecimal(issueAmount).multiply(new BigDecimal(Math.pow(10, Double.parseDouble(decimals)))).setScale(0).toPlainString());
         }catch (NumberFormatException e){
             return false;
         }
         return true;
+    }
+
+    public static String addCurrencySymbol(String assetAmount,String currencyType){
+        for(CurrencyTypeEnum currencyTypeEnum : CurrencyTypeEnum.values()){
+            if(currencyTypeEnum.getName().equals(currencyType)){
+                return "≈" + currencyTypeEnum.getSymbol() + assetAmount;
+            }
+        }
+        return null;
     }
 }

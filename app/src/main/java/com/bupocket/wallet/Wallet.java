@@ -16,19 +16,13 @@ import com.bupocket.wallet.model.WalletBPData;
 import com.bupocket.wallet.utils.KeyStore;
 import com.bupocket.wallet.utils.keystore.BaseKeyStoreEntity;
 import com.bupocket.wallet.utils.keystore.KeyStoreEntity;
-
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.encryption.crypto.mnemonic.Mnemonic;
 import io.bumo.encryption.key.PrivateKey;
 import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.model.request.*;
-import io.bumo.model.request.operation.AccountActivateOperation;
-import io.bumo.model.request.operation.AccountSetMetadataOperation;
-import io.bumo.model.request.operation.AssetIssueOperation;
-import io.bumo.model.request.operation.AssetSendOperation;
-import io.bumo.model.request.operation.BUSendOperation;
-import io.bumo.model.request.operation.BaseOperation;
+import io.bumo.model.request.operation.*;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.TransactionBuildBlobResult;
 import org.bitcoinj.crypto.MnemonicCode;
@@ -44,18 +38,25 @@ import java.util.List;
 import java.util.Map;
 
 public class Wallet {
-    SDK sdk = SDK.getInstance(Constants.BUMO_NODE_URL);
+    private static SDK sdk = null;
     private static Wallet wallet;
 
-    private Wallet(){}
+    private Wallet(){
+        init();
+    }
 
-    public static Wallet getInstance(){
+    private void init() {
+        sdk = SDK.getInstance(Constants.BUMO_NODE_URL);
+    }
+
+    public synchronized static Wallet getInstance(){
         if(wallet == null){
             wallet = new Wallet();
-
         }
         return wallet;
     }
+
+    public void setNull4Wallet() {wallet = null;}
 
     private WalletBPData create(String password, String sKey,Context context) throws WalletException {
         try {
@@ -137,6 +138,7 @@ public class Wallet {
     }
 
     public String getAccountBUBalance(String accountAddress){
+        System.out.print(Constants.BUMO_NODE_URL);
         AccountGetBalanceRequest request = new AccountGetBalanceRequest();
         request.setAddress(accountAddress);
         AccountGetBalanceResponse response = sdk.getAccountService().getBalance(request);
@@ -552,6 +554,5 @@ public class Wallet {
         String txHash = submitTransaction(issuerPrivateKey,fromAccAddr,operations,nonce,gasPrice,feeLimit,transMetadata);
         return txHash;
     }
-
 
 }
