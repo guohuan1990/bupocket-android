@@ -9,14 +9,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.HiddenFunctionStatusEnum;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -113,9 +117,27 @@ public class BPProfileFragment extends BaseFragment{
         System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
         mHits[mHits.length - 1] = SystemClock.uptimeMillis();
         if(mHits[0] > SystemClock.uptimeMillis() - DURATION){
-            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus",HiddenFunctionStatusEnum.ENABLE.getCode());
-            SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
-            startFragment(new BPSettingFragment());
+
+            new QMUIDialog.MessageDialogBuilder(getActivity())
+                    .setMessage(getString(R.string.switch_test_net_message_txt))
+                    .addAction(getString(R.string.no_txt), new QMUIDialogAction.ActionListener() {
+                        @Override
+                        public void onClick(QMUIDialog dialog, int index) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .addAction(getString(R.string.yes_txt), new QMUIDialogAction.ActionListener() {
+                        @Override
+                        public void onClick(QMUIDialog dialog, int index) {
+                            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus",HiddenFunctionStatusEnum.ENABLE.getCode());
+                            SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
+                            BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
+                            dialog.dismiss();
+                            startFragment(new BPSettingFragment());
+                        }
+                    })
+                    .setCanceledOnTouchOutside(false)
+                    .create().show();
         }
     }
 

@@ -7,9 +7,12 @@ import android.content.res.Configuration;
 import android.util.Log;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.BumoNodeEnum;
+import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.SocketUtil;
+import com.bupocket.wallet.Wallet;
 import com.squareup.leakcanary.LeakCanary;
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -48,7 +51,13 @@ public class BPApplication extends Application {
     }
 
     public static void switchNetConfig(String netType){
-        int netTypeCode = new SharedPreferencesHelper(context,"buPocket").getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
+        RetrofitFactory.getInstance().setNull4Retrofit();
+        Wallet.getInstance().setNull4Wallet();
+        SocketUtil.getInstance().SetNull4SocketUtil();
+        SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(context,"buPocket");
+        sharedPreferencesHelper.put("tokensInfoCache","");
+        sharedPreferencesHelper.put("tokenBalance","");
+        int netTypeCode = sharedPreferencesHelper.getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
         Boolean isMainNetConfig = true;
         if(BumoNodeEnum.TEST.getCode() == netTypeCode){
             isMainNetConfig = false;

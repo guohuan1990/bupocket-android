@@ -74,9 +74,7 @@ public class BPSettingFragment extends BaseFragment {
         switchNode.getSwitch().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                RetrofitFactory.getInstance().setNull4Retrofit();
-                Wallet.getInstance().setNull4Wallet();
-                SocketUtil.getInstance().SetNull4SocketUtil();
+
                 if(!isChecked){
                     SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.MAIN.getCode());
                     BPApplication.switchNetConfig(BumoNodeEnum.MAIN.getName());
@@ -103,7 +101,6 @@ public class BPSettingFragment extends BaseFragment {
                                 SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
                                 BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
                                 dialog.dismiss();
-                                clearTokenInfoCache();
                                 startFragment(new HomeFragment());
                             }
                         })
@@ -118,15 +115,9 @@ public class BPSettingFragment extends BaseFragment {
                             @Override
                             public void onClick(QMUIDialog dialog, int index) {
                                 dialog.dismiss();
-                                clearTokenInfoCache();
                                 startFragment(new HomeFragment());
                             }
                         }).setCanceledOnTouchOutside(false).create().show();
-            }
-
-            private void clearTokenInfoCache() {
-                sharedPreferencesHelper.put("tokensInfoCache","");
-                sharedPreferencesHelper.put("tokenBalance","");
             }
         });
 

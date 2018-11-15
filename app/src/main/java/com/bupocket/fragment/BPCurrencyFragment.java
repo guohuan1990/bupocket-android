@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.CurrencyTypeEnum;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -102,6 +103,7 @@ public class BPCurrencyFragment extends BaseFragment {
                     ((QMUICommonListItemView) v).setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
                     ((QMUICommonListItemView) v).addAccessoryCustomView(selected);
                 }
+                startFragment(new HomeFragment());
             }
         };
 

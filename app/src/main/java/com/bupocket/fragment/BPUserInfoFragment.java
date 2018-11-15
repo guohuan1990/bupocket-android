@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -9,12 +10,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bupocket.BPApplication;
+import com.bupocket.BPMainActivity;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.enums.BumoNodeEnum;
+import com.bupocket.enums.HiddenFunctionStatusEnum;
 import com.bupocket.fragment.home.HomeFragment;
+import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.SocketUtil;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -258,10 +265,10 @@ public class BPUserInfoFragment extends BaseFragment {
                         String ciphertextSkeyData = getSkeyStr();
                         try {
                             Wallet.getInstance().checkPwd(password,ciphertextSkeyData);
-//                            sharedPreferencesHelper.put("isFirstCreateWallet","");
-//                            sharedPreferencesHelper.put("createWalletStep","");
-//                            sharedPreferencesHelper.put("mnemonicWordBackupState","");
                             sharedPreferencesHelper.clear();
+                            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus",HiddenFunctionStatusEnum.DISABLE.getCode());
+                            SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.MAIN.getCode());
+                            BPApplication.switchNetConfig(BumoNodeEnum.MAIN.getName());
                             tipDialog.dismiss();
                             startFragment(new BPCreateWalletFragment());
                         } catch (Exception e) {
