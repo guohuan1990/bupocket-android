@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -13,12 +14,16 @@ import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.BumoNodeEnum;
+import com.bupocket.enums.HiddenFunctionStatusEnum;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.SocketUtil;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
@@ -27,6 +32,8 @@ public class BPSettingFragment extends BaseFragment {
     QMUITopBarLayout mTopBar;
     @BindView(R.id.settingLv)
     QMUIGroupListView mSettingLv;
+
+    protected SharedPreferencesHelper sharedPreferencesHelper;
 
     @Override
     protected View onCreateView() {
@@ -37,7 +44,12 @@ public class BPSettingFragment extends BaseFragment {
     }
 
     private void init() {
+        initData();
         initUI();
+    }
+
+    private void initData() {
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
     }
 
     private void initUI() {
@@ -49,7 +61,7 @@ public class BPSettingFragment extends BaseFragment {
     private void initGroupListView() {
 
         // switch node item
-        QMUICommonListItemView switchNode = mSettingLv.createItemView(getString(R.string.switch_node_title_txt));
+        final QMUICommonListItemView switchNode = mSettingLv.createItemView(getString(R.string.switch_node_title_txt));
         switchNode.getTextView().setTextColor(getResources().getColor(R.color.app_txt_color_gray_2));
         switchNode.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
         switchNode.setImageDrawable(getResources().getDrawable(R.mipmap.icon_switch_node));
@@ -69,10 +81,45 @@ public class BPSettingFragment extends BaseFragment {
                 if(!isChecked){
                     SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.MAIN.getCode());
                     BPApplication.switchNetConfig(BumoNodeEnum.MAIN.getName());
+                    showSwitchMainNetDialog();
                 }else {
-                    SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
-                    BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
+                    ShowSwitchTestNetConfirmDialog();
                 }
+            }
+
+            private void ShowSwitchTestNetConfirmDialog() {
+                new QMUIDialog.MessageDialogBuilder(getActivity())
+                        .setMessage(getString(R.string.switch_test_net_message_txt))
+                        .addAction(getString(R.string.no_txt), new QMUIDialogAction.ActionListener() {
+                            @Override
+                            public void onClick(QMUIDialog dialog, int index) {
+                                mSettingLv.removeAllViews();
+                                initGroupListView();
+                                dialog.dismiss();
+                            }
+                        })
+                        .addAction(getString(R.string.yes_txt), new QMUIDialogAction.ActionListener() {
+                            @Override
+                            public void onClick(QMUIDialog dialog, int index) {
+                                SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
+                                BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
+                                dialog.dismiss();
+                                startFragment(new HomeFragment());
+                            }
+                        })
+                        .create().show();
+            }
+
+            private void showSwitchMainNetDialog() {
+                new QMUIDialog.MessageDialogBuilder(getActivity())
+                        .setMessage(getString(R.string.switch_main_net_message_txt))
+                        .addAction(getString(R.string.i_knew_btn_txt), new QMUIDialogAction.ActionListener() {
+                            @Override
+                            public void onClick(QMUIDialog dialog, int index) {
+                                dialog.dismiss();
+                                startFragment(new HomeFragment());
+                            }
+                        }).setCanceledOnTouchOutside(false).create().show();
             }
         });
 
@@ -106,13 +153,17 @@ public class BPSettingFragment extends BaseFragment {
             }
         });
 
-        QMUIGroupListView.newSection(getContext())
+        QMUIGroupListView.Section section = QMUIGroupListView.newSection(getContext())
                 .setSeparatorDrawableRes(R.color.app_color_white)
                 .setSeparatorDrawableRes(R.color.app_color_white,R.color.app_color_white,R.color.app_color_white,R.color.app_color_white)
                 .addItemView(monetary,null)
-                .addItemView(language,null)
-                .addItemView(switchNode,null)
-                .addTo(mSettingLv);
+                .addItemView(language,null);
+
+        int hiddenFunctionStatus = sharedPreferencesHelper.getInt("hiddenFunctionStatus",HiddenFunctionStatusEnum.DISABLE.getCode());
+        if(HiddenFunctionStatusEnum.ENABLE.getCode() == hiddenFunctionStatus){
+            section.addItemView(switchNode,null);
+        }
+        section.addTo(mSettingLv);
     }
 
     private void initTopBar() {

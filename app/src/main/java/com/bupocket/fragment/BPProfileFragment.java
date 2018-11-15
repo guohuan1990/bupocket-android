@@ -1,13 +1,17 @@
 package com.bupocket.fragment;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.enums.BumoNodeEnum;
+import com.bupocket.enums.HiddenFunctionStatusEnum;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
@@ -35,11 +39,20 @@ public class BPProfileFragment extends BaseFragment{
     @BindView(R.id.profileAvatarIv)
     QMUIRadiusImageView mProfileAvatarIv;
 
+    final static int CLICKCOUNTS = 5;
+    final static long DURATION = 3 * 1000;
+
+
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_profile, null);
         ButterKnife.bind(this, root);
         initData();
+        setListener();
+        return root;
+    }
+
+    private void setListener() {
         mChangePwdRL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,15 +81,31 @@ public class BPProfileFragment extends BaseFragment{
                 startFragment(bpUserInfoFragment);
             }
         });
-        return root;
+
+        mVersionNameTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                click();
+            }
+        });
+
+    }
+
+    long[] mHits = new long[CLICKCOUNTS];
+    public void click(){
+        System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
+        mHits[mHits.length - 1] = SystemClock.uptimeMillis();
+        if(mHits[0] > SystemClock.uptimeMillis() - DURATION){
+            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus",HiddenFunctionStatusEnum.ENABLE.getCode());
+            SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
+            startFragment(new BPSettingFragment());
+        }
     }
 
     private void initData(){
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
-
         userNickTx.setText(currentAccNick);
-
         mVersionNameTv.setText(CommonUtil.packageName(getContext()));
     }
 

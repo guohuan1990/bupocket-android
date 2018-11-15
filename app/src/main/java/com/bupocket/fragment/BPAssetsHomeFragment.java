@@ -22,6 +22,8 @@ import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.TokensAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
+import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.TokenActionTypeEnum;
 import com.bupocket.fragment.components.AssetsListView;
 import com.bupocket.http.api.RetrofitFactory;
@@ -100,6 +102,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
     private String tokenBalance;
     private String currencyType;
+    private Integer bumoNodeType;
+    private String localTokenListSharedPreferenceKey;
 
     @Override
     protected View onCreateView() {
@@ -248,8 +252,14 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
 
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
-        if(JSON.parseObject(sharedPreferencesHelper.getSharedPreference("myTokens", "").toString(), GetTokensRespDto.class) != null){
-            mLocalTokenList = JSON.parseObject(sharedPreferencesHelper.getSharedPreference("myTokens", "").toString(), GetTokensRespDto.class).getTokenList();
+        if(BumoNodeEnum.TEST.getCode() == bumoNodeType){
+            localTokenListSharedPreferenceKey = BumoNodeEnum.TEST.getLocalTokenListSharedPreferenceKey();
+        }else if(BumoNodeEnum.MAIN.getCode() == bumoNodeType){
+            localTokenListSharedPreferenceKey = BumoNodeEnum.MAIN.getLocalTokenListSharedPreferenceKey();
+        }
+        GetTokensRespDto getTokensRespDto = JSON.parseObject(sharedPreferencesHelper.getSharedPreference(localTokenListSharedPreferenceKey, "").toString(), GetTokensRespDto.class);
+        if(getTokensRespDto != null){
+            mLocalTokenList = getTokensRespDto.getTokenList();
         }
         String currencyType = sharedPreferencesHelper.getSharedPreference("currencyType","CNY").toString();
         Map<String, Object> parmasMap = new HashMap<>();
@@ -335,6 +345,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
         currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
         currencyType = sharedPreferencesHelper.getSharedPreference("currencyType","CNY").toString();
+        bumoNodeType = sharedPreferencesHelper.getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
         GetTokensRespDto tokensCache = JSON.parseObject(sharedPreferencesHelper.getSharedPreference("tokensInfoCache", "").toString(), GetTokensRespDto.class);
         if(tokensCache != null){
             handleTokens(tokensCache);
