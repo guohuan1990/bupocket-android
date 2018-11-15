@@ -66,7 +66,6 @@ public class BPSettingFragment extends BaseFragment {
         switchNode.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
         switchNode.setImageDrawable(getResources().getDrawable(R.mipmap.icon_switch_node));
         // get bumoNode and set checked
-        System.out.print(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE));
         if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()){
             switchNode.getSwitch().setChecked(true);
         }else {
@@ -104,9 +103,11 @@ public class BPSettingFragment extends BaseFragment {
                                 SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
                                 BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
                                 dialog.dismiss();
+                                clearTokenInfoCache();
                                 startFragment(new HomeFragment());
                             }
                         })
+                        .setCanceledOnTouchOutside(false)
                         .create().show();
             }
 
@@ -117,9 +118,15 @@ public class BPSettingFragment extends BaseFragment {
                             @Override
                             public void onClick(QMUIDialog dialog, int index) {
                                 dialog.dismiss();
+                                clearTokenInfoCache();
                                 startFragment(new HomeFragment());
                             }
                         }).setCanceledOnTouchOutside(false).create().show();
+            }
+
+            private void clearTokenInfoCache() {
+                sharedPreferencesHelper.put("tokensInfoCache","");
+                sharedPreferencesHelper.put("tokenBalance","");
             }
         });
 

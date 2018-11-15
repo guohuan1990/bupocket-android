@@ -300,4 +300,14 @@
     <string name="error_issue_issue_amount_overflow_message_txt">The total amount of tokens you issued exceeds the number you have registered.</string>
     <string name="error_issue_balance_insufficient_message_txt">Your BU balance is insufficient, so you cannot issue tokens, please recharge.</string>
     <string name="error_issue_overflow_message_txt">Your total tokens to be issued exceed the upper limit</string>
+
+    <string name="profile_setting_txt">Setting</string>
+    <string name="switch_node_title_txt">Switch to the test network</string>
+    <string name="monetary_title_txt">Currency unit</string>
+    <string name="switch_test_net_message_txt">Whether to switch to the test network</string>
+    <string name="switch_main_net_message_txt">You have stopped the test network</string>
+    <string name="yes_txt">Yes</string>
+    <string name="no_txt">No</string>
+    <string name="current_test_message_txt">The current environment is the test network environment</string>
+    <string name="identity_id_explain_txt">It is used to secure the data that you store on the blockchain, which is stored in a distributed manner. Only those who have the identity can use the data, so as to ensure that your data sovereignty is not violated.</string>
 </resources>

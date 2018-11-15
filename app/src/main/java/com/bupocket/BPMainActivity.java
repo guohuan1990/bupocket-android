@@ -24,7 +24,7 @@ public class BPMainActivity extends BaseFragmentActivity {
     private SharedPreferencesHelper sharedPreferencesHelper;
     @Override
     protected int getContextViewId() {
-        return R.id.asset_LinearLayout;
+        return R.id.assetLinearLayout;
     }
 
     @Override

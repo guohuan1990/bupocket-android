@@ -18,11 +18,20 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/currentTestNetTipsTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/app_btn_color_blue"
+                android:textSize="15sp" />
+
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                 android:id="@+id/profileAvatarIv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:clickable="false"
                 android:src="@mipmap/avatar"
                 app:qmui_border_color="?attr/qmui_config_color_gray_6"

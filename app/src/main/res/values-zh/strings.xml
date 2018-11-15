@@ -300,4 +300,19 @@
     <string name="error_issue_balance_insufficient_message_txt">您的BU余额不足，无法发行资产，请充值</string>
     <string name="error_issue_overflow_message_txt">您的资产发行总量超过了最大上限</string>
 
+    <string name="profile_setting_txt">设置</string>
+    <string name="switch_node_title_txt">切换测试网</string>
+    <string name="monetary_title_txt">货币单位</string>
+    <string name="currency_cny_txt">CNY</string>
+    <string name="currency_usd_txt">USD</string>
+    <string name="currency_jpy_txt">JPY</string>
+    <string name="currency_krw_txt">KRW</string>
+    <string name="switch_test_net_message_txt">是否切换为测试网</string>
+    <string name="switch_main_net_message_txt">您已关闭测试网</string>
+    <string name="yes_txt">是</string>
+    <string name="no_txt">否</string>
+    <string name="current_test_message_txt">当前为测试网环境</string>
+    <string name="identity_id_explain_txt">用来维护你存储在区块链上的数据，这些信息会以分布式存储的方式进行保存，只有拥有该身份的人可以动用数据，充分确保你的数据主权不受侵犯。</string>
+
+
 </resources>

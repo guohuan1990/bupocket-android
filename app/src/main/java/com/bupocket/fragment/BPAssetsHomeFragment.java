@@ -92,6 +92,10 @@ public class BPAssetsHomeFragment extends BaseFragment {
     ScrollView assetsSv;
     @BindView(R.id.currencyTypeTv)
     TextView mCurrencyTypeTv;
+    @BindView(R.id.currentTestNetTipsTv)
+    TextView mCurrentTestNetTipsTv;
+    @BindView(R.id.assetLinearLayout)
+    LinearLayout mAssetLinearLayout;
 
     protected SharedPreferencesHelper sharedPreferencesHelper;
     private TokensAdapter mTokensAdapter;
@@ -350,9 +354,16 @@ public class BPAssetsHomeFragment extends BaseFragment {
         if(tokensCache != null){
             handleTokens(tokensCache);
         }
-
+        initBackground();
         initTokensView();
         refreshLayout.autoRefresh();
+    }
+
+    private void initBackground() {
+        if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE)== BumoNodeEnum.TEST.getCode()){
+            mCurrentTestNetTipsTv.setText(getString(R.string.current_test_message_txt));
+            mAssetLinearLayout.setBackgroundColor(getResources().getColor(R.color.test_net_background_color));
+        }
     }
 
     private void refreshData(){

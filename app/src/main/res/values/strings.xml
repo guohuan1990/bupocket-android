@@ -311,5 +311,7 @@
     <string name="switch_main_net_message_txt">您已关闭测试网</string>
     <string name="yes_txt">是</string>
     <string name="no_txt">否</string>
+    <string name="current_test_message_txt">当前为测试网环境</string>
+    <string name="identity_id_explain_txt">用来维护你存储在区块链上的数据，这些信息会以分布式存储的方式进行保存，只有拥有该身份的人可以动用数据，充分确保你的数据主权不受侵犯。</string>
 
 </resources>

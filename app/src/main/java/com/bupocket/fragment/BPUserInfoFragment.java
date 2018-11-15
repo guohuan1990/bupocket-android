@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -36,18 +37,16 @@ public class BPUserInfoFragment extends BaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
-
     @BindView(R.id.userInfoBackupWalletTv)
     TextView mUserInfoBackupWalletTv;
-
     @BindView(R.id.userInfoLogoutWalletTv)
     TextView mUserInfoLogoutWalletTv;
-
     @BindView(R.id.userInfoAccNameTv)
     TextView mUserInfoAccNameTv;
-
     @BindView(R.id.identityIdTv)
     TextView mIdentityIdTv;
+    @BindView(R.id.tipsIv)
+    ImageView mTipsIv;
 
 
     private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
@@ -77,7 +76,6 @@ public class BPUserInfoFragment extends BaseFragment {
         mUserInfoBackupWalletTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startFragment(new BPBackupWalletFragment());
                 final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
                 qmuiDialog.setCanceledOnTouchOutside(false);
                 qmuiDialog.setContentView(R.layout.password_comfirm_layout);
@@ -150,6 +148,20 @@ public class BPUserInfoFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 showMessagePositiveDialog();
+            }
+        });
+
+        mTipsIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new QMUIDialog.MessageDialogBuilder(getActivity())
+                        .setMessage(getString(R.string.identity_id_explain_txt))
+                        .addAction(getString(R.string.i_knew_btn_txt), new QMUIDialogAction.ActionListener() {
+                            @Override
+                            public void onClick(QMUIDialog dialog, int index) {
+                                dialog.dismiss();
+                            }
+                        }).setCanceledOnTouchOutside(false).create().show();
             }
         });
     }

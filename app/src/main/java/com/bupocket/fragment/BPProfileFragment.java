@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.HiddenFunctionStatusEnum;
 import com.bupocket.utils.CommonUtil;
@@ -38,18 +40,33 @@ public class BPProfileFragment extends BaseFragment{
     TextView mVersionNameTv;
     @BindView(R.id.profileAvatarIv)
     QMUIRadiusImageView mProfileAvatarIv;
+    @BindView(R.id.currentTestNetTipsTv)
+    TextView mCurrentTestNetTipsTv;
+    @BindView(R.id.meLinearLayout)
+    LinearLayout mMeLinearLayout;
 
     final static int CLICKCOUNTS = 5;
     final static long DURATION = 3 * 1000;
-
 
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_profile, null);
         ButterKnife.bind(this, root);
-        initData();
-        setListener();
+        init();
         return root;
+    }
+
+    private void init() {
+        initData();
+        initUI();
+        setListener();
+    }
+
+    private void initUI() {
+        if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE)== BumoNodeEnum.TEST.getCode()){
+            mCurrentTestNetTipsTv.setText(getString(R.string.current_test_message_txt));
+            mMeLinearLayout.setBackgroundColor(getResources().getColor(R.color.test_net_background_color));
+        }
     }
 
     private void setListener() {
