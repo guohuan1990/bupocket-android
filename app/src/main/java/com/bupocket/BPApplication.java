@@ -6,8 +6,14 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.util.Log;
 
+import com.bupocket.common.Constants;
 import com.bupocket.utils.LocaleUtil;
 import com.squareup.leakcanary.LeakCanary;
+
+import java.net.URISyntaxException;
+
+import io.socket.client.IO;
+import io.socket.client.Socket;
 
 public class BPApplication extends Application {
     @SuppressLint("StaticFieldLeak")
@@ -15,6 +21,19 @@ public class BPApplication extends Application {
 
     public static Context getContext() {
         return context;
+    }
+
+    private Socket mSocket;
+    {
+        try {
+            mSocket = IO.socket(Constants.PUSH_MESSAGE_SOCKET_URL);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Socket getSocket() {
+        return mSocket;
     }
 
     @Override

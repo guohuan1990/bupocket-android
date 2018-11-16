@@ -3,10 +3,13 @@ package com.bupocket.fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.session.MediaSession;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
@@ -14,18 +17,26 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
+import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.TokensAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.enums.TokenActionTypeEnum;
 import com.bupocket.fragment.components.AssetsListView;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TokenService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
+import com.bupocket.model.IssueTokenInfo;
+import com.bupocket.model.RegisterTokenInfo;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.wallet.Wallet;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
@@ -39,6 +50,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,6 +82,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
     QMUIRadiusImageView mAssetsAvatarIv;
     @BindView(R.id.userNickAndBackupBtnLt)
     LinearLayout mUserNickAndBackupBtnLt;
+    @BindView(R.id.homeScanBtn)
+    ImageView mHomeScanBtn;
 
     protected SharedPreferencesHelper sharedPreferencesHelper;
     private TokensAdapter mTokensAdapter;
@@ -79,6 +93,12 @@ public class BPAssetsHomeFragment extends BaseFragment {
     private MaterialHeader mMaterialHeader;
     private static boolean isFirstEnter = true;
     List<GetTokensRespDto.TokenListBean> mLocalTokenList = new ArrayList<>();
+
+    private String assetCode = "BU";
+    private String decimals = "8";
+    private String issuer = "";
+    private String tokenBalance;
+    private String tokenType = "0";
 
     @BindView(R.id.assetsSv)
     ScrollView assetsSv;
@@ -127,7 +147,12 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 showAccountAddressView();
             }
         });
-
+        mHomeScanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startScan();
+            }
+        });
     }
 
     private void backupState() {
@@ -209,6 +234,19 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
     private void loadAssetList() {
+        tokenBalance = sharedPreferencesHelper.getSharedPreference("tokenBalance","0").toString();
+        Runnable getBalanceRunnable = new Runnable() {
+            @Override
+            public void run() {
+                tokenBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
+                if(!CommonUtil.isNull(tokenBalance)){
+                    sharedPreferencesHelper.put("tokenBalance",tokenBalance);
+                }
+            }
+        };
+        new Thread(getBalanceRunnable).start();
+
+
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         if(JSON.parseObject(sharedPreferencesHelper.getSharedPreference("myTokens", "").toString(), GetTokensRespDto.class) != null){
             mLocalTokenList = JSON.parseObject(sharedPreferencesHelper.getSharedPreference("myTokens", "").toString(), GetTokensRespDto.class).getTokenList();
@@ -241,9 +279,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 }
             }
         });
-//        String jsonStr = "{\"tokenList\":[{\"amount\":\"210.32752256\",\"assetCode\":\"BU\",\"icon\":\"data:image/png;base64,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\",\"issuer\":\"\",\"price\":\"1.4812068\",\"type\":1},{\"amount\":\"0\",\"assetCode\":\"MMDA\",\"icon\":\"data:image/png;base64,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\",\"issuer\":\"buQprdKdbzjrZd5V7hNXucUCzgGtk6kw6kof\",\"price\":\"~\",\"type\":1},{\"amount\":\"7\",\"assetCode\":\"issue\",\"icon\":\"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCABqAIwDASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAAAAECAwQFBgf/xAA2EAACAQMCBAQDBgUFAAAAAAABAgMABBESIQUxQVEGEyJhMoGRFCNCUnGhFTOSscFDU6PR4f/EABkBAAMBAQEAAAAAAAAAAAAAAAABAgMEBf/EACIRAAICAgICAwEBAAAAAAAAAAABAhEDEiExBBMiQVEjYf/aAAwDAQACEQMRAD8A+WshUBgcqeRFSBWQEnZhz3xmoxnDaT8J2NNQFw3UNpNewcY8R+xGPzdfpRpXGoZxnmGzj9qWnS/8yPIPf/ygbE/erhuek86VjBgzEksp99QpaDvuv9QqbFRtnSfyhAcfOlqU/wCp/wAYosKK84OM86CSNqk7A6cNnb8oFRyMYosQUs0ZoosAp8/almjpRYDyQMb4o
-//        handleTokens(JSON.parseObject(jsonStr, GetTokensRespDto.class));
-
     }
 
     private void handleTokens(GetTokensRespDto tokensRespDto) {
@@ -316,5 +351,68 @@ public class BPAssetsHomeFragment extends BaseFragment {
 //            refreshLayout.autoRefresh();
 //        }
         loadAssetList();
+    }
+
+    private void startScan(){
+        IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(this);
+        intentIntegrator.setBeepEnabled(true);
+        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        intentIntegrator.setPrompt(getResources().getString(R.string.wallet_scan_notice));
+        intentIntegrator.setCaptureActivity(CaptureActivity.class);
+        // 开始扫描
+        intentIntegrator.initiateScan();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
+            } else {
+                if(!CommonUtil.isBU(result.getContents())){
+                    if(CommonUtil.checkIsBase64(result.getContents())){
+                        String jsonStr = null;
+                        try {
+                            jsonStr = new String(Base64.decode(result.getContents().getBytes("UTF-8"), Base64.DEFAULT));
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        Object object = JSON.parseObject(jsonStr);
+                        String action = ((JSONObject) object).getString("action");
+                        String uuID = ((JSONObject) object).getString("uuID");
+                        String tokenData = ((JSONObject) object).getString("data");
+                        Bundle argz = new Bundle();
+                        argz.putString("uuID",uuID);
+                        argz.putString("tokenData",tokenData);
+                        argz.putString("buBalance",tokenBalance);
+                        if(action.equals(TokenActionTypeEnum.ISSUE.getCode())){
+                            BPIssueTokenFragment bpIssueTokenFragment = new BPIssueTokenFragment();
+                            bpIssueTokenFragment.setArguments(argz);
+                            startFragment(bpIssueTokenFragment);
+                        }else if(action.equals(TokenActionTypeEnum.REGISTER.getCode())){
+                            BPRegisterTokenFragment bpRegisterTokenFragment = new BPRegisterTokenFragment();
+                            bpRegisterTokenFragment.setArguments(argz);
+                            startFragment(bpRegisterTokenFragment);
+                        }
+                    }else {
+                        Toast.makeText(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Bundle argz = new Bundle();
+                    argz.putString("destAddress",result.getContents());
+                    argz.putString("tokenCode",assetCode);
+                    argz.putString("tokenDecimals",decimals);
+                    argz.putString("tokenIssuer",issuer);
+                    argz.putString("tokenBalance",tokenBalance);
+                    argz.putString("tokenType",tokenType);
+                    BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
+                    sendTokenFragment.setArguments(argz);
+                    startFragment(sendTokenFragment);
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
