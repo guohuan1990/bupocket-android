@@ -3,6 +3,7 @@ package com.bupocket.utils;
 import android.support.annotation.NonNull;
 
 import com.alibaba.fastjson.JSON;
+import com.bupocket.common.Constants;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.VersionService;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -12,6 +13,7 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Request;
@@ -22,7 +24,7 @@ public class UpdateAppHttpUtil implements HttpManager {
     @Override
     public void asyncGet(@NonNull String url, @NonNull Map<String, String> params, @NonNull final Callback callBack) {
         VersionService versionService = RetrofitFactory.getInstance().getRetrofit().create(VersionService.class);
-        Call<ApiResult<GetCurrentVersionRespDto>> call = versionService.getCurrentVersion();
+        Call<ApiResult<GetCurrentVersionRespDto>> call = versionService.getCurrentVersion(Constants.APP_TYPE_CODE);
         call.enqueue(new retrofit2.Callback<ApiResult<GetCurrentVersionRespDto>>() {
             @Override
             public void onResponse(Call<ApiResult<GetCurrentVersionRespDto>> call, Response<ApiResult<GetCurrentVersionRespDto>> response) {

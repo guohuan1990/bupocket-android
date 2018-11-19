@@ -171,8 +171,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
     private void showAccountAddressView() {
         final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
         qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.show_address_layout,null));
-        TextView accountAddresTv = qmuiBottomSheet.findViewById(R.id.printAccAddressTv);
-        accountAddresTv.setText(currentAccAddress);
+        TextView accountAddressTv = qmuiBottomSheet.findViewById(R.id.printAccAddressTv);
+        accountAddressTv.setText(currentAccAddress);
 
         Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(currentAccAddress, 356, 356);
         ImageView mImageView = qmuiBottomSheet.findViewById(R.id.qr_pocket_address_image);
@@ -276,7 +276,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
             public void onResponse(Call<ApiResult<GetTokensRespDto>> call, Response<ApiResult<GetTokensRespDto>> response) {
                 mAssetsHomeEmptyView.show(null,null);
                 ApiResult<GetTokensRespDto> respDtoApiResult = response.body();
-                // 更新缓存
+
                 if(respDtoApiResult != null){
                     sharedPreferencesHelper.put("tokensInfoCache", JSON.toJSONString(respDtoApiResult.getData()));
                     if(isAdded()){
