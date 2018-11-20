@@ -225,9 +225,8 @@ public class BPUserInfoFragment extends BaseFragment {
         QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
         ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
         TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
-        TextView mPpasswordConfirmTitle = qmuiDialog.findViewById(R.id.passwordConfirmTitle);
         mPasswordConfirmNotice.setText(R.string.user_info_logout_warning);
-        mPpasswordConfirmTitle.setText(R.string.common_dialog_input_pwd);
+        mPasswordConfirmNotice.setTextColor(getResources().getColor(R.color.qmui_config_color_red));
 
         mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
             @Override

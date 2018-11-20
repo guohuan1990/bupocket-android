@@ -53,12 +53,12 @@
     <string name="confirm_mneonic_code_txt" >请按顺序点击助记词，以确认您正确备份</string>
     <string name="confirm_mneonic_code_btn_txt" >完成</string>
     <string name="wallet_password_confirm_title" >密码确认</string>
-    <string name="wallet_password_confirm_txt1" >请填写钱包密码以确认备份</string>
+    <string name="wallet_password_confirm_txt1" >请填写身份密码以确认备份</string>
     <string name="hint_wallet_passwrod_confirm_txt1" >8~20个字符，且内容仅限字母和数字</string>
     <string name="hint_wallet_passwrod_confirm_submit_btn" >确认</string>
     <string name="wallet_send_txt" >转账</string>
     <string name="wallet_scan_txt" >扫一扫</string>
-    <string name="wallet_scan_notice" >请将二维码置于取景框内扫描</string>
+    <string name="wallet_scan_notice" >将二维码放入框中，即可自动扫描</string>
     <string name="wallet_scan_cancel" >取消扫描</string>
     <string name="recently_tx_txt">交易记录</string>
     <string name="tx_status_success_txt" >成功</string>
@@ -220,7 +220,7 @@
     <string name="i_knew_btn_txt" >我知道了</string>
     <string name="network_error_msg" >网络不给力，请稍后再试</string>
     <string name="capture_activity_label" >自定义扫描界面</string>
-    <string name="capture_activity_title" >二维码扫描</string>
+    <string name="capture_activity_title" >扫一扫</string>
     <string name="time_day_ago">天前</string>
     <string name="time_hour_ago">小时前</string>
     <string name="time_minute_ago">分钟前</string>
