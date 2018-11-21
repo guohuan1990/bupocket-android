@@ -67,8 +67,8 @@
 
                 <ImageView
                     android:id="@+id/tipsIv"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:background="@mipmap/icon_help_tips"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="30dp"

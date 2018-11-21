@@ -24,6 +24,7 @@ import com.bupocket.adaptor.TokensAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.BumoNodeEnum;
+import com.bupocket.enums.CurrencyTypeEnum;
 import com.bupocket.enums.TokenActionTypeEnum;
 import com.bupocket.fragment.components.AssetsListView;
 import com.bupocket.http.api.RetrofitFactory;
@@ -236,7 +237,16 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
             }
         });
-        mCurrencyTypeTv.setText(currencyType);
+        mCurrencyTypeTv.setText(getCurrencyTypeSymbol(currencyType));
+    }
+
+    private String getCurrencyTypeSymbol(String currencyType) {
+        for(CurrencyTypeEnum currencyTypeEnum : CurrencyTypeEnum.values()){
+            if(currencyTypeEnum.getName().equals(currencyType)){
+                return currencyTypeEnum.getSymbol();
+            }
+        }
+        return null;
     }
 
     private void loadAssetList() {

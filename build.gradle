@@ -20,11 +20,11 @@ buildscript {
 allprojects {
     repositories {
         mavenCentral()
-        maven { url 'https://maven.google.com' }
+        maven{ url 'https://maven.google.com' }
         google()
         jcenter()
-        maven { url "http://maven.bumo.io/content/groups/public/"}
-        maven { url "https://jitpack.io" }
+        maven{ url "http://maven.bumo.io/content/groups/public/"}
+        maven{ url "https://jitpack.io" }
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
     }
 
