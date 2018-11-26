@@ -9,10 +9,20 @@
     <color name="app_color_black">#333333</color>
     <color name="app_color_gray">#efefef</color>
     <color name="app_bg_color_gray">#F5F5F5</color>
+    <color name="app_bg_color_gray_2">#f4f4f4</color>
+    <color name="app_bg_color_gray_3">#f8f8f8</color>
     <color name="app_color_blue_disabled">#8000A8E1</color>
     <color name="app_color_blue_pressed">#c000A8E1</color>
     <color name="app_txt_color_gray">#999999</color>
     <color name="app_txt_color_gray_2">#666666</color>
+    <color name="app_txt_color_gray_3">#E3E3E3</color>
+    <color name="app_txt_color_gray_4">#bababa</color>
+    <color name="app_txt_color_gray_5">#888888</color>
+    <color name="app_txt_color_red">#FF7272</color>
+    <color name="app_txt_color_red_2">#ff0000</color>
+    <color name="app_txt_color_red_3">#e23b1b</color>
+    <color name="app_txt_color_black">#2A2A2A</color>
+    <color name="app_txt_color_blue">#0598e2</color>
 
     <color name="app_color_blue_2">#31BDF3</color>
     <color name="app_color_blue_2_disabled">#7F31BDF3</color>

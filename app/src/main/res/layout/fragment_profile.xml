@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,8 +23,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:gravity="center"
                 android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:textColor="@color/app_btn_color_blue"
                 android:textSize="15sp" />
 
@@ -67,19 +67,19 @@
                     android:id="@+id/settingIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
                     android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
                     android:background="@mipmap/icon_setting" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="13dp"
                     android:layout_marginStart="13dp"
+                    android:layout_marginLeft="13dp"
                     android:layout_toEndOf="@id/settingIcon"
                     android:layout_toRightOf="@id/settingIcon"
                     android:text="@string/profile_setting_txt"
@@ -106,19 +106,19 @@
                     android:id="@+id/pwdicon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
                     android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
                     android:background="@mipmap/icon_profile_item_pwd" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="13dp"
                     android:layout_marginStart="13dp"
+                    android:layout_marginLeft="13dp"
                     android:layout_toEndOf="@id/pwdicon"
                     android:layout_toRightOf="@id/pwdicon"
                     android:text="@string/change_the_password_txt"
@@ -146,19 +146,19 @@
                     android:id="@+id/helpIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
                     android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
                     android:background="@mipmap/icon_profile_item_help" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="13dp"
                     android:layout_marginStart="13dp"
+                    android:layout_marginLeft="13dp"
                     android:layout_toEndOf="@id/helpIcon"
                     android:layout_toRightOf="@id/helpIcon"
                     android:text="@string/help_txt"
@@ -185,19 +185,19 @@
                     android:id="@+id/versionIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
                     android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
                     android:background="@mipmap/icon_profile_item_version" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="13dp"
                     android:layout_marginStart="13dp"
+                    android:layout_marginLeft="13dp"
                     android:layout_toEndOf="@id/versionIcon"
                     android:layout_toRightOf="@id/versionIcon"
                     android:text="@string/version_txt"
