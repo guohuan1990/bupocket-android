@@ -26,6 +26,7 @@ allprojects {
         maven{ url "http://maven.bumo.io/content/groups/public/"}
         maven{ url "https://jitpack.io" }
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        maven{ url 'https://dl.bintray.com/bupocket/AppUpdate/'}
     }
 
     ext {

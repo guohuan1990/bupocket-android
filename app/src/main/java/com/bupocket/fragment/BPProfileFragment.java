@@ -48,9 +48,12 @@ public class BPProfileFragment extends BaseFragment{
     TextView mCurrentTestNetTipsTv;
     @BindView(R.id.meLinearLayout)
     LinearLayout mMeLinearLayout;
+    @BindView(R.id.versionRL)
+    RelativeLayout mVersionRl;
+
 
     final static int CLICKCOUNTS = 5;
-    final static long DURATION = 3 * 1000;
+    final static long DURATION = 2 * 1000;
 
     @Override
     protected View onCreateView() {
@@ -103,12 +106,15 @@ public class BPProfileFragment extends BaseFragment{
             }
         });
 
-        mVersionNameTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                click();
-            }
-        });
+        int hiddenFunctionStatus = sharedPreferencesHelper.getInt("hiddenFunctionStatus",HiddenFunctionStatusEnum.DISABLE.getCode());
+        if(HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionStatus){
+            mVersionRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    click();
+                }
+            });
+        }
 
     }
 
