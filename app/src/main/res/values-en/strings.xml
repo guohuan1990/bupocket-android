@@ -249,8 +249,6 @@
     <string name="assets_add_txt">Add assets</string>
     <string name="my_assets_title_txt">My assets</string>
     <string name="add_token_search_hint">Please input the complete TOKEN code</string>
-    <string name="account_not_activated_fee">0.03</string>
-    <string name="account_activated_fee">0.01</string>
     <string name="add_token_btn_txt">Add</string>
     <string name="delete_token_btn_txt">Delete</string>
     <string name="tx_fee_too_big">The maximum transaction fee cannot be greater than 10 BU</string>
@@ -304,6 +302,10 @@
     <string name="profile_setting_txt">Setting</string>
     <string name="switch_node_title_txt">Switch to the test network</string>
     <string name="monetary_title_txt">Currency unit</string>
+    <string name="currency_cny_txt">CNY</string>
+    <string name="currency_usd_txt">USD</string>
+    <string name="currency_jpy_txt">JPY</string>
+    <string name="currency_krw_txt">KRW</string>
     <string name="switch_test_net_message_txt">Whether to switch to the test network</string>
     <string name="switch_main_net_message_txt">You have stopped the test network</string>
     <string name="yes_txt">Yes</string>

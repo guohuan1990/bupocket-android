@@ -17,6 +17,8 @@ public class Constants {
     public static final double MAX_SEND_AMOUNT = 1000000000;
     public static final String REGISTER_TOKEN_FEE = "0.02";
     public static final String ISSUE_TOKEN_FEE = "50.01";
+    public static final String ACCOUNT_NOT_ACTIVATED_SEND_FEE = "0.03";
+    public static final String ACCOUNT_ACTIVATED_SEND_FEE = "0.01";
     public static final Integer DEFAULT_BUMO_NODE = 1;
     public static final Integer APP_TYPE_CODE = 1;
 

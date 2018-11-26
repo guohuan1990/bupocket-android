@@ -174,12 +174,12 @@ public class BPSendTokenFragment extends BaseFragment {
                             String fee;
                             if(Wallet.getInstance().checkAccAddress(s.toString())){
                                 if(!Wallet.getInstance().checkAccountActivated(s.toString())){
-                                    fee = getContext().getString(R.string.account_not_activated_fee);
+                                    fee = Constants.ACCOUNT_NOT_ACTIVATED_SEND_FEE;
                                 }else{
-                                    fee = getContext().getString(R.string.account_activated_fee);
+                                    fee = Constants.ACCOUNT_ACTIVATED_SEND_FEE;
                                 }
                             }else {
-                                fee = getContext().getString(R.string.account_activated_fee);
+                                fee = Constants.ACCOUNT_ACTIVATED_SEND_FEE;
                             }
                             Message message = new Message();
                             Bundle data = new Bundle();
@@ -547,12 +547,12 @@ public class BPSendTokenFragment extends BaseFragment {
                         String fee;
                         if(Wallet.getInstance().checkAccAddress(destAddress)){
                             if(!Wallet.getInstance().checkAccountActivated(destAddress)){
-                                fee = getContext().getString(R.string.account_not_activated_fee);
+                                fee = Constants.ACCOUNT_NOT_ACTIVATED_SEND_FEE;
                             }else{
-                                fee = getContext().getString(R.string.account_activated_fee);
+                                fee = Constants.ACCOUNT_ACTIVATED_SEND_FEE;
                             }
                         }else {
-                            fee = getContext().getString(R.string.account_activated_fee);
+                            fee = Constants.ACCOUNT_ACTIVATED_SEND_FEE;
                         }
                         Message message = new Message();
                         Bundle data = new Bundle();
