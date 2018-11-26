@@ -328,25 +328,6 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:textColor="#888888"
-                                            android:layout_weight="6"
-                                            android:text="Ledger Seq"/>
-                                    <TextView
-                                            android:id="@+id/txDetailTxInfoLedgerSeqTv"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="4"
-                                            android:gravity="end"
-                                            android:text="30212313"/>
-                                </LinearLayout>
-                                <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginBottom="23dp"
-                                        android:orientation="horizontal">
-                                    <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:textColor="#888888"
                                             android:text="Transaction Signature"/>
                                 </LinearLayout>
                                 <LinearLayout
