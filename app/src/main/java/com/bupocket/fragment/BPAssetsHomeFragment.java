@@ -23,8 +23,10 @@ import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.TokensAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.BackupTipsStateEnum;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.CurrencyTypeEnum;
+import com.bupocket.enums.MnemonicWordBackupStateEnum;
 import com.bupocket.enums.TokenActionTypeEnum;
 import com.bupocket.fragment.components.AssetsListView;
 import com.bupocket.http.api.RetrofitFactory;
@@ -69,26 +71,10 @@ public class BPAssetsHomeFragment extends BaseFragment {
     QMUIEmptyView mAssetsHomeEmptyView;
     @BindView(R.id.tokenListLv)
     AssetsListView mTokenListLv;
-    @BindView(R.id.addTokenIv)
-    ImageView mAddTokenIv;
-    @BindView(R.id.userNick)
-    TextView mUserNick;
-    @BindView(R.id.assetBackupWalletBtn)
-    QMUIRoundButton mAssetBackupWalletBtn;
-    @BindView(R.id.showMyAddressLv)
-    LinearLayout mShowMyAddressLv;
     @BindString(R.string.qr_copy_success_message)
     String copySuccessMessage;
-    @BindView(R.id.userBcAddress)
-    TextView mUserBcAddress;
     @BindView(R.id.totalAssetsValueTv)
     TextView mTotalAssetsValueTv;
-    @BindView(R.id.assetsAvatarIv)
-    QMUIRadiusImageView mAssetsAvatarIv;
-    @BindView(R.id.userNickAndBackupBtnLt)
-    LinearLayout mUserNickAndBackupBtnLt;
-    @BindView(R.id.homeScanBtn)
-    ImageView mHomeScanBtn;
     @BindView(R.id.assetsSv)
     ScrollView assetsSv;
     @BindView(R.id.currencyTypeTv)
@@ -97,6 +83,18 @@ public class BPAssetsHomeFragment extends BaseFragment {
     TextView mCurrentTestNetTipsTv;
     @BindView(R.id.assetLinearLayout)
     LinearLayout mAssetLinearLayout;
+    @BindView(R.id.homeScanLl)
+    LinearLayout mHomeScanLl;
+    @BindView(R.id.receiveLl)
+    LinearLayout mReceiveLl;
+    @BindView(R.id.addTokenLl)
+    LinearLayout mAddTokenLl;
+    @BindView(R.id.immediatelyBackupBtn)
+    QMUIRoundButton mImmediatelyBackupBtn;
+    @BindView(R.id.notBackupBtn)
+    QMUIRoundButton mNotBackupBtn;
+    @BindView(R.id.safetyTipsLl)
+    LinearLayout mSafetyTipsLl;
 
     protected SharedPreferencesHelper sharedPreferencesHelper;
     private TokensAdapter mTokensAdapter;
@@ -122,50 +120,48 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
     private void setListeners() {
-        mAddTokenIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startFragment(new BPAssetsAddFragment());
-            }
-        });
-        mAssetBackupWalletBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle argz = new Bundle();
-                argz.putString("accName",currentAccNick);
-                BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
-                bpUserInfoFragment.setArguments(argz);
-                startFragment(bpUserInfoFragment);
-            }
-        });
-        mAssetsAvatarIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle argz = new Bundle();
-                argz.putString("accName",currentAccNick);
-                BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
-                bpUserInfoFragment.setArguments(argz);
-                startFragment(bpUserInfoFragment);
-            }
-        });
-        mShowMyAddressLv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showAccountAddressView();
-            }
-        });
-        mHomeScanBtn.setOnClickListener(new View.OnClickListener() {
+        mHomeScanLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startScan();
             }
         });
+        mReceiveLl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAccountAddressView();
+            }
+        });
+        mAddTokenLl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPAssetsAddFragment());
+            }
+        });
+        mImmediatelyBackupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle argz = new Bundle();
+                argz.putString("accName",currentAccNick);
+                BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
+                bpUserInfoFragment.setArguments(argz);
+                startFragment(bpUserInfoFragment);
+            }
+        });
+        mNotBackupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSafetyTipsLl.setVisibility(View.GONE);
+                sharedPreferencesHelper.put("backupTipsState",BackupTipsStateEnum.HIDE.getCode());
+            }
+        });
     }
 
     private void backupState() {
-        String state = sharedPreferencesHelper.getSharedPreference("mnemonicWordBackupState","").toString();
-        if(state.equals("0")){
-            mUserNickAndBackupBtnLt.removeView(mAssetBackupWalletBtn);
+        String backupState = sharedPreferencesHelper.getSharedPreference("mnemonicWordBackupState","").toString();
+        String backupTipsState = sharedPreferencesHelper.getSharedPreference("backupTipsState","").toString();
+        if(MnemonicWordBackupStateEnum.ALREADYBACKUP.getCode().equals(backupState) || BackupTipsStateEnum.HIDE.getCode().equals(backupTipsState)){
+            mSafetyTipsLl.setVisibility(View.GONE);
         }
     }
 
@@ -214,10 +210,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     };
 
     private void initWalletInfoView() {
-        mUserNick.setText(currentAccNick);
         String shortCurrentAccAddress = AddressUtil.anonymous(currentAccAddress);
-        mUserBcAddress.setText(shortCurrentAccAddress);
-
     }
 
     private void initTokensView() {
@@ -372,7 +365,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     private void initBackground() {
         if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE)== BumoNodeEnum.TEST.getCode()){
             mCurrentTestNetTipsTv.setText(getString(R.string.current_test_message_txt));
-            mAssetLinearLayout.setBackgroundColor(getResources().getColor(R.color.test_net_background_color));
+            mAssetLinearLayout.setBackgroundResource(R.drawable.bg_asset_home_test_net);
         }
     }
 

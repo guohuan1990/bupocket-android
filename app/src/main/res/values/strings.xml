@@ -312,4 +312,9 @@
     <string name="current_test_message_txt">当前为测试网环境</string>
     <string name="identity_id_explain_txt">用来维护你存储在区块链上的数据，这些信息会以分布式存储的方式进行保存，只有拥有该身份的人可以动用数据，充分确保你的数据主权不受侵犯。</string>
 
+    <string name="receive_qr_txt">收款码</string>
+    <string name="safety_tips_title">安全提示</string>
+    <string name="safety_tips_content_txt">您的钱包助记词尚未备份，为防止忘记密码、删除App或丢失手机等情况导致资产损失，请务必备份助记词</string>
+    <string name="backup_immediately_txt">立即备份</string>
+
 </resources>
