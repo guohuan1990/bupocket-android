@@ -112,8 +112,8 @@
                     android:text="@string/backup_mneonic_code_btn_txt"
                     android:textColor="@color/app_color_font"
                     android:textSize="@dimen/bp_btn_text_size"
-                    app:qmui_backgroundColor="@color/app_btn_color_blue"
-                    app:qmui_borderColor="@color/app_btn_color_blue"
+                    app:qmui_backgroundColor="@color/app_color_main"
+                    app:qmui_borderColor="@color/app_color_main"
                     app:qmui_radius="5dp" />
 
             </RelativeLayout>

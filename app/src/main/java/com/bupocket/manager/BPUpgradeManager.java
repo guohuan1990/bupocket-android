@@ -31,7 +31,7 @@ public class BPUpgradeManager {
         new UpdateAppManager
                 .Builder()
                 .setActivity(mActivity)
-                .setThemeColor(0xFF36B3FF)
+                .setThemeColor(0xFF02CA71)
                 .setUpdateUrl(Constants.WEB_SERVER_DOMAIN)
                 .setHttpManager(new UpdateAppHttpUtil())
                 .setTopPic(R.mipmap.upgrade_dialog_bg)

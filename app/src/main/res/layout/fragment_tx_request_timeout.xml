@@ -52,8 +52,8 @@
                 android:textColor="@color/app_color_font"
                 android:textSize="@dimen/bp_btn_text_size"
                 android:visibility="visible"
-                app:qmui_backgroundColor="@color/app_btn_color_blue"
-                app:qmui_borderColor="@color/app_btn_color_blue"
+                app:qmui_backgroundColor="@color/app_color_main"
+                app:qmui_borderColor="@color/app_color_main"
                 app:qmui_radius="5dp" />
 
         </LinearLayout>

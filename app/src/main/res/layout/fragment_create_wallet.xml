@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:textSize="24sp"
-                android:textColor="@color/app_btn_color_white"
+                android:textColor="@color/app_color_black"
                 android:text="@string/wallet_create_txt"/>
         <LinearLayout
                 android:layout_width="match_parent"
@@ -40,8 +40,8 @@
                     android:layout_marginTop="89dp"
                     android:gravity="center"
                     android:text="@string/wallet_create_create_btn_txt"
-                    app:qmui_borderColor="@color/app_btn_color_blue"
-                    app:qmui_backgroundColor="@color/app_btn_color_blue"
+                    app:qmui_borderColor="@color/app_color_main"
+                    app:qmui_backgroundColor="@color/app_color_main"
                     app:qmui_radius="5dp"
                     android:textColor="@color/app_color_font"
                     android:textSize="@dimen/bp_btn_text_size"/>
@@ -52,10 +52,10 @@
                     android:layout_marginTop="35dp"
                     android:gravity="center"
                     android:text="@string/recover_wallet_title"
-                    app:qmui_borderColor="@color/app_btn_color_white"
+                    app:qmui_borderColor="@color/app_color_main"
                     app:qmui_backgroundColor="@color/app_btn_color_white"
                     app:qmui_radius="5dp"
-                    android:textColor="@color/app_color_font_blue"
+                    android:textColor="@color/app_color_main"
                     android:textSize="@dimen/bp_btn_text_size"/>
         </LinearLayout>
 

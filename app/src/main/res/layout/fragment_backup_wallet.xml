@@ -62,8 +62,8 @@
                         android:gravity="center"
                         android:padding="10dp"
                         android:text="@string/backup_wallet_btn_txt"
-                        app:qmui_borderColor="@color/app_btn_color_blue"
-                        app:qmui_backgroundColor="@color/app_btn_color_blue"
+                        app:qmui_borderColor="@color/app_color_main"
+                        app:qmui_backgroundColor="@color/app_color_main"
                         app:qmui_radius="5dp"
                         android:textColor="@color/app_color_font"
                         android:textSize="18sp"/>
@@ -84,10 +84,10 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="@string/no_backup_mneonic_btn_code"
-                    app:qmui_borderColor="@color/app_btn_color_blue"
+                    app:qmui_borderColor="@color/app_color_main"
                     app:qmui_backgroundColor="@color/app_btn_color_white"
                     app:qmui_radius="5dp"
-                    android:textColor="@color/app_color_font_main"
+                    android:textColor="@color/app_color_main"
                     android:textSize="18sp"/>
             </RelativeLayout>
         </LinearLayout>

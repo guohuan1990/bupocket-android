@@ -155,8 +155,8 @@
                 android:text="@string/confirm_register_token_btn_txt"
                 android:textColor="@color/app_color_font"
                 android:textSize="@dimen/bp_btn_text_size"
-                app:qmui_backgroundColor="@color/app_btn_color_blue"
-                app:qmui_borderColor="@color/app_btn_color_blue"
+                app:qmui_backgroundColor="@color/app_color_main"
+                app:qmui_borderColor="@color/app_color_main"
                 app:qmui_radius="5dp" />
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
@@ -168,10 +168,10 @@
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:text="@string/qr_cancel_btn_des"
-                android:textColor="@color/app_color_font"
+                android:textColor="@color/app_color_main"
                 android:textSize="@dimen/bp_btn_text_size"
-                app:qmui_backgroundColor="@color/app_btn_color_purple"
-                app:qmui_borderColor="@color/app_btn_color_purple"
+                app:qmui_backgroundColor="@color/app_color_white"
+                app:qmui_borderColor="@color/app_color_main"
                 app:qmui_radius="5dp" />
         </LinearLayout>
     </LinearLayout>
