@@ -50,7 +50,7 @@ public class HomeFragment extends BaseFragment {
         );
         mTabSegment.addTab(assets);
         mTabSegment.addTab(profile);
-        mTabSegment.setDefaultSelectedColor(0xFF36B3FF);
+        mTabSegment.setDefaultSelectedColor(getContext().getResources().getColor(R.color.app_color_green));
 
     }
 

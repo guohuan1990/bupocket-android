@@ -71,8 +71,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/wallet_send_txt"
-                app:qmui_borderColor="@color/app_btn_color_blue"
-                app:qmui_backgroundColor="@color/app_btn_color_blue"
+                app:qmui_borderColor="@color/transfer_btn_background_color"
+                app:qmui_backgroundColor="@color/transfer_btn_background_color"
                 app:qmui_radius="5dp"
                 android:textColor="@color/app_color_font"
                 android:textSize="@dimen/bp_btn_text_size"/>
@@ -86,8 +86,6 @@
             android:background="@color/app_bg_color_gray">
 
             <TextView
-                android:background="@drawable/text_view_left_borer_bg2"
-                android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"

@@ -12,7 +12,7 @@
         <LinearLayout
             android:id="@+id/meLinearLayout"
             android:layout_width="match_parent"
-            android:layout_height="230dp"
+            android:layout_height="wrap_content"
             android:background="@mipmap/ic_me_header_bg"
             android:fitsSystemWindows="true"
             android:gravity="center_horizontal"
@@ -22,39 +22,48 @@
                 android:id="@+id/currentTestNetTipsTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:textColor="@color/app_btn_color_blue"
+                android:textColor="@color/app_color_green"
                 android:textSize="15sp" />
 
-            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                android:id="@+id/profileAvatarIv"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:clickable="false"
-                android:src="@mipmap/avatar"
-                app:qmui_border_color="?attr/qmui_config_color_gray_6"
-                app:qmui_border_width="1px"
-                app:qmui_is_circle="true"
-                app:qmui_selected_border_color="?attr/qmui_config_color_gray_4"
-                app:qmui_selected_border_width="1px"
-                app:qmui_selected_mask_color="?attr/qmui_config_color_gray_8" />
+                android:layout_marginTop="80dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="start"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/userNick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/app_color_font"
-                android:textSize="16sp" />
+                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                    android:id="@+id/profileAvatarIv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:src="@mipmap/avatar"
+                    app:qmui_border_color="?attr/qmui_config_color_gray_6"
+                    app:qmui_border_width="1px"
+                    app:qmui_is_circle="true"
+                    app:qmui_selected_border_color="?attr/qmui_config_color_gray_4"
+                    app:qmui_selected_border_width="1px"
+                    app:qmui_selected_mask_color="?attr/qmui_config_color_gray_8" />
+
+                <TextView
+                    android:id="@+id/userNick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/app_color_black"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <RelativeLayout

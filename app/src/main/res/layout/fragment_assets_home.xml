@@ -45,7 +45,7 @@
                         android:gravity="center"
                         android:paddingLeft="35dp"
                         android:paddingRight="35dp"
-                        android:textColor="@color/app_btn_color_blue"
+                        android:textColor="@color/app_color_green"
                         android:textSize="15sp" />
 
 
