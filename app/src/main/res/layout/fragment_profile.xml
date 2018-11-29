@@ -29,25 +29,19 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
+                android:layout_marginTop="85dp"
+                android:layout_marginStart="35dp"
+                android:layout_marginLeft="35dp"
                 android:layout_gravity="start"
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                <ImageView
                     android:id="@+id/profileAvatarIv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="false"
-                    android:src="@mipmap/avatar"
-                    app:qmui_border_color="?attr/qmui_config_color_gray_6"
-                    app:qmui_border_width="1px"
-                    app:qmui_is_circle="true"
-                    app:qmui_selected_border_color="?attr/qmui_config_color_gray_4"
-                    app:qmui_selected_border_width="1px"
-                    app:qmui_selected_mask_color="?attr/qmui_config_color_gray_8" />
+                    android:background="@mipmap/avatar" />
 
                 <TextView
                     android:id="@+id/userNick"

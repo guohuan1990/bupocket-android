@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ public class BPProfileFragment extends BaseFragment{
     @BindView(R.id.versionNameTv)
     TextView mVersionNameTv;
     @BindView(R.id.profileAvatarIv)
-    QMUIRadiusImageView mProfileAvatarIv;
+    ImageView mProfileAvatarIv;
     @BindView(R.id.currentTestNetTipsTv)
     TextView mCurrentTestNetTipsTv;
     @BindView(R.id.meLinearLayout)

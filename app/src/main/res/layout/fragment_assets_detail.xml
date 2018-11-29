@@ -12,13 +12,27 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-            android:id="@+id/assetIconIv"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="60dp"
-            app:qmui_border_color="@color/app_color_gray"
-            app:qmui_is_circle="true" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp">
+
+            <ImageView
+                android:layout_centerInParent="true"
+                android:id="@+id/assetIconBgIv"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@mipmap/icon_token_bg_list"/>
+
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:layout_centerInParent="true"
+                android:id="@+id/assetIconIv"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:qmui_border_width="0dp"
+                app:qmui_is_circle="true"/>
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/amountTv"

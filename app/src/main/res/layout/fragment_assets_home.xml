@@ -55,11 +55,10 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="25dp"
-                            android:orientation="horizontal">
+                            android:layout_marginTop="25dp">
 
                             <TextView
                                 android:id="@+id/totalAssetsValueTv"
@@ -71,6 +70,7 @@
 
                             <TextView
                                 android:id="@+id/currencyTypeTv"
+                                android:layout_toRightOf="@+id/totalAssetsValueTv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="￥"
@@ -79,7 +79,7 @@
                                 android:textColor="@color/app_color_white"
                                 android:textSize="18sp" />
 
-                        </LinearLayout>
+                        </RelativeLayout>
 
                         <TextView
                             android:id="@+id/totalAssetsTitleTv"
