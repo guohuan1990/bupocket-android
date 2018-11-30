@@ -31,15 +31,16 @@
                 android:textSize="15sp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/avatarNickLl"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="85dp"
+                android:layout_gravity="start"
+                android:gravity="left"
                 android:paddingLeft="35dp"
                 android:paddingStart="35dp"
                 android:paddingEnd="35dp"
                 android:paddingRight="35dp"
-                android:layout_gravity="start"
-                android:gravity="left"
                 android:orientation="vertical">
 
                 <ImageView
@@ -51,11 +52,12 @@
 
                 <TextView
                     android:id="@+id/userNick"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/app_color_black"
-                    tools:text="二十个子服二十个子服二十个子服二十个子服"
+                    tools:text="二十"
                     android:textSize="18sp" />
             </LinearLayout>
 
