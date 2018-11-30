@@ -147,7 +147,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
 
                 ApiResult<TxDetailRespDto> respDto = response.body();
 
-                if(respDto.getData() != null){
+                if(null != respDto.getData()){
 
                     mTxDetailLl.setVisibility(View.VISIBLE);
                     TxDetailRespDto.TxInfoRespBoBean txInfoRespBoBean = respDto.getData().getTxInfoRespBo();

@@ -191,10 +191,14 @@ public class BPAssetsDetailFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ApiResult<GetMyTxsRespDto>> call, Response<ApiResult<GetMyTxsRespDto>> response) {
                 ApiResult<GetMyTxsRespDto> respDto = response.body();
-                Log.d("GetMyTxsRespDto:", JSON.toJSONString(respDto));
-                mEmptyView.show(null,null);
-                if(isAdded()){
-                    handleMyTxs(respDto.getData());
+                if(respDto != null){
+                    Log.d("GetMyTxsRespDto:", JSON.toJSONString(respDto));
+                    mEmptyView.show(null,null);
+                    if(isAdded()){
+                        handleMyTxs(respDto.getData());
+                    }
+                }else{
+                    mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
                 }
             }
 
