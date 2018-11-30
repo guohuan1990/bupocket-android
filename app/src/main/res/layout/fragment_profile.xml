@@ -2,7 +2,8 @@
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,13 +31,15 @@
                 android:textSize="15sp" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="85dp"
-                android:layout_marginStart="35dp"
-                android:layout_marginLeft="35dp"
+                android:paddingLeft="35dp"
+                android:paddingStart="35dp"
+                android:paddingEnd="35dp"
+                android:paddingRight="35dp"
                 android:layout_gravity="start"
-                android:gravity="center"
+                android:gravity="left"
                 android:orientation="vertical">
 
                 <ImageView
@@ -52,6 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/app_color_black"
+                    tools:text="二十个子服二十个子服二十个子服二十个子服"
                     android:textSize="18sp" />
             </LinearLayout>
 
