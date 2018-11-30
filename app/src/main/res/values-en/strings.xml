@@ -316,5 +316,5 @@
     <string name="receive_qr_txt">Payment code</string>
     <string name="safety_tips_title">Safety tips</string>
     <string name="safety_tips_content_txt">Your wallet mnemonics have not been backed up. To prevent loss of assets due to forgetting passwords, deleting apps, or losing your phone, be sure to back up your mnemonics.</string>
-    <string name="backup_immediately_txt">Backup now</string>
+    <string name="backup_immediately_txt">Back up now</string>
 </resources>
