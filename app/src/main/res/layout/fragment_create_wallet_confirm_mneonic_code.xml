@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
-        android:background="#FFFFFF"
+        android:background="@color/app_btn_color_white"
         android:orientation="vertical">
 
         <TextView
@@ -33,13 +33,13 @@
                 android:text="@string/confirm_mneonic_code_txt"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:textColor="#999999" />
+                android:textColor="@color/app_txt_color_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginTop="28dp"
-                android:background="#F5F5F5"
+                android:background="@color/app_bg_color_gray"
                 android:orientation="vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
@@ -112,10 +112,10 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="@string/skip_backup_mneonic_btn_code"
-                app:qmui_borderColor="@color/app_btn_color_blue"
+                app:qmui_borderColor="@color/app_color_main"
                 app:qmui_backgroundColor="@color/app_btn_color_white"
                 app:qmui_radius="5dp"
-                android:textColor="@color/app_color_font_main"
+                android:textColor="@color/app_color_main"
                 android:textSize="18sp"/>
         </RelativeLayout>
     </LinearLayout>

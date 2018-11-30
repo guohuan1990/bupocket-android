@@ -731,7 +731,7 @@ public class CommonUtil {
     public static String addCurrencySymbol(String assetAmount,String currencyType){
         for(CurrencyTypeEnum currencyTypeEnum : CurrencyTypeEnum.values()){
             if(currencyTypeEnum.getName().equals(currencyType)){
-                return "≈" + currencyTypeEnum.getSymbol() + assetAmount;
+                return "≈" + currencyTypeEnum.getSymbol() + " " + assetAmount;
             }
         }
         return null;

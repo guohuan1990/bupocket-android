@@ -14,199 +14,253 @@
 
         <com.scwang.smartrefresh.header.MaterialHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
 
         <ScrollView
             android:id="@+id/assetsSv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/app_bg_color_gray_4"
             android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/assetLinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@mipmap/ic_asset_header_bg"
+                    android:background="@drawable/bg_asset_home"
                     android:fitsSystemWindows="true"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        
-                        <TextView
-                            android:id="@+id/currentTestNetTipsTv"
-                            android:layout_centerInParent="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/app_btn_color_blue"
-                            android:textSize="15sp"/>
-                        
-                        <ImageView
-                            android:layout_alignParentRight="true"
-                            android:id="@+id/homeScanBtn"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@mipmap/icon_scan_white"/>
-                    </RelativeLayout>
-
-                    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                        android:id="@+id/assetsAvatarIv"
+                    <TextView
+                        android:id="@+id/currentTestNetTipsTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:clickable="false"
-                        android:src="@mipmap/avatar"
-                        app:qmui_border_color="?attr/qmui_config_color_gray_6"
-                        app:qmui_border_width="1px"
-                        app:qmui_is_circle="true"
-                        app:qmui_selected_border_color="?attr/qmui_config_color_gray_4"
-                        app:qmui_selected_border_width="1px"
-                        app:qmui_selected_mask_color="?attr/qmui_config_color_gray_8" />
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:paddingLeft="35dp"
+                        android:paddingRight="35dp"
+                        android:textColor="@color/app_color_green"
+                        android:textSize="15sp" />
 
-                    <LinearLayout
-                        android:id="@+id/userNickAndBackupBtnLt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
-
-                        <TextView
-                            android:id="@+id/userNick"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="阿木"
-                            android:textColor="@color/app_color_font"
-                            android:textSize="16sp" />
-
-                        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                            android:id="@+id/assetBackupWalletBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="5dp"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:padding="3dp"
-                            android:text="@string/no_backup_tips_btn"
-                            android:textColor="@color/no_backup_tips_color"
-                            android:textSize="10sp"
-                            app:qmui_backgroundColor="@android:color/transparent"
-                            app:qmui_borderColor="@color/no_backup_tips_color"
-                            app:qmui_radius="6dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/showMyAddressLv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/userBcAddress"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="buQevL***WPng8P"
-                            android:textColor="@color/app_color_font"
-                            android:textSize="16sp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:paddingStart="5dp"
-                            android:paddingLeft="5dp"
-                            android:src="@mipmap/icon_qrcode" />
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:orientation="vertical"
-                        android:paddingLeft="12dp">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_marginTop="25dp">
 
                             <TextView
                                 android:id="@+id/totalAssetsValueTv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="≈0"
                                 android:textColor="@color/app_color_white"
-                                android:textSize="32sp" />
+                                android:text="≈0"
+                                android:textSize="36sp" />
 
                             <TextView
                                 android:id="@+id/currencyTypeTv"
+                                android:layout_toRightOf="@+id/totalAssetsValueTv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="￥"
+                                android:gravity="top"
                                 android:layout_marginLeft="5dp"
                                 android:textColor="@color/app_color_white"
-                                android:textSize="16sp"/>
+                                android:textSize="18sp" />
 
-                        </LinearLayout>
+                        </RelativeLayout>
 
                         <TextView
                             android:id="@+id/totalAssetsTitleTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:layout_marginBottom="15dp"
                             android:text="@string/total_assets_title_txt"
                             android:textColor="@color/app_color_white"
                             android:textSize="15sp" />
 
+                        <LinearLayout
+                            android:layout_width="340dp"
+                            android:layout_height="110dp"
+                            android:layout_marginTop="30dp"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:background="@drawable/shape_corner">
+
+                            <LinearLayout
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:gravity="center"
+                                android:layout_height="match_parent">
+                                <LinearLayout
+                                    android:id="@+id/homeScanLl"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:gravity="center">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@mipmap/icon_scan_green"/>
+                                    <TextView
+                                        android:layout_marginTop="12dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/wallet_scan_txt"
+                                        android:textColor="@color/app_txt_color_gray"
+                                        android:textSize="15sp"/>
+                                </LinearLayout>
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:gravity="center"
+                                android:layout_height="match_parent">
+                                <LinearLayout
+                                    android:id="@+id/receiveLl"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:gravity="center">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@mipmap/icon_qr_green"/>
+                                    <TextView
+                                        android:layout_marginTop="12dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/receive_qr_txt"
+                                        android:textColor="@color/app_txt_color_gray"
+                                        android:textSize="15sp"/>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:gravity="center"
+                                android:layout_height="match_parent">
+                                <LinearLayout
+                                    android:id="@+id/addTokenLl"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:gravity="center">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@mipmap/icon_add_token_green"/>
+                                    <TextView
+                                        android:layout_marginTop="12dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/assets_add_txt"
+                                        android:textColor="@color/app_txt_color_gray"
+                                        android:textSize="15sp"/>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/safetyTipsLl"
+                    android:visibility="visible"
+                    android:padding="12dp"
+                    android:layout_width="340dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_corner"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/safety_tips_title"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:layout_marginTop="7.5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:text="@string/safety_tips_content_txt"
+                        android:textSize="14sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="10dp">
+                        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                            android:id="@+id/notBackupBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/no_backup_mneonic_btn_code"
+                            app:qmui_borderColor="@color/app_bg_color_purple"
+                            app:qmui_backgroundColor="@color/app_bg_color_purple"
+                            app:qmui_radius="5dp"
+                            android:textColor="@color/app_txt_color_purple"
+                            android:textSize="@dimen/bp_btn_text_size"/>
+                        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                            android:id="@+id/immediatelyBackupBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="25dp"
+                            android:gravity="center"
+                            android:text="@string/backup_immediately_txt"
+                            app:qmui_borderColor="@color/app_color_green"
+                            app:qmui_backgroundColor="@color/app_color_green"
+                            app:qmui_radius="5dp"
+                            android:textColor="@color/app_color_font"
+                            android:textSize="@dimen/bp_btn_text_size"/>
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/asset_home_background_color"
+                    android:background="@color/app_bg_color_gray_4"
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/my_assets_title_txt"
                         android:layout_marginBottom="10dp"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/text_view_left_borer_bg1"
-                            android:paddingLeft="10dp"
-                            android:text="@string/my_assets_title_txt"
-                            android:textSize="16sp" />
-
-                        <ImageView
-                                android:id="@+id/addTokenIv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@mipmap/icon_add_token"
-                                android:layout_alignParentRight="true"/>
-                    </RelativeLayout>
+                        android:textSize="16sp" />
 
                     <com.qmuiteam.qmui.widget.QMUIEmptyView
                         android:id="@+id/assetsHomeEmptyView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/qmui_config_color_white"
+                        android:background="@color/app_bg_color_gray_4"
                         android:fitsSystemWindows="true">
-
 
                         <com.bupocket.fragment.components.AssetsListView
                             android:id="@+id/tokenListLv"
@@ -215,7 +269,8 @@
                             android:divider="@color/token_list_view_background_color"
                             android:dividerHeight="10dp"
                             android:fadeScrollbars="false"
-                            android:scrollbars="none"></com.bupocket.fragment.components.AssetsListView>
+                            android:scrollbars="none">
+                        </com.bupocket.fragment.components.AssetsListView>
 
                     </com.qmuiteam.qmui.widget.QMUIEmptyView>
 

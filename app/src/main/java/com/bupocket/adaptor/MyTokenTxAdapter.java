@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bupocket.R;
+import com.bupocket.enums.OutinTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.dto.resp.GetMyTxsRespDto;
 import com.bupocket.model.TokenTxInfo;
@@ -53,6 +55,7 @@ public class MyTokenTxAdapter extends BaseAdapter {
             holder.txAmountTV = convertView.findViewById(R.id.tx_amount);
             holder.txDateTV = convertView.findViewById(R.id.tx_date);
             holder.txStatusTV = convertView.findViewById(R.id.tx_status);
+            holder.outInTypeIconIv = convertView.findViewById(R.id.outInTypeIconIv);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -70,6 +73,12 @@ public class MyTokenTxAdapter extends BaseAdapter {
                 holder.txStatusTV.setText(R.string.tx_status_fail_txt);
                 holder.txStatusTV.setTextColor(convertView.getResources().getColor(R.color.tx_status_failed_txt_color));
             }
+            String outInType = datas.get(i).getOutinType();
+            if(OutinTypeEnum.IN.getCode().equals(outInType)){
+                holder.outInTypeIconIv.setImageDrawable(convertView.getResources().getDrawable(R.mipmap.icon_collection));
+            }else{
+                holder.outInTypeIconIv.setImageDrawable(convertView.getResources().getDrawable(R.mipmap.icon_payment));
+            }
         }
         return convertView;
     }
@@ -79,6 +88,7 @@ public class MyTokenTxAdapter extends BaseAdapter {
         private TextView txDateTV;
         private TextView txAmountTV;
         private TextView txStatusTV;
+        private ImageView outInTypeIconIv;
     }
 
     public GetMyTxsRespDto.PageBean getPage() {

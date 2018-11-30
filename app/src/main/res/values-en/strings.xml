@@ -58,7 +58,7 @@
     <string name="hint_wallet_passwrod_confirm_submit_btn">Confirm</string>
     <string name="wallet_send_txt">Transfer</string>
     <string name="wallet_scan_txt">Scan</string>
-    <string name="wallet_scan_notice">Please put the QR code in the framing frame to scan</string>
+    <string name="wallet_scan_notice">Automatically scan the QR code in the box</string>
     <string name="wallet_scan_cancel">Cancel</string>
     <string name="recently_tx_txt">Recent transaction history</string>
     <string name="tx_status_success_txt">Succeeded</string>
@@ -217,7 +217,7 @@
     <string name="handling">Processing...</string>
     <string name="i_knew_btn_txt">Got it</string>
     <string name="network_error_msg">Network failure, please try again later</string>
-    <string name="capture_activity_title">Scan QR</string>
+    <string name="capture_activity_title">Scan</string>
     <string name="time_day_ago">days ago</string>
     <string name="time_hour_ago">hours ago</string>
     <string name="time_minute_ago">minutes ago</string>
@@ -249,8 +249,6 @@
     <string name="assets_add_txt">Add assets</string>
     <string name="my_assets_title_txt">My assets</string>
     <string name="add_token_search_hint">Please input the complete TOKEN code</string>
-    <string name="account_not_activated_fee">0.03</string>
-    <string name="account_activated_fee">0.01</string>
     <string name="add_token_btn_txt">Add</string>
     <string name="delete_token_btn_txt">Delete</string>
     <string name="tx_fee_too_big">The maximum transaction fee cannot be greater than 10 BU</string>
@@ -304,10 +302,19 @@
     <string name="profile_setting_txt">Setting</string>
     <string name="switch_node_title_txt">Switch to the test network</string>
     <string name="monetary_title_txt">Currency unit</string>
+    <string name="currency_cny_txt">CNY</string>
+    <string name="currency_usd_txt">USD</string>
+    <string name="currency_jpy_txt">JPY</string>
+    <string name="currency_krw_txt">KRW</string>
     <string name="switch_test_net_message_txt">Whether to switch to the test network</string>
     <string name="switch_main_net_message_txt">You have stopped the test network</string>
     <string name="yes_txt">Yes</string>
     <string name="no_txt">No</string>
     <string name="current_test_message_txt">The current environment is the test network environment</string>
     <string name="identity_id_explain_txt">It is used to secure the data that you store on the blockchain, which is stored in a distributed manner. Only those who have the identity can use the data, so as to ensure that your data sovereignty is not violated.</string>
+
+    <string name="receive_qr_txt">Payment code</string>
+    <string name="safety_tips_title">Safety tips</string>
+    <string name="safety_tips_content_txt">Your wallet mnemonics have not been backed up. To prevent loss of assets due to forgetting passwords, deleting apps, or losing your phone, be sure to back up your mnemonics.</string>
+    <string name="backup_immediately_txt">Back up now</string>
 </resources>

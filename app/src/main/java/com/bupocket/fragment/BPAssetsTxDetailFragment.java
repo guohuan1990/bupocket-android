@@ -72,8 +72,6 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
     TextView mTxDetailTxInfoTXFeeTv;
     @BindView(R.id.txDetailTxInfoNonceTv)
     TextView mTxDetailTxInfoNonceTv;
-    @BindView(R.id.txDetailTxInfoLedgerSeqTv)
-    TextView mTxDetailTxInfoLedgerSeqTv;
     @BindView(R.id.txDetailBlockInfoBlockHeightTv)
     TextView mTxDetailBlockInfoBlockHeightTv;
     @BindView(R.id.txDetailBlockInfoBlockHashTv)
@@ -98,8 +96,11 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
     TxDetailSignatureAdapter txDetailSignatureAdapter;
 
     private String txHash;
-    private Integer outinType;
+    private String outinType;
     private String assetCode;
+    private String currentAccAddress;
+    private String optNo;
+
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_tx_detail, null);
@@ -120,8 +121,10 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         mEmptyView.show(true);
         txHash = getTxHash();
-        outinType = getArguments().getInt("outinType");
+        outinType = getArguments().getString("outinType");
         assetCode = getArguments().getString("assetCode");
+        currentAccAddress = getArguments().getString("currentAccAddress");
+        optNo = getArguments().getString("optNo");
         mAssetCodeTv.setText(assetCode);
     }
 
@@ -132,9 +135,10 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
 
     private void initTxDetailView() {
         TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
-        Map<String, Object> parmasMap = new HashMap<>();
-        parmasMap.put("hash",txHash);
-        Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetail(parmasMap);
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("address",currentAccAddress);
+        paramsMap.put("optNo",optNo);
+        Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetailByOptNo(paramsMap);
         call.enqueue(new Callback<ApiResult<TxDetailRespDto>>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -143,7 +147,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
 
                 ApiResult<TxDetailRespDto> respDto = response.body();
 
-                if(respDto.getData() != null){
+                if(null != respDto.getData()){
 
                     mTxDetailLl.setVisibility(View.VISIBLE);
                     TxDetailRespDto.TxInfoRespBoBean txInfoRespBoBean = respDto.getData().getTxInfoRespBo();
@@ -165,20 +169,19 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     }
                     mTxStatusIcon.setImageDrawable(txStatusIconDrawable);
                     mTxStatusTv.setText(txStatusStr);
-                    mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? "-" : "+") + txInfoRespBoBean.getAmount());
+                    mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? "+" : "-") + txInfoRespBoBean.getAmount());
                     mTxFromAccAddrTv.setText(txDeatilRespBoBean.getSourceAddress());
                     mTxToAccAddrTv.setText(txDeatilRespBoBean.getDestAddress());
                     mTxDetailFeeTv.setText(txDeatilRespBoBean.getFee() + " BU");
                     mTxDetailSendDateTv.setText(TimeUtil.timeStamp2Date(txDeatilRespBoBean.getApplyTimeDate().toString().substring(0,10),"yyyy.MM.dd HH:mm:ss"));
                     mTxDetailTXHashTv.setText(txInfoRespBoBean.getHash());
-                    mTxDetailNoteTv.setText(txDeatilRespBoBean.getOriginalMetadata());
+                    mTxDetailNoteTv.setText(txDeatilRespBoBean.getTxMetadata());
 
                     mTxDetailTxInfoSourceAddressTv.setText(txInfoRespBoBean.getSourceAddress());
                     mTxDetailTxInfoDestAddressTv.setText(txInfoRespBoBean.getDestAddress());
                     mTxDetailTxInfoAmountTv.setText(CommonUtil.addSuffix(txInfoRespBoBean.getAmount(),assetCode));
                     mTxDetailTxInfoTXFeeTv.setText(txInfoRespBoBean.getFee() + " BU");
                     mTxDetailTxInfoNonceTv.setText(txInfoRespBoBean.getNonce() + "");
-                    mTxDetailTxInfoLedgerSeqTv.setText(txInfoRespBoBean.getLedgerSeq() + "");
 
                     String signatureStr = txInfoRespBoBean.getSignatureStr();
                     JSONArray signatureArr = JSON.parseArray(signatureStr);

@@ -331,7 +331,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
                     TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
                     Map<String, Object> parmasMap = new HashMap<>();
                     parmasMap.put("hash",hash);
-                    Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetail(parmasMap);
+                    Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetailByHash(parmasMap);
                     call.enqueue(new retrofit2.Callback<ApiResult<TxDetailRespDto>>(){
 
                         @Override

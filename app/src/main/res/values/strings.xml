@@ -53,14 +53,14 @@
     <string name="confirm_mneonic_code_txt" >请按顺序点击助记词，以确认您正确备份</string>
     <string name="confirm_mneonic_code_btn_txt" >完成</string>
     <string name="wallet_password_confirm_title" >密码确认</string>
-    <string name="wallet_password_confirm_txt1" >请填写钱包密码以确认备份</string>
+    <string name="wallet_password_confirm_txt1" >请填写身份密码以确认备份</string>
     <string name="hint_wallet_passwrod_confirm_txt1" >8~20个字符，且内容仅限字母和数字</string>
     <string name="hint_wallet_passwrod_confirm_submit_btn" >确认</string>
     <string name="wallet_send_txt" >转账</string>
     <string name="wallet_scan_txt" >扫一扫</string>
-    <string name="wallet_scan_notice" >请将二维码置于取景框内扫描</string>
+    <string name="wallet_scan_notice" >将二维码放入框中，即可自动扫描</string>
     <string name="wallet_scan_cancel" >取消扫描</string>
-    <string name="recently_tx_txt">交易记录</string>
+    <string name="recently_tx_txt">最近交易记录</string>
     <string name="tx_status_success_txt" >成功</string>
     <string name="tx_status_fail_txt" >失败</string>
     <string name="tx_status_success_txt1" >转账成功</string>
@@ -220,7 +220,7 @@
     <string name="i_knew_btn_txt" >我知道了</string>
     <string name="network_error_msg" >网络不给力，请稍后再试</string>
     <string name="capture_activity_label" >自定义扫描界面</string>
-    <string name="capture_activity_title" >二维码扫描</string>
+    <string name="capture_activity_title" >扫一扫</string>
     <string name="time_day_ago">天前</string>
     <string name="time_hour_ago">小时前</string>
     <string name="time_minute_ago">分钟前</string>
@@ -249,8 +249,6 @@
     <string name="assets_add_txt">添加资产</string>
     <string name="my_assets_title_txt">我的资产</string>
     <string name="add_token_search_hint">请输入完整的TOKEN代码</string>s
-    <string name="account_not_activated_fee">0.03</string>
-    <string name="account_activated_fee">0.01</string>
     <string name="add_token_btn_txt">添加</string>
     <string name="delete_token_btn_txt">删除</string>
     <string name="register_token_page_title">登记资产确认</string>
@@ -313,5 +311,10 @@
     <string name="no_txt">否</string>
     <string name="current_test_message_txt">当前为测试网环境</string>
     <string name="identity_id_explain_txt">用来维护你存储在区块链上的数据，这些信息会以分布式存储的方式进行保存，只有拥有该身份的人可以动用数据，充分确保你的数据主权不受侵犯。</string>
+
+    <string name="receive_qr_txt">收款码</string>
+    <string name="safety_tips_title">安全提示</string>
+    <string name="safety_tips_content_txt">您的钱包助记词尚未备份，为防止忘记密码、删除App或丢失手机等情况导致资产损失，请务必备份助记词</string>
+    <string name="backup_immediately_txt">立即备份</string>
 
 </resources>

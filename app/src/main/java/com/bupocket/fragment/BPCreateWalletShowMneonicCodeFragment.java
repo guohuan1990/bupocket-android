@@ -29,8 +29,6 @@ public class BPCreateWalletShowMneonicCodeFragment extends BaseFragment {
     QMUITopBarLayout mTopBar;
     @BindView(R.id.showMneonicCodeGL)
     GridLayout mShowMneonicCodeGL;
-//    @BindView(R.id.showMneonicCodeQMUIFL)
-//    QMUIFloatLayout mShowMneonicCodeQMUIFl;
     @BindView(R.id.go2ConfirmMneonicCodeBtn)
     QMUIRoundButton mGo2ConfirmMneonicCodeBtn;
 
@@ -83,9 +81,8 @@ public class BPCreateWalletShowMneonicCodeFragment extends BaseFragment {
             textView.setGravity(Gravity.CENTER);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             textView.setText(getMneonicCode().get(i));
-            textView.setTextColor(0xFF36B3FF);
-            textView.setBackgroundColor(0xFFF5F5F5);
-//            textView.setOnClickListener(clickListener);
+            textView.setTextColor(getResources().getColor(R.color.app_txt_color_gray));
+            textView.setBackgroundColor(getResources().getColor(R.color.app_bg_color_gray));
             GridLayout.Spec rowSpec = GridLayout.spec(i / 4, 1.0f);
             GridLayout.Spec columnSpec = GridLayout.spec(i % 4, 1.0f);
             GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);

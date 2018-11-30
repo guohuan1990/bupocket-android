@@ -1,19 +1,25 @@
 package com.bupocket.http.api.dto.resp;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 public class GetMyTxsRespDto{
 
-
     /**
-     * page : {"count":1,"curSize":2,"endOfGroup":1,"firstResultNumber":0,"nextFlag":false,"queryTotal":true,"size":10,"start":1,"startOfGroup":1,"total":2}
-     * txRecord : [{"amount":"45","amountUnit":0,"fromAddress":"buQswSaKDACkrFsnP1wcVsLAUzXQsemauEjf","ledgerSeq":1172893,"outinType":1,"toAddress":"buQg4XPL35gxkDxyNmrjH6GrecSpdzzW6vxv","txHash":"64fc36224d1c31962f662cb5f4f8fc4b06798decbf7d589d9d4bfb82bb69dbf5","txStatus":0,"txTime":1536810617193169},{"amount":"25","amountUnit":0,"fromAddress":"buQswSaKDACkrFsnP1wcVsLAUzXQsemauEjf","ledgerSeq":1168565,"outinType":1,"toAddress":"buQg4XPL35gxkDxyNmrjH6GrecSpdzzW6vxv","txHash":"74e85bbfa1def09949b4d5aea1867e7d2af57b81d89881f34a6aa8c085461bb3","txStatus":0,"txTime":1536762146705924}]
+     * page : {"count":1,"curSize":1,"endOfGroup":1,"firstResultNumber":0,"nextFlag":false,"queryTotal":true,"size":10,"start":1,"startOfGroup":1,"total":1}
+     * assetData : {"totalAmount":"~","currencyType":"CNY","price":"~","balance":"10.25"}
+     * txRecord : [{"amount":"20","fromAddress":"buQWESXjdgXSFFajEZfkwi5H4fuAyTGgzkje","ledger":"1621644","optNo":32,"outinType":"0","toAddress":"buQXqF35Pa8duB1oUGBhNSZBLdMmc93LzrGt","txHash":"4dac7c8b55f7b9784d70d89cbf89f03c26b5c770c6683be8d4cc935589c26d92","txStatus":1,"txTime":1541406573582965}]
      */
 
     private PageBean page;
+    private AssetDataBean assetData;
     private List<TxRecordBean> txRecord;
-    private String tokenBalance;
-    private String assetAmount;
+
+    public static GetMyTxsRespDto objectFromData(String str) {
+
+        return new Gson().fromJson(str, GetMyTxsRespDto.class);
+    }
 
     public PageBean getPage() {
         return page;
@@ -21,6 +27,14 @@ public class GetMyTxsRespDto{
 
     public void setPage(PageBean page) {
         this.page = page;
+    }
+
+    public AssetDataBean getAssetData() {
+        return assetData;
+    }
+
+    public void setAssetData(AssetDataBean assetData) {
+        this.assetData = assetData;
     }
 
     public List<TxRecordBean> getTxRecord() {
@@ -31,26 +45,10 @@ public class GetMyTxsRespDto{
         this.txRecord = txRecord;
     }
 
-    public String getTokenBalance() {
-        return tokenBalance;
-    }
-
-    public void setTokenBalance(String tokenBalance) {
-        this.tokenBalance = tokenBalance;
-    }
-
-    public String getAssetAmount() {
-        return assetAmount;
-    }
-
-    public void setAssetAmount(String assetAmount) {
-        this.assetAmount = assetAmount;
-    }
-
     public static class PageBean {
         /**
          * count : 1
-         * curSize : 2
+         * curSize : 1
          * endOfGroup : 1
          * firstResultNumber : 0
          * nextFlag : false
@@ -58,7 +56,7 @@ public class GetMyTxsRespDto{
          * size : 10
          * start : 1
          * startOfGroup : 1
-         * total : 2
+         * total : 1
          */
 
         private int count;
@@ -71,6 +69,11 @@ public class GetMyTxsRespDto{
         private int start;
         private int startOfGroup;
         private int total;
+
+        public static PageBean objectFromData(String str) {
+
+            return new Gson().fromJson(str, PageBean.class);
+        }
 
         public int getCount() {
             return count;
@@ -153,28 +156,84 @@ public class GetMyTxsRespDto{
         }
     }
 
+    public static class AssetDataBean {
+        /**
+         * totalAmount : ~
+         * currencyType : CNY
+         * price : ~
+         * balance : 10.25
+         */
+
+        private String totalAmount;
+        private String currencyType;
+        private String price;
+        private String balance;
+
+        public static AssetDataBean objectFromData(String str) {
+
+            return new Gson().fromJson(str, AssetDataBean.class);
+        }
+
+        public String getTotalAmount() {
+            return totalAmount;
+        }
+
+        public void setTotalAmount(String totalAmount) {
+            this.totalAmount = totalAmount;
+        }
+
+        public String getCurrencyType() {
+            return currencyType;
+        }
+
+        public void setCurrencyType(String currencyType) {
+            this.currencyType = currencyType;
+        }
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+        public String getBalance() {
+            return balance;
+        }
+
+        public void setBalance(String balance) {
+            this.balance = balance;
+        }
+    }
+
     public static class TxRecordBean {
         /**
-         * amount : 45
-         * amountUnit : 0
-         * fromAddress : buQswSaKDACkrFsnP1wcVsLAUzXQsemauEjf
-         * ledgerSeq : 1172893
-         * outinType : 1
-         * toAddress : buQg4XPL35gxkDxyNmrjH6GrecSpdzzW6vxv
-         * txHash : 64fc36224d1c31962f662cb5f4f8fc4b06798decbf7d589d9d4bfb82bb69dbf5
-         * txStatus : 0
-         * txTime : 1536810617193169
+         * amount : 20
+         * fromAddress : buQWESXjdgXSFFajEZfkwi5H4fuAyTGgzkje
+         * ledger : 1621644
+         * optNo : 32
+         * outinType : 0
+         * toAddress : buQXqF35Pa8duB1oUGBhNSZBLdMmc93LzrGt
+         * txHash : 4dac7c8b55f7b9784d70d89cbf89f03c26b5c770c6683be8d4cc935589c26d92
+         * txStatus : 1
+         * txTime : 1541406573582965
          */
 
         private String amount;
-        private int amountUnit;
         private String fromAddress;
-        private int ledgerSeq;
-        private int outinType;
+        private String ledger;
+        private long optNo;
+        private String outinType;
         private String toAddress;
         private String txHash;
         private int txStatus;
         private long txTime;
+
+        public static TxRecordBean objectFromData(String str) {
+
+            return new Gson().fromJson(str, TxRecordBean.class);
+        }
 
         public String getAmount() {
             return amount;
@@ -182,14 +241,6 @@ public class GetMyTxsRespDto{
 
         public void setAmount(String amount) {
             this.amount = amount;
-        }
-
-        public int getAmountUnit() {
-            return amountUnit;
-        }
-
-        public void setAmountUnit(int amountUnit) {
-            this.amountUnit = amountUnit;
         }
 
         public String getFromAddress() {
@@ -200,19 +251,27 @@ public class GetMyTxsRespDto{
             this.fromAddress = fromAddress;
         }
 
-        public int getLedgerSeq() {
-            return ledgerSeq;
+        public String getLedger() {
+            return ledger;
         }
 
-        public void setLedgerSeq(int ledgerSeq) {
-            this.ledgerSeq = ledgerSeq;
+        public void setLedger(String ledger) {
+            this.ledger = ledger;
         }
 
-        public int getOutinType() {
+        public long getOptNo() {
+            return optNo;
+        }
+
+        public void setOptNo(long optNo) {
+            this.optNo = optNo;
+        }
+
+        public String getOutinType() {
             return outinType;
         }
 
-        public void setOutinType(int outinType) {
+        public void setOutinType(String outinType) {
             this.outinType = outinType;
         }
 

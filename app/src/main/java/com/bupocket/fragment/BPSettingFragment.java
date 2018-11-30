@@ -65,11 +65,13 @@ public class BPSettingFragment extends BaseFragment {
         switchNode.getTextView().setTextColor(getResources().getColor(R.color.app_txt_color_gray_2));
         switchNode.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
         switchNode.setImageDrawable(getResources().getDrawable(R.mipmap.icon_switch_node));
-        // get bumoNode and set checked
+        // get bumoNode and set checked change listener
         if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()){
             switchNode.getSwitch().setChecked(true);
+            switchNode.getSwitch().setButtonDrawable(getResources().getDrawable(R.mipmap.icon_switch_checked));
         }else {
             switchNode.getSwitch().setChecked(false);
+            switchNode.getSwitch().setButtonDrawable(getResources().getDrawable(R.mipmap.icon_switch_normal));
         }
         switchNode.getSwitch().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -101,6 +103,7 @@ public class BPSettingFragment extends BaseFragment {
                                 SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
                                 BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
                                 dialog.dismiss();
+                                switchNode.getSwitch().setButtonDrawable(getResources().getDrawable(R.mipmap.icon_switch_checked));
                                 startFragment(new HomeFragment());
                             }
                         })
@@ -115,6 +118,7 @@ public class BPSettingFragment extends BaseFragment {
                             @Override
                             public void onClick(QMUIDialog dialog, int index) {
                                 dialog.dismiss();
+                                switchNode.getSwitch().setButtonDrawable(getResources().getDrawable(R.mipmap.icon_switch_normal));
                                 startFragment(new HomeFragment());
                             }
                         }).setCanceledOnTouchOutside(false).create().show();

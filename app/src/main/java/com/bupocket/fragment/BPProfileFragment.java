@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,14 +44,16 @@ public class BPProfileFragment extends BaseFragment{
     @BindView(R.id.versionNameTv)
     TextView mVersionNameTv;
     @BindView(R.id.profileAvatarIv)
-    QMUIRadiusImageView mProfileAvatarIv;
+    ImageView mProfileAvatarIv;
     @BindView(R.id.currentTestNetTipsTv)
     TextView mCurrentTestNetTipsTv;
     @BindView(R.id.meLinearLayout)
     LinearLayout mMeLinearLayout;
+    @BindView(R.id.versionRL)
+    RelativeLayout mVersionRl;
 
-    final static int CLICKCOUNTS = 5;
-    final static long DURATION = 3 * 1000;
+    private final static int CLICKCOUNTS = 5;
+    private final static long DURATION = 2 * 1000;
 
     @Override
     protected View onCreateView() {
@@ -69,7 +72,7 @@ public class BPProfileFragment extends BaseFragment{
     private void initUI() {
         if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE)== BumoNodeEnum.TEST.getCode()){
             mCurrentTestNetTipsTv.setText(getString(R.string.current_test_message_txt));
-            mMeLinearLayout.setBackgroundColor(getResources().getColor(R.color.test_net_background_color));
+            mMeLinearLayout.setBackgroundResource(R.mipmap.ic_me_header_bg_test_net);
         }
     }
 
@@ -103,17 +106,21 @@ public class BPProfileFragment extends BaseFragment{
             }
         });
 
-        mVersionNameTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                click();
-            }
-        });
+        int hiddenFunctionStatus = sharedPreferencesHelper.getInt("hiddenFunctionStatus",HiddenFunctionStatusEnum.DISABLE.getCode());
+        if(HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionStatus){
+            mVersionRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    straightClick();
+                }
+            });
+        }
 
     }
 
     long[] mHits = new long[CLICKCOUNTS];
-    public void click(){
+    public void straightClick(){
+        // Listening to the straight click 5 times
         System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
         mHits[mHits.length - 1] = SystemClock.uptimeMillis();
         if(mHits[0] > SystemClock.uptimeMillis() - DURATION){
