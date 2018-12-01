@@ -53,11 +53,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="20dp"
                 android:padding="@dimen/view_padding">
                 <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                     android:id="@+id/givingBtn"
                     android:layout_width="150dp"
-                    android:layout_height="@dimen/bp_btn_hight"
+                    android:layout_height="35dp"
                     android:layout_weight="1"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
@@ -71,7 +72,7 @@
                 <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                     android:id="@+id/walletSendBtn"
                     android:layout_width="150dp"
-                    android:layout_height="@dimen/bp_btn_hight"
+                    android:layout_height="35dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
@@ -86,17 +87,13 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/boundaryLl"
             android:layout_below="@+id/cardAssetInfoLl"
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:background="@color/app_color_white"
             android:orientation="horizontal">
-            <View
-                android:layout_width="18dp"
-                android:layout_height="36dp"
-                android:background="@drawable/shape_bg_semi_circle_left_purple"/>
 
             <View
                 android:layout_width="wrap_content"
@@ -104,13 +101,22 @@
                 android:background="@drawable/shape_bg_dash_line"/>
 
             <View
+                android:layout_alignParentLeft="true"
                 android:layout_width="18dp"
                 android:layout_height="36dp"
-                android:background="@drawable/shape_bg_semi_circle_right_purple"/>
-        </LinearLayout>
+                android:background="@drawable/shape_bg_semi_circle_left_purple"
+                android:layout_alignParentStart="true" />
+
+            <View
+                android:layout_alignParentRight="true"
+                android:layout_width="18dp"
+                android:layout_height="36dp"
+                android:background="@drawable/shape_bg_semi_circle_right_purple"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/myOrderListLl"
+            android:id="@+id/mySellListLl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/boundaryLl"
@@ -121,9 +127,54 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/my_order_list_title_txt"
+                android:text="@string/my_sell_list_title_txt"
                 android:textSize="16sp"
                 android:textColor="@color/app_color_black"/>
+
+            <com.qmuiteam.qmui.widget.QMUIEmptyView
+                android:id="@+id/mySellEmptyView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ListView
+                    android:id="@+id/mySellLv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:headerDividersEnabled="false"
+                    android:footerDividersEnabled="true"
+                    android:divider="@drawable/shape_bg_dash_line"
+                    android:dividerHeight="10dp">
+
+                </ListView>
+            </com.qmuiteam.qmui.widget.QMUIEmptyView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@drawable/shape_bg_dash_line"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/purchasing_information_title_txt"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/app_color_black"/>
+
+            <com.qmuiteam.qmui.widget.QMUIEmptyView
+                android:id="@+id/purchasingInfoEmptyView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ListView
+                    android:id="@+id/purchasingInfoLv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:footerDividersEnabled="false">
+
+                </ListView>
+            </com.qmuiteam.qmui.widget.QMUIEmptyView>
+
         </LinearLayout>
 
         <ImageView
