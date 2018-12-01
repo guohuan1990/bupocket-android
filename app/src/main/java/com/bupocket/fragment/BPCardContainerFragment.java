@@ -23,12 +23,12 @@ public class BPCardContainerFragment extends BaseFragment {
     @BindView(R.id.cardContainerTabContentLl)
     LinearLayout mCardContainerTabContentLl;
 
-    private View cardPackage;
-    private View cardBuyOrSell;
+    private View cardPackageMine;
+    private View cardPackageBuyOrSell;
 
     @Override
     protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_card_container, null);
+        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_card_package, null);
         ButterKnife.bind(this, root);
         init();
         return root;
@@ -43,14 +43,14 @@ public class BPCardContainerFragment extends BaseFragment {
     }
 
     private void selectTabs() {
-        cardPackage = View.inflate(getContext(),R.layout.fragment_card_package,null);
-        cardBuyOrSell = View.inflate(getContext(),R.layout.fragment_card_buy_or_sell,null);
-        mCardContainerTabContentLl.addView(cardPackage);
+        cardPackageMine = View.inflate(getContext(),R.layout.fragment_card_package_mine,null);
+        cardPackageBuyOrSell = View.inflate(getContext(),R.layout.fragment_card_package_buy_or_sell,null);
+        mCardContainerTabContentLl.addView(cardPackageMine);
         mCardContainerMineCardTabTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCardContainerTabContentLl.removeAllViews();
-                mCardContainerTabContentLl.addView(cardPackage);
+                mCardContainerTabContentLl.addView(cardPackageMine);
                 setActiveTab("MINE");
             }
         });
@@ -59,7 +59,7 @@ public class BPCardContainerFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 mCardContainerTabContentLl.removeAllViews();
-                mCardContainerTabContentLl.addView(cardBuyOrSell);
+                mCardContainerTabContentLl.addView(cardPackageBuyOrSell);
                 setActiveTab("BUY");
             }
         });
@@ -68,7 +68,7 @@ public class BPCardContainerFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 mCardContainerTabContentLl.removeAllViews();
-                mCardContainerTabContentLl.addView(cardBuyOrSell);
+                mCardContainerTabContentLl.addView(cardPackageBuyOrSell);
                 setActiveTab("SELL");
             }
         });
