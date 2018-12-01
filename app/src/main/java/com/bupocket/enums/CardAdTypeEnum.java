@@ -1,13 +1,13 @@
 package com.bupocket.enums;
 
-public enum AdTypeEnum {
+public enum CardAdTypeEnum {
     BUY(0,"buy"),
     SELL(1,"sell")
     ;
     private Integer code;
     private String name;
 
-    private AdTypeEnum(Integer code, String name) {
+    private CardAdTypeEnum(Integer code, String name) {
         this.code = code;
         this.name = name;
     }

@@ -3,15 +3,23 @@ package com.bupocket.fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
+import com.bupocket.adaptor.CardAdDatasAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.http.api.dto.resp.GetCardAdDatasRespDto;
+import com.qmuiteam.qmui.widget.QMUIEmptyView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BPCardContainerFragment extends BaseFragment {
+public class BPCardPackageFragment extends BaseFragment {
 
     @BindView(R.id.cardContainerMineCardTabTv)
     TextView mCardContainerMineCardTabTv;
@@ -25,6 +33,15 @@ public class BPCardContainerFragment extends BaseFragment {
 
     private View cardPackageMine;
     private View cardPackageBuyOrSell;
+    private QMUIEmptyView mAdEmptyView;
+    private SmartRefreshLayout mAdRefreshLayout;
+    private ListView mCardAdDataLv;
+
+    private Integer adType = 0;
+    private GetCardAdDatasRespDto getCardAdDatasRespDto;
+    private CardAdDatasAdapter cardAdDatasAdapter;
+    private GetCardAdDatasRespDto.PageBean cardPage;
+    private List<GetCardAdDatasRespDto.AdvertListBean> cardAdList;
 
     @Override
     protected View onCreateView() {
@@ -35,7 +52,16 @@ public class BPCardContainerFragment extends BaseFragment {
     }
 
     private void init() {
+        initTabsPages();
         setListeners();
+    }
+
+    private void initTabsPages() {
+        cardPackageMine = View.inflate(getContext(),R.layout.fragment_card_package_mine,null);
+        cardPackageBuyOrSell = View.inflate(getContext(),R.layout.fragment_card_package_ad,null);
+        mAdEmptyView = cardPackageBuyOrSell.findViewById(R.id.emptyView);
+        mAdRefreshLayout = cardPackageBuyOrSell.findViewById(R.id.refreshLayout);
+        mCardAdDataLv = cardPackageBuyOrSell.findViewById(R.id.cardAdDataLv);
     }
 
     private void setListeners() {
@@ -43,8 +69,6 @@ public class BPCardContainerFragment extends BaseFragment {
     }
 
     private void selectTabs() {
-        cardPackageMine = View.inflate(getContext(),R.layout.fragment_card_package_mine,null);
-        cardPackageBuyOrSell = View.inflate(getContext(),R.layout.fragment_card_package_ad,null);
         mCardContainerTabContentLl.addView(cardPackageMine);
         mCardContainerMineCardTabTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +84,8 @@ public class BPCardContainerFragment extends BaseFragment {
             public void onClick(View v) {
                 mCardContainerTabContentLl.removeAllViews();
                 mCardContainerTabContentLl.addView(cardPackageBuyOrSell);
+                adType = 1;
+                getCardBuyAd();
                 setActiveTab("BUY");
             }
         });
@@ -69,9 +95,34 @@ public class BPCardContainerFragment extends BaseFragment {
             public void onClick(View v) {
                 mCardContainerTabContentLl.removeAllViews();
                 mCardContainerTabContentLl.addView(cardPackageBuyOrSell);
+                adType = 0;
+                getCardSellAd();
                 setActiveTab("SELL");
             }
         });
+    }
+
+    private void getCardBuyAd() {
+        String json = "{\"advertList\":[{\"advertId\":\"10000020\",\"advertTitle\":\"阳澄湖牌大闸蟹礼券 8只装\",\"price\":\"2\",\"coin\":\"BU\",\"stockQuantity\":\"5\",\"issuer\":{\"name\":\"现牛羊\",\"photo\":\"base64\"}}],\"page\":{\"count\":1,\"curSize\":2,\"endOfGroup\":1,\"firstResultNumber\":0,\"nextFlag\":false,\"queryTotal\":true,\"size\":10,\"start\":1,\"startOfGroup\":1,\"total\":2}}";
+        getCardAdDatasRespDto = JSON.parseObject(json,GetCardAdDatasRespDto.class);
+        cardAdList = getCardAdDatasRespDto.getAdvertList();
+        cardPage = getCardAdDatasRespDto.getPage();
+        loadAdDataAdapter();
+    }
+
+    private void getCardSellAd() {
+        String json = "{\"advertList\":[{\"advertId\":\"10000021\",\"advertTitle\":\"阳澄湖牌大闸蟹礼券 2只装\",\"price\":\"100\",\"coin\":\"BU\",\"stockQuantity\":\"10\",\"issuer\":{\"name\":\"阳澄湖大闸蟹管理中心\",\"photo\":\"\"}}],\"page\":{\"count\":1,\"curSize\":2,\"endOfGroup\":1,\"firstResultNumber\":0,\"nextFlag\":false,\"queryTotal\":true,\"size\":10,\"start\":1,\"startOfGroup\":1,\"total\":2}}";
+        getCardAdDatasRespDto = JSON.parseObject(json,GetCardAdDatasRespDto.class);
+        cardAdList = getCardAdDatasRespDto.getAdvertList();
+        cardPage = getCardAdDatasRespDto.getPage();
+        loadAdDataAdapter();
+    }
+
+    private void loadAdDataAdapter() {
+        cardAdDatasAdapter = new CardAdDatasAdapter(cardAdList, getContext());
+        cardAdDatasAdapter.setPage(cardPage);
+        cardAdDatasAdapter.setAdType(adType);
+        mCardAdDataLv.setAdapter(cardAdDatasAdapter);
     }
 
     private void setActiveTab(String activeTab) {

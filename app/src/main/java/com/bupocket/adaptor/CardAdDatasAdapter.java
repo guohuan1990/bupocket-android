@@ -1,6 +1,7 @@
 package com.bupocket.adaptor;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -11,10 +12,11 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bupocket.R;
-import com.bupocket.enums.AdTypeEnum;
-import com.bupocket.http.api.dto.resp.GetAdDatasRespDto;
+import com.bupocket.enums.CardAdTypeEnum;
+import com.bupocket.http.api.dto.resp.GetCardAdDatasRespDto;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButtonDrawable;
 
 import java.util.List;
 
@@ -22,10 +24,19 @@ public class CardAdDatasAdapter extends BaseAdapter {
 
     private Integer adType;
     private Context mContext;
-    private GetAdDatasRespDto.PageBean page;
-    private List<GetAdDatasRespDto.AdvertListBean> advertList;
 
-    public CardAdDatasAdapter(List<GetAdDatasRespDto.AdvertListBean> datas, Context mContext) {
+    public GetCardAdDatasRespDto.PageBean getPage() {
+        return page;
+    }
+
+    public void setPage(GetCardAdDatasRespDto.PageBean page) {
+        this.page = page;
+    }
+
+    private GetCardAdDatasRespDto.PageBean page;
+    private List<GetCardAdDatasRespDto.AdvertListBean> advertList;
+
+    public CardAdDatasAdapter(List<GetCardAdDatasRespDto.AdvertListBean> datas, Context mContext) {
         this.advertList = datas;
         this.mContext = mContext;
     }
@@ -62,30 +73,34 @@ public class CardAdDatasAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        GetAdDatasRespDto.AdvertListBean itemData = advertList.get(position);
+        GetCardAdDatasRespDto.AdvertListBean itemData = advertList.get(position);
         holder.mCardAdTitleTv.setText(itemData.getAdvertTitle());
         holder.mCardAdPriceTv.setText(itemData.getPrice());
-        holder.mCardAdPriceTv.setText(itemData.getPrice());
+        holder.mCardAdPriceTv.setText(itemData.getPrice() + " " + itemData.getCoin());
         if ("".equals(itemData.getIssuer().getPhoto())) {
             holder.mCardAdIssuerAuthTv.setVisibility(View.GONE);
             holder.mCardAdIssuerAvatarIv.setImageResource(R.mipmap.avatar);
         } else {
             holder.mCardAdIssuerAuthTv.setVisibility(View.VISIBLE);
-            byte[] decodedString = Base64.decode(itemData.getIssuer().getPhoto(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            holder.mCardAdIssuerAvatarIv.setImageBitmap(decodedByte);
+//            byte[] decodedString = Base64.decode(itemData.getIssuer().getPhoto(), Base64.DEFAULT);
+//            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//            holder.mCardAdIssuerAvatarIv.setImageBitmap(decodedByte);
         }
 
         String stockStr = "";
-        if(AdTypeEnum.BUY.getCode().equals(adType)){
+        if(CardAdTypeEnum.BUY.getCode().equals(adType)){
             holder.mCardAdBuyOrSellBtn.setText(R.string.card_package_sell_btn_txt);
-            holder.mCardAdBuyOrSellBtn.setBackgroundColor(convertView.getResources().getColor(R.color.card_ad_sell_btn_bg));
+            QMUIRoundButtonDrawable adOptBtnDrawable = ((QMUIRoundButtonDrawable)holder.mCardAdBuyOrSellBtn.getBackground());
+            adOptBtnDrawable.setBgData(ColorStateList.valueOf(0xFFFF6E3C));
+            adOptBtnDrawable.setStrokeData(1, ColorStateList.valueOf(0xFFFF6E3C));
             stockStr = convertView.getResources().getString(R.string.card_package_sell_item_stock_txt);
             stockStr = String.format(stockStr, Integer.parseInt(itemData.getStockQuantity()));
 
-        } else if (AdTypeEnum.SELL.getCode().equals(adType)) {
+        } else if (CardAdTypeEnum.SELL.getCode().equals(adType)) {
             holder.mCardAdBuyOrSellBtn.setText(R.string.card_package_buy_btn_txt);
-            holder.mCardAdBuyOrSellBtn.setBackgroundColor(convertView.getResources().getColor(R.color.app_color_green));
+            QMUIRoundButtonDrawable adOptBtnDrawable = ((QMUIRoundButtonDrawable)holder.mCardAdBuyOrSellBtn.getBackground());
+            adOptBtnDrawable.setBgData(ColorStateList.valueOf(0xFF02CA71));
+            adOptBtnDrawable.setStrokeData(1, ColorStateList.valueOf(0xFF02CA71));
             stockStr = convertView.getResources().getString(R.string.card_package_buy_item_stock_txt);
             stockStr = String.format(stockStr, Integer.parseInt(itemData.getStockQuantity()));
         }

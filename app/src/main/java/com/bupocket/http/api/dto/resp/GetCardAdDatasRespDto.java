@@ -2,7 +2,7 @@ package com.bupocket.http.api.dto.resp;
 
 import java.util.List;
 
-public class GetAdDatasRespDto {
+public class GetCardAdDatasRespDto {
 
     /**
      * advertList : [{"advertId":"10000020","advertTitle":"阳澄湖牌大闸蟹礼券 8只装","price":"2","coin":"BU","stockQuantity":"5","issuer":{"name":"现牛羊","photo":"base64"}}]
