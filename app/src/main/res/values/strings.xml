@@ -317,10 +317,13 @@
     <string name="safety_tips_title">安全提示</string>
     <string name="safety_tips_content_txt">您的钱包助记词尚未备份，为防止忘记密码、删除App或丢失手机等情况导致资产损失，请务必备份助记词</string>
     <string name="backup_immediately_txt">立即备份</string>
-    
+
+    <string name="number_remaining_txt">剩余数量：</string>
     <string name="gaving_btn_txt">转赠</string>
     <string name="entry_order_btn_txt">挂单出售</string>
-    <string name="my_order_list_title_txt">我的挂单</string>
+    <string name="my_sell_list_title_txt">我的挂单</string>
+    <string name="purchasing_information_title_txt">求购信息</string>
+    <string name="sold_txt">已售</string>
 
     <string name="card_package_tab_mine">我的</string>
     <string name="card_package_tab_buy">买入</string>
