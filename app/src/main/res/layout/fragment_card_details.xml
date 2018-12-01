@@ -94,19 +94,20 @@
             android:background="@color/app_color_white"
             android:orientation="horizontal">
             <View
+                android:
                 android:layout_width="18dp"
                 android:layout_height="36dp"
-                android:background="@drawable/shape_bg_semi_circle_left"/>
+                android:background="@drawable/shape_bg_semi_circle_left_purple"/>
 
             <View
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_bg_dash_line"/>
 
             <View
                 android:layout_width="18dp"
                 android:layout_height="36dp"
-                android:background="@drawable/shape_bg_semi_circle_right"/>
+                android:background="@drawable/shape_bg_semi_circle_right_purple"/>
         </LinearLayout>
 
         <LinearLayout
