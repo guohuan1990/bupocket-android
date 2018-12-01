@@ -45,8 +45,8 @@ public class HomeFragment extends BaseFragment {
                 getResources().getString(R.string.tabbar_assets_txt), false
         );
         QMUITabSegment.Tab cardPackage = new QMUITabSegment.Tab(
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_wallet),
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_wallet_selected),
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_card_package),
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_card_package_selected),
                 getResources().getString(R.string.tabbar_card_package_txt), false
         );
         QMUITabSegment.Tab profile = new QMUITabSegment.Tab(

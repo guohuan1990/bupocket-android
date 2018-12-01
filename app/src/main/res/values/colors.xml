@@ -78,4 +78,8 @@
     <color name="search_token_item_txt_color">#666666</color>
     <color name="test_net_background_color">#4B4A66</color>
     <color name="popup_background_color">#56526D</color>
+    <color name="title_deep_black_txt">#333</color>
+    <color name="body_black_txt">#666</color>
+    <color name="body_light_black_txt">#999</color>
+    <color name="card_ad_sell_btn_bg">#FF6E3C</color>
 </resources>

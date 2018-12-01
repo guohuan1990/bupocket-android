@@ -44,7 +44,7 @@ public class BPCardContainerFragment extends BaseFragment {
 
     private void selectTabs() {
         cardPackageMine = View.inflate(getContext(),R.layout.fragment_card_package_mine,null);
-        cardPackageBuyOrSell = View.inflate(getContext(),R.layout.fragment_card_package_buy_or_sell,null);
+        cardPackageBuyOrSell = View.inflate(getContext(),R.layout.fragment_card_package_ad,null);
         mCardContainerTabContentLl.addView(cardPackageMine);
         mCardContainerMineCardTabTv.setOnClickListener(new View.OnClickListener() {
             @Override

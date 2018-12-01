@@ -94,7 +94,6 @@
             android:background="@color/app_color_white"
             android:orientation="horizontal">
             <View
-                android:
                 android:layout_width="18dp"
                 android:layout_height="36dp"
                 android:background="@drawable/shape_bg_semi_circle_left_purple"/>

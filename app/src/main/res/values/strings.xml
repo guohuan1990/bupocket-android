@@ -325,5 +325,9 @@
     <string name="card_package_tab_mine">我的</string>
     <string name="card_package_tab_buy">买入</string>
     <string name="card_package_tab_sell">出售</string>
+    <string name="card_package_buy_item_stock_txt">剩余量 %1$d</string>
+    <string name="card_package_sell_item_stock_txt">数量 %1$d</string>
+    <string name="card_package_buy_btn_txt">立即买入</string>
+    <string name="card_package_sell_btn_txt">立即出售</string>
 
 </resources>
