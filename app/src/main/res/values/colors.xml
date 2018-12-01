@@ -14,6 +14,7 @@
     <color name="app_bg_color_gray_3">#f8f8f8</color>
     <color name="app_bg_color_gray_4">#f4f3f4</color>
     <color name="app_bg_color_purple">#DADDF3</color>
+    <color name="app_bg_color_purple_2">#3C3B6D</color>
     <color name="app_txt_color_purple">#9298BD</color>
     <color name="app_color_blue_disabled">#8000A8E1</color>
     <color name="app_color_blue_pressed">#c000A8E1</color>

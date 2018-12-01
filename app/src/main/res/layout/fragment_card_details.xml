@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg_color_purple_2">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingLeft="12.5dp"
+        android:paddingRight="12.5dp">
+
+        <LinearLayout
+            android:id="@+id/cardAssetInfoLl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="84dp"
+            android:background="@drawable/shape_corner_top"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/issueOrganizationNameTv"
+                android:layout_marginTop="38dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="阳澄湖管理中心"
+                android:textSize="14sp"
+                android:textColor="@color/app_txt_color_gray"/>
+
+            <TextView
+                android:id="@+id/cardNameTv"
+                android:layout_marginTop="16.5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="阳澄湖大闸蟹免费体验卷"
+                android:textSize="16sp"
+                android:textColor="@color/app_color_black"/>
+
+            <TextView
+                android:id="@+id/numberRemainingTv"
+                android:layout_marginTop="11.5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="剩余数量：3"
+                android:textColor="@color/app_txt_color_gray"
+                android:textSize="14sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/view_padding">
+                <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                    android:id="@+id/givingBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="@dimen/bp_btn_hight"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center"
+                    android:text="@string/gaving_btn_txt"
+                    app:qmui_borderColor="@color/app_color_main"
+                    app:qmui_backgroundColor="@color/app_color_white"
+                    app:qmui_radius="5dp"
+                    android:textColor="@color/app_color_main"
+                    android:textSize="@dimen/bp_btn_text_size"/>
+                <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                    android:id="@+id/walletSendBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="@dimen/bp_btn_hight"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/entry_order_btn_txt"
+                    app:qmui_borderColor="@color/transfer_btn_background_color"
+                    app:qmui_backgroundColor="@color/transfer_btn_background_color"
+                    app:qmui_radius="5dp"
+                    android:textColor="@color/app_color_font"
+                    android:textSize="@dimen/bp_btn_text_size"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/boundaryLl"
+            android:layout_below="@+id/cardAssetInfoLl"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@color/app_color_white"
+            android:orientation="horizontal">
+            <View
+                android:layout_width="18dp"
+                android:layout_height="36dp"
+                android:background="@drawable/shape_bg_semi_circle_left"/>
+
+            <View
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_bg_dash_line"/>
+
+            <View
+                android:layout_width="18dp"
+                android:layout_height="36dp"
+                android:background="@drawable/shape_bg_semi_circle_right"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/myOrderListLl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/boundaryLl"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:background="@drawable/shape_corner_bottom">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_order_list_title_txt"
+                android:textSize="16sp"
+                android:textColor="@color/app_color_black"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="60dp"
+            android:src="@mipmap/icon_card_details_logo"/>
+    </RelativeLayout>
+
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
