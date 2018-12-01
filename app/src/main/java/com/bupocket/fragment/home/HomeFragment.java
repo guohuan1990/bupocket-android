@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.BPAssetsHomeFragment;
+import com.bupocket.fragment.BPCardContainerFragment;
 import com.bupocket.fragment.BPProfileFragment;
 import com.qmuiteam.qmui.widget.QMUIPagerAdapter;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
@@ -43,12 +44,18 @@ public class HomeFragment extends BaseFragment {
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_wallet_selected),
                 getResources().getString(R.string.tabbar_assets_txt), false
         );
+        QMUITabSegment.Tab cardPackage = new QMUITabSegment.Tab(
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_wallet),
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_wallet_selected),
+                getResources().getString(R.string.tabbar_card_package_txt), false
+        );
         QMUITabSegment.Tab profile = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_profile),
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_profile_selected),
                 getResources().getString(R.string.tabbar_profile_txt), false
         );
         mTabSegment.addTab(assets);
+        mTabSegment.addTab(cardPackage);
         mTabSegment.addTab(profile);
         mTabSegment.setDefaultSelectedColor(getContext().getResources().getColor(R.color.app_color_green));
 
@@ -66,7 +73,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public int getCount() {
-                return 2;
+                return 3;
             }
 
             @Override
@@ -75,6 +82,8 @@ public class HomeFragment extends BaseFragment {
                     case 0:
                         return getResources().getString(R.string.tabbar_assets_txt);
                     case 1:
+                        return getResources().getString(R.string.tabbar_card_package_txt);
+                    case 2:
                     default:
                         return getResources().getString(R.string.tabbar_profile_txt);
                 }
@@ -86,6 +95,8 @@ public class HomeFragment extends BaseFragment {
                     case 0:
                         return new BPAssetsHomeFragment();
                     case 1:
+                        return new BPCardContainerFragment();
+                    case 2:
                     default:
                         return new BPProfileFragment();
                 }

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">小布口袋</string>
     <string name="tabbar_assets_txt">资产</string>
+    <string name="tabbar_card_package_txt">卡包</string>
     <string name="tabbar_discovery_txt">发现</string>
     <string name="tabbar_profile_txt">我的</string>
 
@@ -316,5 +317,9 @@
     <string name="safety_tips_title">安全提示</string>
     <string name="safety_tips_content_txt">您的钱包助记词尚未备份，为防止忘记密码、删除App或丢失手机等情况导致资产损失，请务必备份助记词</string>
     <string name="backup_immediately_txt">立即备份</string>
+
+    <string name="card_package_tab_mine">我的</string>
+    <string name="card_package_tab_buy">买入</string>
+    <string name="card_package_tab_sell">出售</string>
 
 </resources>
