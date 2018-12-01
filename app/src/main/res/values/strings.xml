@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">小布口袋</string>
     <string name="tabbar_assets_txt">资产</string>
+    <string name="tabbar_card_package_txt">卡包</string>
     <string name="tabbar_discovery_txt">发现</string>
     <string name="tabbar_profile_txt">我的</string>
 
@@ -320,5 +321,9 @@
     <string name="gaving_btn_txt">转赠</string>
     <string name="entry_order_btn_txt">挂单出售</string>
     <string name="my_order_list_title_txt">我的挂单</string>
+
+    <string name="card_package_tab_mine">我的</string>
+    <string name="card_package_tab_buy">买入</string>
+    <string name="card_package_tab_sell">出售</string>
 
 </resources>
