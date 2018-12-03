@@ -350,6 +350,8 @@
     <string name="card_package_number_of_available_txt">可用数量</string>
     <string name="card_package_sell_fee_txt">交易费用(BU)</string>
     <string name="card_package_sell_fee_hint_txt">免费</string>
+    <string name="card_package_buy_request_title_txt">求购</string>
+    <string name="card_package_search_hint">请输入卡劵名称</string>
 
 
 </resources>

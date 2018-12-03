@@ -165,8 +165,8 @@ public class BPCardPackageFragment extends BaseFragment {
                 adType = CardAdTypeEnum.BUY.getCode();
                 activeTab = "SELL";
                 addTabsPages();
-//                getCardSellAd();
-                getAdDatas();
+                getCardSellAd();
+//                getAdDatas();
                 setActiveTab();
             }
         });
