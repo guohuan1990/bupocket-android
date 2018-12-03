@@ -5,21 +5,35 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.adaptor.CardAdDatasAdapter;
 import com.bupocket.adaptor.CardMineAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.enums.CardAdTypeEnum;
+import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.http.api.AssetService;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetCardAdDatasRespDto;
 import com.bupocket.http.api.dto.resp.GetCardMineDto;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BPCardPackageFragment extends BaseFragment {
 
@@ -34,19 +48,33 @@ public class BPCardPackageFragment extends BaseFragment {
     LinearLayout mCardContainerTabContentLl;
 
     private View cardPackageMine;
+    private QMUIEmptyView mCardMineEmptyView;
+    private SmartRefreshLayout mCardMineRefreshLayout;
+    private ListView mCardMineLv;
+
     private View cardPackageBuyOrSell;
     private QMUIEmptyView mAdEmptyView;
     private SmartRefreshLayout mAdRefreshLayout;
     private ListView mCardAdDataLv;
-    private ListView mCardMineLv;
 
-    private Integer adType = 0;
+    private String activeTab = "MINE";
+    private Integer adType = CardAdTypeEnum.BUY.getCode();
+
     private GetCardAdDatasRespDto getCardAdDatasRespDto;
     private CardAdDatasAdapter cardAdDatasAdapter;
-    private GetCardAdDatasRespDto.PageBean cardPage;
+    private GetCardAdDatasRespDto.PageBean cardAdPage;
     private List<GetCardAdDatasRespDto.AdvertListBean> cardAdList;
+    private Integer cardAdPageStart = 1;
+    private String cardAdPageSize = "50";
+    private boolean cardAdRefreshFlag = true;
+    private boolean cardAdClickFlag = false;
+
     private GetCardMineDto getCardMineDto;
     private List<GetCardMineDto.MyAssetsBean> myAssetsList;
+    private Integer myAssetsPageStart = 1;
+    private String myAssetsPageSize = "50";
+    private boolean myAssetsRefreshFlag = true;
+    private boolean myAssetsClickFlag = false;
 
     @Override
     protected View onCreateView() {
@@ -64,14 +92,14 @@ public class BPCardPackageFragment extends BaseFragment {
     private void initTabsPages() {
 
         cardPackageMine = View.inflate(getContext(),R.layout.card_package_mine_layout,null);
+        mCardMineEmptyView = cardPackageMine.findViewById(R.id.emptyView);
+        mCardMineRefreshLayout = cardPackageMine.findViewById(R.id.refreshLayout);
+        mCardMineLv = cardPackageMine.findViewById(R.id.cardMineLv);
+
         cardPackageBuyOrSell = View.inflate(getContext(),R.layout.card_package_ad_layout,null);
-//        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) cardPackageBuyOrSell.getLayoutParams();
-//        linearParams.height = 100%;
-//        cardPackageBuyOrSell.setLayoutParams(linearParams);
         mAdEmptyView = cardPackageBuyOrSell.findViewById(R.id.emptyView);
         mAdRefreshLayout = cardPackageBuyOrSell.findViewById(R.id.refreshLayout);
         mCardAdDataLv = cardPackageBuyOrSell.findViewById(R.id.cardAdDataLv);
-        mCardMineLv = cardPackageMine.findViewById(R.id.cardMineLv);
     }
 
     private void setListeners() {
@@ -84,32 +112,44 @@ public class BPCardPackageFragment extends BaseFragment {
         mCardContainerMineCardTabTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if ("MINE".equals(activeTab)) {
+                    return;
+                }
                 mCardContainerTabContentLl.removeAllViews();
                 mCardContainerTabContentLl.addView(cardPackageMine);
+                activeTab = "MINE";
                 getMyCards();
-                setActiveTab("MINE");
+                setActiveTab();
             }
         });
 
         mCardContainerBuyTabTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if ("BUY".equals(activeTab)) {
+                    return;
+                }
                 mCardContainerTabContentLl.removeAllViews();
                 mCardContainerTabContentLl.addView(cardPackageBuyOrSell);
-                adType = 1;
+                adType = CardAdTypeEnum.SELL.getCode();
+                activeTab = "BUY";
                 getCardBuyAd();
-                setActiveTab("BUY");
+                setActiveTab();
             }
         });
 
         mCardContainerSellTabTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if ("SELL".equals(activeTab)) {
+                    return;
+                }
                 mCardContainerTabContentLl.removeAllViews();
                 mCardContainerTabContentLl.addView(cardPackageBuyOrSell);
-                adType = 0;
+                adType = CardAdTypeEnum.BUY.getCode();
+                activeTab = "SELL";
                 getCardSellAd();
-                setActiveTab("SELL");
+                setActiveTab();
             }
         });
     }
@@ -119,6 +159,38 @@ public class BPCardPackageFragment extends BaseFragment {
         getCardMineDto = JSON.parseObject(json,GetCardMineDto.class);
         myAssetsList = getCardMineDto.getMyAssets();
         loadMineCardsAdapter();
+    }
+    private void getMyCardDatas() {
+        Map<String, Object> paramsMap = new HashMap<>();
+//        paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
+        AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
+        retrofit2.Call<ApiResult<GetCardMineDto>> call = assetService.getMyCardMine(paramsMap);
+        call.enqueue(new Callback<ApiResult<GetCardMineDto>>() {
+            @Override
+            public void onResponse(Call<ApiResult<GetCardMineDto>> call, Response<ApiResult<GetCardMineDto>> response) {
+                ApiResult<GetCardMineDto> respDto = response.body();
+                if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
+                    if (cardAdRefreshFlag) {
+//                        cardAdList = respDto.getData().getMyAssets();
+                    } else {
+//                        cardAdList.addAll(respDto.getData().getMyAssets());
+                    }
+//                    cardAdPage = respDto.getData().getPage();
+//                    loadAdDataAdapter();
+                } else {
+                    Toast.makeText(getContext(),getString(R.string.err_code_txt) +
+                            respDto.getErrCode(),Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<GetCardMineDto>> call, Throwable t) {
+                if (getActivity() != null) {
+                    Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
+                }
+                t.printStackTrace();
+            }
+        });
     }
 
     private void loadMineCardsAdapter() {
@@ -131,7 +203,7 @@ public class BPCardPackageFragment extends BaseFragment {
         String json = "{\"advertList\":[{\"advertId\":\"10000020\",\"advertTitle\":\"阳澄湖牌大闸蟹礼券 8只装\",\"price\":\"2\",\"coin\":\"BU\",\"stockQuantity\":\"5\",\"issuer\":{\"name\":\"现牛羊\",\"photo\":\"base64\"}}],\"page\":{\"count\":1,\"curSize\":2,\"endOfGroup\":1,\"firstResultNumber\":0,\"nextFlag\":false,\"queryTotal\":true,\"size\":10,\"start\":1,\"startOfGroup\":1,\"total\":2}}";
         getCardAdDatasRespDto = JSON.parseObject(json,GetCardAdDatasRespDto.class);
         cardAdList = getCardAdDatasRespDto.getAdvertList();
-        cardPage = getCardAdDatasRespDto.getPage();
+        cardAdPage = getCardAdDatasRespDto.getPage();
         loadAdDataAdapter();
     }
 
@@ -139,18 +211,102 @@ public class BPCardPackageFragment extends BaseFragment {
         String json = "{\"advertList\":[{\"advertId\":\"10000021\",\"advertTitle\":\"阳澄湖牌大闸蟹礼券 2只装\",\"price\":\"100\",\"coin\":\"BU\",\"stockQuantity\":\"10\",\"issuer\":{\"name\":\"阳澄湖大闸蟹管理中心\",\"photo\":\"\"}}],\"page\":{\"count\":1,\"curSize\":2,\"endOfGroup\":1,\"firstResultNumber\":0,\"nextFlag\":false,\"queryTotal\":true,\"size\":10,\"start\":1,\"startOfGroup\":1,\"total\":2}}";
         getCardAdDatasRespDto = JSON.parseObject(json,GetCardAdDatasRespDto.class);
         cardAdList = getCardAdDatasRespDto.getAdvertList();
-        cardPage = getCardAdDatasRespDto.getPage();
+        cardAdPage = getCardAdDatasRespDto.getPage();
         loadAdDataAdapter();
+    }
+
+    private void getAdDatas() {
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("advertType", adType);
+        paramsMap.put("startPage", cardAdPageStart);
+        paramsMap.put("pageSize", cardAdPageSize);
+//        paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
+        AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
+        retrofit2.Call<ApiResult<GetCardAdDatasRespDto>> call = assetService.getCardAdDatas(paramsMap);
+        call.enqueue(new Callback<ApiResult<GetCardAdDatasRespDto>>() {
+            @Override
+            public void onResponse(retrofit2.Call<ApiResult<GetCardAdDatasRespDto>> call, Response<ApiResult<GetCardAdDatasRespDto>> response) {
+                ApiResult<GetCardAdDatasRespDto> respDto = response.body();
+                if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
+                    if (cardAdRefreshFlag) {
+                        cardAdList = respDto.getData().getAdvertList();
+                    } else {
+                        cardAdList.addAll(respDto.getData().getAdvertList());
+                    }
+                    cardAdPage = respDto.getData().getPage();
+//                    loadAdDataAdapter();
+                } else {
+                    Toast.makeText(getContext(),getString(R.string.err_code_txt) +
+                            respDto.getErrCode(),Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<ApiResult<GetCardAdDatasRespDto>> call, Throwable t) {
+                if (getActivity() != null) {
+                    Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
+                }
+                t.printStackTrace();
+            }
+        });
     }
 
     private void loadAdDataAdapter() {
         cardAdDatasAdapter = new CardAdDatasAdapter(cardAdList, getContext());
-        cardAdDatasAdapter.setPage(cardPage);
+        cardAdDatasAdapter.setPage(cardAdPage);
         cardAdDatasAdapter.setAdType(adType);
         mCardAdDataLv.setAdapter(cardAdDatasAdapter);
     }
 
-    private void setActiveTab(String activeTab) {
+    private void loadAdDatasViews(){
+        mAdRefreshLayout.setEnableLoadMore(true);
+        mAdRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(final RefreshLayout refreshlayout) {
+                refreshlayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshCardAdData();
+                        mAdRefreshLayout.finishRefresh();
+                        mAdRefreshLayout.setNoMoreData(false);
+//                        initData();
+                    }
+                }, 500);
+
+            }
+        });
+        mAdRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(final RefreshLayout refreshlayout) {
+                mAdRefreshLayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(cardAdDatasAdapter == null){
+                            mAdRefreshLayout.finishRefresh();
+                            return;
+                        }
+                        mAdRefreshLayout.finishLoadMore(500);
+                        loadMoreCardAdData();
+                    }
+                }, 500);
+            }
+        });
+    }
+
+    private void refreshCardAdData(){
+        cardAdRefreshFlag = true;
+        cardAdPageStart = 1;
+//        adInfos.clear();
+//        loadOTCAdDatas();
+    }
+
+    private void loadMoreCardAdData(){
+        cardAdPageStart ++;
+        cardAdRefreshFlag = false;
+//        loadOTCAdDatas();
+    }
+
+    private void setActiveTab() {
         mCardContainerMineCardTabTv.setTextColor(getResources().getColor(R.color.app_color_green));
         mCardContainerBuyTabTv.setTextColor(getResources().getColor(R.color.app_color_green));
         mCardContainerSellTabTv.setTextColor(getResources().getColor(R.color.app_color_green));

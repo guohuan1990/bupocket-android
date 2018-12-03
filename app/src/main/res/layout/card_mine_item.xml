@@ -7,15 +7,16 @@
     android:orientation="vertical"
     android:background="@color/app_color_white">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_marginTop="17dp"
-            android:layout_marginBottom="17dp"
-            android:layout_marginLeft="37dp"
-            android:layout_marginRight="15dp"
+            android:paddingTop="17dp"
+            android:paddingBottom="17dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="6dp"
             android:id="@+id/myCardIssuerLogoLl"
             android:background="@drawable/shape_corner_left"
             android:layout_width="wrap_content"
@@ -27,6 +28,7 @@
                 android:id="@+id/myCardIssuerLogoIv"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
+                android:layout_marginBottom="3dp"
                 android:background="@mipmap/icon_card_details_logo"
                 app:qmui_border_width="0dp"
                 app:qmui_is_circle="true"/>
@@ -37,34 +39,38 @@
                 android:layout_height="wrap_content"
                 tools:text="现牛羊"/>
         </LinearLayout>
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/boundaryLl"
-            android:layout_toRightOf="@+id/myCardIssuerLogoLl"
             android:layout_width="20dp"
-            android:layout_height="match_parent">
-
-            
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <View
-                android:layout_alignParentTop="true"
                 android:layout_width="18dp"
                 android:layout_height="9dp"
                 android:background="@drawable/shape_bg_semi_circle_top_gray" />
+            <View
+                android:layout_width="100dp"
+                android:layout_marginLeft="-42dp"
+                android:layout_marginRight="-42dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_bg_dotted_line"
+                android:layerType="software"/>
 
             <View
-                android:layout_alignParentBottom="true"
                 android:layout_width="18dp"
                 android:layout_height="9dp"
                 android:background="@drawable/shape_bg_semi_circle_bottom_gray" />
 
-        </RelativeLayout>
+        </LinearLayout>
         <LinearLayout
-            android:layout_marginTop="17dp"
-            android:layout_marginBottom="17dp"
-            android:layout_marginLeft="15dp"
+            android:paddingTop="17dp"
+            android:paddingBottom="17dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="4dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/boundaryLl"
             android:orientation="vertical">
 
             <TextView
@@ -84,6 +90,6 @@
                 android:textSize="14sp"/>
 
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

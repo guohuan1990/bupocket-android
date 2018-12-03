@@ -326,6 +326,7 @@
     <string name="sold_txt">已售</string>
     <string name="i_ask_purchase_txt">我要求购</string>
 
+    <string name="err_code_txt">错误码</string>
     <string name="card_package_tab_mine">我的</string>
     <string name="card_package_tab_buy">买入</string>
     <string name="card_package_tab_sell">出售</string>

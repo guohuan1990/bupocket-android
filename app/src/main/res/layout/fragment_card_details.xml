@@ -92,12 +92,12 @@
             android:layout_below="@+id/cardAssetInfoLl"
             android:layout_width="match_parent"
             android:layout_height="36dp"
-            android:background="@color/app_color_white"
-            android:orientation="horizontal">
+            android:background="@color/app_color_white">
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layerType="software"
                 android:background="@drawable/shape_bg_dash_line"/>
 
             <View
