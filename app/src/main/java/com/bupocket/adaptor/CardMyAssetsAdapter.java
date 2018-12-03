@@ -8,18 +8,17 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bupocket.R;
-import com.bupocket.http.api.dto.resp.GetCardMineDto;
-import com.google.common.hash.HashingOutputStream;
+import com.bupocket.http.api.dto.resp.GetCardMyAssetsRespDto;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 import java.util.List;
 
-public class CardMineAdapter extends BaseAdapter {
-    private List<GetCardMineDto.MyAssetsBean> myAssetsBeanList;
+public class CardMyAssetsAdapter extends BaseAdapter {
+    private List<GetCardMyAssetsRespDto.MyAssetsBean> myAssetsBeanList;
     private Context mContext;
-    private GetCardMineDto.PageBean page;
+    private GetCardMyAssetsRespDto.PageBean page;
 
-    public CardMineAdapter(List<GetCardMineDto.MyAssetsBean> myAssetsBeanList, Context mContext){
+    public CardMyAssetsAdapter(List<GetCardMyAssetsRespDto.MyAssetsBean> myAssetsBeanList, Context mContext){
         this.myAssetsBeanList = myAssetsBeanList;
         this.mContext = mContext;
     }
@@ -53,7 +52,7 @@ public class CardMineAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
         if(myAssetsBeanList.size() != 0){
-            GetCardMineDto.MyAssetsBean myAssetsBean = myAssetsBeanList.get(position);
+            GetCardMyAssetsRespDto.MyAssetsBean myAssetsBean = myAssetsBeanList.get(position);
             holder.myCardIssuerNameTv.setText(myAssetsBean.getIssuer().getName());
             holder.myCardNameTv.setText(myAssetsBean.getAssetInfo().getName());
             holder.myCardAmountTv.setText(String.format(convertView.getResources().getString(R.string.card_package_mine_card_amount_txt),myAssetsBean.getAssetInfo().getMyAssetQty()));
@@ -62,11 +61,11 @@ public class CardMineAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public GetCardMineDto.PageBean getPage() {
+    public GetCardMyAssetsRespDto.PageBean getPage() {
         return page;
     }
 
-    public void setPage(GetCardMineDto.PageBean page) {
+    public void setPage(GetCardMyAssetsRespDto.PageBean page) {
         this.page = page;
     }
 
