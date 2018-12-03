@@ -55,6 +55,7 @@ public class BPCardPackageFragment extends BaseFragment {
     private SmartRefreshLayout mCardMyAssetsRefreshLayout;
     private ListView mCardMyAssetsLv;
     private LinearLayout mCardMyAssetsEmptyLl;
+    private LinearLayout mCardMyAssetsBuyRequestLl;
 
     private GetCardMyAssetsRespDto getCardMyAssetsRespDto;
     private CardMyAssetsAdapter cardMyAssetsAdapter;
@@ -100,7 +101,13 @@ public class BPCardPackageFragment extends BaseFragment {
             mCardMyAssetsRefreshLayout = cardPackageMine.findViewById(R.id.refreshLayout);
             mCardMyAssetsLv = cardPackageMine.findViewById(R.id.cardMineLv);
             mCardMyAssetsEmptyLl = cardPackageMine.findViewById(R.id.cardMyAssetsListEmptyLl);
-
+            mCardMyAssetsBuyRequestLl = cardPackageMine.findViewById(R.id.cardMyAssetsBuyRequestLl);
+            mCardMyAssetsBuyRequestLl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startFragment(new BPBuyRequestFragment());
+                }
+            });
         } else if ("BUY".equals(activeTab) || "SELL".equals(activeTab)) {
             cardPackageBuyOrSell = inflater.inflate(R.layout.card_package_ad_layout, mCardContainerTabContentLl,true);
             mAdEmptyView = cardPackageBuyOrSell.findViewById(R.id.emptyView);
@@ -175,6 +182,12 @@ public class BPCardPackageFragment extends BaseFragment {
             loadCardMyAssetsAdapter();
         } else {
             showOrHideEmptyPage(true);
+        }
+        myAssetsPage = getCardMyAssetsRespDto.getPage();
+        if (myAssetsPage.isNextFlag()) {
+            mCardMyAssetsRefreshLayout.setEnableLoadMore(true);
+        } else {
+            mCardMyAssetsRefreshLayout.setEnableLoadMore(false);
         }
     }
     private void getMyCardAssetsDatas() {

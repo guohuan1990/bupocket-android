@@ -10,6 +10,7 @@
     android:paddingRight="12.5dp">
 
     <LinearLayout
+        android:id="@+id/cardMyAssetsBuyRequestLl"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/shape_corner"
