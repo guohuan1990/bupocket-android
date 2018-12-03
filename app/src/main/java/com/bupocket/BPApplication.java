@@ -14,6 +14,7 @@ import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.SocketUtil;
 import com.bupocket.wallet.Wallet;
+import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.squareup.leakcanary.LeakCanary;
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -27,6 +28,8 @@ import java.security.NoSuchAlgorithmException;
 public class BPApplication extends Application {
     @SuppressLint("StaticFieldLeak")
     private static Context context;
+
+    public static QMUIBottomSheet confirmPasswordDialog;
 
     public static Context getContext() {
         return context;

@@ -1,7 +1,9 @@
 package com.bupocket.fragment;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetCardAdDatasRespDto;
 import com.bupocket.http.api.dto.resp.GetCardMyAssetsRespDto;
+import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -49,6 +52,7 @@ public class BPCardPackageFragment extends BaseFragment {
 
     private String activeTab = "MINE";
     private Integer adType = CardAdTypeEnum.BUY.getCode();
+    private SharedPreferencesHelper sharedPreferencesHelper;
 
     private View cardPackageMine;
     private QMUIEmptyView mCardMyAssetsEmptyView;
@@ -90,6 +94,7 @@ public class BPCardPackageFragment extends BaseFragment {
     }
 
     private void init() {
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buBox");
         setListeners();
     }
 
@@ -165,8 +170,8 @@ public class BPCardPackageFragment extends BaseFragment {
                 adType = CardAdTypeEnum.BUY.getCode();
                 activeTab = "SELL";
                 addTabsPages();
-//                getCardSellAd();
-                getAdDatas();
+                getCardSellAd();
+//                getAdDatas();
                 setActiveTab();
             }
         });
@@ -239,6 +244,19 @@ public class BPCardPackageFragment extends BaseFragment {
         cardMyAssetsAdapter = new CardMyAssetsAdapter(myAssetsList,getContext());
         cardMyAssetsAdapter.setPage(getCardMyAssetsRespDto.getPage());
         mCardMyAssetsLv.setAdapter(cardMyAssetsAdapter);
+        mCardMyAssetsLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                GetCardMyAssetsRespDto.MyAssetsBean itemInfo = myAssetsList.get(position);
+                Bundle argz = new Bundle();
+//                argz.putString("address", itemInfo.get);
+                argz.putString("issuerAddress", itemInfo.getIssuer().getAddress());
+                argz.putString("assetCode", itemInfo.getAssetInfo().getCode());
+                BPCardDetailsFragment fragment = new BPCardDetailsFragment();
+                fragment.setArguments(argz);
+                startFragment(fragment);
+            }
+        });
     }
 
     private void loadMyAssetsDatasViews(){
@@ -460,5 +478,10 @@ public class BPCardPackageFragment extends BaseFragment {
                 mCardAdDataLv.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    private String getAccountBPData(){
+        String data = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
+        return data;
     }
 }

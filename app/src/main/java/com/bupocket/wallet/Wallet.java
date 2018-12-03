@@ -13,6 +13,7 @@ import com.bupocket.wallet.enums.BUChainExceptionEnum;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
+import com.bupocket.wallet.model.WalletSignData;
 import com.bupocket.wallet.utils.KeyStore;
 import com.bupocket.wallet.utils.keystore.BaseKeyStoreEntity;
 import com.bupocket.wallet.utils.keystore.KeyStoreEntity;
@@ -462,6 +463,50 @@ public class Wallet {
 
     private String signData(String sk,String message){
         return HexFormat.byteToHex(PrivateKey.sign(message.getBytes(), sk));
+    }
+
+    private String getPrvateKey(String password, String bPData) throws Exception{
+        try {
+            String senderPrivateKey = null;
+
+            List<WalletBPData.AccountsBean> accountsBeans = JSON.parseArray(bPData, WalletBPData.AccountsBean.class);
+
+            if(accountsBeans.size()>0){
+
+                WalletBPData.AccountsBean walletAccount = accountsBeans.get(1);
+
+                senderPrivateKey = KeyStore.decodeMsg(password,JSON.parseObject(walletAccount.getSecret().toString(),BaseKeyStoreEntity.class));
+                if(!senderPrivateKey.startsWith("priv")){
+                    throw new Exception();
+                }
+
+                return senderPrivateKey;
+
+            }
+        }catch (WalletException e){
+            throw new WalletException(e.getErrCode(),e.getErrMsg());
+        }catch (Exception e){
+            throw new Exception(e);
+        }
+        return null;
+    }
+
+    public WalletSignData signData(String password, String message, String bPData) throws Exception {
+        try {
+            String senderPrivateKey = getPrvateKey(password, bPData);
+            String senderPk = PrivateKey.getEncPublicKey(senderPrivateKey);
+            String signData = signData(senderPrivateKey, message);
+
+            WalletSignData walletSignData = new WalletSignData();
+            walletSignData.setPublicKey(senderPk);
+            walletSignData.setSignData(signData);
+
+            return walletSignData;
+        }catch (WalletException e){
+            throw new WalletException(e.getErrCode(),e.getErrMsg());
+        }catch (Exception e){
+            throw new Exception(e);
+        }
     }
 
     private Long handleTokenAmount(String srcAmount, String decimals){

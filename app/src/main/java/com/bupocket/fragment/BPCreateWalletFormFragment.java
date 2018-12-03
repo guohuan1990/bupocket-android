@@ -16,15 +16,23 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.http.api.AccountService;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.http.api.dto.resp.GetUserTokenRespDto;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
+import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
+import com.bupocket.wallet.model.WalletSignData;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -32,6 +40,8 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BPCreateWalletFormFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -193,11 +203,12 @@ public class BPCreateWalletFormFragment extends BaseFragment {
                             sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode());
 
 
-
+                            generateUserToken(walletBPData.getAccounts().get(1).getAddress(), accountPwd);
                             BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
                             Bundle argz = new Bundle();
                             argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) walletBPData.getMnemonicCodes());
                             backupWalletFragment.setArguments(argz);
+                            Thread.sleep(1500);
                             startFragment(backupWalletFragment);
 
 
@@ -206,6 +217,8 @@ public class BPCreateWalletFormFragment extends BaseFragment {
                             e.printStackTrace();
                             Toast.makeText(getActivity(), R.string.create_wallet_fail,Toast.LENGTH_SHORT).show();
                             return;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
                     }
                 }).start();
@@ -275,5 +288,37 @@ public class BPCreateWalletFormFragment extends BaseFragment {
         mRepeatPwdEt.addTextChangedListener(watcher);
     }
 
+    private void generateUserToken(String currentAccAddr, String accountPwd) {
+        String accountBPData = getAccountBPData();
+        String currentAccAddress = currentAccAddr;
+        try {
+            final WalletSignData walletSignData = Wallet.getInstance().signData(accountPwd,currentAccAddress,accountBPData);
+            AccountService accountService = RetrofitFactory.getInstance().getRetrofit().create(AccountService.class);
+            Map<String, Object> parmasMap = new HashMap<>();
+            parmasMap.put("publicKey",walletSignData.getPublicKey());
+            parmasMap.put("signData", walletSignData.getSignData());
+            retrofit2.Call<ApiResult<GetUserTokenRespDto>> call = accountService.getUserToken(parmasMap);
+            call.enqueue(new retrofit2.Callback<ApiResult<GetUserTokenRespDto>>() {
 
+                @Override
+                public void onResponse(Call<ApiResult<GetUserTokenRespDto>> call, retrofit2.Response<ApiResult<GetUserTokenRespDto>> response) {
+                    ApiResult<GetUserTokenRespDto> respDto = response.body();
+                    if (com.bupocket.enums.ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
+                        sharedPreferencesHelper.put("userToken",respDto.getData().getUserToken());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResult<GetUserTokenRespDto>> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private String getAccountBPData(){
+        String data = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
+        return data;
+    }
 }

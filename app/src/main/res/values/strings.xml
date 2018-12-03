@@ -352,4 +352,11 @@
     <string name="card_package_sell_fee_hint_txt">免费</string>
 
 
+    <string name="user_confirm_password_txt">密码确认</string>
+    <string name="user_confirm_password_txt1">为了您的资产安全，请输入钱包密码</string>
+    <string name="user_confirm_password_wallet_password_txt">钱包密码</string>
+    <string name="user_confirm_password_wallet_password_txt1">8~20个字符，且内容仅限字母和数字</string>
+    <string name="user_confirm_password_wallet_forget_password_txt">忘记密码，</string>
+    <string name="user_confirm_password_wallet_recover_identity_txt">去恢复身份</string>
+    <string name="user_confirm_password_wallet_submit_txt">完成</string>
 </resources>
