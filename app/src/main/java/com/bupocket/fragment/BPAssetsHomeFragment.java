@@ -135,8 +135,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
         mAddTokenLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startFragment(new BPAssetsAddFragment());
-                startFragment(new BPCardPublishSellADFragment());
+                startFragment(new BPAssetsAddFragment());
+//                startFragment(new BPCardPublishSellADFragment());
             }
         });
         mImmediatelyBackupBtn.setOnClickListener(new View.OnClickListener() {
