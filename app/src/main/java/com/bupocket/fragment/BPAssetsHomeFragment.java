@@ -136,7 +136,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 //                startFragment(new BPAssetsAddFragment());
-                startFragment(new BPCardDetailsFragment());
+                startFragment(new BPCardPublishSellADFragment());
             }
         });
         mImmediatelyBackupBtn.setOnClickListener(new View.OnClickListener() {
