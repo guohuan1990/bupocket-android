@@ -58,7 +58,10 @@ public class BPCardPackageFragment extends BaseFragment {
 
     private void initTabsPages() {
         cardPackageMine = View.inflate(getContext(),R.layout.fragment_card_package_mine,null);
-        cardPackageBuyOrSell = View.inflate(getContext(),R.layout.fragment_card_package_ad,null);
+        cardPackageBuyOrSell = View.inflate(getContext(),R.layout.card_package_ad_layout,null);
+//        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) cardPackageBuyOrSell.getLayoutParams();
+//        linearParams.height = 100%;
+//        cardPackageBuyOrSell.setLayoutParams(linearParams);
         mAdEmptyView = cardPackageBuyOrSell.findViewById(R.id.emptyView);
         mAdRefreshLayout = cardPackageBuyOrSell.findViewById(R.id.refreshLayout);
         mCardAdDataLv = cardPackageBuyOrSell.findViewById(R.id.cardAdDataLv);
