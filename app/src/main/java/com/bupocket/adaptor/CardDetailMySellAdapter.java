@@ -13,11 +13,11 @@ import com.bupocket.utils.CommonUtil;
 
 import java.util.List;
 
-public class CardMySellAdapter extends BaseAdapter {
+public class CardDetailMySellAdapter extends BaseAdapter {
     private List<GetCardDetailsDto.MySaleBean> mySale;
     private Context mContext;
 
-    public CardMySellAdapter(List<GetCardDetailsDto.MySaleBean> mySale, Context mContext){
+    public CardDetailMySellAdapter(List<GetCardDetailsDto.MySaleBean> mySale, Context mContext){
         this.mySale = mySale;
         this.mContext = mContext;
     }
