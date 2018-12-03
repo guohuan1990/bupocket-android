@@ -9,8 +9,10 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.adaptor.CardAdDatasAdapter;
+import com.bupocket.adaptor.CardMineAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.http.api.dto.resp.GetCardAdDatasRespDto;
+import com.bupocket.http.api.dto.resp.GetCardMineDto;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -36,12 +38,15 @@ public class BPCardPackageFragment extends BaseFragment {
     private QMUIEmptyView mAdEmptyView;
     private SmartRefreshLayout mAdRefreshLayout;
     private ListView mCardAdDataLv;
+    private ListView mCardMineLv;
 
     private Integer adType = 0;
     private GetCardAdDatasRespDto getCardAdDatasRespDto;
     private CardAdDatasAdapter cardAdDatasAdapter;
     private GetCardAdDatasRespDto.PageBean cardPage;
     private List<GetCardAdDatasRespDto.AdvertListBean> cardAdList;
+    private GetCardMineDto getCardMineDto;
+    private List<GetCardMineDto.MyAssetsBean> myAssetsList;
 
     @Override
     protected View onCreateView() {
@@ -57,7 +62,8 @@ public class BPCardPackageFragment extends BaseFragment {
     }
 
     private void initTabsPages() {
-        cardPackageMine = View.inflate(getContext(),R.layout.fragment_card_package_mine,null);
+
+        cardPackageMine = View.inflate(getContext(),R.layout.card_package_mine_layout,null);
         cardPackageBuyOrSell = View.inflate(getContext(),R.layout.card_package_ad_layout,null);
 //        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) cardPackageBuyOrSell.getLayoutParams();
 //        linearParams.height = 100%;
@@ -65,6 +71,7 @@ public class BPCardPackageFragment extends BaseFragment {
         mAdEmptyView = cardPackageBuyOrSell.findViewById(R.id.emptyView);
         mAdRefreshLayout = cardPackageBuyOrSell.findViewById(R.id.refreshLayout);
         mCardAdDataLv = cardPackageBuyOrSell.findViewById(R.id.cardAdDataLv);
+        mCardMineLv = cardPackageMine.findViewById(R.id.cardMineLv);
     }
 
     private void setListeners() {
@@ -73,11 +80,13 @@ public class BPCardPackageFragment extends BaseFragment {
 
     private void selectTabs() {
         mCardContainerTabContentLl.addView(cardPackageMine);
+        getMyCards();
         mCardContainerMineCardTabTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCardContainerTabContentLl.removeAllViews();
                 mCardContainerTabContentLl.addView(cardPackageMine);
+                getMyCards();
                 setActiveTab("MINE");
             }
         });
@@ -103,6 +112,19 @@ public class BPCardPackageFragment extends BaseFragment {
                 setActiveTab("SELL");
             }
         });
+    }
+
+    private void getMyCards() {
+        String json = "{ \"myAssets\": [{ \"issuer\": { \"name\":\"现牛羊\", \"address\":\"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT\", \"logo\":\"base64\" }, \"assetInfo\": { \"name\":\"牛肉代金券\", \"code\":\"RNC-1000\", \"issuerAddress\":\"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT\", \"myAssetQty\":\"3\" } }], \"page\": { \"count\": 1, \"curSize\": 1, \"endOfGroup\": 1, \"firstResultNumber\": 0, \"nextFlag\": false, \"queryTotal\": true, \"size\": 10, \"start\": 1, \"startOfGroup\": 1, \"total\": 1 } }";
+        getCardMineDto = JSON.parseObject(json,GetCardMineDto.class);
+        myAssetsList = getCardMineDto.getMyAssets();
+        loadMineCardsAdapter();
+    }
+
+    private void loadMineCardsAdapter() {
+        CardMineAdapter cardMineAdapter = new CardMineAdapter(myAssetsList,getContext());
+        cardMineAdapter.setPage(getCardMineDto.getPage());
+        mCardMineLv.setAdapter(cardMineAdapter);
     }
 
     private void getCardBuyAd() {

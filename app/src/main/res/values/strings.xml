@@ -324,6 +324,7 @@
     <string name="my_sell_list_title_txt">我的挂单</string>
     <string name="purchasing_information_title_txt">求购信息</string>
     <string name="sold_txt">已售</string>
+    <string name="i_ask_purchase_txt">我要求购</string>
 
     <string name="card_package_tab_mine">我的</string>
     <string name="card_package_tab_buy">买入</string>
@@ -332,5 +333,6 @@
     <string name="card_package_sell_item_stock_txt">数量 %1$d</string>
     <string name="card_package_buy_btn_txt">立即买入</string>
     <string name="card_package_sell_btn_txt">立即出售</string>
+    <string name="card_package_mine_card_amount_txt">数量：%1$s</string>
 
 </resources>
