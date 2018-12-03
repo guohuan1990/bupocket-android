@@ -8,16 +8,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bupocket.R;
-import com.bupocket.http.api.dto.resp.CardDetailsDto;
+import com.bupocket.http.api.dto.resp.GetCardDetailsDto;
 import com.bupocket.utils.CommonUtil;
 
 import java.util.List;
 
 public class CardMySellAdapter extends BaseAdapter {
-    private List<CardDetailsDto.MySaleBean> mySale;
+    private List<GetCardDetailsDto.MySaleBean> mySale;
     private Context mContext;
 
-    public CardMySellAdapter(List<CardDetailsDto.MySaleBean> mySale,Context mContext){
+    public CardMySellAdapter(List<GetCardDetailsDto.MySaleBean> mySale, Context mContext){
         this.mySale = mySale;
         this.mContext = mContext;
     }
@@ -52,7 +52,7 @@ public class CardMySellAdapter extends BaseAdapter {
         }
 
         if(mySale.size() != 0){
-            CardDetailsDto.MySaleBean mySaleBean = mySale.get(position);
+            GetCardDetailsDto.MySaleBean mySaleBean = mySale.get(position);
             holder.adTitleTv.setText(mySaleBean.getAdTitle());
             holder.priceTv.setText(CommonUtil.addSuffix(mySaleBean.getPrice(),"BU"));
             String soldAmount = mySaleBean.getSelledAmount();

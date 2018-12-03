@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/app_color_white">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_marginTop="17dp"
+            android:layout_marginBottom="17dp"
+            android:layout_marginLeft="37dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/myCardIssuerLogoLl"
+            android:background="@drawable/shape_corner_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/myCardIssuerLogoIv"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@mipmap/icon_card_details_logo"
+                app:qmui_border_width="0dp"
+                app:qmui_is_circle="true"/>
+
+            <TextView
+                android:id="@+id/myCardIssuerNameTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="现牛羊"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/boundaryLl"
+            android:layout_toRightOf="@+id/myCardIssuerLogoLl"
+            android:layout_width="20dp"
+            android:layout_height="match_parent">
+
+            
+
+            <View
+                android:layout_alignParentTop="true"
+                android:layout_width="18dp"
+                android:layout_height="9dp"
+                android:background="@drawable/shape_bg_semi_circle_top_gray" />
+
+            <View
+                android:layout_alignParentBottom="true"
+                android:layout_width="18dp"
+                android:layout_height="9dp"
+                android:background="@drawable/shape_bg_semi_circle_bottom_gray" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_marginTop="17dp"
+            android:layout_marginBottom="17dp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/boundaryLl"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/myCardNameTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="牛肉代金券"
+                android:textColor="@color/app_color_black"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_marginTop="13dp"
+                android:id="@+id/myCardAmountTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="数量：3"
+                android:textColor="@color/app_txt_color_gray"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

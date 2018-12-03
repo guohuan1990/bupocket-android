@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
-public class CardDetailsDto {
+public class GetCardDetailsDto {
 
     /**
      * assetInfo : {"name":"牛肉代金券","code":"RNC-1000","issuerAddress":"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT","issuerName":"现牛羊","issuerLogo":"base64","myAssetQty":"3"}
@@ -16,9 +16,9 @@ public class CardDetailsDto {
     private List<MySaleBean> mySale;
     private List<BuyRequestBean> buyRequest;
 
-    public static CardDetailsDto objectFromData(String str) {
+    public static GetCardDetailsDto objectFromData(String str) {
 
-        return new Gson().fromJson(str, CardDetailsDto.class);
+        return new Gson().fromJson(str, GetCardDetailsDto.class);
     }
 
     public AssetInfoBean getAssetInfo() {
