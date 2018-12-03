@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/qmui_config_color_white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_color_white_background"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/qmui_topbar_height"
+            android:background="@color/app_color_white_background"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                android:text="@string/card_package_publish_sell_ad_txt"
+                android:theme="@style/BPViewTitle" />
+
+            <RelativeLayout
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="@drawable/shape_gradient_orange_bg"
+                android:gravity="center_horizontal">
+
+                <View
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="11dp"
+                    android:layout_height="22dp"
+                    android:background="@drawable/shape_bg_semi_circle_left_white"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"/>
+
+                <View
+                    android:layout_alignParentRight="true"
+                    android:layout_width="11dp"
+                    android:layout_height="22dp"
+                    android:background="@drawable/shape_bg_semi_circle_right_white"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+
+                <LinearLayout
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
+                    
+                    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:src="@mipmap/icon_card_details_logo"
+                        app:qmui_is_circle="true"/>
+
+                    <TextView
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="7.5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="阳澄湖大闸蟹免费体验卷"
+                        android:textColor="@color/app_color_white"
+                        android:textSize="16sp"
+                        android:ellipsize="end"
+                        android:singleLine="true"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/app_color_white"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_package_ad_title_txt"
+                            android:textColor="@color/app_color_black"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*"
+                            android:textColor="@color/app_txt_color_red_2" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="8"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/publishBuyADEt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="@string/card_package_ad_title_hint_txt"
+                                android:inputType=""
+                                android:textColor="@color/app_color_black"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.5dip"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/app_txt_color_gray_3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/app_color_white"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_package_unit_price_txt"
+                            android:textColor="@color/app_color_black"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*"
+                            android:textColor="@color/app_txt_color_red_2" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/unitPriceEt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="@string/send_hint_txt2"
+                            android:inputType=""
+                            android:textColor="@color/app_color_black"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.5dip"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/app_txt_color_gray_3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/app_color_white"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_alignParentLeft="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/card_package_sell_amount_txt"
+                                android:textColor="@color/app_color_black"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="*"
+                                android:textColor="@color/app_txt_color_red_2" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/card_package_number_of_available_txt"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="3张"
+                                android:textSize="12sp"
+                                android:textColor="@color/app_color_main"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/sendFormTxFeeEt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="@string/card_package_sell_amount_hint_txt"
+                            android:inputType=""
+                            android:textColor="@color/app_color_black"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.5dip"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/app_txt_color_gray_3" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/app_color_white"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/card_package_sell_fee_txt"
+                        android:textColor="@color/app_color_black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="*"
+                        android:textColor="@color/app_txt_color_red_2" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/sellFeeEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="@string/card_package_sell_fee_hint_txt"
+                        android:inputType=""
+                        android:textColor="@color/app_color_black"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/app_txt_color_gray_3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:padding="15dp">
+
+                    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                        android:id="@+id/completeMnemonicCodeBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/bp_btn_hight"
+                        android:layout_centerInParent="true"
+                        android:enabled="false"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:text="@string/card_package_publish_btn_txt"
+                        android:textColor="@color/app_color_font"
+                        android:textSize="@dimen/bp_btn_text_size"
+                        app:qmui_backgroundColor="@color/disabled_btn_color"
+                        app:qmui_borderColor="@color/disabled_btn_color"
+                        app:qmui_radius="5dp" />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true" />
+
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
