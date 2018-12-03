@@ -7,9 +7,12 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
-import com.bupocket.adaptor.CardMySellAdapter;
+import com.bupocket.adaptor.CardDetailAskAdapter;
+import com.bupocket.adaptor.CardDetailMySellAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.http.api.dto.resp.GetCardDetailsDto;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,9 +27,11 @@ public class BPCardDetailsFragment extends BaseFragment {
     TextView mNumberRemainingTv;
     @BindView(R.id.mySellLv)
     ListView mMySellLv;
+    @BindView(R.id.purchasingInfoLv)
+    ListView mPurchasingInfoLv;
 
     private GetCardDetailsDto cardDetailsDto;
-    private CardMySellAdapter cardMySellAdapter;
+
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_card_details, null);
@@ -58,8 +63,9 @@ public class BPCardDetailsFragment extends BaseFragment {
         mCardNameTv.setText(cardName);
         mNumberRemainingTv.setText(getString(R.string.number_remaining_txt) + numberRemaining);
 
-        cardMySellAdapter = new CardMySellAdapter(cardDetailsDto.getMySale(),getContext());
+        CardDetailMySellAdapter cardMySellAdapter = new CardDetailMySellAdapter(cardDetailsDto.getMySale(), getContext());
         mMySellLv.setAdapter(cardMySellAdapter);
-
+        CardDetailAskAdapter cardDetailAskAdapter = new CardDetailAskAdapter(cardDetailsDto.getBuyRequest(),getContext());
+        mPurchasingInfoLv.setAdapter(cardDetailAskAdapter);
     }
 }

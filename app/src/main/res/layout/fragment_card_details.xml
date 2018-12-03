@@ -6,188 +6,211 @@
     android:layout_height="match_parent"
     android:background="@color/app_bg_color_purple_2">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:paddingLeft="12.5dp"
-        android:paddingRight="12.5dp">
-
+        android:layout_height="match_parent"
+        android:scrollbars="none">
         <LinearLayout
-            android:id="@+id/cardAssetInfoLl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="84dp"
-            android:background="@drawable/shape_corner_top"
-            android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/issueOrganizationNameTv"
-                android:layout_marginTop="38dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="阳澄湖管理中心"
-                android:textSize="14sp"
-                android:textColor="@color/app_txt_color_gray"/>
-
-            <TextView
-                android:id="@+id/cardNameTv"
-                android:layout_marginTop="16.5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="阳澄湖大闸蟹免费体验卷"
-                android:textSize="16sp"
-                android:textColor="@color/app_color_black"/>
-
-            <TextView
-                android:id="@+id/numberRemainingTv"
-                android:layout_marginTop="11.5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="剩余数量：3"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="14sp"/>
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="20dp"
-                android:padding="@dimen/view_padding">
-                <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                    android:id="@+id/givingBtn"
-                    android:layout_width="150dp"
-                    android:layout_height="35dp"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:gravity="center"
-                    android:text="@string/gaving_btn_txt"
-                    app:qmui_borderColor="@color/app_color_main"
-                    app:qmui_backgroundColor="@color/app_color_white"
-                    app:qmui_radius="5dp"
-                    android:textColor="@color/app_color_main"
-                    android:textSize="@dimen/bp_btn_text_size"/>
-                <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                    android:id="@+id/walletSendBtn"
-                    android:layout_width="150dp"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/entry_order_btn_txt"
-                    app:qmui_borderColor="@color/transfer_btn_background_color"
-                    app:qmui_backgroundColor="@color/transfer_btn_background_color"
-                    app:qmui_radius="5dp"
-                    android:textColor="@color/app_color_font"
-                    android:textSize="@dimen/bp_btn_text_size"/>
-            </LinearLayout>
+                android:gravity="center_horizontal"
+                android:paddingLeft="12.5dp"
+                android:paddingRight="12.5dp">
 
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/boundaryLl"
-            android:layout_below="@+id/cardAssetInfoLl"
-            android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:background="@color/app_color_white"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_bg_dash_line"/>
-
-            <View
-                android:layout_alignParentLeft="true"
-                android:layout_width="18dp"
-                android:layout_height="36dp"
-                android:background="@drawable/shape_bg_semi_circle_left_purple"
-                android:layout_alignParentStart="true" />
-
-            <View
-                android:layout_alignParentRight="true"
-                android:layout_width="18dp"
-                android:layout_height="36dp"
-                android:background="@drawable/shape_bg_semi_circle_right_purple"
-                android:layout_alignParentEnd="true" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/mySellListLl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/boundaryLl"
-            android:orientation="vertical"
-            android:padding="10dp"
-            android:background="@drawable/shape_corner_bottom">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/my_sell_list_title_txt"
-                android:textSize="16sp"
-                android:textColor="@color/app_color_black"/>
-
-            <com.qmuiteam.qmui.widget.QMUIEmptyView
-                android:id="@+id/mySellEmptyView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ListView
-                    android:id="@+id/mySellLv"
+                <LinearLayout
+                    android:id="@+id/cardAssetInfoLl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:headerDividersEnabled="false"
-                    android:footerDividersEnabled="true"
-                    android:divider="@drawable/shape_bg_dash_line"
-                    android:dividerHeight="10dp">
+                    android:layout_marginTop="84dp"
+                    android:background="@drawable/shape_corner_top"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                </ListView>
-            </com.qmuiteam.qmui.widget.QMUIEmptyView>
+                    <TextView
+                        android:id="@+id/issueOrganizationNameTv"
+                        android:layout_marginTop="38dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="阳澄湖管理中心"
+                        android:textSize="14sp"
+                        android:textColor="@color/app_txt_color_gray"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@drawable/shape_bg_dash_line"/>
+                    <TextView
+                        android:id="@+id/cardNameTv"
+                        android:layout_marginTop="16.5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="阳澄湖大闸蟹免费体验卷"
+                        android:textSize="16sp"
+                        android:textColor="@color/app_color_black"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/purchasing_information_title_txt"
-                android:layout_marginTop="10dp"
-                android:textSize="16sp"
-                android:textColor="@color/app_color_black"/>
+                    <TextView
+                        android:id="@+id/numberRemainingTv"
+                        android:layout_marginTop="11.5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="剩余数量：3"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="14sp"/>
 
-            <com.qmuiteam.qmui.widget.QMUIEmptyView
-                android:id="@+id/purchasingInfoEmptyView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp"
+                        android:padding="@dimen/view_padding">
+                        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                            android:id="@+id/givingBtn"
+                            android:layout_width="150dp"
+                            android:layout_height="35dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:gravity="center"
+                            android:text="@string/gaving_btn_txt"
+                            app:qmui_borderColor="@color/app_color_main"
+                            app:qmui_backgroundColor="@color/app_color_white"
+                            app:qmui_radius="5dp"
+                            android:textColor="@color/app_color_main"
+                            android:textSize="@dimen/bp_btn_text_size"/>
+                        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                            android:id="@+id/walletSendBtn"
+                            android:layout_width="150dp"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/entry_order_btn_txt"
+                            app:qmui_borderColor="@color/transfer_btn_background_color"
+                            app:qmui_backgroundColor="@color/transfer_btn_background_color"
+                            app:qmui_radius="5dp"
+                            android:textColor="@color/app_color_font"
+                            android:textSize="@dimen/bp_btn_text_size"/>
+                    </LinearLayout>
 
-                <ListView
-                    android:id="@+id/purchasingInfoLv"
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/boundaryLl"
+                    android:layout_below="@+id/cardAssetInfoLl"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:background="@color/app_color_white"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_bg_dash_line"
+                        android:layerType="software"/>
+
+                    <View
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="18dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/shape_bg_semi_circle_left_purple"
+                        android:layout_alignParentStart="true" />
+
+                    <View
+                        android:layout_alignParentRight="true"
+                        android:layout_width="18dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/shape_bg_semi_circle_right_purple"
+                        android:layout_alignParentEnd="true" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/mySellListLl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:footerDividersEnabled="false">
+                    android:layout_below="@+id/boundaryLl"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:background="@drawable/shape_corner_bottom">
 
-                </ListView>
-            </com.qmuiteam.qmui.widget.QMUIEmptyView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_sell_list_title_txt"
+                        android:textSize="16sp"
+                        android:textColor="@color/app_color_black"/>
 
+                    <com.qmuiteam.qmui.widget.QMUIEmptyView
+                        android:id="@+id/mySellEmptyView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.bupocket.fragment.components.AssetsListView
+                            android:id="@+id/mySellLv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:headerDividersEnabled="false"
+                            android:footerDividersEnabled="true"
+                            android:divider="@drawable/shape_bg_dash_line"
+                            android:dividerHeight="10dp"
+                            android:layerType="software"
+                            android:fadeScrollbars="false"
+                            android:scrollbars="none">
+
+                        </com.bupocket.fragment.components.AssetsListView>
+                    </com.qmuiteam.qmui.widget.QMUIEmptyView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@drawable/shape_bg_dash_line"
+                        android:layerType="software"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/purchasing_information_title_txt"
+                        android:layout_marginTop="10dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/app_color_black"/>
+
+                    <com.qmuiteam.qmui.widget.QMUIEmptyView
+                        android:id="@+id/purchasingInfoEmptyView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.bupocket.fragment.components.AssetsListView
+                            android:id="@+id/purchasingInfoLv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:footerDividersEnabled="false"
+                            android:headerDividersEnabled="false"
+                            android:divider="@drawable/shape_bg_dash_line"
+                            android:dividerHeight="10dp"
+                            android:layerType="software"
+                            android:fadeScrollbars="false"
+                            android:scrollbars="none">
+
+                        </com.bupocket.fragment.components.AssetsListView>
+                    </com.qmuiteam.qmui.widget.QMUIEmptyView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="60dp"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/cardLogoIv"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@mipmap/icon_card_details_logo"/>
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="60dp"
-            android:gravity="center">
-            <ImageView
-                android:id="@+id/cardLogoIv"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@mipmap/icon_card_details_logo"/>
-        </LinearLayout>
-    </RelativeLayout>
+    </ScrollView>
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
