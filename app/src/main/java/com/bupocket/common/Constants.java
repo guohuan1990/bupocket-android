@@ -23,6 +23,7 @@ public class Constants {
     public static final Integer APP_TYPE_CODE = 1;
 
     public static final Integer TX_REQUEST_TIMEOUT_TIMES = 20;
+    public static final double CARD_TX_FEE = 0.5;
 
     public static enum MainNetConfig {
         WEB_SERVER_DOMAIN("https://api-bp.bumo.io/"),
