@@ -291,7 +291,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
         if(!CommonUtil.isNull(bundle.getString("icon"))){
             try{
                 mAssetIconIv.setImageBitmap(CommonUtil.base64ToBitmap(bundle.getString("icon")));
-            }catch (IllegalArgumentException e){
+            }catch (Exception e){
                 mAssetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
             }
 

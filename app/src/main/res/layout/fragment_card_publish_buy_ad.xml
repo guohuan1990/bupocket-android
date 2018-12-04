@@ -181,8 +181,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"
-                            android:hint="@string/send_hint_txt2"
-                            android:inputType=""
+                            android:hint="@string/card_package_unit_price_hint_txt"
+                            android:inputType="numberDecimal"
                             android:textColor="@color/app_color_black"
                             android:textSize="14sp" />
 
@@ -232,12 +232,12 @@
                         android:orientation="horizontal">
 
                         <EditText
-                            android:id="@+id/sendFormTxFeeEt"
+                            android:id="@+id/buyAmountET"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:hint="@string/card_package_buy_amount_hint_txt"
-                            android:inputType=""
+                            android:inputType="number"
                             android:textColor="@color/app_color_black"
                             android:textSize="14sp" />
 
@@ -263,7 +263,7 @@
                     android:padding="15dp">
 
                     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                        android:id="@+id/completeMnemonicCodeBtn"
+                        android:id="@+id/publishBuyADBtn"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/bp_btn_hight"
                         android:layout_centerInParent="true"

@@ -600,4 +600,19 @@ public class Wallet {
         return txHash;
     }
 
+    public WalletSignData signTxBlob(String password, String txBlob, String bPData) throws Exception {
+        try {
+            String senderPrivateKey = getPrvateKey(password, bPData);
+            String signData = HexFormat.byteToHex(PrivateKey.sign(HexFormat.hexStringToBytes(txBlob), senderPrivateKey));
+            String publicKey = PrivateKey.getEncPublicKey(senderPrivateKey);
+            WalletSignData walletSignData = new WalletSignData();
+            walletSignData.setPublicKey(publicKey);
+            walletSignData.setSignData(signData);
+            return walletSignData;
+        }catch (WalletException e){
+            throw new WalletException(e.getErrCode(),e.getErrMsg());
+        }catch (Exception e){
+            throw new Exception(e);
+        }
+    }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public class GetCardMyAssetsRespDto {
 
     /**
-     * myAssets : [{"issuer":{"name":"现牛羊","address":"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT","logo":"base64"},"assetInfo":{"name":"牛肉代金券","code":"RNC-1000","issuerAddress":"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT","myAssetQty":"3"}}]
+     * myAssets : [{"issuer":{"name":"现牛羊","address":"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT","logo":"base64"},"AssetInfo":{"name":"牛肉代金券","code":"RNC-1000","issuerAddress":"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT","myAssetQty":"3"}}]
      * page : {"count":1,"curSize":1,"endOfGroup":1,"firstResultNumber":0,"nextFlag":false,"queryTotal":true,"size":10,"start":1,"startOfGroup":1,"total":1}
      */
 
@@ -149,7 +149,7 @@ public class GetCardMyAssetsRespDto {
     public static class MyAssetsBean {
         /**
          * issuer : {"name":"现牛羊","address":"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT","logo":"base64"}
-         * assetInfo : {"name":"牛肉代金券","code":"RNC-1000","issuerAddress":"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT","myAssetQty":"3"}
+         * AssetInfo : {"name":"牛肉代金券","code":"RNC-1000","issuerAddress":"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT","myAssetQty":"3"}
          */
 
         private IssuerBean issuer;
