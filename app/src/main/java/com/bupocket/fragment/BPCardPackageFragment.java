@@ -341,7 +341,7 @@ public class BPCardPackageFragment extends BaseFragment {
 
     // AD part start ++++++++
     private void getCardBuyAd() {
-        String json = "{\"advertList\":[{\"advertId\":\"10000020\",\"advertTitle\":\"阳澄湖牌大闸蟹礼券 8只装\",\"price\":\"2\",\"coin\":\"BU\",\"stockQuantity\":\"5\",\"issuer\":{\"name\":\"现牛羊\",\"photo\":\"base64\"}}],\"page\":{\"count\":1,\"curSize\":2,\"endOfGroup\":1,\"firstResultNumber\":0,\"nextFlag\":false,\"queryTotal\":true,\"size\":10,\"start\":1,\"startOfGroup\":1,\"total\":2}}";
+        String json = "{\"advertList\":[{\"advertId\":\"10000020\",\"advertTitle\":\"阳澄湖牌大闸蟹礼券 8只装\",\"price\":\"2\",\"coin\":\"BU\",\"stockQuantity\":\"5\",\"assetCode\": \"SSR-10086\",\"issuer\":{\"name\":\"现牛羊\",\"photo\":\"base64\"}}],\"page\":{\"count\":1,\"curSize\":2,\"endOfGroup\":1,\"firstResultNumber\":0,\"nextFlag\":false,\"queryTotal\":true,\"size\":10,\"start\":1,\"startOfGroup\":1,\"total\":2}}";
         getCardAdDataRespDto = JSON.parseObject(json,GetCardAdDataRespDto.class);
         cardAdList = getCardAdDataRespDto.getAdvertList();
         if (cardAdList.size() > 0) {
@@ -359,7 +359,7 @@ public class BPCardPackageFragment extends BaseFragment {
 
     private void getCardSellAd() {
 //        String json = "{\"advertList\":[],\"page\":{\"count\":1,\"curSize\":2,\"endOfGroup\":1,\"firstResultNumber\":0,\"nextFlag\":false,\"queryTotal\":true,\"size\":10,\"start\":1,\"startOfGroup\":1,\"total\":2}}";
-        String json = "{\"advertList\":[{\"advertId\":\"10000021\",\"advertTitle\":\"阳澄湖牌大闸蟹礼券 2只装\",\"price\":\"100\",\"coin\":\"BU\",\"stockQuantity\":\"10\",\"issuer\":{\"name\":\"阳澄湖大闸蟹管理中心\",\"photo\":\"\"}}],\"page\":{\"count\":1,\"curSize\":2,\"endOfGroup\":1,\"firstResultNumber\":0,\"nextFlag\":false,\"queryTotal\":true,\"size\":10,\"start\":1,\"startOfGroup\":1,\"total\":2}}";
+        String json = "{\"advertList\":[{\"advertId\":\"10000021\",\"advertTitle\":\"阳澄湖牌大闸蟹礼券 2只装\",\"price\":\"100\",\"coin\":\"BU\",\"stockQuantity\":\"10\",\"assetCode\": \"SSR-10086\",\"issuer\":{\"name\":\"阳澄湖大闸蟹管理中心\",\"photo\":\"\"}}],\"page\":{\"count\":1,\"curSize\":2,\"endOfGroup\":1,\"firstResultNumber\":0,\"nextFlag\":false,\"queryTotal\":true,\"size\":10,\"start\":1,\"startOfGroup\":1,\"total\":2}}";
         getCardAdDataRespDto = JSON.parseObject(json,GetCardAdDataRespDto.class);
         cardAdList = getCardAdDataRespDto.getAdvertList();
         cardAdPage = getCardAdDataRespDto.getPage();
@@ -551,7 +551,7 @@ public class BPCardPackageFragment extends BaseFragment {
         String priceTxt = itemInfo.getPrice() + " " + itemInfo.getCoin() + " " + getString(R.string.card_package_card_ad_confirm_unit_txt);
         mAdPrice.setText(priceTxt);
         String assetIdTxt = getString(R.string.card_package_card_ad_confirm_asset_id_txt);
-//        assetIdTxt = String.format(assetIdTxt, itemInfo.getAdvertId());
+        assetIdTxt = String.format(assetIdTxt, itemInfo.getAssetCode());
         mAdAssetId.setText(assetIdTxt);
         String feeTxt = getString(R.string.card_package_card_ad_sell_fee_txt);
         feeTxt = String.format(feeTxt, String.valueOf(Constants.CARD_TX_FEE)) + " " + itemInfo.getCoin();

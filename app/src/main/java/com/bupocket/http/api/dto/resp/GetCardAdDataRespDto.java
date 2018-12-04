@@ -149,7 +149,17 @@ public class GetCardAdDataRespDto {
         private String price;
         private String coin;
         private String stockQuantity;
+        private String assetCode;
         private IssuerBean issuer;
+
+        public String getAssetCode() {
+            return assetCode;
+        }
+
+        public void setAssetCode(String assetCode) {
+            this.assetCode = assetCode;
+        }
+
 
         public String getAdvertId() {
             return advertId;
