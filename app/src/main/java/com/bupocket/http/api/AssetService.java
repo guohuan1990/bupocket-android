@@ -3,6 +3,7 @@ package com.bupocket.http.api;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.BlobInfoDto;
 import com.bupocket.http.api.dto.resp.GetCardAdDatasRespDto;
+import com.bupocket.http.api.dto.resp.GetCardDetailsDto;
 import com.bupocket.http.api.dto.resp.GetCardMyAssetsRespDto;
 import com.bupocket.http.api.dto.resp.PublishAdRespDto;
 
@@ -21,4 +22,6 @@ public interface AssetService {
     Call<ApiResult<BlobInfoDto>> getBlob(@Body Map<String, Object> map);
     @POST("advert/sell/publish")
     Call<ApiResult<PublishAdRespDto>> publishSellAd(@Body Map<String, Object> map);
+    @POST("asset/v1/detail")
+    Call<ApiResult<GetCardDetailsDto>> getCardDetails(@Body Map<String,Object> map);
 }
