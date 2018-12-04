@@ -810,6 +810,7 @@ public class BPCardPackageFragment extends BaseFragment {
                     pwdConfirmDialog.dismiss();
                     txSendingTipDialog.dismiss();
                     confirmOperationBtmSheet.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.card_package_card_ad_confirm_sell_success_txt),Toast.LENGTH_LONG).show();
                 } else {
                     txSendingTipDialog.dismiss();
                     Toast.makeText(getContext(),getString(R.string.err_code_txt) +
@@ -846,6 +847,7 @@ public class BPCardPackageFragment extends BaseFragment {
                     pwdConfirmDialog.dismiss();
                     txSendingTipDialog.dismiss();
                     confirmOperationBtmSheet.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.card_package_card_ad_confirm_buy_success_txt),Toast.LENGTH_LONG).show();
                 } else {
                     txSendingTipDialog.dismiss();
                     Toast.makeText(getContext(),getString(R.string.err_code_txt) +
