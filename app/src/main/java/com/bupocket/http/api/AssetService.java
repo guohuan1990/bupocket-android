@@ -4,6 +4,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetCardAdBlobRespDto;
 import com.bupocket.http.api.dto.resp.GetCardAdDataRespDto;
 import com.bupocket.http.api.dto.resp.BlobInfoDto;
+import com.bupocket.http.api.dto.resp.GetCardDetailsDto;
 import com.bupocket.http.api.dto.resp.GetCardMyAssetsRespDto;
 import com.bupocket.http.api.dto.resp.PublishAdRespDto;
 
@@ -30,5 +31,6 @@ public interface AssetService {
     Call<ApiResult> submitBuyAd(@Body Map<String, Object> map);
     @POST("advert/sell")
     Call<ApiResult> submitSellAd(@Body Map<String, Object> map);
-
+    @POST("asset/v1/detail")
+    Call<ApiResult<GetCardDetailsDto>> getCardDetails(@Body Map<String,Object> map);
 }

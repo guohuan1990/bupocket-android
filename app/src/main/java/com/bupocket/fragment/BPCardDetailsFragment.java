@@ -11,6 +11,8 @@ import com.bupocket.R;
 import com.bupocket.adaptor.CardDetailAskAdapter;
 import com.bupocket.adaptor.CardDetailMySellAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.http.api.AssetService;
+import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.GetCardDetailsDto;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -80,6 +82,7 @@ public class BPCardDetailsFragment extends BaseFragment {
     }
 
     private void getCardDetails() {
+        AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
         String json = "{ \"AssetInfo\":{ \"name\":\"牛肉代金券\", \"code\":\"RNC-1000\", \"issuerAddress\":\"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT\", \"issuerName\":\"现牛羊\", \"issuerLogo\":\"base64\", \"myAssetQty\":\"3\" }, \"mySale\":[ { \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" },{ \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" },{ \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" } ], \"buyRequest\":[ { \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"adId\":\"10000000\", \"issuer\":{ \"name\":\"现牛羊\", \"logo\":\"base64\" } } ] }";
         cardDetailsDto = JSON.parseObject(json,GetCardDetailsDto.class);
         issueOrganizationName = cardDetailsDto.getAssetInfo().getIssuerName();
