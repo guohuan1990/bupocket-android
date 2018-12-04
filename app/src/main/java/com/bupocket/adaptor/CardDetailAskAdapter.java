@@ -11,6 +11,7 @@ import com.bupocket.R;
 import com.bupocket.http.api.dto.resp.GetCardDetailsDto;
 import com.bupocket.utils.CommonUtil;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class CardDetailAskAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if(convertView == null){
             holder = new ViewHolder();
@@ -48,19 +49,38 @@ public class CardDetailAskAdapter extends BaseAdapter {
             holder.cardAdPriceTv = convertView.findViewById(R.id.cardAdPriceTv);
             holder.cardAdIssuerAvatarIv = convertView.findViewById(R.id.cardAdIssuerAvatarIv);
             holder.cardAdIssuerNameTv = convertView.findViewById(R.id.cardAdIssuerNameTv);
+            holder.cardAdSellBtn = convertView.findViewById(R.id.cardAdSellBtn);
             convertView.setTag(holder);
-            if(buyRequest.size() != 0){
-                GetCardDetailsDto.BuyRequestBean buyRequestBean = buyRequest.get(position);
-                holder.cardAdTitleTv.setText(buyRequestBean.getAdTitle());
-                holder.cardAdPriceTv.setText(CommonUtil.addSuffix(buyRequestBean.getPrice(),"BU"));
-                holder.cardAdIssuerAvatarIv.setBackgroundResource(R.mipmap.icon_card_details_logo);
-                holder.cardAdIssuerNameTv.setText(buyRequestBean.getIssuer().getName());
-            }
 
         }else {
             holder = (ViewHolder)convertView.getTag();
         }
+
+        if(buyRequest.size() != 0){
+            GetCardDetailsDto.BuyRequestBean buyRequestBean = buyRequest.get(position);
+            holder.cardAdTitleTv.setText(buyRequestBean.getAdTitle());
+            holder.cardAdPriceTv.setText(CommonUtil.addSuffix(buyRequestBean.getPrice(),"BU"));
+            holder.cardAdIssuerAvatarIv.setBackgroundResource(R.mipmap.icon_card_details_logo);
+            holder.cardAdIssuerNameTv.setText(buyRequestBean.getIssuer().getName());
+        }
+        holder.cardAdSellBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemOptBtnListener.onClick(position);
+            }
+        });
+        holder.cardAdSellBtn.setTag(position);
+
         return convertView;
+    }
+
+    public interface OnItemOptBtnListener {
+        void onClick(int i);
+    }
+    private OnItemOptBtnListener onItemOptBtnListener;
+
+    public void setOnItemOptBtnListener(OnItemOptBtnListener onItemOptBtnListener) {
+        this.onItemOptBtnListener = onItemOptBtnListener;
     }
 
     class ViewHolder{
@@ -68,5 +88,6 @@ public class CardDetailAskAdapter extends BaseAdapter {
         private TextView cardAdPriceTv;
         private QMUIRadiusImageView cardAdIssuerAvatarIv;
         private TextView cardAdIssuerNameTv;
+        private QMUIRoundButton cardAdSellBtn;
     }
 }

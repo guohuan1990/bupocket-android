@@ -76,7 +76,7 @@
         </LinearLayout>
 
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-            android:id="@+id/cardAdBuyOrSellBtn"
+            android:id="@+id/cardAdSellBtn"
             android:layout_width="94dp"
             android:layout_height="30dp"
             android:paddingLeft="7dp"
