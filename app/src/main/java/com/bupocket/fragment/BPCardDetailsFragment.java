@@ -41,6 +41,8 @@ public class BPCardDetailsFragment extends BaseFragment {
     private String issueOrganizationName;
     private String numberRemaining;
     private String issuerLogo;
+    private String issuerAddress;
+    private String assetCode;
 
     @Override
     protected View onCreateView() {
@@ -65,6 +67,8 @@ public class BPCardDetailsFragment extends BaseFragment {
                 argz.putString("cardName",cardName);
                 argz.putString("issuerLogo",issuerLogo);
                 argz.putString("numberAvailable",numberRemaining);
+                argz.putString("issuerAddress",issuerAddress);
+                argz.putString("assetCode",assetCode);
                 bpCardPublishSellADFragment.setArguments(argz);
                 startFragment(bpCardPublishSellADFragment);
             }
@@ -76,12 +80,14 @@ public class BPCardDetailsFragment extends BaseFragment {
     }
 
     private void getCardDetails() {
-        String json = "{ \"assetInfo\":{ \"name\":\"牛肉代金券\", \"code\":\"RNC-1000\", \"issuerAddress\":\"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT\", \"issuerName\":\"现牛羊\", \"issuerLogo\":\"base64\", \"myAssetQty\":\"3\" }, \"mySale\":[ { \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" },{ \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" },{ \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" } ], \"buyRequest\":[ { \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"adId\":\"10000000\", \"issuer\":{ \"name\":\"现牛羊\", \"logo\":\"base64\" } } ] }";
+        String json = "{ \"AssetInfo\":{ \"name\":\"牛肉代金券\", \"code\":\"RNC-1000\", \"issuerAddress\":\"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT\", \"issuerName\":\"现牛羊\", \"issuerLogo\":\"base64\", \"myAssetQty\":\"3\" }, \"mySale\":[ { \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" },{ \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" },{ \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" } ], \"buyRequest\":[ { \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"adId\":\"10000000\", \"issuer\":{ \"name\":\"现牛羊\", \"logo\":\"base64\" } } ] }";
         cardDetailsDto = JSON.parseObject(json,GetCardDetailsDto.class);
         issueOrganizationName = cardDetailsDto.getAssetInfo().getIssuerName();
         cardName = cardDetailsDto.getAssetInfo().getName();
         numberRemaining = cardDetailsDto.getAssetInfo().getMyAssetQty();
         issuerLogo = cardDetailsDto.getAssetInfo().getIssuerLogo();
+        issuerAddress = cardDetailsDto.getAssetInfo().getIssuerAddress();
+        assetCode = cardDetailsDto.getAssetInfo().getCode();
     }
 
     private void initUI() {

@@ -7,7 +7,7 @@ import java.util.List;
 public class GetCardDetailsDto {
 
     /**
-     * assetInfo : {"name":"牛肉代金券","code":"RNC-1000","issuerAddress":"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT","issuerName":"现牛羊","issuerLogo":"base64","myAssetQty":"3"}
+     * AssetInfo : {"name":"牛肉代金券","code":"RNC-1000","issuerAddress":"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT","issuerName":"现牛羊","issuerLogo":"base64","myAssetQty":"3"}
      * mySale : [{"adTitle":"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉","price":"60","saleTotal":"10","selledAmount":"5"}]
      * buyRequest : [{"adTitle":"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉","price":"60","adId":"10000000","issuer":{"name":"现牛羊","logo":"base64"}}]
      */
