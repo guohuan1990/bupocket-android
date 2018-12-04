@@ -16,7 +16,7 @@
         android:background="#EBEBEB"
         android:orientation="vertical">
         <ImageView
-            android:id="@+id/sendConfirmCloseBtn"
+            android:id="@+id/cardAdConfirmCloseBtn"
             android:layout_width="wrap_content"
             android:contentDescription="TODO"
             android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
                         android:paddingRight="20dp"
                         android:textSize="16sp"
                         android:textColor="@color/body_light_black_txt"
-                        tools:text="买入数量 ： 2"/>
+                        android:text="买入数量 ： 2"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -169,12 +169,12 @@
             </LinearLayout>
         </LinearLayout>
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-            android:id="@+id/immediatelyBackupBtn"
+            android:id="@+id/confirmBuyOrSellBtn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bp_btn_hight"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/backup_immediately_txt"
+            android:text="@string/card_package_card_ad_confirm_buy_txt"
             app:qmui_borderColor="@color/app_color_green"
             app:qmui_backgroundColor="@color/app_color_green"
             app:qmui_radius="5dp"

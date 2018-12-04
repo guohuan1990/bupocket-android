@@ -23,6 +23,8 @@ import com.bupocket.http.api.dto.resp.GetCardAdDatasRespDto;
 import com.bupocket.http.api.dto.resp.GetCardMyAssetsRespDto;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
+import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -390,6 +392,17 @@ public class BPCardPackageFragment extends BaseFragment {
         cardAdDatasAdapter.setPage(cardAdPage);
         cardAdDatasAdapter.setAdType(adType);
         mCardAdDataLv.setAdapter(cardAdDatasAdapter);
+        cardAdDatasAdapter.setOnItemOptBtnListener(new CardAdDatasAdapter.OnItemOptBtnListener() {
+            @Override
+            public void onClick(int i) {
+                if (cardAdClickFlag) {
+                    return;
+                }
+                cardAdClickFlag = true;
+                GetCardAdDatasRespDto.AdvertListBean currentItem = (GetCardAdDatasRespDto.AdvertListBean) cardAdDatasAdapter.getItem(i);
+                showConfirmOperationBottomSheet(currentItem);
+            }
+        });
     }
 
     private void loadAdDatasViews(){
@@ -478,6 +491,34 @@ public class BPCardPackageFragment extends BaseFragment {
                 mCardAdDataLv.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    private void showConfirmOperationBottomSheet(GetCardAdDatasRespDto.AdvertListBean itemInfo) {
+        final QMUIBottomSheet sheet = new QMUIBottomSheet(getContext());
+
+        sheet.setContentView(R.layout.card_ad_confirm_layout);
+
+        sheet.findViewById(R.id.cardAdConfirmCloseBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sheet.dismiss();
+            }
+        });
+
+        sheet.show();
+        sheet.findViewById(R.id.confirmBuyOrSellBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPasswordConfirmDialog();
+            }
+        });
+    }
+
+    private void showPasswordConfirmDialog() {
+        final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
+        qmuiDialog.setCanceledOnTouchOutside(false);
+        qmuiDialog.setContentView(R.layout.password_comfirm_layout);
+        qmuiDialog.show();
     }
 
     private String getAccountBPData(){
