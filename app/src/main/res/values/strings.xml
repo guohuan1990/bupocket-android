@@ -348,10 +348,12 @@
     <string name="card_package_sell_amount_txt">出售数量</string>
     <string name="card_package_sell_amount_hint_txt">填写出售数量</string>
     <string name="card_package_number_of_available_txt">可用数量</string>
-    <string name="card_package_sell_fee_txt">交易费用(BU)</string>
+    <string name="card_package_sell_fee_txt">服务费(BU)</string>
     <string name="card_package_sell_fee_hint_txt">免费</string>
     <string name="card_package_buy_request_title_txt">求购</string>
     <string name="card_package_search_hint">请输入卡劵名称</string>
+    <string name="card_package_sell_amount_not_enough_message_txt">您的可用数量不足</string>
+    <string name="card_package_title_error_message_txt">广告标题内容必须在2-15个字符之间</string>
 
 
     <string name="user_confirm_password_txt">密码确认</string>

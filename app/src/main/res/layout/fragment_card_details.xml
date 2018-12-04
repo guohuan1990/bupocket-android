@@ -7,6 +7,7 @@
     android:background="@color/app_bg_color_purple_2">
 
     <ScrollView
+        android:layout_marginTop="@dimen/qmui_topbar_height"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
@@ -79,7 +80,7 @@
                             android:textColor="@color/app_color_main"
                             android:textSize="@dimen/bp_btn_text_size"/>
                         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                            android:id="@+id/walletSendBtn"
+                            android:id="@+id/publishSellADBtn"
                             android:layout_width="150dp"
                             android:layout_height="35dp"
                             android:layout_marginLeft="5dp"
@@ -202,15 +203,23 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="60dp"
                     android:gravity="center">
-                    <ImageView
+                    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                         android:id="@+id/cardLogoIv"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@mipmap/icon_card_details_logo"/>
+                        android:src="@mipmap/icon_card_details_logo"
+                        app:qmui_is_circle="true"
+                        app:qmui_border_width="0dp"/>
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
 
     </ScrollView>
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:qmui_topbar_title_color="@color/app_color_white" />
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

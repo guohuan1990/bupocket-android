@@ -659,7 +659,7 @@ public class CommonUtil {
         return sb.toString();
     }
 
-    public static Bitmap base64ToBitmap(String base64Data) throws IllegalArgumentException{
+    public static Bitmap base64ToBitmap(String base64Data) throws Exception{
         base64Data = base64Data.split(",")[1];
         byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
