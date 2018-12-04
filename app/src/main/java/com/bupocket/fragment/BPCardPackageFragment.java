@@ -1,15 +1,21 @@
 package com.bupocket.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Looper;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.adaptor.CardAdDatasAdapter;
 import com.bupocket.adaptor.CardMyAssetsAdapter;
@@ -20,14 +26,19 @@ import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.AssetService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.http.api.dto.resp.GetCardAdBlobRespDto;
 import com.bupocket.http.api.dto.resp.GetCardAdDataRespDto;
 import com.bupocket.http.api.dto.resp.GetCardMyAssetsRespDto;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.exception.WalletException;
+import com.bupocket.wallet.model.WalletSignData;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -58,6 +69,8 @@ public class BPCardPackageFragment extends BaseFragment {
 
     private String activeTab = "MINE";
     private Integer adType = CardAdTypeEnum.BUY.getCode();
+    private String adId;
+    private String adPrice;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String totalQuantityTxt = "";
     private Integer buyOrSellQuantity;
@@ -65,6 +78,9 @@ public class BPCardPackageFragment extends BaseFragment {
     private double totalAmount;
     private boolean subFlag;
     private boolean addFlag;
+    private String txBlob;
+    private String txHash;
+    private String blobId;
 
     private View cardPackageMine;
     private QMUIEmptyView mCardMyAssetsEmptyView;
@@ -72,6 +88,9 @@ public class BPCardPackageFragment extends BaseFragment {
     private ListView mCardMyAssetsLv;
     private LinearLayout mCardMyAssetsEmptyLl;
     private LinearLayout mCardMyAssetsBuyRequestLl;
+    private QMUITipDialog txSendingTipDialog;
+    private QMUIDialog pwdConfirmDialog;
+    private QMUIBottomSheet confirmOperationBtmSheet;
 
     private GetCardMyAssetsRespDto getCardMyAssetsRespDto;
     private CardMyAssetsAdapter cardMyAssetsAdapter;
@@ -410,6 +429,8 @@ public class BPCardPackageFragment extends BaseFragment {
 //                }
 //                cardAdClickFlag = true;
                 GetCardAdDataRespDto.AdvertListBean currentItem = (GetCardAdDataRespDto.AdvertListBean) cardAdDatasAdapter.getItem(i);
+                adId = currentItem.getAdvertId();
+                adPrice = currentItem.getPrice();
                 showConfirmOperationBottomSheet(currentItem);
             }
         });
@@ -504,25 +525,25 @@ public class BPCardPackageFragment extends BaseFragment {
     }
 
     private void showConfirmOperationBottomSheet(final GetCardAdDataRespDto.AdvertListBean itemInfo) {
-        final QMUIBottomSheet sheet = new QMUIBottomSheet(getContext());
+        confirmOperationBtmSheet = new QMUIBottomSheet(getContext());
         buyOrSellQuantity = 1;
         stockQuantity = Integer.parseInt(itemInfo.getStockQuantity());
         subFlag = true;
         addFlag = true;
 
-        sheet.setContentView(R.layout.card_ad_confirm_layout);
-        TextView mAdTitle = sheet.findViewById(R.id.cardAdConfirmTitleTv);
-        TextView mAdPrice = sheet.findViewById(R.id.cardAdConfirmPriceTv);
-        TextView mAdAssetId = sheet.findViewById(R.id.cardAdConfirmAssetIdTv);
-        final TextView mAdTotalQuantity = sheet.findViewById(R.id.cardAdConfirmQuantityTv);
-        final TextView mAdTotalQuantitySub = sheet.findViewById(R.id.cardAdConfirmSubQuantityTv);
-        final TextView mAdTotalQuantityAdd = sheet.findViewById(R.id.cardAdConfirmAddQuantityTv);
-        final TextView mAdTotalQuantityCompute = sheet.findViewById(R.id.cardAdConfirmComputeQuantityTv);
-        TextView mAdSellFee = sheet.findViewById(R.id.cardAdConfirmSellFeeTv);
-        TextView mAdTotalAmountLabel = sheet.findViewById(R.id.cardAdConfirmTotalAmountLabelTv);
-        final TextView mAdTotalAmountValue = sheet.findViewById(R.id.cardAdConfirmTotalAmountValueTv);
+        confirmOperationBtmSheet.setContentView(R.layout.card_ad_confirm_layout);
+        TextView mAdTitle = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmTitleTv);
+        TextView mAdPrice = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmPriceTv);
+        TextView mAdAssetId = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmAssetIdTv);
+        final TextView mAdTotalQuantity = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmQuantityTv);
+        final TextView mAdTotalQuantitySub = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmSubQuantityTv);
+        final TextView mAdTotalQuantityAdd = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmAddQuantityTv);
+        final TextView mAdTotalQuantityCompute = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmComputeQuantityTv);
+        TextView mAdSellFee = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmSellFeeTv);
+        TextView mAdTotalAmountLabel = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmTotalAmountLabelTv);
+        final TextView mAdTotalAmountValue = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmTotalAmountValueTv);
 
-        QMUIRoundButton mConfirmBtn = sheet.findViewById(R.id.cardAdConfirmBuyOrSellBtn);
+        QMUIRoundButton mConfirmBtn = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmBuyOrSellBtn);
         mAdTotalQuantitySub.setTextColor(getResources().getColor(R.color.app_txt_color_gray));
 
 //        fill detail
@@ -553,11 +574,11 @@ public class BPCardPackageFragment extends BaseFragment {
         mAdTotalQuantityCompute.setText(buyOrSellQuantity.toString());
         mAdTotalAmountValue.setText(CommonUtil.rvZeroAndDot(String.valueOf(totalAmount)) + itemInfo.getCoin());
 
-        sheet.show();
-        sheet.findViewById(R.id.cardAdConfirmCloseBtn).setOnClickListener(new View.OnClickListener() {
+        confirmOperationBtmSheet.show();
+        confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmCloseBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sheet.dismiss();
+                confirmOperationBtmSheet.dismiss();
                 cardAdClickFlag = false;
             }
         });
@@ -618,14 +639,237 @@ public class BPCardPackageFragment extends BaseFragment {
     }
 
     private void showPasswordConfirmDialog() {
-        final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-        qmuiDialog.setCanceledOnTouchOutside(false);
-        qmuiDialog.setContentView(R.layout.password_comfirm_layout);
-        qmuiDialog.show();
+        pwdConfirmDialog = new QMUIDialog(getContext());
+        pwdConfirmDialog.setCanceledOnTouchOutside(true);
+        pwdConfirmDialog.setContentView(R.layout.password_comfirm_layout);
+        pwdConfirmDialog.show();
+
+        QMUIRoundButton mPasswordConfirmBtn = pwdConfirmDialog.findViewById(R.id.passwordConfirmBtn);
+        ImageView mPasswordConfirmCloseBtn = pwdConfirmDialog.findViewById(R.id.passwordConfirmCloseBtn);
+
+        mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pwdConfirmDialog.dismiss();
+            }
+        });
+        mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 检查合法性
+                EditText mPasswordConfirmEt = pwdConfirmDialog.findViewById(R.id.passwordConfirmEt);
+                final String password = mPasswordConfirmEt.getText().toString().trim();
+                txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                        .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                        .create();
+                txSendingTipDialog.show();
+                txSendingTipDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                    @Override
+                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+
+                        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+                if (CardAdTypeEnum.BUY.getCode().equals(adType)) {
+                    getSellAdBlob(password);
+                } else if (CardAdTypeEnum.SELL.getCode().equals(adType)) {
+                    getBuyAdBlob(password);
+                }
+            }
+        });
+    }
+
+    private void getSellAdBlob(final String password) {
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("advertId",adId);
+        paramsMap.put("price",adPrice);
+        paramsMap.put("totalQuantity",buyOrSellQuantity.toString());
+        paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
+        AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
+        Call<ApiResult<GetCardAdBlobRespDto>> call = assetService.getCardSellAdBlob(paramsMap);
+        call.enqueue(new Callback<ApiResult<GetCardAdBlobRespDto>>() {
+            @Override
+            public void onResponse(Call<ApiResult<GetCardAdBlobRespDto>> call, Response<ApiResult<GetCardAdBlobRespDto>> response) {
+                ApiResult<GetCardAdBlobRespDto> respDto = response.body();
+                if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
+                    txBlob = respDto.getData().getTxBlob();
+                    txHash = respDto.getData().getTxHash();
+                    blobId = respDto.getData().getBlobId();
+                    signBlob(password);
+                } else {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_code_txt) +
+                            respDto.getErrCode(),Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<GetCardAdBlobRespDto>> call, Throwable t) {
+                txSendingTipDialog.dismiss();
+                if (getActivity() != null) {
+                    Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
+                }
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void getBuyAdBlob(final String password) {
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("advertId",adId);
+        paramsMap.put("price",adPrice);
+        paramsMap.put("totalQuantity",buyOrSellQuantity.toString());
+        paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
+        AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
+        Call<ApiResult<GetCardAdBlobRespDto>> call = assetService.getCardBuyAdBlob(paramsMap);
+        call.enqueue(new Callback<ApiResult<GetCardAdBlobRespDto>>() {
+            @Override
+            public void onResponse(Call<ApiResult<GetCardAdBlobRespDto>> call, Response<ApiResult<GetCardAdBlobRespDto>> response) {
+                ApiResult<GetCardAdBlobRespDto> respDto = response.body();
+                if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
+                    txBlob = respDto.getData().getTxBlob();
+                    txHash = respDto.getData().getTxHash();
+                    blobId = respDto.getData().getBlobId();
+                    signBlob(password);
+                } else {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_code_txt) +
+                            respDto.getErrCode(),Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<GetCardAdBlobRespDto>> call, Throwable t) {
+                txSendingTipDialog.dismiss();
+                if (getActivity() != null) {
+                    Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
+                }
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void signBlob(final String password) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String bpData = getAccountBPData();
+                    final WalletSignData walletSignData = Wallet.getInstance().signTxBlob(password, txBlob, bpData);
+
+                    if (walletSignData != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (CardAdTypeEnum.BUY.getCode().equals(adType)) {
+                                    submitSell(walletSignData.getSignData(), walletSignData.getPublicKey());
+                                } else if (CardAdTypeEnum.SELL.getCode().equals(adType)) {
+                                    submitBuy(walletSignData.getSignData(), walletSignData.getPublicKey());
+                                }
+                            }
+                        });
+                    }
+                }catch (WalletException e){
+                    e.printStackTrace();
+                    Looper.prepare();
+                    Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
+                    txSendingTipDialog.dismiss();
+                    Looper.loop();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Looper.prepare();
+                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                    txSendingTipDialog.dismiss();
+                    Looper.loop();
+                }finally {
+
+                }
+            }
+        }).start();
+    }
+
+    private void submitSell(String txBlobSign, String publicKey) {
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("txBlob", txBlob);
+        paramsMap.put("txHash", txHash);
+        paramsMap.put("blobId", blobId);
+        paramsMap.put("txBlobSign", txBlobSign);
+        paramsMap.put("publicKey", publicKey);
+        paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken", "").toString());
+        AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
+        Call<ApiResult> call = assetService.submitSellAd(paramsMap);
+        call.enqueue(new Callback<ApiResult>() {
+            @Override
+            public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+                ApiResult respDto = response.body();
+                if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
+                    pwdConfirmDialog.dismiss();
+                    txSendingTipDialog.dismiss();
+                    confirmOperationBtmSheet.dismiss();
+                } else {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_code_txt) +
+                            respDto.getErrCode(),Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult> call, Throwable t) {
+                txSendingTipDialog.dismiss();
+                if (getActivity() != null) {
+                    Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
+                }
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void submitBuy(String txBlobSign, String publicKey) {
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("txBlob", txBlob);
+        paramsMap.put("txHash", txHash);
+        paramsMap.put("blobId", blobId);
+        paramsMap.put("txBlobSign", txBlobSign);
+        paramsMap.put("publicKey", publicKey);
+        paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken", "").toString());
+        AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
+        Call<ApiResult> call = assetService.submitBuyAd(paramsMap);
+        call.enqueue(new Callback<ApiResult>() {
+            @Override
+            public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+                ApiResult respDto = response.body();
+                if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
+                    pwdConfirmDialog.dismiss();
+                    txSendingTipDialog.dismiss();
+                    confirmOperationBtmSheet.dismiss();
+                } else {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_code_txt) +
+                            respDto.getErrCode(),Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult> call, Throwable t) {
+                txSendingTipDialog.dismiss();
+                if (getActivity() != null) {
+                    Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
+                }
+                t.printStackTrace();
+            }
+        });
     }
 
     private String getAccountBPData(){
         String data = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
         return data;
+    }
+
+    private String getSkeyStr(){
+        return sharedPreferencesHelper.getSharedPreference("skey","").toString();
     }
 }
