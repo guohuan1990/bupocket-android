@@ -57,7 +57,7 @@ public class CardAdDatasAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if(convertView == null) {
             holder = new ViewHolder();
@@ -106,7 +106,25 @@ public class CardAdDatasAdapter extends BaseAdapter {
         }
         holder.mCardAdStockQuantityTv.setText(stockStr);
         holder.mCardAdIssuerNameTv.setText(itemData.getIssuer().getName());
+
+        holder.mCardAdBuyOrSellBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemOptBtnListener.onClick(position);
+            }
+        });
+        holder.mCardAdBuyOrSellBtn.setTag(position);
+
         return convertView;
+    }
+
+    public interface OnItemOptBtnListener {
+        void onClick(int i);
+    }
+    private OnItemOptBtnListener onItemOptBtnListener;
+
+    public void setOnItemOptBtnListener(OnItemOptBtnListener onItemOptBtnListener) {
+        this.onItemOptBtnListener = onItemOptBtnListener;
     }
 
     class ViewHolder {
