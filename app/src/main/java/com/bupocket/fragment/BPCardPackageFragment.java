@@ -14,17 +14,21 @@ import com.bupocket.R;
 import com.bupocket.adaptor.CardAdDatasAdapter;
 import com.bupocket.adaptor.CardMyAssetsAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.enums.CardAdTypeEnum;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.AssetService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
-import com.bupocket.http.api.dto.resp.GetCardAdDatasRespDto;
+import com.bupocket.http.api.dto.resp.GetCardAdDataRespDto;
 import com.bupocket.http.api.dto.resp.GetCardMyAssetsRespDto;
+import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -55,6 +59,12 @@ public class BPCardPackageFragment extends BaseFragment {
     private String activeTab = "MINE";
     private Integer adType = CardAdTypeEnum.BUY.getCode();
     private SharedPreferencesHelper sharedPreferencesHelper;
+    private String totalQuantityTxt = "";
+    private Integer buyOrSellQuantity;
+    private Integer stockQuantity;
+    private double totalAmount;
+    private boolean subFlag;
+    private boolean addFlag;
 
     private View cardPackageMine;
     private QMUIEmptyView mCardMyAssetsEmptyView;
@@ -78,10 +88,10 @@ public class BPCardPackageFragment extends BaseFragment {
     private ListView mCardAdDataLv;
     private LinearLayout mCardAdListEmptyLl;
 
-    private GetCardAdDatasRespDto getCardAdDatasRespDto;
+    private GetCardAdDataRespDto getCardAdDataRespDto;
     private CardAdDatasAdapter cardAdDatasAdapter;
-    private GetCardAdDatasRespDto.PageBean cardAdPage;
-    private List<GetCardAdDatasRespDto.AdvertListBean> cardAdList;
+    private GetCardAdDataRespDto.PageBean cardAdPage;
+    private List<GetCardAdDataRespDto.AdvertListBean> cardAdList;
     private Integer cardAdPageStart = 1;
     private String cardAdPageSize = "50";
     private boolean cardAdRefreshFlag = true;
@@ -313,14 +323,14 @@ public class BPCardPackageFragment extends BaseFragment {
     // AD part start ++++++++
     private void getCardBuyAd() {
         String json = "{\"advertList\":[{\"advertId\":\"10000020\",\"advertTitle\":\"阳澄湖牌大闸蟹礼券 8只装\",\"price\":\"2\",\"coin\":\"BU\",\"stockQuantity\":\"5\",\"issuer\":{\"name\":\"现牛羊\",\"photo\":\"base64\"}}],\"page\":{\"count\":1,\"curSize\":2,\"endOfGroup\":1,\"firstResultNumber\":0,\"nextFlag\":false,\"queryTotal\":true,\"size\":10,\"start\":1,\"startOfGroup\":1,\"total\":2}}";
-        getCardAdDatasRespDto = JSON.parseObject(json,GetCardAdDatasRespDto.class);
-        cardAdList = getCardAdDatasRespDto.getAdvertList();
+        getCardAdDataRespDto = JSON.parseObject(json,GetCardAdDataRespDto.class);
+        cardAdList = getCardAdDataRespDto.getAdvertList();
         if (cardAdList.size() > 0) {
             loadAdDataAdapter();
         } else {
             showOrHideEmptyPage(true);
         }
-        cardAdPage = getCardAdDatasRespDto.getPage();
+        cardAdPage = getCardAdDataRespDto.getPage();
         if (cardAdPage.isNextFlag()) {
             mAdRefreshLayout.setEnableLoadMore(true);
         } else {
@@ -331,9 +341,9 @@ public class BPCardPackageFragment extends BaseFragment {
     private void getCardSellAd() {
 //        String json = "{\"advertList\":[],\"page\":{\"count\":1,\"curSize\":2,\"endOfGroup\":1,\"firstResultNumber\":0,\"nextFlag\":false,\"queryTotal\":true,\"size\":10,\"start\":1,\"startOfGroup\":1,\"total\":2}}";
         String json = "{\"advertList\":[{\"advertId\":\"10000021\",\"advertTitle\":\"阳澄湖牌大闸蟹礼券 2只装\",\"price\":\"100\",\"coin\":\"BU\",\"stockQuantity\":\"10\",\"issuer\":{\"name\":\"阳澄湖大闸蟹管理中心\",\"photo\":\"\"}}],\"page\":{\"count\":1,\"curSize\":2,\"endOfGroup\":1,\"firstResultNumber\":0,\"nextFlag\":false,\"queryTotal\":true,\"size\":10,\"start\":1,\"startOfGroup\":1,\"total\":2}}";
-        getCardAdDatasRespDto = JSON.parseObject(json,GetCardAdDatasRespDto.class);
-        cardAdList = getCardAdDatasRespDto.getAdvertList();
-        cardAdPage = getCardAdDatasRespDto.getPage();
+        getCardAdDataRespDto = JSON.parseObject(json,GetCardAdDataRespDto.class);
+        cardAdList = getCardAdDataRespDto.getAdvertList();
+        cardAdPage = getCardAdDataRespDto.getPage();
         if (cardAdList.size() > 0) {
             loadAdDataAdapter();
         } else {
@@ -353,11 +363,11 @@ public class BPCardPackageFragment extends BaseFragment {
         paramsMap.put("pageSize", cardAdPageSize);
 //        paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
         AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
-        retrofit2.Call<ApiResult<GetCardAdDatasRespDto>> call = assetService.getCardAdDatas(paramsMap);
-        call.enqueue(new Callback<ApiResult<GetCardAdDatasRespDto>>() {
+        retrofit2.Call<ApiResult<GetCardAdDataRespDto>> call = assetService.getCardAdData(paramsMap);
+        call.enqueue(new Callback<ApiResult<GetCardAdDataRespDto>>() {
             @Override
-            public void onResponse(retrofit2.Call<ApiResult<GetCardAdDatasRespDto>> call, Response<ApiResult<GetCardAdDatasRespDto>> response) {
-                ApiResult<GetCardAdDatasRespDto> respDto = response.body();
+            public void onResponse(retrofit2.Call<ApiResult<GetCardAdDataRespDto>> call, Response<ApiResult<GetCardAdDataRespDto>> response) {
+                ApiResult<GetCardAdDataRespDto> respDto = response.body();
                 if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                     if (cardAdRefreshFlag) {
                         cardAdList = respDto.getData().getAdvertList();
@@ -378,7 +388,7 @@ public class BPCardPackageFragment extends BaseFragment {
             }
 
             @Override
-            public void onFailure(retrofit2.Call<ApiResult<GetCardAdDatasRespDto>> call, Throwable t) {
+            public void onFailure(retrofit2.Call<ApiResult<GetCardAdDataRespDto>> call, Throwable t) {
                 if (getActivity() != null) {
                     Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
                 }
@@ -399,7 +409,7 @@ public class BPCardPackageFragment extends BaseFragment {
 //                    return;
 //                }
 //                cardAdClickFlag = true;
-                GetCardAdDatasRespDto.AdvertListBean currentItem = (GetCardAdDatasRespDto.AdvertListBean) cardAdDatasAdapter.getItem(i);
+                GetCardAdDataRespDto.AdvertListBean currentItem = (GetCardAdDataRespDto.AdvertListBean) cardAdDatasAdapter.getItem(i);
                 showConfirmOperationBottomSheet(currentItem);
             }
         });
@@ -493,11 +503,57 @@ public class BPCardPackageFragment extends BaseFragment {
         }
     }
 
-    private void showConfirmOperationBottomSheet(GetCardAdDatasRespDto.AdvertListBean itemInfo) {
+    private void showConfirmOperationBottomSheet(final GetCardAdDataRespDto.AdvertListBean itemInfo) {
         final QMUIBottomSheet sheet = new QMUIBottomSheet(getContext());
+        buyOrSellQuantity = 1;
+        stockQuantity = Integer.parseInt(itemInfo.getStockQuantity());
+        subFlag = true;
+        addFlag = true;
 
         sheet.setContentView(R.layout.card_ad_confirm_layout);
+        TextView mAdTitle = sheet.findViewById(R.id.cardAdConfirmTitleTv);
+        TextView mAdPrice = sheet.findViewById(R.id.cardAdConfirmPriceTv);
+        TextView mAdAssetId = sheet.findViewById(R.id.cardAdConfirmAssetIdTv);
+        final TextView mAdTotalQuantity = sheet.findViewById(R.id.cardAdConfirmQuantityTv);
+        final TextView mAdTotalQuantitySub = sheet.findViewById(R.id.cardAdConfirmSubQuantityTv);
+        final TextView mAdTotalQuantityAdd = sheet.findViewById(R.id.cardAdConfirmAddQuantityTv);
+        final TextView mAdTotalQuantityCompute = sheet.findViewById(R.id.cardAdConfirmComputeQuantityTv);
+        TextView mAdSellFee = sheet.findViewById(R.id.cardAdConfirmSellFeeTv);
+        TextView mAdTotalAmountLabel = sheet.findViewById(R.id.cardAdConfirmTotalAmountLabelTv);
+        final TextView mAdTotalAmountValue = sheet.findViewById(R.id.cardAdConfirmTotalAmountValueTv);
 
+        QMUIRoundButton mConfirmBtn = sheet.findViewById(R.id.cardAdConfirmBuyOrSellBtn);
+        mAdTotalQuantitySub.setTextColor(getResources().getColor(R.color.app_txt_color_gray));
+
+//        fill detail
+        mAdTitle.setText(itemInfo.getAdvertTitle());
+        String priceTxt = itemInfo.getPrice() + " " + itemInfo.getCoin() + " " + getString(R.string.card_package_card_ad_confirm_unit_txt);
+        mAdPrice.setText(priceTxt);
+        String assetIdTxt = getString(R.string.card_package_card_ad_confirm_asset_id_txt);
+//        assetIdTxt = String.format(assetIdTxt, itemInfo.getAdvertId());
+        mAdAssetId.setText(assetIdTxt);
+        String feeTxt = getString(R.string.card_package_card_ad_sell_fee_txt);
+        feeTxt = String.format(feeTxt, String.valueOf(Constants.CARD_TX_FEE)) + " " + itemInfo.getCoin();
+        mAdSellFee.setText(feeTxt);
+
+        if (CardAdTypeEnum.BUY.getCode().equals(adType)) {
+            totalQuantityTxt = getString(R.string.card_package_card_ad_sell_amount_txt);
+            mAdTotalAmountLabel.setText(R.string.card_package_card_ad_confirm_total_amount_sell_txt);
+            totalAmount = DecimalCalculate.sub(DecimalCalculate.mul(Double.parseDouble(String.valueOf(buyOrSellQuantity)), Double.parseDouble(itemInfo.getPrice())), Constants.CARD_TX_FEE);
+
+            mConfirmBtn.setText(R.string.card_package_card_ad_confirm_sell_txt);
+        } else if (CardAdTypeEnum.SELL.getCode().equals(adType)) {
+            totalQuantityTxt = getString(R.string.card_package_card_ad_buy_amount_txt);
+            mAdTotalAmountLabel.setText(R.string.card_package_card_ad_confirm_total_amount_buy_txt);
+            totalAmount = DecimalCalculate.add(DecimalCalculate.mul(Double.parseDouble(String.valueOf(buyOrSellQuantity)), Double.parseDouble(itemInfo.getPrice())), Constants.CARD_TX_FEE);
+
+            mConfirmBtn.setText(R.string.card_package_card_ad_confirm_buy_txt);
+        }
+        mAdTotalQuantity.setText(totalQuantityTxt);
+        mAdTotalQuantityCompute.setText(buyOrSellQuantity.toString());
+        mAdTotalAmountValue.setText(CommonUtil.rvZeroAndDot(String.valueOf(totalAmount)) + itemInfo.getCoin());
+
+        sheet.show();
         sheet.findViewById(R.id.cardAdConfirmCloseBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -505,12 +561,58 @@ public class BPCardPackageFragment extends BaseFragment {
                 cardAdClickFlag = false;
             }
         });
-
-        sheet.show();
-        sheet.findViewById(R.id.cardAdConfirmBuyOrSellBtn).setOnClickListener(new View.OnClickListener() {
+        mConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPasswordConfirmDialog();
+            }
+        });
+        mAdTotalQuantitySub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!subFlag) {
+                    return;
+                }
+                buyOrSellQuantity--;
+                addFlag = true;
+                mAdTotalQuantityAdd.setTextColor(getResources().getColor(R.color.app_color_green));
+                if (buyOrSellQuantity == 1) {
+                    subFlag = false;
+                    mAdTotalQuantitySub.setTextColor(getResources().getColor(R.color.app_txt_color_gray));
+                }
+                if (CardAdTypeEnum.BUY.getCode().equals(adType)) {
+                    totalAmount = DecimalCalculate.sub(DecimalCalculate.mul(Double.parseDouble(String.valueOf(buyOrSellQuantity)), Double.parseDouble(itemInfo.getPrice())), Constants.CARD_TX_FEE);
+                } else if (CardAdTypeEnum.SELL.getCode().equals(adType)) {
+                    totalAmount = DecimalCalculate.add(DecimalCalculate.mul(Double.parseDouble(String.valueOf(buyOrSellQuantity)), Double.parseDouble(itemInfo.getPrice())), Constants.CARD_TX_FEE);
+                }
+
+                mAdTotalQuantity.setText(totalQuantityTxt);
+                mAdTotalQuantityCompute.setText(buyOrSellQuantity.toString());
+                mAdTotalAmountValue.setText(CommonUtil.rvZeroAndDot(String.valueOf(totalAmount)) + itemInfo.getCoin());
+            }
+        });
+        mAdTotalQuantityAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!addFlag) {
+                    return;
+                }
+                buyOrSellQuantity++;
+                subFlag = true;
+                mAdTotalQuantitySub.setTextColor(getResources().getColor(R.color.app_color_green));
+                if (buyOrSellQuantity.equals(stockQuantity)) {
+                    addFlag = false;
+                    mAdTotalQuantityAdd.setTextColor(getResources().getColor(R.color.app_txt_color_gray));
+                }
+                if (CardAdTypeEnum.BUY.getCode().equals(adType)) {
+                    totalAmount = DecimalCalculate.sub(DecimalCalculate.mul(Double.parseDouble(String.valueOf(buyOrSellQuantity)), Double.parseDouble(itemInfo.getPrice())), Constants.CARD_TX_FEE);
+                } else if (CardAdTypeEnum.SELL.getCode().equals(adType)) {
+                    totalAmount = DecimalCalculate.add(DecimalCalculate.mul(Double.parseDouble(String.valueOf(buyOrSellQuantity)), Double.parseDouble(itemInfo.getPrice())), Constants.CARD_TX_FEE);
+                }
+
+                mAdTotalQuantity.setText(totalQuantityTxt);
+                mAdTotalQuantityCompute.setText(buyOrSellQuantity.toString());
+                mAdTotalAmountValue.setText(CommonUtil.rvZeroAndDot(String.valueOf(totalAmount)) + itemInfo.getCoin());
             }
         });
     }

@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            android:background="@color/app_color_white"
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -104,11 +105,11 @@
                     android:paddingRight="20dp"
                     android:textSize="16sp"
                     android:textColor="@color/body_light_black_txt"
-                    tools:text="资产ID：YCH-1033"/>
+                    android:text="@string/card_package_card_ad_confirm_asset_id_txt"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="7dp"
                     android:layout_alignParentBottom="true"
                     android:orientation="horizontal">
                     <TextView
@@ -123,25 +124,29 @@
                         android:text="@string/card_package_card_ad_buy_amount_txt"/>
                     <TextView
                         android:id="@+id/cardAdConfirmSubQuantityTv"
-                        android:layout_width="wrap_content"
+                        android:layout_width="30dp"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:textSize="25sp"
                         android:textStyle="bold"
                         android:textColor="@color/app_color_green"
                         android:text="-"/>
                     <TextView
                         android:id="@+id/cardAdConfirmComputeQuantityTv"
-                        android:layout_width="wrap_content"
+                        android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:gravity="center_vertical"
-                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:textColor="@color/body_black_txt"
+                        android:textSize="20sp"
                         tools:text="2"/>
                     <TextView
                         android:id="@+id/cardAdConfirmAddQuantityTv"
-                        android:layout_width="wrap_content"
+                        android:layout_width="30dp"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginRight="20dp"
                         android:textSize="25sp"
                         android:textStyle="bold"
                         android:textColor="@color/app_color_green"
@@ -152,11 +157,10 @@
                 android:id="@+id/cardAdConfirmSellFeeTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:paddingBottom="10dp"
-                android:visibility="gone"
+                android:textSize="16sp"
                 android:background="@color/app_color_white"
                 android:textColor="@color/body_light_black_txt"
                 android:text="@string/card_package_card_ad_sell_fee_txt"/>
@@ -181,16 +185,17 @@
                     android:id="@+id/cardAdConfirmTotalAmountLabelTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
                     android:layout_marginRight="8dp"
                     android:layout_marginEnd="8dp"
                     android:textSize="12sp"
                     android:textColor="@color/body_light_black_txt"
-                    android:text="@string/card_package_card_ad_confirm_total_amount_txt"/>
+                    android:text="@string/card_package_card_ad_confirm_total_amount_buy_txt"/>
                 <TextView
                     android:id="@+id/cardAdConfirmTotalAmountValueTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:textSize="21sp"
                     android:textColor="@color/title_deep_black_txt"
                     tools:text="120BU"/>

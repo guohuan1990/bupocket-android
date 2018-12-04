@@ -6,10 +6,15 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Base64;
 
+import com.bupocket.R;
 import com.bupocket.enums.CurrencyTypeEnum;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -735,5 +740,34 @@ public class CommonUtil {
             }
         }
         return null;
+    }
+
+    public static void showErrorTipDialog(Context mContext, String errorMsg) {
+        final QMUITipDialog tipDialog;
+        Handler handler=new Handler();
+        tipDialog = new QMUITipDialog.Builder(mContext)
+                .setTipWord(errorMsg)
+                .create();
+        tipDialog.show();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tipDialog.dismiss();
+            }
+        }, 1500);
+    }
+
+    public static void showIKnowDialog(Context mContext, String notice) {
+        int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
+        new QMUIDialog.MessageDialogBuilder(mContext)
+                .setMessage(notice)
+                .addAction(R.string.i_knew_btn_txt, new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .create(mCurrentDialogStyle).show();
+
     }
 }

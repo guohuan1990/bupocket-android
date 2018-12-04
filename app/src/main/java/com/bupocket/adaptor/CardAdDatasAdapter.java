@@ -2,9 +2,6 @@ package com.bupocket.adaptor;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +10,7 @@ import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.enums.CardAdTypeEnum;
-import com.bupocket.http.api.dto.resp.GetCardAdDatasRespDto;
+import com.bupocket.http.api.dto.resp.GetCardAdDataRespDto;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButtonDrawable;
@@ -25,18 +22,18 @@ public class CardAdDatasAdapter extends BaseAdapter {
     private Integer adType;
     private Context mContext;
 
-    public GetCardAdDatasRespDto.PageBean getPage() {
+    public GetCardAdDataRespDto.PageBean getPage() {
         return page;
     }
 
-    public void setPage(GetCardAdDatasRespDto.PageBean page) {
+    public void setPage(GetCardAdDataRespDto.PageBean page) {
         this.page = page;
     }
 
-    private GetCardAdDatasRespDto.PageBean page;
-    private List<GetCardAdDatasRespDto.AdvertListBean> advertList;
+    private GetCardAdDataRespDto.PageBean page;
+    private List<GetCardAdDataRespDto.AdvertListBean> advertList;
 
-    public CardAdDatasAdapter(List<GetCardAdDatasRespDto.AdvertListBean> datas, Context mContext) {
+    public CardAdDatasAdapter(List<GetCardAdDataRespDto.AdvertListBean> datas, Context mContext) {
         this.advertList = datas;
         this.mContext = mContext;
     }
@@ -73,7 +70,7 @@ public class CardAdDatasAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        GetCardAdDatasRespDto.AdvertListBean itemData = advertList.get(position);
+        GetCardAdDataRespDto.AdvertListBean itemData = advertList.get(position);
         holder.mCardAdTitleTv.setText(itemData.getAdvertTitle());
         holder.mCardAdPriceTv.setText(itemData.getPrice());
         holder.mCardAdPriceTv.setText(itemData.getPrice() + " " + itemData.getCoin());
