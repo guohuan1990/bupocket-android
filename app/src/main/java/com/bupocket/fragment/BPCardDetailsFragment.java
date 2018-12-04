@@ -133,11 +133,15 @@ public class BPCardDetailsFragment extends BaseFragment {
     }
 
     private void getCardDetails() {
-        /*AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
+        AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("address",currentAccAddress);
         paramsMap.put("issuerAddress",issuerAddress);
         paramsMap.put("assetCode",assetCode);
+        paramsMap.put("saleStartPage","1");
+        paramsMap.put("salePageSize","100");
+        paramsMap.put("buyStartPage","1");
+        paramsMap.put("buyPageSize","100");
         Call<ApiResult<GetCardDetailsDto>> call = assetService.getCardDetails(paramsMap);
         call.enqueue(new Callback<ApiResult<GetCardDetailsDto>>() {
             @Override
@@ -145,12 +149,12 @@ public class BPCardDetailsFragment extends BaseFragment {
                 ApiResult<GetCardDetailsDto> respDto = response.body();
                 if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                     cardDetailsDto = respDto.getData();
-                    issueOrganizationName = cardDetailsDto.getAssetInfo().getIssuerName();
-                    cardName = cardDetailsDto.getAssetInfo().getName();
-                    numberRemaining = cardDetailsDto.getAssetInfo().getMyAssetQty();
-                    issuerLogo = cardDetailsDto.getAssetInfo().getIssuerLogo();
-                    issuerAddress = cardDetailsDto.getAssetInfo().getIssuerAddress();
-                    assetCode = cardDetailsDto.getAssetInfo().getCode();
+                    issueOrganizationName = cardDetailsDto.getAssetDetail().getIssuer().getName();
+                    cardName = cardDetailsDto.getAssetDetail().getAssetInfo().getName();
+                    numberRemaining = cardDetailsDto.getAssetDetail().getAssetInfo().getMyAssetQty();
+                    issuerLogo = cardDetailsDto.getAssetDetail().getIssuer().getLogo();
+                    issuerAddress = cardDetailsDto.getAssetDetail().getIssuer().getAddress();
+                    assetCode = cardDetailsDto.getAssetDetail().getAssetInfo().getCode();
                 }else{
                     Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
                 }
@@ -161,16 +165,16 @@ public class BPCardDetailsFragment extends BaseFragment {
                 Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
                 t.printStackTrace();
             }
-        });*/
+        });
 
-        String json = "{ \"AssetInfo\":{ \"name\":\"牛肉代金券\", \"code\":\"RNC-1000\", \"issuerAddress\":\"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT\", \"issuerName\":\"现牛羊\", \"issuerLogo\":\"base64\", \"myAssetQty\":\"3\" }, \"mySale\":[ { \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" },{ \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" },{ \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" } ], \"buyRequest\":[ { \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"adId\":\"10000000\", \"issuer\":{ \"name\":\"现牛羊\", \"logo\":\"base64\" } } ] }";
+        /*String json = "{ \"AssetInfo\":{ \"name\":\"牛肉代金券\", \"code\":\"RNC-1000\", \"issuerAddress\":\"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT\", \"issuerName\":\"现牛羊\", \"issuerLogo\":\"base64\", \"myAssetQty\":\"3\" }, \"mySale\":[ { \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" },{ \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" },{ \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" } ], \"buyRequest\":[ { \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"adId\":\"10000000\", \"issuer\":{ \"name\":\"现牛羊\", \"logo\":\"base64\" } } ] }";
         cardDetailsDto = JSON.parseObject(json,GetCardDetailsDto.class);
         issueOrganizationName = cardDetailsDto.getAssetInfo().getIssuerName();
         cardName = cardDetailsDto.getAssetInfo().getName();
         numberRemaining = cardDetailsDto.getAssetInfo().getMyAssetQty();
         issuerLogo = cardDetailsDto.getAssetInfo().getIssuerLogo();
         issuerAddress = cardDetailsDto.getAssetInfo().getIssuerAddress();
-        assetCode = cardDetailsDto.getAssetInfo().getCode();
+        assetCode = cardDetailsDto.getAssetInfo().getCode();*/
     }
 
     private void initUI() {
@@ -200,7 +204,7 @@ public class BPCardDetailsFragment extends BaseFragment {
         final QMUIBottomSheet confirmOperationBtmSheet = new QMUIBottomSheet(getContext());
         buyOrSellQuantity = 1;
 
-        stockQuantity = Integer.parseInt(cardDetailsDto.getAssetInfo().getMyAssetQty());
+        stockQuantity = Integer.parseInt(cardDetailsDto.getAssetDetail().getAssetInfo().getMyAssetQty());
         subFlag = true;
         addFlag = true;
 
