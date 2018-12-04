@@ -395,10 +395,10 @@ public class BPCardPackageFragment extends BaseFragment {
         cardAdDatasAdapter.setOnItemOptBtnListener(new CardAdDatasAdapter.OnItemOptBtnListener() {
             @Override
             public void onClick(int i) {
-                if (cardAdClickFlag) {
-                    return;
-                }
-                cardAdClickFlag = true;
+//                if (cardAdClickFlag) {
+//                    return;
+//                }
+//                cardAdClickFlag = true;
                 GetCardAdDatasRespDto.AdvertListBean currentItem = (GetCardAdDatasRespDto.AdvertListBean) cardAdDatasAdapter.getItem(i);
                 showConfirmOperationBottomSheet(currentItem);
             }
@@ -502,11 +502,12 @@ public class BPCardPackageFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 sheet.dismiss();
+                cardAdClickFlag = false;
             }
         });
 
         sheet.show();
-        sheet.findViewById(R.id.confirmBuyOrSellBtn).setOnClickListener(new View.OnClickListener() {
+        sheet.findViewById(R.id.cardAdConfirmBuyOrSellBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPasswordConfirmDialog();
