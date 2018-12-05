@@ -19,6 +19,7 @@ public enum ExceptionEnum {
     ADVERT_PRICE_ERROR1("200004","广告价格发生变化"),
 
     ORDER_BCTX_FAIL("300001","区块链转账失败"),
+    ORDER_PLACE_ONESELF_ERROR("300002","不能下单自己的广告"),
 
     ASSET_INFO_NOT_EXIST("500001","资产信息不存在"),
     QUERY_ASSET_TO_BLOCKCHAIN_ERROR("500002","资产信息查询失败"),
