@@ -230,7 +230,7 @@ public class BPCardPackageFragment extends BaseFragment {
         mCardMyAssetsEmptyView.show(true);
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
-        paramsMap.put("startPage",myAssetsPageStart);
+        paramsMap.put("startPage",myAssetsPageStart.toString());
         paramsMap.put("pageSize",myAssetsPageSize);
         AssetService assetService = RetrofitFactory.getInstance().getRetrofit(getActivity()).create(AssetService.class);
         retrofit2.Call<ApiResult<GetCardMyAssetsRespDto>> call = assetService.getMyCardMine(paramsMap);
@@ -238,6 +238,9 @@ public class BPCardPackageFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ApiResult<GetCardMyAssetsRespDto>> call, Response<ApiResult<GetCardMyAssetsRespDto>> response) {
                 ApiResult<GetCardMyAssetsRespDto> respDto = response.body();
+                if(respDto == null){
+                    return;
+                }
                 System.out.println(JSON.toJSONString(respDto));
                 if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                     mCardMyAssetsEmptyView.show(false);
