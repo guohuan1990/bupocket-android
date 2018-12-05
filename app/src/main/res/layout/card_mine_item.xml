@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:singleLine="true"
-                android:ellipsize="end"
+                android:maxLength="4"
                 tools:text="现牛羊"/>
         </LinearLayout>
         <LinearLayout

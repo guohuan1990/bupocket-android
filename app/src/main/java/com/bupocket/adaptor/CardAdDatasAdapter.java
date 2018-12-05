@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bupocket.R;
 import com.bupocket.enums.CardAdTypeEnum;
 import com.bupocket.http.api.dto.resp.GetCardAdDataRespDto;
+import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -70,6 +71,7 @@ public class CardAdDatasAdapter extends BaseAdapter {
             holder.mCardAdIssuerAvatarIv = convertView.findViewById(R.id.cardAdIssuerAvatarIv);
             holder.mCardAdIssuerNameTv = convertView.findViewById(R.id.cardAdIssuerNameTv);
             holder.mCardAdIssuerAuthTv = convertView.findViewById(R.id.cardAdIssuerAuthTv);
+            holder.mCardAdPublisherAddressTv = convertView.findViewById(R.id.cardAdPublisherAddressTv);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -113,6 +115,7 @@ public class CardAdDatasAdapter extends BaseAdapter {
         }
         holder.mCardAdStockQuantityTv.setText(stockStr);
         holder.mCardAdIssuerNameTv.setText(itemData.getIssuer().getName());
+        holder.mCardAdPublisherAddressTv.setText(AddressUtil.anonymous(itemData.getPublishAddress()));
 
         holder.mCardAdBuyOrSellBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +145,7 @@ public class CardAdDatasAdapter extends BaseAdapter {
         private QMUIRadiusImageView mCardAdIssuerAvatarIv;
         private TextView mCardAdIssuerNameTv;
         private TextView mCardAdIssuerAuthTv;
+        private TextView mCardAdPublisherAddressTv;
     }
 
     public Integer getAdType() {

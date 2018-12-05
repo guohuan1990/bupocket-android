@@ -6,27 +6,23 @@ import android.os.Looper;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.adaptor.CardDetailAskAdapter;
 import com.bupocket.adaptor.CardDetailMySellAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
-import com.bupocket.enums.CardAdTypeEnum;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.AssetService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetCardAdBlobRespDto;
-import com.bupocket.http.api.dto.resp.GetCardAdDataRespDto;
 import com.bupocket.http.api.dto.resp.GetCardDetailsDto;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
@@ -44,7 +40,6 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -264,7 +259,7 @@ public class BPCardDetailsFragment extends BaseFragment {
         addFlag = true;
 
         confirmOperationBtmSheet.setContentView(R.layout.card_ad_confirm_layout);
-        TextView mAdTitle = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmTitleTv);
+        TextView mAdTitle = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmAssetNameTv);
         TextView mAdPrice = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmPriceTv);
         TextView mAdAssetId = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmAssetIdTv);
         final TextView mAdTotalQuantity = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmQuantityTv);
