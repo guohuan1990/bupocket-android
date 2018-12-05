@@ -272,6 +272,7 @@ public class BPCardDetailsFragment extends BaseFragment {
         TextView mAdTitle = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmAssetNameTv);
         TextView mAdPrice = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmPriceTv);
         TextView mAdAssetId = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmAssetIdTv);
+        TextView mAdAssetIssuerName = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmAssetIssuerNameTv);
         final TextView mAdTotalQuantity = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmQuantityTv);
         final TextView mAdTotalQuantitySub = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmSubQuantityTv);
         final TextView mAdTotalQuantityAdd = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmAddQuantityTv);
@@ -284,12 +285,13 @@ public class BPCardDetailsFragment extends BaseFragment {
         mAdTotalQuantitySub.setTextColor(getResources().getColor(R.color.app_txt_color_gray));
 
 //        fill detail
-        mAdTitle.setText(itemInfo.getAdTitle());
+        mAdTitle.setText(cardName);
         String priceTxt = itemInfo.getPrice() + " " + "BU" + " " + getString(R.string.card_package_card_ad_confirm_unit_txt);
         mAdPrice.setText(priceTxt);
         String assetIdTxt = getString(R.string.card_package_card_ad_confirm_asset_id_txt);
         assetIdTxt = String.format(assetIdTxt, cardDetailsDto.getAssetDetail().getAssetInfo().getCode());
         mAdAssetId.setText(assetIdTxt);
+        mAdAssetIssuerName.setText(itemInfo.getIssuer().getName());
         String feeTxt = getString(R.string.card_package_card_ad_sell_fee_txt);
         feeTxt = String.format(feeTxt, String.valueOf(Constants.CARD_TX_FEE)) + " " + "BU";
         mAdSellFee.setText(feeTxt);

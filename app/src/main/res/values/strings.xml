@@ -325,7 +325,7 @@
     <string name="purchasing_information_title_txt">求购信息</string>
     <string name="sold_txt">已售</string>
     <string name="i_ask_purchase_txt">我要求购</string>
-    <string name="undeveloped_function_message_txt">该功能即将开发</string>
+    <string name="undeveloped_function_message_txt">该功能即将开放，尽请期待</string>
 
     <string name="err_code_txt">错误码</string>
     <string name="card_package_tab_mine">我的</string>
@@ -340,7 +340,7 @@
     <string name="card_package_card_ad_sell_amount_txt">出售数量: </string>
     <string name="card_package_card_ad_sell_fee_txt">服务费：%1$s</string>
     <string name="card_package_card_ad_confirm_asset_id_txt">资产ID：%1$s</string>
-    <string name="card_package_card_ad_confirm_asset_issuer_name_txt">资方名称: </string>
+    <string name="card_package_card_ad_confirm_asset_issuer_name_txt">资方: </string>
     <string name="card_package_card_ad_item_issuer_name">发布人: </string>
     <string name="card_package_card_ad_confirm_unit_txt">/张</string>
     <string name="card_package_card_ad_confirm_sell_txt">确认出售</string>

@@ -339,7 +339,7 @@
     <string name="card_package_card_ad_buy_amount_txt">Amount to purchase: </string>
     <string name="card_package_card_ad_sell_amount_txt">Amount to sell: </string>
     <string name="card_package_card_ad_sell_fee_txt">Service fee：%1$s</string>
-    <string name="card_package_card_ad_confirm_asset_id_txt">Token ID：%1$s</string>
+    <string name="card_package_card_ad_confirm_asset_id_txt">Asset ID：%1$s</string>
     <string name="card_package_card_ad_confirm_unit_txt">/Order</string>
     <string name="card_package_card_ad_confirm_sell_txt">Confirm to sell</string>
     <string name="card_package_card_ad_confirm_sell_success_txt">Sold out successfully</string>
