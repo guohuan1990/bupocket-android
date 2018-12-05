@@ -148,13 +148,13 @@ public class BPCardPackageFragment extends BaseFragment {
             mCardMyAssetsRefreshLayout = cardPackageMine.findViewById(R.id.refreshLayout);
             mCardMyAssetsLv = cardPackageMine.findViewById(R.id.cardMineLv);
             mCardMyAssetsEmptyLl = cardPackageMine.findViewById(R.id.cardMyAssetsListEmptyLl);
-            mCardMyAssetsBuyRequestLl = cardPackageMine.findViewById(R.id.cardMyAssetsBuyRequestLl);
-            mCardMyAssetsBuyRequestLl.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startFragment(new BPBuyRequestFragment());
-                }
-            });
+//            mCardMyAssetsBuyRequestLl = cardPackageMine.findViewById(R.id.cardMyAssetsBuyRequestLl);
+//            mCardMyAssetsBuyRequestLl.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    startFragment(new BPBuyRequestFragment());
+//                }
+//            });
             loadMyAssetsDatasViews();
         } else if ("BUY".equals(activeTab) || "SELL".equals(activeTab)) {
             cardPackageBuyOrSell = inflater.inflate(R.layout.card_package_ad_layout, mCardContainerTabContentLl,true);
