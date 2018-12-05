@@ -23,16 +23,16 @@
             android:textSize="18sp"
             android:textColor="@color/title_deep_black_txt"
             android:ellipsize="end"
-            android:singleLine="true"
+            android:maxLines="2"
             android:textStyle="bold"
-            tools:text="阳澄湖牌大哒哒哒哒闸蟹礼券 8只装"/>
+            tools:text="阳澄湖牌大哒哒哒哒哒哒哒哒哒哒哒哒哒哒哒哒闸蟹礼券 8只装"/>
         <TextView
             android:id="@+id/cardAdPriceTv"
             android:layout_width="94dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textSize="18sp"
             android:textColor="@color/app_color_green"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:textStyle="bold"
             tools:text="300 BU"/>
     </LinearLayout>
@@ -80,7 +80,7 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:clickable="false"
-            android:src="@mipmap/icon_haidilao_logo"
+            android:src="@mipmap/avatar"
             app:qmui_border_color="?attr/qmui_config_color_gray_6"
             app:qmui_border_width="1px"
             app:qmui_is_circle="true"

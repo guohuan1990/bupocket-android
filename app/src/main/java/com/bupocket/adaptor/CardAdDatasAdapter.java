@@ -2,6 +2,9 @@ package com.bupocket.adaptor;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 import com.bupocket.R;
 import com.bupocket.enums.CardAdTypeEnum;
 import com.bupocket.http.api.dto.resp.GetCardAdDataRespDto;
+import com.bupocket.utils.CommonUtil;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButtonDrawable;
@@ -79,9 +83,15 @@ public class CardAdDatasAdapter extends BaseAdapter {
             holder.mCardAdIssuerAvatarIv.setImageResource(R.mipmap.avatar);
         } else {
             holder.mCardAdIssuerAuthTv.setVisibility(View.VISIBLE);
-//            byte[] decodedString = Base64.decode(itemData.getIssuer().getPhoto(), Base64.DEFAULT);
-//            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//            holder.mCardAdIssuerAvatarIv.setImageBitmap(decodedByte);
+            if(CommonUtil.isNull(itemData.getIssuer().getPhoto())){
+                holder.mCardAdIssuerAvatarIv.setImageDrawable(convertView.getResources().getDrawable(R.mipmap.avatar));
+            }else {
+                try {
+                    holder.mCardAdIssuerAvatarIv.setImageBitmap(CommonUtil.base64ToBitmap(itemData.getIssuer().getPhoto()));
+                } catch (Exception e) {
+                    holder.mCardAdIssuerAvatarIv.setImageDrawable(convertView.getResources().getDrawable(R.mipmap.avatar));
+                }
+            }
         }
 
         String stockStr = "";
@@ -91,7 +101,7 @@ public class CardAdDatasAdapter extends BaseAdapter {
             adOptBtnDrawable.setBgData(ColorStateList.valueOf(0xFFFF6E3C));
             adOptBtnDrawable.setStrokeData(1, ColorStateList.valueOf(0xFFFF6E3C));
             stockStr = convertView.getResources().getString(R.string.card_package_sell_item_stock_txt);
-            stockStr = String.format(stockStr, Integer.parseInt(itemData.getStockQuantity()));
+            stockStr = String.format(stockStr, itemData.getStockQuantity());
 
         } else if (CardAdTypeEnum.SELL.getCode().equals(adType)) {
             holder.mCardAdBuyOrSellBtn.setText(R.string.card_package_buy_btn_txt);
@@ -99,7 +109,7 @@ public class CardAdDatasAdapter extends BaseAdapter {
             adOptBtnDrawable.setBgData(ColorStateList.valueOf(0xFF02CA71));
             adOptBtnDrawable.setStrokeData(1, ColorStateList.valueOf(0xFF02CA71));
             stockStr = convertView.getResources().getString(R.string.card_package_buy_item_stock_txt);
-            stockStr = String.format(stockStr, Integer.parseInt(itemData.getStockQuantity()));
+            stockStr = String.format(stockStr, itemData.getStockQuantity());
         }
         holder.mCardAdStockQuantityTv.setText(stockStr);
         holder.mCardAdIssuerNameTv.setText(itemData.getIssuer().getName());

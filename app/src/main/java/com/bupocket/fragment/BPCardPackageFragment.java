@@ -23,6 +23,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.CardAdTypeEnum;
 import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.enums.TokenTypeEnum;
 import com.bupocket.http.api.AssetService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -45,6 +46,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,6 +83,9 @@ public class BPCardPackageFragment extends BaseFragment {
     private String txBlob;
     private String txHash;
     private String blobId;
+    private String tokenBalance;
+    private String currentAccAddress;
+    private String availableTokenBalance;
 
     private View cardPackageMine;
     private QMUIEmptyView mCardMyAssetsEmptyView;
@@ -89,6 +94,7 @@ public class BPCardPackageFragment extends BaseFragment {
     private LinearLayout mCardMyAssetsEmptyLl;
     private LinearLayout mCardMyAssetsBuyRequestLl;
     private QMUITipDialog txSendingTipDialog;
+    private QMUITipDialog loadGetBalanceTipDialog;
     private QMUIDialog pwdConfirmDialog;
     private QMUIBottomSheet confirmOperationBtmSheet;
 
@@ -125,8 +131,13 @@ public class BPCardPackageFragment extends BaseFragment {
     }
 
     private void init() {
-        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), Constants.LOCAL_SHARED_FILE_NAME);
+        initData();
         setListeners();
+    }
+
+    private void initData() {
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), Constants.LOCAL_SHARED_FILE_NAME);
+        currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
     }
 
     private void addTabsPages() {
@@ -144,6 +155,7 @@ public class BPCardPackageFragment extends BaseFragment {
                     startFragment(new BPBuyRequestFragment());
                 }
             });
+            getMyCardAssetsDatas();
         } else if ("BUY".equals(activeTab) || "SELL".equals(activeTab)) {
             cardPackageBuyOrSell = inflater.inflate(R.layout.card_package_ad_layout, mCardContainerTabContentLl,true);
             mAdEmptyView = cardPackageBuyOrSell.findViewById(R.id.emptyView);
@@ -393,11 +405,20 @@ public class BPCardPackageFragment extends BaseFragment {
             @Override
             public void onResponse(retrofit2.Call<ApiResult<GetCardAdDataRespDto>> call, Response<ApiResult<GetCardAdDataRespDto>> response) {
                 ApiResult<GetCardAdDataRespDto> respDto = response.body();
+                if (respDto == null) {
+                    return;
+                }
                 if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                     if (cardAdRefreshFlag) {
                         cardAdList = respDto.getData().getAdvertList();
                     } else {
                         cardAdList.addAll(respDto.getData().getAdvertList());
+                    }
+                    if (cardAdList.size() > 0) {
+                        loadAdDataAdapter();
+                        showOrHideEmptyPage(false);
+                    } else {
+                        showOrHideEmptyPage(true);
                     }
                     cardAdPage = respDto.getData().getPage();
                     if (cardAdPage.isNextFlag()) {
@@ -407,6 +428,7 @@ public class BPCardPackageFragment extends BaseFragment {
                     }
                     loadAdDataAdapter();
                 } else {
+                    showOrHideEmptyPage(true);
                     Toast.makeText(getContext(),getString(R.string.err_code_txt) +
                             respDto.getErrCode(),Toast.LENGTH_LONG).show();
                 }
@@ -414,6 +436,7 @@ public class BPCardPackageFragment extends BaseFragment {
 
             @Override
             public void onFailure(retrofit2.Call<ApiResult<GetCardAdDataRespDto>> call, Throwable t) {
+                showOrHideEmptyPage(true);
                 if (getActivity() != null) {
                     Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
                 }
@@ -693,7 +716,7 @@ public class BPCardPackageFragment extends BaseFragment {
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("advertId",adId);
         paramsMap.put("price",adPrice);
-        paramsMap.put("totalQuantity",buyOrSellQuantity.toString());
+        paramsMap.put("quantity",buyOrSellQuantity.toString());
         paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
         AssetService assetService = RetrofitFactory.getInstance().getRetrofit(getActivity()).create(AssetService.class);
         Call<ApiResult<GetCardAdBlobRespDto>> call = assetService.getCardSellAdBlob(paramsMap);
@@ -728,7 +751,7 @@ public class BPCardPackageFragment extends BaseFragment {
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("advertId",adId);
         paramsMap.put("price",adPrice);
-        paramsMap.put("totalQuantity",buyOrSellQuantity.toString());
+        paramsMap.put("quantity",buyOrSellQuantity.toString());
         paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
         AssetService assetService = RetrofitFactory.getInstance().getRetrofit(getActivity()).create(AssetService.class);
         Call<ApiResult<GetCardAdBlobRespDto>> call = assetService.getCardBuyAdBlob(paramsMap);
@@ -816,6 +839,7 @@ public class BPCardPackageFragment extends BaseFragment {
                     pwdConfirmDialog.dismiss();
                     txSendingTipDialog.dismiss();
                     confirmOperationBtmSheet.dismiss();
+                    refreshCardAdData();
                     Toast.makeText(getContext(),getString(R.string.card_package_card_ad_confirm_sell_success_txt),Toast.LENGTH_LONG).show();
                 } else {
                     txSendingTipDialog.dismiss();
@@ -853,6 +877,7 @@ public class BPCardPackageFragment extends BaseFragment {
                     pwdConfirmDialog.dismiss();
                     txSendingTipDialog.dismiss();
                     confirmOperationBtmSheet.dismiss();
+                    refreshCardAdData();
                     Toast.makeText(getContext(),getString(R.string.card_package_card_ad_confirm_buy_success_txt),Toast.LENGTH_LONG).show();
                 } else {
                     txSendingTipDialog.dismiss();
@@ -880,4 +905,46 @@ public class BPCardPackageFragment extends BaseFragment {
     private String getSkeyStr(){
         return sharedPreferencesHelper.getSharedPreference("skey","").toString();
     }
+
+//    private void getAvilableTokenBlance(final String tokenType) {
+//        loadGetBalanceTipDialog = new QMUITipDialog.Builder(getContext())
+//                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+//                .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+//                .create();
+//        loadGetBalanceTipDialog.show();
+//        loadGetBalanceTipDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+//            @Override
+//            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+//
+//                if(event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                tokenBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
+//                if(!CommonUtil.isNull(tokenBalance)){
+//                    sharedPreferencesHelper.put("tokenBalance",tokenBalance);
+//                    if(TokenTypeEnum.BU.getCode().equals(tokenType)){
+//                        if(tokenBalance == null || Double.parseDouble(tokenBalance) < 0 || Double.parseDouble(tokenBalance) == 0){
+//                            availableTokenBalance = "0";
+//                        } else {
+//                            Double doubleAvailableTokenBalance = DecimalCalculate.sub(Double.parseDouble(tokenBalance),com.bupocket.common.Constants.RESERVE_AMOUNT);
+//                            if(doubleAvailableTokenBalance < 0){
+//                                availableTokenBalance = "0";
+//                            }else {
+//                                availableTokenBalance = CommonUtil.rvZeroAndDot(new BigDecimal(DecimalCalculate.sub(Double.parseDouble(tokenBalance),com.bupocket.common.Constants.RESERVE_AMOUNT)).setScale(Constants.BU_DECIMAL,BigDecimal.ROUND_HALF_UP).toPlainString());
+//                            }
+//                        }
+//                    }else{
+//                        availableTokenBalance = tokenBalance;
+//                    }
+//                }
+//                System.out.println("------------------------" + availableTokenBalance);
+//            }
+//        }).start();
+//    }
 }
