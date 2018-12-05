@@ -25,6 +25,8 @@ public class Constants {
     public static final Integer TX_REQUEST_TIMEOUT_TIMES = 20;
     public static final double CARD_TX_FEE = 0.5;
 
+    public  static final String LOCAL_SHARED_FILE_NAME = "buPocket";
+
     public static enum MainNetConfig {
         WEB_SERVER_DOMAIN("https://api-bp.bumo.io/"),
         BUMO_NODE_URL("http://wallet-node.bumo.io"),
