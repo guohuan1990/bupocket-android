@@ -100,6 +100,7 @@ public class BPCardDetailsFragment extends BaseFragment {
 
     private QMUIDialog pwdConfirmDialog;
     private QMUITipDialog txSendingTipDialog;
+    private QMUITipDialog getDataTipDialog;
     private QMUIBottomSheet confirmOperationBtmSheet;
 
     @Override
@@ -143,6 +144,11 @@ public class BPCardDetailsFragment extends BaseFragment {
     }
 
     private void getCardDetails() {
+        getDataTipDialog = new QMUITipDialog.Builder(getContext())
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                .create();
+        getDataTipDialog.show();
         AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("userToken",sharedPreferencesHelper.getSharedPreference("userToken","").toString());
@@ -168,8 +174,10 @@ public class BPCardDetailsFragment extends BaseFragment {
                         issuerLogo = cardDetailsDto.getAssetDetail().getIssuer().getLogo();
                         issuerAddress = cardDetailsDto.getAssetDetail().getIssuer().getAddress();
                         assetCode = cardDetailsDto.getAssetDetail().getAssetInfo().getCode();
+                        getDataTipDialog.dismiss();
                         initView();
                     }else{
+                        getDataTipDialog.dismiss();
                         new QMUIDialog.MessageDialogBuilder(getContext())
                                 .setMessage(getString(R.string.network_error_msg))
                                 .addAction(R.string.i_knew_btn_txt, new QMUIDialogAction.ActionListener() {
@@ -183,6 +191,7 @@ public class BPCardDetailsFragment extends BaseFragment {
                                 .create().show();
                     }
                 }else {
+                    getDataTipDialog.dismiss();
                     new QMUIDialog.MessageDialogBuilder(getContext())
                             .setMessage(getString(R.string.network_error_msg))
                             .addAction(R.string.i_knew_btn_txt, new QMUIDialogAction.ActionListener() {
@@ -199,6 +208,7 @@ public class BPCardDetailsFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<GetCardDetailsDto>> call, Throwable t) {
+                getDataTipDialog.dismiss();
                 Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
                 t.printStackTrace();
             }
@@ -237,6 +247,8 @@ public class BPCardDetailsFragment extends BaseFragment {
                 @Override
                 public void onClick(int i) {
                     GetCardDetailsDto.BuyRequestBean getCardDetailsDto = (GetCardDetailsDto.BuyRequestBean) cardDetailAskAdapter.getItem(i);
+                    adId = getCardDetailsDto.getAdId();
+                    adPrice = getCardDetailsDto.getPrice();
                     showConfirmOperationBottomSheet(getCardDetailsDto);
                 }
             });
@@ -246,7 +258,7 @@ public class BPCardDetailsFragment extends BaseFragment {
     }
 
     private void showConfirmOperationBottomSheet(final GetCardDetailsDto.BuyRequestBean itemInfo) {
-        final QMUIBottomSheet confirmOperationBtmSheet = new QMUIBottomSheet(getContext());
+        confirmOperationBtmSheet = new QMUIBottomSheet(getContext());
         buyOrSellQuantity = 1;
 
         stockQuantity = Integer.parseInt(cardDetailsDto.getAssetDetail().getAssetInfo().getMyAssetQty());
@@ -390,7 +402,7 @@ public class BPCardDetailsFragment extends BaseFragment {
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("advertId",adId);
         paramsMap.put("price",adPrice);
-        paramsMap.put("totalQuantity",buyOrSellQuantity.toString());
+        paramsMap.put("quantity",buyOrSellQuantity.toString());
         paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
         AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
         Call<ApiResult<GetCardAdBlobRespDto>> call = assetService.getCardSellAdBlob(paramsMap);
@@ -472,6 +484,7 @@ public class BPCardDetailsFragment extends BaseFragment {
                     pwdConfirmDialog.dismiss();
                     txSendingTipDialog.dismiss();
                     confirmOperationBtmSheet.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.card_package_card_ad_confirm_sell_success_txt),Toast.LENGTH_LONG).show();
                 } else {
                     txSendingTipDialog.dismiss();
                     Toast.makeText(getContext(),getString(R.string.err_code_txt) +
