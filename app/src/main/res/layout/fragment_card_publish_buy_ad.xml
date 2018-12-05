@@ -59,12 +59,14 @@
                     android:layout_centerInParent="true">
                     
                     <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                        android:layout_width="27dp"
-                        android:layout_height="27dp"
-                        android:src="@mipmap/icon_card_details_logo"
-                        app:qmui_is_circle="true"/>
+                        android:id="@+id/cardLogoIv"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        app:qmui_is_circle="true"
+                        app:qmui_border_width="0dp"/>
 
                     <TextView
+                        android:id="@+id/cardNameTv"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="7.5dp"
                         android:layout_width="wrap_content"
@@ -128,7 +130,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@null"
                                 android:hint="@string/card_package_ad_title_hint_txt"
-                                android:inputType=""
+                                android:maxLines="1"
                                 android:textColor="@color/app_color_black"
                                 android:textSize="14sp" />
 
@@ -183,6 +185,7 @@
                             android:background="@null"
                             android:hint="@string/card_package_unit_price_hint_txt"
                             android:inputType="numberDecimal"
+                            android:maxLines="1"
                             android:textColor="@color/app_color_black"
                             android:textSize="14sp" />
 
@@ -238,6 +241,7 @@
                             android:background="@null"
                             android:hint="@string/card_package_buy_amount_hint_txt"
                             android:inputType="number"
+                            android:maxLines="1"
                             android:textColor="@color/app_color_black"
                             android:textSize="14sp" />
 

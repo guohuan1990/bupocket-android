@@ -7,7 +7,6 @@ import android.os.Looper;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.ExceptionEnum;
@@ -346,10 +344,14 @@ public class BPCardPublishSellADFragment extends BaseFragment {
     private void initView() {
         mNumberAvailableTv.setText(numberAvailable+"张");
         mCardNameTv.setText(cardName);
-        try{
-            mCardLogoIv.setImageBitmap(CommonUtil.base64ToBitmap(issuerLogo));
-        }catch (Exception e){
+        if(CommonUtil.isNull(issuerLogo)){
             mCardLogoIv.setImageDrawable(getResources().getDrawable(R.mipmap.avatar));
+        }else {
+            try{
+                mCardLogoIv.setImageBitmap(CommonUtil.base64ToBitmap(issuerLogo));
+            }catch (Exception e){
+                mCardLogoIv.setImageDrawable(getResources().getDrawable(R.mipmap.avatar));
+            }
         }
     }
 
