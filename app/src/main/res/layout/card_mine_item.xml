@@ -15,8 +15,8 @@
         <LinearLayout
             android:paddingTop="17dp"
             android:paddingBottom="17dp"
-            android:paddingLeft="24dp"
-            android:paddingRight="6dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:id="@+id/myCardIssuerLogoLl"
             android:background="@drawable/shape_corner_left"
             android:layout_width="wrap_content"
@@ -29,14 +29,15 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_marginBottom="3dp"
-                android:background="@mipmap/icon_card_details_logo"
                 app:qmui_border_width="0dp"
                 app:qmui_is_circle="true"/>
 
             <TextView
                 android:id="@+id/myCardIssuerNameTv"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:ellipsize="end"
                 tools:text="现牛羊"/>
         </LinearLayout>
         <LinearLayout
@@ -78,6 +79,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="牛肉代金券"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:textColor="@color/app_color_black"
                 android:textSize="16sp"/>
             <TextView

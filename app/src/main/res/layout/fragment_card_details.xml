@@ -207,7 +207,6 @@
                         android:id="@+id/cardLogoIv"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@mipmap/icon_card_details_logo"
                         app:qmui_is_circle="true"
                         app:qmui_border_width="0dp"/>
                 </LinearLayout>

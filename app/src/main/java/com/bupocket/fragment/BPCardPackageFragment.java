@@ -243,6 +243,7 @@ public class BPCardPackageFragment extends BaseFragment {
                 }
                 System.out.println(JSON.toJSONString(respDto));
                 if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
+                    getCardMyAssetsRespDto = respDto.getData();
                     mCardMyAssetsEmptyView.show(false);
                     if (respDto.getData().getMyAssets().size() > 0) {
                         if (myAssetsRefreshFlag) {
@@ -286,8 +287,7 @@ public class BPCardPackageFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GetCardMyAssetsRespDto.MyAssetsBean itemInfo = myAssetsList.get(position);
                 Bundle argz = new Bundle();
-//                argz.putString("address", itemInfo.get);
-                argz.putString("issuerAddress", itemInfo.getIssuer().getAddress());
+                argz.putString("issuerAddress", itemInfo.getAssetInfo().getIssuerAddress());
                 argz.putString("assetCode", itemInfo.getAssetInfo().getCode());
                 BPCardDetailsFragment fragment = new BPCardDetailsFragment();
                 fragment.setArguments(argz);

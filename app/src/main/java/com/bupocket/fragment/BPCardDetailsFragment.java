@@ -35,6 +35,7 @@ import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletSignData;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -71,6 +72,8 @@ public class BPCardDetailsFragment extends BaseFragment {
     QMUIEmptyView mMySellEmptyView;
     @BindView(R.id.purchasingInfoEmptyView)
     QMUIEmptyView mPurchasingInfoEmptyView;
+    @BindView(R.id.cardLogoIv)
+    QMUIRadiusImageView mCardLogoIv;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
 
@@ -198,29 +201,6 @@ public class BPCardDetailsFragment extends BaseFragment {
                 t.printStackTrace();
             }
         });
-
-        /*String json = "{\n" +
-                "  \"assetDetail\": {\n" +
-                "    \"issuer\": {\n" +
-                "      \"name\": \"现牛羊\",\n" +
-                "      \"address\": \"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT\",\n" +
-                "      \"logo\": \"base64\"\n" +
-                "    },\n" +
-                "    \"assetInfo\": {\n" +
-                "      \"name\": \"牛肉代金券\",\n" +
-                "      \"code\": \"RNC-1000\",\n" +
-                "      \"issuerAddress\": \"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT\",\n" +
-                "      \"myAssetQty\": \"3\"\n" +
-                "    }\n" +
-                "  }\n" +
-                "}";
-        cardDetailsDto = JSON.parseObject(json,GetCardDetailsDto.class);
-        issueOrganizationName = cardDetailsDto.getAssetDetail().getIssuer().getName();
-        cardName = cardDetailsDto.getAssetDetail().getAssetInfo().getName();
-        numberRemaining = cardDetailsDto.getAssetDetail().getAssetInfo().getMyAssetQty();
-        issuerLogo = cardDetailsDto.getAssetDetail().getIssuer().getLogo();
-        issuerAddress = cardDetailsDto.getAssetDetail().getIssuer().getAddress();
-        assetCode = cardDetailsDto.getAssetDetail().getAssetInfo().getCode();*/
     }
 
     private void initUI() {
@@ -231,6 +211,15 @@ public class BPCardDetailsFragment extends BaseFragment {
         mIssueOrganizationNameTv.setText(issueOrganizationName);
         mCardNameTv.setText(cardName);
         mNumberRemainingTv.setText(getString(R.string.number_remaining_txt) + numberRemaining);
+        if(CommonUtil.isNull(issuerLogo)){
+            mCardLogoIv.setImageDrawable(getResources().getDrawable(R.mipmap.avatar));
+        }else {
+            try {
+                mCardLogoIv.setImageBitmap(CommonUtil.base64ToBitmap(issuerLogo));
+            } catch (Exception e) {
+                mCardLogoIv.setImageDrawable(getResources().getDrawable(R.mipmap.avatar));
+            }
+        }
 
         if(cardDetailsDto.getMySale() != null && 0 != cardDetailsDto.getMySale().size()){
             CardDetailMySellAdapter cardMySellAdapter = new CardDetailMySellAdapter(cardDetailsDto.getMySale(), getContext());
@@ -304,7 +293,6 @@ public class BPCardDetailsFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 confirmOperationBtmSheet.dismiss();
-//                cardAdClickFlag = false;
             }
         });
         mConfirmBtn.setOnClickListener(new View.OnClickListener() {
@@ -459,8 +447,6 @@ public class BPCardDetailsFragment extends BaseFragment {
                     Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
                     txSendingTipDialog.dismiss();
                     Looper.loop();
-                }finally {
-
                 }
             }
         }).start();
