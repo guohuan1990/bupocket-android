@@ -368,7 +368,6 @@
     <string name="card_package_publish_success_message_txt">发布成功</string>
     <string name="card_package_user_token_error_message_txt">您的身份状态已过期</string>
 
-
     <string name="user_confirm_password_txt">密码确认</string>
     <string name="user_confirm_password_txt1">为了您的资产安全，请输入钱包密码</string>
     <string name="user_confirm_password_wallet_password_txt">钱包密码</string>
@@ -376,4 +375,12 @@
     <string name="user_confirm_password_wallet_forget_password_txt">忘记密码，</string>
     <string name="user_confirm_password_wallet_recover_identity_txt">去恢复身份</string>
     <string name="user_confirm_password_wallet_submit_txt">完成</string>
+
+    <string name="err_account_bu_balance_not_enough">账户BU余额不足</string>
+    <string name="err_account_asset_balance_not_enough">账户资产余额不足</string>
+    <string name="err_ad_not_exist">广告不存在</string>
+    <string name="err_ad_stock_quantity_not_enough">广告库存不足</string>
+    <string name="err_ad_price_refresh">广告价格发生变化</string>
+    <string name="err_cannot_tx_with_self">不能下单自己的广告</string>
+    <string name="err_cannot_order">交易失败</string>
 </resources>

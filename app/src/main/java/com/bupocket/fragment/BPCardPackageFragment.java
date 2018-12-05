@@ -155,7 +155,7 @@ public class BPCardPackageFragment extends BaseFragment {
                     startFragment(new BPBuyRequestFragment());
                 }
             });
-            getMyCardAssetsDatas();
+            loadMyAssetsDatasViews();
         } else if ("BUY".equals(activeTab) || "SELL".equals(activeTab)) {
             cardPackageBuyOrSell = inflater.inflate(R.layout.card_package_ad_layout, mCardContainerTabContentLl,true);
             mAdEmptyView = cardPackageBuyOrSell.findViewById(R.id.emptyView);
@@ -221,23 +221,6 @@ public class BPCardPackageFragment extends BaseFragment {
     }
 
     // My assets part start  ++++++++
-    private void getMyCards() {
-        String json = "{ \"myAssets\": [{ \"issuer\": { \"name\":\"现牛羊\", \"address\":\"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT\", \"logo\":\"base64\" }, \"AssetInfo\": { \"name\":\"牛肉代金券\", \"code\":\"RNC-1000\", \"issuerAddress\":\"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT\", \"myAssetQty\":\"3\" } }], \"page\": { \"count\": 1, \"curSize\": 1, \"endOfGroup\": 1, \"firstResultNumber\": 0, \"nextFlag\": false, \"queryTotal\": true, \"size\": 10, \"start\": 1, \"startOfGroup\": 1, \"total\": 1 } }";
-//        String json = "{ \"myAssets\": [], \"page\": { \"count\": 1, \"curSize\": 1, \"endOfGroup\": 1, \"firstResultNumber\": 0, \"nextFlag\": false, \"queryTotal\": true, \"size\": 10, \"start\": 1, \"startOfGroup\": 1, \"total\": 1 } }";
-        getCardMyAssetsRespDto = JSON.parseObject(json,GetCardMyAssetsRespDto.class);
-        myAssetsList = getCardMyAssetsRespDto.getMyAssets();
-        if(myAssetsList.size() > 0) {
-            loadCardMyAssetsAdapter();
-        } else {
-            showOrHideEmptyPage(true);
-        }
-        myAssetsPage = getCardMyAssetsRespDto.getPage();
-        if (myAssetsPage.isNextFlag()) {
-            mCardMyAssetsRefreshLayout.setEnableLoadMore(true);
-        } else {
-            mCardMyAssetsRefreshLayout.setEnableLoadMore(false);
-        }
-    }
     private void getMyCardAssetsDatas() {
         mCardMyAssetsEmptyView.show(true);
         Map<String, Object> paramsMap = new HashMap<>();
@@ -274,6 +257,8 @@ public class BPCardPackageFragment extends BaseFragment {
                         showOrHideEmptyPage(true);
                     }
                 } else {
+                    showOrHideEmptyPage(false);
+                    mCardMyAssetsEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
                     Toast.makeText(getContext(),getString(R.string.err_code_txt) +
                             respDto.getErrCode(),Toast.LENGTH_LONG).show();
                 }
@@ -281,7 +266,8 @@ public class BPCardPackageFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<GetCardMyAssetsRespDto>> call, Throwable t) {
-                mCardMyAssetsEmptyView.show(false);
+                showOrHideEmptyPage(false);
+                mCardMyAssetsEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
                 if (getActivity() != null) {
                     Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
                 }
@@ -358,42 +344,8 @@ public class BPCardPackageFragment extends BaseFragment {
     // My assets part end  --------
 
     // AD part start ++++++++
-    private void getCardBuyAd() {
-        String json = "{\"advertList\":[{\"advertId\":\"10000020\",\"advertTitle\":\"阳澄湖牌大闸蟹礼券 8只装\",\"price\":\"2\",\"coin\":\"BU\",\"stockQuantity\":\"5\",\"assetCode\": \"SSR-10086\",\"issuer\":{\"name\":\"现牛羊\",\"photo\":\"base64\"}}],\"page\":{\"count\":1,\"curSize\":2,\"endOfGroup\":1,\"firstResultNumber\":0,\"nextFlag\":false,\"queryTotal\":true,\"size\":10,\"start\":1,\"startOfGroup\":1,\"total\":2}}";
-        getCardAdDataRespDto = JSON.parseObject(json,GetCardAdDataRespDto.class);
-        cardAdList = getCardAdDataRespDto.getAdvertList();
-        if (cardAdList.size() > 0) {
-            loadAdDataAdapter();
-        } else {
-            showOrHideEmptyPage(true);
-        }
-        cardAdPage = getCardAdDataRespDto.getPage();
-        if (cardAdPage.isNextFlag()) {
-            mAdRefreshLayout.setEnableLoadMore(true);
-        } else {
-            mAdRefreshLayout.setEnableLoadMore(false);
-        }
-    }
-
-    private void getCardSellAd() {
-//        String json = "{\"advertList\":[],\"page\":{\"count\":1,\"curSize\":2,\"endOfGroup\":1,\"firstResultNumber\":0,\"nextFlag\":false,\"queryTotal\":true,\"size\":10,\"start\":1,\"startOfGroup\":1,\"total\":2}}";
-        String json = "{\"advertList\":[{\"advertId\":\"10000021\",\"advertTitle\":\"阳澄湖牌大闸蟹礼券 2只装\",\"price\":\"100\",\"coin\":\"BU\",\"stockQuantity\":\"10\",\"assetCode\": \"SSR-10086\",\"issuer\":{\"name\":\"阳澄湖大闸蟹管理中心\",\"photo\":\"\"}}],\"page\":{\"count\":1,\"curSize\":2,\"endOfGroup\":1,\"firstResultNumber\":0,\"nextFlag\":false,\"queryTotal\":true,\"size\":10,\"start\":1,\"startOfGroup\":1,\"total\":2}}";
-        getCardAdDataRespDto = JSON.parseObject(json,GetCardAdDataRespDto.class);
-        cardAdList = getCardAdDataRespDto.getAdvertList();
-        cardAdPage = getCardAdDataRespDto.getPage();
-        if (cardAdList.size() > 0) {
-            loadAdDataAdapter();
-        } else {
-            showOrHideEmptyPage(true);
-        }
-        if (cardAdPage.isNextFlag()) {
-            mAdRefreshLayout.setEnableLoadMore(true);
-        } else {
-            mAdRefreshLayout.setEnableLoadMore(false);
-        }
-    }
-
     private void getAdDatas() {
+        mAdEmptyView.show(true);
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("advertType", adType.toString());
         paramsMap.put("startPage", cardAdPageStart.toString());
@@ -404,6 +356,7 @@ public class BPCardPackageFragment extends BaseFragment {
         call.enqueue(new Callback<ApiResult<GetCardAdDataRespDto>>() {
             @Override
             public void onResponse(retrofit2.Call<ApiResult<GetCardAdDataRespDto>> call, Response<ApiResult<GetCardAdDataRespDto>> response) {
+                mAdEmptyView.show(false);
                 ApiResult<GetCardAdDataRespDto> respDto = response.body();
                 if (respDto == null) {
                     return;
@@ -428,7 +381,8 @@ public class BPCardPackageFragment extends BaseFragment {
                     }
                     loadAdDataAdapter();
                 } else {
-                    showOrHideEmptyPage(true);
+                    showOrHideEmptyPage(false);
+                    mAdEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
                     Toast.makeText(getContext(),getString(R.string.err_code_txt) +
                             respDto.getErrCode(),Toast.LENGTH_LONG).show();
                 }
@@ -436,7 +390,8 @@ public class BPCardPackageFragment extends BaseFragment {
 
             @Override
             public void onFailure(retrofit2.Call<ApiResult<GetCardAdDataRespDto>> call, Throwable t) {
-                showOrHideEmptyPage(true);
+                showOrHideEmptyPage(false);
+                mAdEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
                 if (getActivity() != null) {
                     Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
                 }
@@ -729,10 +684,24 @@ public class BPCardPackageFragment extends BaseFragment {
                     txHash = respDto.getData().getTxHash();
                     blobId = respDto.getData().getBlobId();
                     signBlob(password);
+                } else if(ExceptionEnum.ASSET_BALANCE_ERROR.getCode().equals(respDto.getErrCode())) {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_account_asset_balance_not_enough),Toast.LENGTH_LONG).show();
+                } else if(ExceptionEnum.ADVERT_ID_EXIST_ERROR.getCode().equals(respDto.getErrCode())) {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_ad_not_exist),Toast.LENGTH_LONG).show();
+                } else if(ExceptionEnum.ADVERT_PRICE_ERROR1.getCode().equals(respDto.getErrCode())) {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_ad_price_refresh),Toast.LENGTH_LONG).show();
+                } else if(ExceptionEnum.ORDER_PLACE_ONESELF_ERROR.getCode().equals(respDto.getErrCode())) {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_cannot_tx_with_self),Toast.LENGTH_LONG).show();
+                } else if(ExceptionEnum.ADVERT_STOCK_QUANTITY_ERROR.getCode().equals(respDto.getErrCode())) {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_ad_stock_quantity_not_enough),Toast.LENGTH_LONG).show();
                 } else {
                     txSendingTipDialog.dismiss();
-                    Toast.makeText(getContext(),getString(R.string.err_code_txt) +
-                            respDto.getErrCode(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),getString(R.string.err_cannot_order),Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -764,10 +733,24 @@ public class BPCardPackageFragment extends BaseFragment {
                     txHash = respDto.getData().getTxHash();
                     blobId = respDto.getData().getBlobId();
                     signBlob(password);
+                } else if(ExceptionEnum.BU_BALANCE_ERROR.getCode().equals(respDto.getErrCode())) {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_account_bu_balance_not_enough),Toast.LENGTH_LONG).show();
+                } else if(ExceptionEnum.ADVERT_ID_EXIST_ERROR.getCode().equals(respDto.getErrCode())) {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_ad_not_exist),Toast.LENGTH_LONG).show();
+                } else if(ExceptionEnum.ADVERT_PRICE_ERROR1.getCode().equals(respDto.getErrCode())) {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_ad_price_refresh),Toast.LENGTH_LONG).show();
+                } else if(ExceptionEnum.ORDER_PLACE_ONESELF_ERROR.getCode().equals(respDto.getErrCode())) {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_cannot_tx_with_self),Toast.LENGTH_LONG).show();
+                } else if(ExceptionEnum.ADVERT_STOCK_QUANTITY_ERROR.getCode().equals(respDto.getErrCode())) {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_ad_stock_quantity_not_enough),Toast.LENGTH_LONG).show();
                 } else {
                     txSendingTipDialog.dismiss();
-                    Toast.makeText(getContext(),getString(R.string.err_code_txt) +
-                            respDto.getErrCode(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),getString(R.string.err_cannot_order),Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -841,10 +824,12 @@ public class BPCardPackageFragment extends BaseFragment {
                     confirmOperationBtmSheet.dismiss();
                     refreshCardAdData();
                     Toast.makeText(getContext(),getString(R.string.card_package_card_ad_confirm_sell_success_txt),Toast.LENGTH_LONG).show();
+                } else if(ExceptionEnum.ADVERT_STOCK_QUANTITY_ERROR.getCode().equals(respDto.getErrCode())) {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_ad_stock_quantity_not_enough),Toast.LENGTH_LONG).show();
                 } else {
                     txSendingTipDialog.dismiss();
-                    Toast.makeText(getContext(),getString(R.string.err_code_txt) +
-                            respDto.getErrCode(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),getString(R.string.err_cannot_order),Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -879,10 +864,12 @@ public class BPCardPackageFragment extends BaseFragment {
                     confirmOperationBtmSheet.dismiss();
                     refreshCardAdData();
                     Toast.makeText(getContext(),getString(R.string.card_package_card_ad_confirm_buy_success_txt),Toast.LENGTH_LONG).show();
+                } else if(ExceptionEnum.ADVERT_STOCK_QUANTITY_ERROR.getCode().equals(respDto.getErrCode())) {
+                    txSendingTipDialog.dismiss();
+                    Toast.makeText(getContext(),getString(R.string.err_ad_stock_quantity_not_enough),Toast.LENGTH_LONG).show();
                 } else {
                     txSendingTipDialog.dismiss();
-                    Toast.makeText(getContext(),getString(R.string.err_code_txt) +
-                            respDto.getErrCode(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),getString(R.string.err_cannot_order),Toast.LENGTH_LONG).show();
                 }
             }
 

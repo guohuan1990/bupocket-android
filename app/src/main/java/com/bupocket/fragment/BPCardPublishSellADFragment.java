@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -345,14 +346,10 @@ public class BPCardPublishSellADFragment extends BaseFragment {
     private void initView() {
         mNumberAvailableTv.setText(numberAvailable+"张");
         mCardNameTv.setText(cardName);
-        if(CommonUtil.isNull(issuerLogo)){
+        try{
+            mCardLogoIv.setImageBitmap(CommonUtil.base64ToBitmap(issuerLogo));
+        }catch (Exception e){
             mCardLogoIv.setImageDrawable(getResources().getDrawable(R.mipmap.avatar));
-        }else {
-            try{
-                mCardLogoIv.setImageBitmap(CommonUtil.base64ToBitmap(issuerLogo));
-            }catch (Exception e){
-                mCardLogoIv.setImageDrawable(getResources().getDrawable(R.mipmap.avatar));
-            }
         }
     }
 
