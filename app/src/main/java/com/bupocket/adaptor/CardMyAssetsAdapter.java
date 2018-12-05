@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.http.api.dto.resp.GetCardMyAssetsRespDto;
+import com.bupocket.utils.CommonUtil;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 import java.util.List;
@@ -56,7 +57,15 @@ public class CardMyAssetsAdapter extends BaseAdapter {
             holder.myCardIssuerNameTv.setText(myAssetsBean.getIssuer().getName());
             holder.myCardNameTv.setText(myAssetsBean.getAssetInfo().getName());
             holder.myCardAmountTv.setText(String.format(convertView.getResources().getString(R.string.card_package_mine_card_amount_txt),myAssetsBean.getAssetInfo().getMyAssetQty()));
-            holder.myCardIssuerLogoIv.setBackgroundResource(R.mipmap.icon_card_details_logo);
+            if(CommonUtil.isNull(myAssetsBean.getIssuer().getLogo())){
+                holder.myCardIssuerLogoIv.setImageDrawable(convertView.getResources().getDrawable(R.mipmap.avatar));
+            }else{
+                try{
+                    holder.myCardIssuerLogoIv.setImageBitmap(CommonUtil.base64ToBitmap(myAssetsBean.getIssuer().getLogo()));
+                }catch (Exception e){
+                    holder.myCardIssuerLogoIv.setImageDrawable(convertView.getResources().getDrawable(R.mipmap.avatar));
+                }
+            }
         }
         return convertView;
     }
