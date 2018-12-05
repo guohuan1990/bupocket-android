@@ -22,21 +22,31 @@ import com.bupocket.wallet.model.WalletSignData;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
+import io.bumo.common.Constant;
+import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okio.Buffer;
+import okio.BufferedSource;
 import retrofit2.Call;
 
+import java.io.EOFException;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.UnsupportedCharsetException;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.alibaba.fastjson.util.IOUtils.UTF8;
 
 public class UserTokenInterceptor implements Interceptor {
     private Activity mActivity;
     private QMUIBottomSheet mConfirmPasswordDialog;
     private QMUITipDialog confirmPasswordTipDialog;
-    protected SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(BPApplication.getContext(), "buBox");
+    protected SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(BPApplication.getContext(), Constants.LOCAL_SHARED_FILE_NAME);
 
     public UserTokenInterceptor(Activity activity) {
         this.mActivity = activity;
@@ -45,24 +55,67 @@ public class UserTokenInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Response response = chain.proceed(chain.request());
-        ResponseBody body = response.body();
-        String bodyString = body.string();
-        MediaType contentType = body.contentType();
-        Log.d("Response", bodyString);
+        ResponseBody responseBody = response.body();
+        long contentLength = responseBody.contentLength();
+        if (!bodyEncoded(response.headers())) {
+            BufferedSource source = responseBody.source();
+            source.request(Long.MAX_VALUE); // Buffer the entire body.
+            Buffer buffer = source.buffer();
 
-        ApiResult<Object> apiResult = JSON.parseObject(bodyString, ApiResult.class);
-        if (ExceptionEnum.USER_TOKEN_ERR.getCode().equals(apiResult.getErrCode())) {
-            if (BPApplication.confirmPasswordDialog == null) {
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        startConfirmPasswordDialog();
-                    }
-                });
-                return response.newBuilder().build();
+            Charset charset = UTF8;
+            MediaType contentType = responseBody.contentType();
+            if (contentType != null) {
+                try {
+                    charset = contentType.charset(UTF8);
+                } catch (UnsupportedCharsetException e) {
+                    return response;
+                }
             }
+            if (!isPlaintext(buffer)) {
+                return response;
+            }
+            String bodyString = "";
+            if (contentLength != 0) {
+                bodyString = buffer.clone().readString(charset);
+                Log.d("Response", " response.url():"+ response.request().url());
+                Log.d("Response", " response.body():" + bodyString);
+                //得到所需的string，开始判断是否异常
+                //***********************do something*****************************
+                ApiResult<Object> apiResult = JSON.parseObject(bodyString, ApiResult.class);
+                if (ExceptionEnum.USER_TOKEN_ERR.getCode().equals(apiResult.getErrCode())) {
+                    if (BPApplication.confirmPasswordDialog == null) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                startConfirmPasswordDialog();
+                            }
+                        });
+                        return response.newBuilder().build();
+                    }
+                }
+                return response.newBuilder().body(ResponseBody.create(contentType, bodyString)).build();
+            }
+
+            return response.newBuilder().body(ResponseBody.create(contentType, bodyString)).build();
         }
-        return response.newBuilder().body(ResponseBody.create(contentType, bodyString)).build();
+        return response.newBuilder().build();
+//        String bodyString = responseBody.string();
+//        MediaType contentType = responseBody.contentType();
+//        Log.d("Response", bodyString);
+
+//        ApiResult<Object> apiResult = JSON.parseObject(bodyString, ApiResult.class);
+//        if (ExceptionEnum.USER_TOKEN_ERR.getCode().equals(apiResult.getErrCode())) {
+//            if (BPApplication.confirmPasswordDialog == null) {
+//                mActivity.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        startConfirmPasswordDialog();
+//                    }
+//                });
+//                return response.newBuilder().build();
+//            }
+//        }
+//        return response.newBuilder().body(ResponseBody.create(contentType, bodyString)).build();
     }
 
 
@@ -160,7 +213,7 @@ public class UserTokenInterceptor implements Interceptor {
             @Override
             public void onResponse(Call<ApiResult<GetUserTokenRespDto>> call, retrofit2.Response<ApiResult<GetUserTokenRespDto>> response) {
                 ApiResult<GetUserTokenRespDto> respDto = response.body();
-                if (ExceptionEnum.SUCCESS.equals(respDto.getErrCode())) {
+                if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                     Message msg = new Message();
                     Bundle data = new Bundle();
                     data.putString("userToken", respDto.getData().getUserToken());
@@ -174,5 +227,30 @@ public class UserTokenInterceptor implements Interceptor {
                 t.printStackTrace();
             }
         });
+    }
+
+    private boolean bodyEncoded(Headers headers) {
+        String contentEncoding = headers.get("Content-Encoding");
+        return contentEncoding != null && !contentEncoding.equalsIgnoreCase("identity");
+    }
+
+    static boolean isPlaintext(Buffer buffer) throws EOFException {
+        try {
+            Buffer prefix = new Buffer();
+            long byteCount = buffer.size() < 64 ? buffer.size() : 64;
+            buffer.copyTo(prefix, 0, byteCount);
+            for (int i = 0; i < 16; i++) {
+                if (prefix.exhausted()) {
+                    break;
+                }
+                int codePoint = prefix.readUtf8CodePoint();
+                if (Character.isISOControl(codePoint) && !Character.isWhitespace(codePoint)) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (EOFException e) {
+            return false; // Truncated UTF-8 sequence.
+        }
     }
 }

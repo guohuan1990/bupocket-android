@@ -125,7 +125,7 @@ public class BPCardPackageFragment extends BaseFragment {
     }
 
     private void init() {
-        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buBox");
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), Constants.LOCAL_SHARED_FILE_NAME);
         setListeners();
     }
 
@@ -170,7 +170,8 @@ public class BPCardPackageFragment extends BaseFragment {
                 mCardContainerTabContentLl.removeAllViews();
                 activeTab = "MINE";
                 addTabsPages();
-                getMyCards();
+//                getMyCards();
+                getMyCardAssetsDatas();
                 setActiveTab();
             }
         });
@@ -185,8 +186,8 @@ public class BPCardPackageFragment extends BaseFragment {
                 adType = CardAdTypeEnum.SELL.getCode();
                 activeTab = "BUY";
                 addTabsPages();
-                getCardBuyAd();
-//                getAdDatas();
+//                getCardBuyAd();
+                getAdDatas();
                 setActiveTab();
             }
         });
@@ -201,8 +202,8 @@ public class BPCardPackageFragment extends BaseFragment {
                 adType = CardAdTypeEnum.BUY.getCode();
                 activeTab = "SELL";
                 addTabsPages();
-                getCardSellAd();
-//                getAdDatas();
+//                getCardSellAd();
+                getAdDatas();
                 setActiveTab();
             }
         });
@@ -229,13 +230,14 @@ public class BPCardPackageFragment extends BaseFragment {
     private void getMyCardAssetsDatas() {
         mAdEmptyView.show(true);
         Map<String, Object> paramsMap = new HashMap<>();
-//        paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
-        AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
+        paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
+        AssetService assetService = RetrofitFactory.getInstance().getRetrofit(getActivity()).create(AssetService.class);
         retrofit2.Call<ApiResult<GetCardMyAssetsRespDto>> call = assetService.getMyCardMine(paramsMap);
         call.enqueue(new Callback<ApiResult<GetCardMyAssetsRespDto>>() {
             @Override
             public void onResponse(Call<ApiResult<GetCardMyAssetsRespDto>> call, Response<ApiResult<GetCardMyAssetsRespDto>> response) {
                 ApiResult<GetCardMyAssetsRespDto> respDto = response.body();
+                System.out.println(JSON.toJSONString(respDto));
                 if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                     mAdEmptyView.show(false);
                     if (respDto.getData().getMyAssets().size() > 0) {
@@ -380,8 +382,8 @@ public class BPCardPackageFragment extends BaseFragment {
         paramsMap.put("advertType", adType.toString());
         paramsMap.put("startPage", cardAdPageStart.toString());
         paramsMap.put("pageSize", cardAdPageSize);
-//        paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
-        AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
+        paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
+        AssetService assetService = RetrofitFactory.getInstance().getRetrofit(getActivity()).create(AssetService.class);
         retrofit2.Call<ApiResult<GetCardAdDataRespDto>> call = assetService.getCardAdData(paramsMap);
         call.enqueue(new Callback<ApiResult<GetCardAdDataRespDto>>() {
             @Override
@@ -689,7 +691,7 @@ public class BPCardPackageFragment extends BaseFragment {
         paramsMap.put("price",adPrice);
         paramsMap.put("totalQuantity",buyOrSellQuantity.toString());
         paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
-        AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
+        AssetService assetService = RetrofitFactory.getInstance().getRetrofit(getActivity()).create(AssetService.class);
         Call<ApiResult<GetCardAdBlobRespDto>> call = assetService.getCardSellAdBlob(paramsMap);
         call.enqueue(new Callback<ApiResult<GetCardAdBlobRespDto>>() {
             @Override
@@ -724,7 +726,7 @@ public class BPCardPackageFragment extends BaseFragment {
         paramsMap.put("price",adPrice);
         paramsMap.put("totalQuantity",buyOrSellQuantity.toString());
         paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
-        AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
+        AssetService assetService = RetrofitFactory.getInstance().getRetrofit(getActivity()).create(AssetService.class);
         Call<ApiResult<GetCardAdBlobRespDto>> call = assetService.getCardBuyAdBlob(paramsMap);
         call.enqueue(new Callback<ApiResult<GetCardAdBlobRespDto>>() {
             @Override
@@ -800,7 +802,7 @@ public class BPCardPackageFragment extends BaseFragment {
         paramsMap.put("txBlobSign", txBlobSign);
         paramsMap.put("publicKey", publicKey);
         paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken", "").toString());
-        AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
+        AssetService assetService = RetrofitFactory.getInstance().getRetrofit(getActivity()).create(AssetService.class);
         Call<ApiResult> call = assetService.submitSellAd(paramsMap);
         call.enqueue(new Callback<ApiResult>() {
             @Override
@@ -837,7 +839,7 @@ public class BPCardPackageFragment extends BaseFragment {
         paramsMap.put("txBlobSign", txBlobSign);
         paramsMap.put("publicKey", publicKey);
         paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken", "").toString());
-        AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
+        AssetService assetService = RetrofitFactory.getInstance().getRetrofit(getActivity()).create(AssetService.class);
         Call<ApiResult> call = assetService.submitBuyAd(paramsMap);
         call.enqueue(new Callback<ApiResult>() {
             @Override
