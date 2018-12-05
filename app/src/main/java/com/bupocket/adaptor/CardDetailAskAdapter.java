@@ -60,8 +60,16 @@ public class CardDetailAskAdapter extends BaseAdapter {
             GetCardDetailsDto.BuyRequestBean buyRequestBean = buyRequest.get(position);
             holder.cardAdTitleTv.setText(buyRequestBean.getAdTitle());
             holder.cardAdPriceTv.setText(CommonUtil.addSuffix(buyRequestBean.getPrice(),"BU"));
-            holder.cardAdIssuerAvatarIv.setBackgroundResource(R.mipmap.icon_card_details_logo);
             holder.cardAdIssuerNameTv.setText(buyRequestBean.getIssuer().getName());
+            if(CommonUtil.isNull(buyRequestBean.getIssuer().getLogo())){
+                holder.cardAdIssuerAvatarIv.setImageDrawable(convertView.getResources().getDrawable(R.mipmap.avatar));
+            }else {
+                try {
+                    holder.cardAdIssuerAvatarIv.setImageBitmap(CommonUtil.base64ToBitmap(buyRequestBean.getIssuer().getLogo()));
+                } catch (Exception e) {
+                    holder.cardAdIssuerAvatarIv.setImageDrawable(convertView.getResources().getDrawable(R.mipmap.avatar));
+                }
+            }
         }
         holder.cardAdSellBtn.setOnClickListener(new View.OnClickListener() {
             @Override
