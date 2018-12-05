@@ -4,6 +4,7 @@
 
     <string name="tabbar_assets_txt">Assets</string>
     <string name="tabbar_discovery_txt">Discovery</string>
+    <string name="tabbar_card_package_txt">Cards</string>
     <string name="tabbar_profile_txt">My Profile</string>
 
     <string name="fragment_title_tx_detail_txt">Transaction detail</string>
@@ -317,4 +318,63 @@
     <string name="safety_tips_title">Safety tips</string>
     <string name="safety_tips_content_txt">Your wallet mnemonics have not been backed up. To prevent loss of assets due to forgetting passwords, deleting apps, or losing your phone, be sure to back up your mnemonics.</string>
     <string name="backup_immediately_txt">Back up now</string>
+
+    <string name="number_remaining_txt">Remaining amount</string>
+    <string name="gaving_btn_txt">Transfer</string>
+    <string name="entry_order_btn_txt">Post an order to sell</string>
+    <string name="my_sell_list_title_txt">My orders</string>
+    <string name="purchasing_information_title_txt">Purchase info</string>
+    <string name="sold_txt">Sold</string>
+    <string name="i_ask_purchase_txt">I want to purchase</string>
+
+    <string name="err_code_txt">Error code</string>
+    <string name="card_package_tab_mine">My</string>
+    <string name="card_package_tab_buy">Buy</string>
+    <string name="card_package_tab_sell">Sell</string>
+    <string name="card_package_buy_item_stock_txt">Remaining amount %1$s</string>
+    <string name="card_package_sell_item_stock_txt">Amount %1$s</string>
+    <string name="card_package_buy_btn_txt">Purchase now</string>
+    <string name="card_package_sell_btn_txt">Sell now</string>
+    <string name="card_package_mine_card_amount_txt">Amount: %1$s</string>
+    <string name="card_package_card_ad_buy_amount_txt">Amount to purchase: </string>
+    <string name="card_package_card_ad_sell_amount_txt">Amount to sell: </string>
+    <string name="card_package_card_ad_sell_fee_txt">Service fee：%1$s</string>
+    <string name="card_package_card_ad_confirm_asset_id_txt">Token ID：%1$s</string>
+    <string name="card_package_card_ad_confirm_unit_txt">/Order</string>
+    <string name="card_package_card_ad_confirm_sell_txt">Confirm to sell</string>
+    <string name="card_package_card_ad_confirm_sell_success_txt">Sold out successfully</string>
+    <string name="card_package_card_ad_confirm_buy_txt">Confirm to purchase</string>
+    <string name="card_package_card_ad_confirm_buy_success_txt">Purchased successfully</string>
+    <string name="card_package_card_ad_confirm_total_amount_buy_txt">Total cost</string>
+    <string name="card_package_card_ad_confirm_total_amount_sell_txt">Acquired</string>
+    <string name="card_package_mine_empty_list">Records are not available now</string>
+    <string name="card_package_publish_buy_ad_txt">Post offer</string>
+    <string name="card_package_ad_title_txt">Title of Offer</string>
+    <string name="card_package_unit_price_txt">Price(BU)</string>
+    <string name="card_package_buy_amount_txt">Amount to buy</string>
+    <string name="card_package_ad_title_hint_txt">Please input your title</string>
+    <string name="card_package_unit_price_hint_txt">Please input the price</string>
+    <string name="card_package_buy_amount_hint_txt">Please input the amount to buy</string>
+    <string name="card_package_publish_btn_txt">Publish</string>
+    <string name="card_package_publish_sell_ad_txt">Publish the offer to sell</string>
+    <string name="card_package_sell_amount_txt">Amount to sell</string>
+    <string name="card_package_sell_amount_hint_txt">Fill in the amount to sell</string>
+    <string name="card_package_number_of_available_txt">Available amount</string>
+    <string name="card_package_sell_fee_txt">Service fee(BU)</string>
+    <string name="card_package_sell_fee_hint_txt">Free</string>
+    <string name="card_package_buy_request_title_txt">Buy</string>
+    <string name="card_package_search_hint">Please input the coupon name</string>
+    <string name="card_package_sell_amount_not_enough_message_txt">Your available amount is insufficient</string>
+    <string name="card_package_title_error_message_txt">The title must be between 2-15 characters</string>
+    <string name="card_package_publish_success_message_txt">Published successfully</string>
+    <string name="card_package_user_token_error_message_txt">Your identity status has expired</string>
+
+
+    <string name="user_confirm_password_txt">Confirm password</string>
+    <string name="user_confirm_password_txt1">Please input your wallet password for your token security</string>
+    <string name="user_confirm_password_wallet_password_txt">Wallet password</string>
+    <string name="user_confirm_password_wallet_password_txt1">8~20 characters composed of letters and numerics</string>
+    <string name="user_confirm_password_wallet_forget_password_txt">Forget password</string>
+    <string name="user_confirm_password_wallet_recover_identity_txt">Recover identity</string>
+    <string name="user_confirm_password_wallet_submit_txt">Completed</string>
 </resources>

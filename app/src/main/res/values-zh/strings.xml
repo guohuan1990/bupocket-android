@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">小布口袋</string>
     <string name="tabbar_assets_txt">资产</string>
+    <string name="tabbar_card_package_txt">卡包</string>
     <string name="tabbar_discovery_txt">发现</string>
     <string name="tabbar_profile_txt">我的</string>
 
@@ -316,4 +317,62 @@
     <string name="safety_tips_title">安全提示</string>
     <string name="safety_tips_content_txt">您的钱包助记词尚未备份，为防止忘记密码、删除App或丢失手机等情况导致资产损失，请务必备份助记词</string>
     <string name="backup_immediately_txt">立即备份</string>
+
+    <string name="number_remaining_txt">剩余数量：</string>
+    <string name="gaving_btn_txt">转赠</string>
+    <string name="entry_order_btn_txt">挂单出售</string>
+    <string name="my_sell_list_title_txt">我的挂单</string>
+    <string name="purchasing_information_title_txt">求购信息</string>
+    <string name="sold_txt">已售</string>
+    <string name="i_ask_purchase_txt">我要求购</string>
+
+    <string name="err_code_txt">错误码</string>
+    <string name="card_package_tab_mine">我的</string>
+    <string name="card_package_tab_buy">购买</string>
+    <string name="card_package_tab_sell">出售</string>
+    <string name="card_package_buy_item_stock_txt">剩余量 %1$s</string>
+    <string name="card_package_sell_item_stock_txt">数量 %1$s</string>
+    <string name="card_package_buy_btn_txt">立即购买</string>
+    <string name="card_package_sell_btn_txt">立即出售</string>
+    <string name="card_package_mine_card_amount_txt">数量: %1$s</string>
+    <string name="card_package_card_ad_buy_amount_txt">购买数量: </string>
+    <string name="card_package_card_ad_sell_amount_txt">出售数量: </string>
+    <string name="card_package_card_ad_sell_fee_txt">服务费：%1$s</string>
+    <string name="card_package_card_ad_confirm_asset_id_txt">资产ID：%1$s</string>
+    <string name="card_package_card_ad_confirm_unit_txt">/张</string>
+    <string name="card_package_card_ad_confirm_sell_txt">确认出售</string>
+    <string name="card_package_card_ad_confirm_sell_success_txt">出售成功</string>
+    <string name="card_package_card_ad_confirm_buy_txt">确认购买</string>
+    <string name="card_package_card_ad_confirm_buy_success_txt">购买成功</string>
+    <string name="card_package_card_ad_confirm_total_amount_buy_txt">总共费用</string>
+    <string name="card_package_card_ad_confirm_total_amount_sell_txt">获得</string>
+    <string name="card_package_mine_empty_list">暂无记录</string>
+    <string name="card_package_publish_buy_ad_txt">发布买入广告</string>
+    <string name="card_package_ad_title_txt">广告标题</string>
+    <string name="card_package_unit_price_txt">单价(BU)</string>
+    <string name="card_package_buy_amount_txt">买入数量</string>
+    <string name="card_package_ad_title_hint_txt">请输入您的广告标题</string>
+    <string name="card_package_unit_price_hint_txt">请输入单价</string>
+    <string name="card_package_buy_amount_hint_txt">填写买入数量</string>
+    <string name="card_package_publish_btn_txt">发布</string>
+    <string name="card_package_publish_sell_ad_txt">发布出售广告</string>
+    <string name="card_package_sell_amount_txt">出售数量</string>
+    <string name="card_package_sell_amount_hint_txt">填写出售数量</string>
+    <string name="card_package_number_of_available_txt">可用数量</string>
+    <string name="card_package_sell_fee_txt">服务费(BU)</string>
+    <string name="card_package_sell_fee_hint_txt">免费</string>
+    <string name="card_package_buy_request_title_txt">求购</string>
+    <string name="card_package_search_hint">请输入卡劵名称</string>
+    <string name="card_package_sell_amount_not_enough_message_txt">您的可用数量不足</string>
+    <string name="card_package_title_error_message_txt">广告标题内容必须在2–15个字符之间</string>
+    <string name="card_package_publish_success_message_txt">发布成功</string>
+    <string name="card_package_user_token_error_message_txt">您的身份状态已过期</string>
+
+    <string name="user_confirm_password_txt">密码确认</string>
+    <string name="user_confirm_password_txt1">为了您的资产安全，请输入钱包密码</string>
+    <string name="user_confirm_password_wallet_password_txt">钱包密码</string>
+    <string name="user_confirm_password_wallet_password_txt1">8~20个字符，且内容仅限字母和数字</string>
+    <string name="user_confirm_password_wallet_forget_password_txt">忘记密码，</string>
+    <string name="user_confirm_password_wallet_recover_identity_txt">去恢复身份</string>
+    <string name="user_confirm_password_wallet_submit_txt">完成</string>
 </resources>

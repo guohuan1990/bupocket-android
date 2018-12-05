@@ -27,7 +27,7 @@
                     android:id="@+id/cardAssetInfoLl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="84dp"
+                    android:layout_marginTop="94dp"
                     android:background="@drawable/shape_corner_top"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
@@ -201,7 +201,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="70dp"
                     android:gravity="center">
                     <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                         android:id="@+id/cardLogoIv"

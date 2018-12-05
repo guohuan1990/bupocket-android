@@ -34,6 +34,7 @@ import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletSignData;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -74,6 +75,8 @@ public class BPCardDetailsFragment extends BaseFragment {
     QMUIEmptyView mPurchasingInfoEmptyView;
     @BindView(R.id.cardLogoIv)
     QMUIRadiusImageView mCardLogoIv;
+    @BindView(R.id.givingBtn)
+    QMUIRoundButton givingBtn;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
 
@@ -130,6 +133,12 @@ public class BPCardDetailsFragment extends BaseFragment {
                 argz.putString("assetCode",assetCode);
                 bpCardPublishSellADFragment.setArguments(argz);
                 startFragment(bpCardPublishSellADFragment);
+            }
+        });
+        givingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),getString(R.string.undeveloped_function_message_txt),Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -214,6 +223,7 @@ public class BPCardDetailsFragment extends BaseFragment {
     }
 
     private void initUI() {
+        QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
         initTopBar();
     }
 
