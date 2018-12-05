@@ -273,7 +273,7 @@ public class BPCardDetailsFragment extends BaseFragment {
         String priceTxt = itemInfo.getPrice() + " " + "BU" + " " + getString(R.string.card_package_card_ad_confirm_unit_txt);
         mAdPrice.setText(priceTxt);
         String assetIdTxt = getString(R.string.card_package_card_ad_confirm_asset_id_txt);
-//        assetIdTxt = String.format(assetIdTxt, itemInfo.getAdvertId());
+        assetIdTxt = String.format(assetIdTxt, cardDetailsDto.getAssetDetail().getAssetInfo().getCode());
         mAdAssetId.setText(assetIdTxt);
         String feeTxt = getString(R.string.card_package_card_ad_sell_fee_txt);
         feeTxt = String.format(feeTxt, String.valueOf(Constants.CARD_TX_FEE)) + " " + "BU";
