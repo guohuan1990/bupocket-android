@@ -341,7 +341,7 @@
     <string name="card_package_card_ad_sell_fee_txt">服务费：%1$s</string>
     <string name="card_package_card_ad_confirm_asset_id_txt">资产ID：%1$s</string>
     <string name="card_package_card_ad_confirm_asset_issuer_name_txt">资方: </string>
-    <string name="card_package_card_ad_item_issuer_name">发布人: </string>
+    <string name="card_package_card_ad_item_issuer_name">提供</string>
     <string name="card_package_card_ad_confirm_unit_txt">/张</string>
     <string name="card_package_card_ad_confirm_sell_txt">确认出售</string>
     <string name="card_package_card_ad_confirm_sell_success_txt">出售成功</string>
