@@ -30,6 +30,7 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.model.WalletSignData;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -82,6 +83,7 @@ public class BPCardPublishSellADFragment extends BaseFragment {
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_card_publish_sell_ad, null);
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         ButterKnife.bind(this, root);
         init();
         return root;
