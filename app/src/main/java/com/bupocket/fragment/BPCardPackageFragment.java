@@ -236,7 +236,6 @@ public class BPCardPackageFragment extends BaseFragment {
                 if(respDto == null){
                     return;
                 }
-                System.out.println(JSON.toJSONString(respDto));
                 if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                     getCardMyAssetsRespDto = respDto.getData();
                     mCardMyAssetsEmptyView.show(false);
@@ -823,6 +822,7 @@ public class BPCardPackageFragment extends BaseFragment {
                     txSendingTipDialog.dismiss();
                     confirmOperationBtmSheet.dismiss();
                     refreshCardAdData();
+                    getAdDatas();
                     Toast.makeText(getContext(),getString(R.string.card_package_card_ad_confirm_sell_success_txt),Toast.LENGTH_LONG).show();
                 } else if(ExceptionEnum.ADVERT_STOCK_QUANTITY_ERROR.getCode().equals(respDto.getErrCode())) {
                     txSendingTipDialog.dismiss();
@@ -863,6 +863,7 @@ public class BPCardPackageFragment extends BaseFragment {
                     txSendingTipDialog.dismiss();
                     confirmOperationBtmSheet.dismiss();
                     refreshCardAdData();
+                    getAdDatas();
                     Toast.makeText(getContext(),getString(R.string.card_package_card_ad_confirm_buy_success_txt),Toast.LENGTH_LONG).show();
                 } else if(ExceptionEnum.ADVERT_STOCK_QUANTITY_ERROR.getCode().equals(respDto.getErrCode())) {
                     txSendingTipDialog.dismiss();
