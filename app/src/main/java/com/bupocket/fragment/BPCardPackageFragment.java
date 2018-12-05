@@ -533,6 +533,7 @@ public class BPCardPackageFragment extends BaseFragment {
 
         QMUIRoundButton mConfirmBtn = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmBuyOrSellBtn);
         mAdTotalQuantitySub.setTextColor(getResources().getColor(R.color.app_txt_color_gray));
+        subFlag = false;
 
 //        fill detail
         mAssetName.setText(itemInfo.getAssetName());
