@@ -157,7 +157,9 @@ public class BPCardDetailsFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ApiResult<GetCardDetailsDto>> call, Response<ApiResult<GetCardDetailsDto>> response) {
                 ApiResult<GetCardDetailsDto> respDto = response.body();
+                System.out.println(JSON.toJSONString(respDto));
                 if(respDto != null){
+                    System.out.println(JSON.toJSONString(respDto));
                     if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                         cardDetailsDto = respDto.getData();
                         issueOrganizationName = cardDetailsDto.getAssetDetail().getIssuer().getName();

@@ -166,6 +166,7 @@ public class BPCardPublishSellADFragment extends BaseFragment {
         assetInfo.setCode(assetCode);
         assetInfo.setIssuerAddress(issuerAddress);
         paramsMap.put("asset",assetInfo);
+        System.out.println(JSON.toJSONString(paramsMap));
 
         Call<ApiResult<BlobInfoDto>> call = assetService.getBlob(paramsMap);
         call.enqueue(new Callback<ApiResult<BlobInfoDto>>() {
@@ -173,21 +174,26 @@ public class BPCardPublishSellADFragment extends BaseFragment {
             public void onResponse(Call<ApiResult<BlobInfoDto>> call, Response<ApiResult<BlobInfoDto>> response) {
                 ApiResult<BlobInfoDto> respDto = response.body();
                 if(respDto != null){
+                    System.out.println(JSON.toJSONString(respDto));
                     if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                         BlobInfoDto blobInfoDto = respDto.getData();
                         publishADTxBlob = blobInfoDto.getTxBlob();
                         publishADTxHash = blobInfoDto.getTxHash();
                         publishADBlobId = blobInfoDto.getBlobId();
                         publishSellAd(password);
+                    }else if(ExceptionEnum.USER_TOKEN_ERR.getCode().equals(respDto.getErrCode())){
+                        publishTipDialog.dismiss();
+                        showPwdQmuiDialog.dismiss();
+                        Toast.makeText(getContext(),getString(R.string.card_package_user_token_error_message_txt),Toast.LENGTH_LONG).show();
+                    }else{
+                        publishTipDialog.dismiss();
+                        showPwdQmuiDialog.dismiss();
+                        Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
                     }
-                }else if(ExceptionEnum.USER_TOKEN_ERR.getCode().equals(respDto.getErrCode())){
+                } else {
                     publishTipDialog.dismiss();
                     showPwdQmuiDialog.dismiss();
-                    Toast.makeText(getContext(),getString(R.string.card_package_user_token_error_message_txt),Toast.LENGTH_LONG).show();
-                }else{
-                    publishTipDialog.dismiss();
-                    showPwdQmuiDialog.dismiss();
-                    Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"Null",Toast.LENGTH_LONG).show();
                 }
             }
 

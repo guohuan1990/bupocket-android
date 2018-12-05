@@ -19,7 +19,7 @@ public interface AssetService {
     Call<ApiResult<GetCardMyAssetsRespDto>> getMyCardMine(@Body Map<String, Object> map);
     @POST("assetapi/advert/list")
     Call<ApiResult<GetCardAdDataRespDto>> getCardAdData(@Body Map<String, Object> map);
-    @POST("assetapi/asset/sell/getBlob")
+    @POST("assetapi/advert/sell/getBlob")
     Call<ApiResult<BlobInfoDto>> getBlob(@Body Map<String, Object> map);
     @POST("assetapi/advert/sell/publish")
     Call<ApiResult<PublishAdRespDto>> publishSellAd(@Body Map<String, Object> map);
