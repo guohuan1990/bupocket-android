@@ -15,22 +15,22 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface AssetService {
-    @POST("asset/v1/my")
+    @POST("assetapi/asset/v1/my")
     Call<ApiResult<GetCardMyAssetsRespDto>> getMyCardMine(@Body Map<String, Object> map);
-    @POST("asset/ad/list")
+    @POST("assetapi/asset/ad/list")
     Call<ApiResult<GetCardAdDataRespDto>> getCardAdData(@Body Map<String, Object> map);
-    @POST("asset/sell/getBlob")
+    @POST("assetapi/asset/sell/getBlob")
     Call<ApiResult<BlobInfoDto>> getBlob(@Body Map<String, Object> map);
-    @POST("advert/sell/publish")
+    @POST("assetapi/advert/sell/publish")
     Call<ApiResult<PublishAdRespDto>> publishSellAd(@Body Map<String, Object> map);
-    @POST("advert/sell/ad/getBlob")
+    @POST("assetapi/advert/sell/ad/getBlob")
     Call<ApiResult<GetCardAdBlobRespDto>> getCardSellAdBlob(@Body Map<String, Object> map);
-    @POST("advert/buy/ad/getBlob")
+    @POST("assetapi/advert/buy/ad/getBlob")
     Call<ApiResult<GetCardAdBlobRespDto>> getCardBuyAdBlob(@Body Map<String, Object> map);
-    @POST("advert/buy")
+    @POST("assetapi/advert/buy")
     Call<ApiResult> submitBuyAd(@Body Map<String, Object> map);
-    @POST("advert/sell")
+    @POST("assetapi/advert/sell")
     Call<ApiResult> submitSellAd(@Body Map<String, Object> map);
-    @POST("asset/v1/detail")
+    @POST("assetapi/asset/v1/detail")
     Call<ApiResult<GetCardDetailsDto>> getCardDetails(@Body Map<String,Object> map);
 }

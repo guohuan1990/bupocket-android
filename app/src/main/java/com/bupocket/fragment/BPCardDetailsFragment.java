@@ -21,6 +21,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.CardAdTypeEnum;
 import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.AssetService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -33,9 +34,11 @@ import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletSignData;
+import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -64,6 +67,10 @@ public class BPCardDetailsFragment extends BaseFragment {
     ListView mPurchasingInfoLv;
     @BindView(R.id.publishSellADBtn)
     QMUIRoundButton mPublishSellADBtn;
+    @BindView(R.id.mySellEmptyView)
+    QMUIEmptyView mMySellEmptyView;
+    @BindView(R.id.purchasingInfoEmptyView)
+    QMUIEmptyView mPurchasingInfoEmptyView;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
 
@@ -135,7 +142,7 @@ public class BPCardDetailsFragment extends BaseFragment {
     private void getCardDetails() {
         AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
         Map<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("address",currentAccAddress);
+        paramsMap.put("userToken",sharedPreferencesHelper.getSharedPreference("userToken","").toString());
         paramsMap.put("issuerAddress",issuerAddress);
         paramsMap.put("assetCode",assetCode);
         paramsMap.put("saleStartPage","1");
@@ -147,16 +154,41 @@ public class BPCardDetailsFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ApiResult<GetCardDetailsDto>> call, Response<ApiResult<GetCardDetailsDto>> response) {
                 ApiResult<GetCardDetailsDto> respDto = response.body();
-                if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
-                    cardDetailsDto = respDto.getData();
-                    issueOrganizationName = cardDetailsDto.getAssetDetail().getIssuer().getName();
-                    cardName = cardDetailsDto.getAssetDetail().getAssetInfo().getName();
-                    numberRemaining = cardDetailsDto.getAssetDetail().getAssetInfo().getMyAssetQty();
-                    issuerLogo = cardDetailsDto.getAssetDetail().getIssuer().getLogo();
-                    issuerAddress = cardDetailsDto.getAssetDetail().getIssuer().getAddress();
-                    assetCode = cardDetailsDto.getAssetDetail().getAssetInfo().getCode();
-                }else{
-                    Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
+                if(respDto != null){
+                    if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
+                        cardDetailsDto = respDto.getData();
+                        issueOrganizationName = cardDetailsDto.getAssetDetail().getIssuer().getName();
+                        cardName = cardDetailsDto.getAssetDetail().getAssetInfo().getName();
+                        numberRemaining = cardDetailsDto.getAssetDetail().getAssetInfo().getMyAssetQty();
+                        issuerLogo = cardDetailsDto.getAssetDetail().getIssuer().getLogo();
+                        issuerAddress = cardDetailsDto.getAssetDetail().getIssuer().getAddress();
+                        assetCode = cardDetailsDto.getAssetDetail().getAssetInfo().getCode();
+                        initView();
+                    }else{
+                        new QMUIDialog.MessageDialogBuilder(getContext())
+                                .setMessage(getString(R.string.network_error_msg))
+                                .addAction(R.string.i_knew_btn_txt, new QMUIDialogAction.ActionListener() {
+                                    @Override
+                                    public void onClick(QMUIDialog dialog, int index) {
+                                        dialog.dismiss();
+                                        startFragmentAndDestroyCurrent(new HomeFragment());
+                                    }
+                                })
+                                .setCanceledOnTouchOutside(false)
+                                .create().show();
+                    }
+                }else {
+                    new QMUIDialog.MessageDialogBuilder(getContext())
+                            .setMessage(getString(R.string.network_error_msg))
+                            .addAction(R.string.i_knew_btn_txt, new QMUIDialogAction.ActionListener() {
+                                @Override
+                                public void onClick(QMUIDialog dialog, int index) {
+                                    dialog.dismiss();
+                                    startFragmentAndDestroyCurrent(new HomeFragment());
+                                }
+                            })
+                            .setCanceledOnTouchOutside(false)
+                            .create().show();
                 }
             }
 
@@ -167,19 +199,32 @@ public class BPCardDetailsFragment extends BaseFragment {
             }
         });
 
-        /*String json = "{ \"AssetInfo\":{ \"name\":\"牛肉代金券\", \"code\":\"RNC-1000\", \"issuerAddress\":\"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT\", \"issuerName\":\"现牛羊\", \"issuerLogo\":\"base64\", \"myAssetQty\":\"3\" }, \"mySale\":[ { \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" },{ \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" },{ \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"saleTotal\":\"10\", \"selledAmount\":\"5\" } ], \"buyRequest\":[ { \"adTitle\":\"如康牛腩块1kg生牛肉 整肉原切生鲜 生鲜 清真食品咖哩牛肉 牛腩肉\", \"price\":\"60\", \"adId\":\"10000000\", \"issuer\":{ \"name\":\"现牛羊\", \"logo\":\"base64\" } } ] }";
+        /*String json = "{\n" +
+                "  \"assetDetail\": {\n" +
+                "    \"issuer\": {\n" +
+                "      \"name\": \"现牛羊\",\n" +
+                "      \"address\": \"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT\",\n" +
+                "      \"logo\": \"base64\"\n" +
+                "    },\n" +
+                "    \"assetInfo\": {\n" +
+                "      \"name\": \"牛肉代金券\",\n" +
+                "      \"code\": \"RNC-1000\",\n" +
+                "      \"issuerAddress\": \"buQZf3Uz8HzjCtZBBwK9ce9gkbj9G4Ew4grT\",\n" +
+                "      \"myAssetQty\": \"3\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "}";
         cardDetailsDto = JSON.parseObject(json,GetCardDetailsDto.class);
-        issueOrganizationName = cardDetailsDto.getAssetInfo().getIssuerName();
-        cardName = cardDetailsDto.getAssetInfo().getName();
-        numberRemaining = cardDetailsDto.getAssetInfo().getMyAssetQty();
-        issuerLogo = cardDetailsDto.getAssetInfo().getIssuerLogo();
-        issuerAddress = cardDetailsDto.getAssetInfo().getIssuerAddress();
-        assetCode = cardDetailsDto.getAssetInfo().getCode();*/
+        issueOrganizationName = cardDetailsDto.getAssetDetail().getIssuer().getName();
+        cardName = cardDetailsDto.getAssetDetail().getAssetInfo().getName();
+        numberRemaining = cardDetailsDto.getAssetDetail().getAssetInfo().getMyAssetQty();
+        issuerLogo = cardDetailsDto.getAssetDetail().getIssuer().getLogo();
+        issuerAddress = cardDetailsDto.getAssetDetail().getIssuer().getAddress();
+        assetCode = cardDetailsDto.getAssetDetail().getAssetInfo().getCode();*/
     }
 
     private void initUI() {
         initTopBar();
-        initView();
     }
 
     private void initView() {
@@ -187,17 +232,26 @@ public class BPCardDetailsFragment extends BaseFragment {
         mCardNameTv.setText(cardName);
         mNumberRemainingTv.setText(getString(R.string.number_remaining_txt) + numberRemaining);
 
-        CardDetailMySellAdapter cardMySellAdapter = new CardDetailMySellAdapter(cardDetailsDto.getMySale(), getContext());
-        mMySellLv.setAdapter(cardMySellAdapter);
-        final CardDetailAskAdapter cardDetailAskAdapter = new CardDetailAskAdapter(cardDetailsDto.getBuyRequest(),getContext());
-        mPurchasingInfoLv.setAdapter(cardDetailAskAdapter);
-        cardDetailAskAdapter.setOnItemOptBtnListener(new CardDetailAskAdapter.OnItemOptBtnListener() {
-            @Override
-            public void onClick(int i) {
-                GetCardDetailsDto.BuyRequestBean getCardDetailsDto = (GetCardDetailsDto.BuyRequestBean) cardDetailAskAdapter.getItem(i);
-                showConfirmOperationBottomSheet(getCardDetailsDto);
-            }
-        });
+        if(cardDetailsDto.getMySale() != null && 0 != cardDetailsDto.getMySale().size()){
+            CardDetailMySellAdapter cardMySellAdapter = new CardDetailMySellAdapter(cardDetailsDto.getMySale(), getContext());
+            mMySellLv.setAdapter(cardMySellAdapter);
+        }else {
+            mMySellEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
+        }
+
+        if(cardDetailsDto.getBuyRequest() != null && 0 != cardDetailsDto.getBuyRequest().size()){
+            final CardDetailAskAdapter cardDetailAskAdapter = new CardDetailAskAdapter(cardDetailsDto.getBuyRequest(),getContext());
+            mPurchasingInfoLv.setAdapter(cardDetailAskAdapter);
+            cardDetailAskAdapter.setOnItemOptBtnListener(new CardDetailAskAdapter.OnItemOptBtnListener() {
+                @Override
+                public void onClick(int i) {
+                    GetCardDetailsDto.BuyRequestBean getCardDetailsDto = (GetCardDetailsDto.BuyRequestBean) cardDetailAskAdapter.getItem(i);
+                    showConfirmOperationBottomSheet(getCardDetailsDto);
+                }
+            });
+        }else {
+            mPurchasingInfoEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
+        }
     }
 
     private void showConfirmOperationBottomSheet(final GetCardDetailsDto.BuyRequestBean itemInfo) {
@@ -449,8 +503,7 @@ public class BPCardDetailsFragment extends BaseFragment {
     }
 
     private String getAccountBPData(){
-        String data = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
-        return data;
+        return sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
     }
 
     private void initTopBar() {

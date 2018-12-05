@@ -133,7 +133,7 @@ public class BPCardPackageFragment extends BaseFragment {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         if ("MINE".equals(activeTab)) {
             cardPackageMine = inflater.inflate(R.layout.card_package_mine_layout, mCardContainerTabContentLl,true);
-            mCardMyAssetsEmptyView = cardPackageMine.findViewById(R.id.emptyView);
+            mCardMyAssetsEmptyView = cardPackageMine.findViewById(R.id.cardMineEmptyView);
             mCardMyAssetsRefreshLayout = cardPackageMine.findViewById(R.id.refreshLayout);
             mCardMyAssetsLv = cardPackageMine.findViewById(R.id.cardMineLv);
             mCardMyAssetsEmptyLl = cardPackageMine.findViewById(R.id.cardMyAssetsListEmptyLl);
@@ -160,7 +160,7 @@ public class BPCardPackageFragment extends BaseFragment {
 
     private void selectTabs() {
         addTabsPages();
-        getMyCards();
+        getMyCardAssetsDatas();
         mCardContainerMineCardTabTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,7 +170,7 @@ public class BPCardPackageFragment extends BaseFragment {
                 mCardContainerTabContentLl.removeAllViews();
                 activeTab = "MINE";
                 addTabsPages();
-                getMyCards();
+                getMyCardAssetsDatas();
                 setActiveTab();
             }
         });
@@ -227,9 +227,13 @@ public class BPCardPackageFragment extends BaseFragment {
         }
     }
     private void getMyCardAssetsDatas() {
-        mAdEmptyView.show(true);
+        mCardMyAssetsEmptyView.show(true);
         Map<String, Object> paramsMap = new HashMap<>();
-//        paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
+        sharedPreferencesHelper.put("userToken","osczyXfMrTh0Swu/ifdm10sKqqCa5SB6YeLIUjpKwwizUWaWH+S3dJGzj4nLJQXY+9RSA+SinYq+\nnvZczArnErK9Pu+pV/ww");
+        paramsMap.put("userToken", sharedPreferencesHelper.getSharedPreference("userToken","").toString());
+//        paramsMap.put("userToken","osczyXfMrTh0Swu/ifdm10sKqqCa5SB6YeLIUjpKwwizUWaWH+S3dJGzj4nLJQXY+9RSA+SinYq+\nnvZczArnErK9Pu+pV/ww");
+        paramsMap.put("startPage","1");
+        paramsMap.put("pageSize","10");
         AssetService assetService = RetrofitFactory.getInstance().getRetrofit().create(AssetService.class);
         retrofit2.Call<ApiResult<GetCardMyAssetsRespDto>> call = assetService.getMyCardMine(paramsMap);
         call.enqueue(new Callback<ApiResult<GetCardMyAssetsRespDto>>() {
@@ -237,7 +241,7 @@ public class BPCardPackageFragment extends BaseFragment {
             public void onResponse(Call<ApiResult<GetCardMyAssetsRespDto>> call, Response<ApiResult<GetCardMyAssetsRespDto>> response) {
                 ApiResult<GetCardMyAssetsRespDto> respDto = response.body();
                 if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
-                    mAdEmptyView.show(false);
+                    mCardMyAssetsEmptyView.show(false);
                     if (respDto.getData().getMyAssets().size() > 0) {
                         if (myAssetsRefreshFlag) {
                             myAssetsList = respDto.getData().getMyAssets();
@@ -262,7 +266,7 @@ public class BPCardPackageFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<GetCardMyAssetsRespDto>> call, Throwable t) {
-                mAdEmptyView.show(false);
+                mCardMyAssetsEmptyView.show(false);
                 if (getActivity() != null) {
                     Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
                 }
