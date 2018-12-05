@@ -14,8 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.adaptor.CardAdDatasAdapter;
 import com.bupocket.adaptor.CardMyAssetsAdapter;
@@ -23,7 +21,6 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.CardAdTypeEnum;
 import com.bupocket.enums.ExceptionEnum;
-import com.bupocket.enums.TokenTypeEnum;
 import com.bupocket.http.api.AssetService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -47,7 +44,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -185,11 +181,7 @@ public class BPCardPackageFragment extends BaseFragment {
                 if ("MINE".equals(activeTab)) {
                     return;
                 }
-                mCardContainerTabContentLl.removeAllViews();
-                activeTab = "MINE";
-                addTabsPages();
-                getMyCardAssetsDatas();
-                setActiveTab();
+                selectMineTab();
             }
         });
 
@@ -203,7 +195,6 @@ public class BPCardPackageFragment extends BaseFragment {
                 adType = CardAdTypeEnum.SELL.getCode();
                 activeTab = "BUY";
                 addTabsPages();
-//                getCardBuyAd();
                 getAdDatas();
                 setActiveTab();
             }
@@ -219,11 +210,18 @@ public class BPCardPackageFragment extends BaseFragment {
                 adType = CardAdTypeEnum.BUY.getCode();
                 activeTab = "SELL";
                 addTabsPages();
-//                getCardSellAd();
                 getAdDatas();
                 setActiveTab();
             }
         });
+    }
+
+    private void selectMineTab() {
+        mCardContainerTabContentLl.removeAllViews();
+        activeTab = "MINE";
+        addTabsPages();
+        getMyCardAssetsDatas();
+        setActiveTab();
     }
 
     // My assets part start  ++++++++
@@ -521,9 +519,10 @@ public class BPCardPackageFragment extends BaseFragment {
         addFlag = true;
 
         confirmOperationBtmSheet.setContentView(R.layout.card_ad_confirm_layout);
-        TextView mAdTitle = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmTitleTv);
+        TextView mAssetName = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmAssetNameTv);
         TextView mAdPrice = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmPriceTv);
         TextView mAdAssetId = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmAssetIdTv);
+        TextView mAdAssetIssuerName = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmAssetIssuerNameTv);
         final TextView mAdTotalQuantity = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmQuantityTv);
         final TextView mAdTotalQuantitySub = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmSubQuantityTv);
         final TextView mAdTotalQuantityAdd = confirmOperationBtmSheet.findViewById(R.id.cardAdConfirmAddQuantityTv);
@@ -536,12 +535,13 @@ public class BPCardPackageFragment extends BaseFragment {
         mAdTotalQuantitySub.setTextColor(getResources().getColor(R.color.app_txt_color_gray));
 
 //        fill detail
-        mAdTitle.setText(itemInfo.getAdvertTitle());
+        mAssetName.setText(itemInfo.getAssetName());
         String priceTxt = itemInfo.getPrice() + " " + itemInfo.getCoin() + " " + getString(R.string.card_package_card_ad_confirm_unit_txt);
         mAdPrice.setText(priceTxt);
         String assetIdTxt = getString(R.string.card_package_card_ad_confirm_asset_id_txt);
         assetIdTxt = String.format(assetIdTxt, itemInfo.getAssetCode());
         mAdAssetId.setText(assetIdTxt);
+        mAdAssetIssuerName.setText(itemInfo.getIssuer().getName());
         String feeTxt = getString(R.string.card_package_card_ad_sell_fee_txt);
         feeTxt = String.format(feeTxt, String.valueOf(Constants.CARD_TX_FEE)) + " " + itemInfo.getCoin();
         mAdSellFee.setText(feeTxt);
@@ -827,8 +827,7 @@ public class BPCardPackageFragment extends BaseFragment {
                     pwdConfirmDialog.dismiss();
                     txSendingTipDialog.dismiss();
                     confirmOperationBtmSheet.dismiss();
-                    refreshCardAdData();
-                    getAdDatas();
+                    selectMineTab();
                     Toast.makeText(getContext(),getString(R.string.card_package_card_ad_confirm_sell_success_txt),Toast.LENGTH_LONG).show();
                 } else if(ExceptionEnum.ADVERT_STOCK_QUANTITY_ERROR.getCode().equals(respDto.getErrCode())) {
                     txSendingTipDialog.dismiss();
@@ -868,8 +867,7 @@ public class BPCardPackageFragment extends BaseFragment {
                     pwdConfirmDialog.dismiss();
                     txSendingTipDialog.dismiss();
                     confirmOperationBtmSheet.dismiss();
-                    refreshCardAdData();
-                    getAdDatas();
+                    selectMineTab();
                     Toast.makeText(getContext(),getString(R.string.card_package_card_ad_confirm_buy_success_txt),Toast.LENGTH_LONG).show();
                 } else if(ExceptionEnum.ADVERT_STOCK_QUANTITY_ERROR.getCode().equals(respDto.getErrCode())) {
                     txSendingTipDialog.dismiss();
@@ -899,46 +897,4 @@ public class BPCardPackageFragment extends BaseFragment {
     private String getSkeyStr(){
         return sharedPreferencesHelper.getSharedPreference("skey","").toString();
     }
-
-//    private void getAvilableTokenBlance(final String tokenType) {
-//        loadGetBalanceTipDialog = new QMUITipDialog.Builder(getContext())
-//                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-//                .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
-//                .create();
-//        loadGetBalanceTipDialog.show();
-//        loadGetBalanceTipDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-//            @Override
-//            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-//
-//                if(event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                tokenBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
-//                if(!CommonUtil.isNull(tokenBalance)){
-//                    sharedPreferencesHelper.put("tokenBalance",tokenBalance);
-//                    if(TokenTypeEnum.BU.getCode().equals(tokenType)){
-//                        if(tokenBalance == null || Double.parseDouble(tokenBalance) < 0 || Double.parseDouble(tokenBalance) == 0){
-//                            availableTokenBalance = "0";
-//                        } else {
-//                            Double doubleAvailableTokenBalance = DecimalCalculate.sub(Double.parseDouble(tokenBalance),com.bupocket.common.Constants.RESERVE_AMOUNT);
-//                            if(doubleAvailableTokenBalance < 0){
-//                                availableTokenBalance = "0";
-//                            }else {
-//                                availableTokenBalance = CommonUtil.rvZeroAndDot(new BigDecimal(DecimalCalculate.sub(Double.parseDouble(tokenBalance),com.bupocket.common.Constants.RESERVE_AMOUNT)).setScale(Constants.BU_DECIMAL,BigDecimal.ROUND_HALF_UP).toPlainString());
-//                            }
-//                        }
-//                    }else{
-//                        availableTokenBalance = tokenBalance;
-//                    }
-//                }
-//                System.out.println("------------------------" + availableTokenBalance);
-//            }
-//        }).start();
-//    }
 }

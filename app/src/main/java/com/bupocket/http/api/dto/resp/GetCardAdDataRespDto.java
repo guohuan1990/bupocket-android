@@ -150,7 +150,25 @@ public class GetCardAdDataRespDto {
         private String coin;
         private String stockQuantity;
         private String assetCode;
+        private String assetName;
+        private String publishAddress;
         private IssuerBean issuer;
+
+        public String getAssetName() {
+            return assetName;
+        }
+
+        public void setAssetName(String assetName) {
+            this.assetName = assetName;
+        }
+
+        public String getPublishAddress() {
+            return publishAddress;
+        }
+
+        public void setPublishAddress(String publishAddress) {
+            this.publishAddress = publishAddress;
+        }
 
         public String getAssetCode() {
             return assetCode;
