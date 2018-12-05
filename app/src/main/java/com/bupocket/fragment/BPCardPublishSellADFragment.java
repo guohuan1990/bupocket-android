@@ -235,12 +235,14 @@ public class BPCardPublishSellADFragment extends BaseFragment {
                                         if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                                             publishTipDialog.dismiss();
                                             Toast.makeText(getActivity(), R.string.card_package_publish_success_message_txt, Toast.LENGTH_SHORT).show();
-                                            BPCardDetailsFragment bpCardDetailsFragment = new BPCardDetailsFragment();
+                                            popBackStack();
+                                            /*BPCardDetailsFragment bpCardDetailsFragment = new BPCardDetailsFragment();
                                             Bundle argz = new Bundle();
                                             argz.putString("issuerAddress", issuerAddress);
                                             argz.putString("assetCode", assetCode);
+                                            Toast.makeText(getContext(),getString(R.string.card_package_publish_success_message_txt),Toast.LENGTH_LONG).show();
                                             bpCardDetailsFragment.setArguments(argz);
-                                            startFragmentAndDestroyCurrent(bpCardDetailsFragment);
+                                            startFragmentAndDestroyCurrent(bpCardDetailsFragment);*/
                                         }else if(ExceptionEnum.USER_TOKEN_ERR.getCode().equals(respDto.getErrCode())){
                                             publishTipDialog.dismiss();
                                             Toast.makeText(getContext(),getString(R.string.card_package_user_token_error_message_txt),Toast.LENGTH_LONG).show();
@@ -254,6 +256,7 @@ public class BPCardPublishSellADFragment extends BaseFragment {
                                     @Override
                                     public void onFailure(Call<ApiResult<PublishAdRespDto>> call, Throwable t) {
                                         showPwdQmuiDialog.dismiss();
+                                        publishTipDialog.dismiss();
                                         Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
                                         t.printStackTrace();
                                     }
@@ -286,6 +289,10 @@ public class BPCardPublishSellADFragment extends BaseFragment {
         }
         if(Integer.valueOf(sellAmount) > Integer.valueOf(numberAvailable)){
             Toast.makeText(getActivity(), R.string.card_package_sell_amount_not_enough_message_txt, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(Integer.valueOf(sellAmount) <= 0){
+            Toast.makeText(getActivity(), R.string.err_canout_zero, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
