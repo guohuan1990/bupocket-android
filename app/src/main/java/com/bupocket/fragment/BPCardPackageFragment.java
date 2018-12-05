@@ -33,6 +33,7 @@ import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletSignData;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -128,7 +129,12 @@ public class BPCardPackageFragment extends BaseFragment {
 
     private void init() {
         initData();
+        initUI();
         setListeners();
+    }
+
+    private void initUI() {
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
     }
 
     private void initData() {
