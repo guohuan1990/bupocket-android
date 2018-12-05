@@ -54,7 +54,7 @@ public class CardMyAssetsAdapter extends BaseAdapter {
         }
         if(myAssetsBeanList.size() != 0){
             GetCardMyAssetsRespDto.MyAssetsBean myAssetsBean = myAssetsBeanList.get(position);
-            holder.myCardIssuerNameTv.setText(myAssetsBean.getIssuer().getName());
+            holder.myCardIssuerNameTv.setText(myAssetsBean.getIssuer().getAbbreviation());
             holder.myCardNameTv.setText(myAssetsBean.getAssetInfo().getName());
             holder.myCardAmountTv.setText(String.format(convertView.getResources().getString(R.string.card_package_mine_card_amount_txt),myAssetsBean.getAssetInfo().getMyAssetQty()));
             if(CommonUtil.isNull(myAssetsBean.getIssuer().getLogo())){

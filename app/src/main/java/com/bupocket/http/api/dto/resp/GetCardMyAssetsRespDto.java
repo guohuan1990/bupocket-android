@@ -186,6 +186,15 @@ public class GetCardMyAssetsRespDto {
             private String name;
             private String address;
             private String logo;
+            private String abbreviation;
+
+            public String getAbbreviation() {
+                return abbreviation;
+            }
+
+            public void setAbbreviation(String abbreviation) {
+                this.abbreviation = abbreviation;
+            }
 
             public static IssuerBean objectFromData(String str) {
 
