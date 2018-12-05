@@ -393,11 +393,20 @@ public class BPCardPackageFragment extends BaseFragment {
             @Override
             public void onResponse(retrofit2.Call<ApiResult<GetCardAdDataRespDto>> call, Response<ApiResult<GetCardAdDataRespDto>> response) {
                 ApiResult<GetCardAdDataRespDto> respDto = response.body();
+                if (respDto == null) {
+                    return;
+                }
                 if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                     if (cardAdRefreshFlag) {
                         cardAdList = respDto.getData().getAdvertList();
                     } else {
                         cardAdList.addAll(respDto.getData().getAdvertList());
+                    }
+                    if (cardAdList.size() > 0) {
+                        loadAdDataAdapter();
+                        showOrHideEmptyPage(false);
+                    } else {
+                        showOrHideEmptyPage(true);
                     }
                     cardAdPage = respDto.getData().getPage();
                     if (cardAdPage.isNextFlag()) {
@@ -407,6 +416,7 @@ public class BPCardPackageFragment extends BaseFragment {
                     }
                     loadAdDataAdapter();
                 } else {
+                    showOrHideEmptyPage(true);
                     Toast.makeText(getContext(),getString(R.string.err_code_txt) +
                             respDto.getErrCode(),Toast.LENGTH_LONG).show();
                 }
@@ -414,6 +424,7 @@ public class BPCardPackageFragment extends BaseFragment {
 
             @Override
             public void onFailure(retrofit2.Call<ApiResult<GetCardAdDataRespDto>> call, Throwable t) {
+                showOrHideEmptyPage(true);
                 if (getActivity() != null) {
                     Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_LONG).show();
                 }

@@ -91,7 +91,7 @@ public class CardAdDatasAdapter extends BaseAdapter {
             adOptBtnDrawable.setBgData(ColorStateList.valueOf(0xFFFF6E3C));
             adOptBtnDrawable.setStrokeData(1, ColorStateList.valueOf(0xFFFF6E3C));
             stockStr = convertView.getResources().getString(R.string.card_package_sell_item_stock_txt);
-            stockStr = String.format(stockStr, Integer.parseInt(itemData.getStockQuantity()));
+            stockStr = String.format(stockStr, itemData.getStockQuantity());
 
         } else if (CardAdTypeEnum.SELL.getCode().equals(adType)) {
             holder.mCardAdBuyOrSellBtn.setText(R.string.card_package_buy_btn_txt);
@@ -99,7 +99,7 @@ public class CardAdDatasAdapter extends BaseAdapter {
             adOptBtnDrawable.setBgData(ColorStateList.valueOf(0xFF02CA71));
             adOptBtnDrawable.setStrokeData(1, ColorStateList.valueOf(0xFF02CA71));
             stockStr = convertView.getResources().getString(R.string.card_package_buy_item_stock_txt);
-            stockStr = String.format(stockStr, Integer.parseInt(itemData.getStockQuantity()));
+            stockStr = String.format(stockStr, itemData.getStockQuantity());
         }
         holder.mCardAdStockQuantityTv.setText(stockStr);
         holder.mCardAdIssuerNameTv.setText(itemData.getIssuer().getName());
