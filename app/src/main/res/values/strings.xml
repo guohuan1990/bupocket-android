@@ -383,4 +383,5 @@
     <string name="err_ad_price_refresh">广告价格发生变化</string>
     <string name="err_cannot_tx_with_self">不能下单自己的广告</string>
     <string name="err_cannot_order">交易失败</string>
+    <string name="err_canout_zero">出售量应大于0</string>
 </resources>
