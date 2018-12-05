@@ -10,12 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/app_color_white_background"
+        android:layout_marginTop="?attr/qmui_topbar_height"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/qmui_topbar_height"
             android:background="@color/app_color_white_background"
             android:orientation="vertical">
 
