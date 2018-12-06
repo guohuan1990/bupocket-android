@@ -137,6 +137,7 @@ public class BPCardPackageFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE)== BumoNodeEnum.TEST.getCode()){
             activeTab = "MINE";
             cardAdPageStart = 1;
@@ -148,11 +149,6 @@ public class BPCardPackageFragment extends BaseFragment {
 
     private void init() {
         initData();
-        initUI();
-    }
-
-    private void initUI() {
-        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
     }
 
     private void initData() {

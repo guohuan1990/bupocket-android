@@ -68,6 +68,12 @@ public class BPProfileFragment extends BaseFragment{
         return root;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
+    }
+
     private void init() {
         initData();
         initUI();
@@ -75,7 +81,6 @@ public class BPProfileFragment extends BaseFragment{
     }
 
     private void initUI() {
-        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE)== BumoNodeEnum.TEST.getCode()){
             mCurrentTestNetTipsTv.setText(getString(R.string.current_test_message_txt));
             mMeLinearLayout.setBackgroundResource(R.mipmap.ic_me_header_bg_test_net);

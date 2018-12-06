@@ -109,6 +109,12 @@ public class BPCardDetailsFragment extends BaseFragment {
         return root;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
+    }
+
     private void init() {
         initData();
         initUI();
@@ -218,7 +224,6 @@ public class BPCardDetailsFragment extends BaseFragment {
     }
 
     private void initUI() {
-        QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
         initTopBar();
     }
 
