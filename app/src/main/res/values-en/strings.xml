@@ -320,10 +320,10 @@
     <string name="backup_immediately_txt">Back up now</string>
 
     <string name="number_remaining_txt">Remaining amount</string>
-    <string name="gaving_btn_txt">Transfer</string>
-    <string name="entry_order_btn_txt">Post an order to sell</string>
-    <string name="my_sell_list_title_txt">My orders</string>
-    <string name="purchasing_information_title_txt">Purchase info</string>
+    <string name="gaving_btn_txt">Send Coupon</string>
+    <string name="entry_order_btn_txt">Sell Coupon</string>
+    <string name="my_sell_list_title_txt">My Sales</string>
+    <string name="purchasing_information_title_txt">Buyer Requests</string>
     <string name="sold_txt">Sold</string>
     <string name="i_ask_purchase_txt">I want to purchase</string>
 
@@ -333,8 +333,8 @@
     <string name="card_package_tab_sell">Sell</string>
     <string name="card_package_buy_item_stock_txt">Remaining amount %1$s</string>
     <string name="card_package_sell_item_stock_txt">Amount %1$s</string>
-    <string name="card_package_buy_btn_txt">Purchase now</string>
-    <string name="card_package_sell_btn_txt">Sell now</string>
+    <string name="card_package_buy_btn_txt">Buy Now</string>
+    <string name="card_package_sell_btn_txt">Sell Now</string>
     <string name="card_package_mine_card_amount_txt">Amount: %1$s</string>
     <string name="card_package_card_ad_buy_amount_txt">Amount to purchase: </string>
     <string name="card_package_card_ad_sell_amount_txt">Amount to sell: </string>
