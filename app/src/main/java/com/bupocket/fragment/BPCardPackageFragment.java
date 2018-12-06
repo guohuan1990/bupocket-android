@@ -19,6 +19,7 @@ import com.bupocket.adaptor.CardAdDatasAdapter;
 import com.bupocket.adaptor.CardMyAssetsAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.CardAdTypeEnum;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.AssetService;
@@ -122,19 +123,26 @@ public class BPCardPackageFragment extends BaseFragment {
 
     @Override
     protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_card_package, null);
-        ButterKnife.bind(this, root);
-        init();
-        return root;
+        if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE)== BumoNodeEnum.MAIN.getCode()){
+            View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_under_construction, null);
+            return root;
+        }else {
+            View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_card_package, null);
+            ButterKnife.bind(this, root);
+            init();
+            return root;
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        activeTab = "MINE";
-        cardAdPageStart = 1;
-        cardAdPageSize = "10";
-        setListeners();
+        if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE)== BumoNodeEnum.TEST.getCode()){
+            activeTab = "MINE";
+            cardAdPageStart = 1;
+            cardAdPageSize = "10";
+            setListeners();
+        }
     }
 
 

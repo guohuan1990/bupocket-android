@@ -42,6 +42,8 @@ public class BPAssetsAddFragment extends BaseFragment {
     DrawableEditText mSearchTokenEt;
 
     SearchTokenAdapter searchTokenAdapter;
+    private String currentAccAddress;
+    protected SharedPreferencesHelper sharedPreferencesHelper;
 
     @Override
     protected View onCreateView() {
@@ -49,7 +51,8 @@ public class BPAssetsAddFragment extends BaseFragment {
         ButterKnife.bind(this, root);
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
-
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+        currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
         mSearchTokenEt.setOnDrawableClickListener(new DrawableEditText.OnDrawableClickListener() {
             @Override
             public void onDrawableClick() {
@@ -78,6 +81,7 @@ public class BPAssetsAddFragment extends BaseFragment {
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         Map<String, Object> parmasMap = new HashMap<>();
         parmasMap.put("assetCode",assetCode);
+        parmasMap.put("address",currentAccAddress);
         parmasMap.put("startPage", 1);
         parmasMap.put("pageSize", 100);
         Call<ApiResult<SearchTokenRespDto>> call = tokenService.queryTokens(parmasMap);
