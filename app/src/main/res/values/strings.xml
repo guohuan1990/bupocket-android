@@ -325,7 +325,9 @@
     <string name="purchasing_information_title_txt">求购信息</string>
     <string name="sold_txt">已售</string>
     <string name="i_ask_purchase_txt">我要求购</string>
-    <string name="undeveloped_function_message_txt">该功能即将开放，尽请期待</string>
+    <string name="undeveloped_function_message_txt">该功能即将开放，敬请期待</string>
+    <string name="developing_tips_txt">更多功能正在开发中</string>
+    <string name="please_wait_txt">敬请期待...</string>
 
     <string name="err_code_txt">错误码</string>
     <string name="card_package_tab_mine">我的</string>
@@ -381,7 +383,7 @@
     <string name="user_confirm_password_wallet_submit_txt">完成</string>
 
     <string name="err_account_bu_balance_not_enough">账户BU余额不足</string>
-    <string name="err_account_asset_balance_not_enough">账户资产余额不足</string>
+    <string name="err_account_asset_balance_not_enough">剩余数量不足</string>
     <string name="err_ad_not_exist">广告不存在</string>
     <string name="err_ad_stock_quantity_not_enough">广告库存不足</string>
     <string name="err_ad_price_refresh">广告价格发生变化</string>

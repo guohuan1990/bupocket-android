@@ -377,4 +377,18 @@
     <string name="user_confirm_password_wallet_forget_password_txt">Forget password</string>
     <string name="user_confirm_password_wallet_recover_identity_txt">Recover identity</string>
     <string name="user_confirm_password_wallet_submit_txt">Completed</string>
+    <string name="undeveloped_function_message_txt">This function will be available soon</string>
+    <string name="card_package_card_ad_confirm_asset_issuer_name_txt">Token issuer</string>
+    <string name="card_package_card_ad_item_issuer_name">Provide</string>
+    <string name="card_package_pwd_dialog_message_txt">Please enter the identity password to confirm the transaction</string>
+    <string name="err_account_bu_balance_not_enough">Insufficient BU balance</string>
+    <string name="err_account_asset_balance_not_enough">The remaining tokens are insufficient</string>
+    <string name="err_ad_not_exist">The offer does not exist</string>
+    <string name="err_ad_stock_quantity_not_enough">The inventory of offers is insufficient</string>
+    <string name="err_ad_price_refresh">The price of the offer has changed</string>
+    <string name="err_cannot_tx_with_self">You cannot place an order to the offer posted by yourself</string>
+    <string name="err_cannot_order">Transaction failed</string>
+    <string name="err_canout_zero">The amount to sell should be larger than 0</string>
+    <string name="developing_tips_txt">More functions are in progress</string>
+    <string name="please_wait_txt">Stay tuned for more...</string>
 </resources>
