@@ -99,7 +99,7 @@ public class BPCardPackageFragment extends BaseFragment {
     private GetCardMyAssetsRespDto getCardMyAssetsRespDto;
     private CardMyAssetsAdapter cardMyAssetsAdapter;
     private GetCardMyAssetsRespDto.PageBean myAssetsPage;
-    private List<GetCardMyAssetsRespDto.MyAssetsBean> myAssetsList;
+    private List<GetCardMyAssetsRespDto.MyAssetsBean> myAssetsList = new ArrayList<>();
     private Integer myAssetsPageStart = 1;
     private String myAssetsPageSize = "10";
     private boolean myAssetsRefreshFlag = true;
@@ -263,8 +263,8 @@ public class BPCardPackageFragment extends BaseFragment {
                     return;
                 }
                 if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
-                    getCardMyAssetsRespDto = respDto.getData();
                     mCardMyAssetsEmptyView.show(false);
+                    getCardMyAssetsRespDto = respDto.getData();
                     if (respDto.getData().getMyAssets().size() > 0) {
                         if (myAssetsRefreshFlag) {
                             myAssetsList = respDto.getData().getMyAssets();
@@ -303,7 +303,7 @@ public class BPCardPackageFragment extends BaseFragment {
 
     private void loadCardMyAssetsAdapter() {
         cardMyAssetsAdapter = new CardMyAssetsAdapter(myAssetsList,getContext());
-        cardMyAssetsAdapter.setPage(getCardMyAssetsRespDto.getPage());
+        cardMyAssetsAdapter.setPage(myAssetsPage);
         mCardMyAssetsLv.setAdapter(cardMyAssetsAdapter);
         mCardMyAssetsLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -357,14 +357,14 @@ public class BPCardPackageFragment extends BaseFragment {
         myAssetsRefreshFlag = true;
         myAssetsPageStart = 1;
         myAssetsList.clear();
-        loadAdDataAdapter();
+        loadCardMyAssetsAdapter();
     }
 
     private void loadMoreMyAssetsData(){
         myAssetsPageStart ++;
         myAssetsRefreshFlag = false;
         getMyCardAssetsDatas();
-        loadAdDataAdapter();
+        loadCardMyAssetsAdapter();
     }
     // My assets part end  --------
 
