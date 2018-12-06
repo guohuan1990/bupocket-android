@@ -112,6 +112,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets_home, null);
         ButterKnife.bind(this, root);
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initData();
         initWalletInfoView();
         setListeners();
