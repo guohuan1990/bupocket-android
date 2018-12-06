@@ -365,7 +365,7 @@
     <string name="card_package_buy_request_title_txt">Buy</string>
     <string name="card_package_search_hint">Please input the coupon name</string>
     <string name="card_package_sell_amount_not_enough_message_txt">Your available amount is insufficient</string>
-    <string name="card_package_title_error_message_txt">The title must be between 2-15 characters</string>
+    <string name="card_package_title_error_message_txt">The title must be between 2–30 characters</string>
     <string name="card_package_publish_success_message_txt">Published successfully</string>
     <string name="card_package_user_token_error_message_txt">Your identity status has expired</string>
 

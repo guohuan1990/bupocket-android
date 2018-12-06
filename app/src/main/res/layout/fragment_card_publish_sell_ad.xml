@@ -131,7 +131,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@null"
                                 android:hint="@string/card_package_ad_title_hint_txt"
-                                android:maxLines="1"
+                                android:imeOptions="actionDone"
                                 android:textColor="@color/app_color_black"
                                 android:textSize="16sp" />
 
@@ -186,7 +186,7 @@
                             android:background="@null"
                             android:hint="@string/card_package_unit_price_hint_txt"
                             android:inputType="numberDecimal"
-                            android:maxLines="1"
+                            android:imeOptions="actionDone"
                             android:textColor="@color/app_color_black"
                             android:textSize="16sp" />
 
@@ -264,7 +264,7 @@
                             android:background="@null"
                             android:hint="@string/card_package_sell_amount_hint_txt"
                             android:inputType="number"
-                            android:maxLines="1"
+                            android:imeOptions="actionDone"
                             android:textColor="@color/app_color_black"
                             android:textSize="16sp" />
 

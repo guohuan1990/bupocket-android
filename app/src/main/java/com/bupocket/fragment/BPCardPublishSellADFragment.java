@@ -78,6 +78,8 @@ public class BPCardPublishSellADFragment extends BaseFragment {
     private String publishADTxBlob;
     private String publishADTxHash;
     private String publishADBlobId;
+    private int minTitleLength = 2;
+    private int maxTitleLength = 30;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -104,6 +106,13 @@ public class BPCardPublishSellADFragment extends BaseFragment {
                 if(validateData()){
                     showPasswordConfirmDialog();
                 }
+            }
+        });
+        mPublishSellADEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                mPublishSellADEt.clearFocus();
+                return true;
             }
         });
     }
@@ -285,7 +294,7 @@ public class BPCardPublishSellADFragment extends BaseFragment {
 
     private boolean validateData() {
         String sellAmount = mSellAmountEt.getText().toString();
-        if(mPublishSellADEt.getText().length() < 2 || mPublishSellADEt.getText().length() > 15){
+        if(mPublishSellADEt.getText().length() < minTitleLength || mPublishSellADEt.getText().length() > maxTitleLength){
             Toast.makeText(getActivity(), R.string.card_package_title_error_message_txt, Toast.LENGTH_SHORT).show();
             return false;
         }
