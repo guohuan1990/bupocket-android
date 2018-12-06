@@ -44,6 +44,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,7 +114,7 @@ public class BPCardPackageFragment extends BaseFragment {
     private GetCardAdDataRespDto getCardAdDataRespDto;
     private CardAdDatasAdapter cardAdDatasAdapter;
     private GetCardAdDataRespDto.PageBean cardAdPage;
-    private List<GetCardAdDataRespDto.AdvertListBean> cardAdList;
+    private List<GetCardAdDataRespDto.AdvertListBean> cardAdList = new ArrayList<>();
     private Integer cardAdPageStart = 1;
     private String cardAdPageSize = "50";
     private boolean cardAdRefreshFlag = true;
@@ -127,10 +128,19 @@ public class BPCardPackageFragment extends BaseFragment {
         return root;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        activeTab = "MINE";
+        cardAdPageStart = 1;
+        cardAdPageSize = "10";
+        setListeners();
+    }
+
+
     private void init() {
         initData();
         initUI();
-        setListeners();
     }
 
     private void initUI() {
@@ -194,8 +204,14 @@ public class BPCardPackageFragment extends BaseFragment {
                 mCardContainerTabContentLl.removeAllViews();
                 adType = CardAdTypeEnum.SELL.getCode();
                 activeTab = "BUY";
+                cardAdPageStart = 1;
+                cardAdList.clear();
                 addTabsPages();
-                getAdDatas();
+                loadAdDataAdapter();
+                mAdRefreshLayout.setNoMoreData(false);
+                showOrHideEmptyPage(false);
+                mAdEmptyView.show(true);
+                getAdDatas(activeTab);
                 setActiveTab();
             }
         });
@@ -209,8 +225,14 @@ public class BPCardPackageFragment extends BaseFragment {
                 mCardContainerTabContentLl.removeAllViews();
                 adType = CardAdTypeEnum.BUY.getCode();
                 activeTab = "SELL";
+                cardAdPageStart = 1;
+                cardAdList.clear();
                 addTabsPages();
-                getAdDatas();
+                loadAdDataAdapter();
+                mAdRefreshLayout.setNoMoreData(false);
+                showOrHideEmptyPage(false);
+                mAdEmptyView.show(true);
+                getAdDatas(activeTab);
                 setActiveTab();
             }
         });
@@ -347,7 +369,7 @@ public class BPCardPackageFragment extends BaseFragment {
     // My assets part end  --------
 
     // AD part start ++++++++
-    private void getAdDatas() {
+    private void getAdDatas(final String currentTab) {
         mAdEmptyView.show(true);
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("advertType", adType.toString());
@@ -365,24 +387,30 @@ public class BPCardPackageFragment extends BaseFragment {
                     return;
                 }
                 if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
-                    if (cardAdRefreshFlag) {
-                        cardAdList = respDto.getData().getAdvertList();
-                    } else {
-                        cardAdList.addAll(respDto.getData().getAdvertList());
-                    }
-                    if (cardAdList.size() > 0) {
+                    if (currentTab.equals(activeTab)) {
+
+
+                        if (cardAdRefreshFlag) {
+                            cardAdList = respDto.getData().getAdvertList();
+                        } else {
+                            cardAdList.addAll(respDto.getData().getAdvertList());
+                        }
+                        if (cardAdList.size() > 0) {
+                            loadAdDataAdapter();
+                            showOrHideEmptyPage(false);
+                        } else {
+                            showOrHideEmptyPage(true);
+                        }
+                        cardAdPage = respDto.getData().getPage();
+                        if (cardAdPage.isNextFlag()) {
+                            mAdRefreshLayout.setEnableLoadMore(true);
+                        } else {
+                            mAdRefreshLayout.setEnableLoadMore(false);
+                        }
                         loadAdDataAdapter();
-                        showOrHideEmptyPage(false);
                     } else {
-                        showOrHideEmptyPage(true);
+                        cardAdList.clear();
                     }
-                    cardAdPage = respDto.getData().getPage();
-                    if (cardAdPage.isNextFlag()) {
-                        mAdRefreshLayout.setEnableLoadMore(true);
-                    } else {
-                        mAdRefreshLayout.setEnableLoadMore(false);
-                    }
-                    loadAdDataAdapter();
                 } else {
                     showOrHideEmptyPage(false);
                     mAdEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
@@ -433,7 +461,7 @@ public class BPCardPackageFragment extends BaseFragment {
                         refreshCardAdData();
                         mAdRefreshLayout.finishRefresh();
                         mAdRefreshLayout.setNoMoreData(false);
-                        getAdDatas();
+                        getAdDatas(activeTab);
                     }
                 }, 500);
 
@@ -636,6 +664,8 @@ public class BPCardPackageFragment extends BaseFragment {
 
         QMUIRoundButton mPasswordConfirmBtn = pwdConfirmDialog.findViewById(R.id.passwordConfirmBtn);
         ImageView mPasswordConfirmCloseBtn = pwdConfirmDialog.findViewById(R.id.passwordConfirmCloseBtn);
+        TextView mPasswordConfirmNotice = pwdConfirmDialog.findViewById(R.id.passwordConfirmNotice);
+        mPasswordConfirmNotice.setText(R.string.card_package_pwd_dialog_message_txt);
 
         mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
