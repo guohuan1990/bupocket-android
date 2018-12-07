@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:textSize="24sp"
-                android:textColor="#ffffff"
+                android:textColor="@color/app_btn_color_white"
                 android:text="@string/wallet_create_txt"/>
         <LinearLayout
                 android:layout_width="match_parent"

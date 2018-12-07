@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,41 +20,43 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:textSize="16sp"
             android:layout_marginHorizontal="12.5dp"
-            android:text="@string/help_title_txt"/>
-        
+            android:layout_marginTop="35dp"
+            android:text="@string/help_title_txt"
+            android:textSize="16sp" />
+
         <EditText
             android:id="@+id/feedbackContentET"
             android:layout_width="match_parent"
             android:layout_height="125.5dp"
-            android:hint="@string/help_hint"
-            android:gravity="left|top"
-            android:inputType="" android:textSize="15sp"
-            android:layout_marginTop="15dp"
-            android:padding="10dp"
             android:layout_marginHorizontal="12.5dp"
-            android:background="@color/help_feedback_et_background_color" />
-        
+            android:layout_marginTop="15dp"
+            android:background="@color/help_feedback_et_background_color"
+            android:gravity="left|top"
+            android:hint="@string/help_hint"
+            android:inputType=""
+            android:padding="10dp"
+            android:textSize="15sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginTop="30dp"
             android:layout_marginHorizontal="12.5dp"
-            android:text="@string/contact_title_txt"/>
-        
+            android:layout_marginTop="30dp"
+            android:text="@string/contact_title_txt"
+            android:textSize="16sp" />
+
         <EditText
             android:id="@+id/contactET"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:hint="@string/contact_hint"
-            android:inputType="" android:textSize="15sp"
-            android:layout_marginTop="15dp"
             android:layout_marginHorizontal="12.5dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/help_feedback_et_background_color"
+            android:hint="@string/contact_hint"
+            android:inputType=""
             android:paddingHorizontal="10dp"
-            android:background="@color/help_feedback_et_background_color" />
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,9 +85,10 @@
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
+
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"/>
+        android:fitsSystemWindows="true" />
 </android.support.design.widget.CoordinatorLayout>

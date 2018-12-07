@@ -65,7 +65,7 @@ public class BPSettingFragment extends BaseFragment {
         switchNode.getTextView().setTextColor(getResources().getColor(R.color.app_txt_color_gray_2));
         switchNode.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
         switchNode.setImageDrawable(getResources().getDrawable(R.mipmap.icon_switch_node));
-        // get bumoNode and set checked
+        // get bumoNode and set checked change listener
         if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()){
             switchNode.getSwitch().setChecked(true);
         }else {

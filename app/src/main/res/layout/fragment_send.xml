@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/qmui_config_color_white">
 
     <ScrollView
@@ -35,7 +35,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFF"
+                    android:background="@color/app_color_white"
                     android:orientation="vertical"
                     android:padding="15dp">
 
@@ -53,14 +53,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/send_address_title"
-                            android:textColor="#333333"
+                            android:textColor="@color/app_color_black"
                             android:textSize="16sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="*"
-                            android:textColor="#ff0000" />
+                            android:textColor="@color/app_txt_color_red_2" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -83,7 +83,7 @@
                                 android:background="@null"
                                 android:hint="@string/send_input_receiver_address_hint"
                                 android:inputType=""
-                                android:textColor="#333333"
+                                android:textColor="@color/app_color_black"
                                 android:textSize="14sp" />
 
                         </LinearLayout>
@@ -109,14 +109,13 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0.5dip"
                         android:layout_marginTop="8dp"
-                        android:background="#E3E3E3" />
-                    />
+                        android:background="@color/app_txt_color_gray_3" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
+                    android:background="@color/app_color_white"
                     android:orientation="vertical"
                     android:padding="15dp">
 
@@ -135,14 +134,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/send_amount_title"
-                            android:textColor="#333333"
+                            android:textColor="@color/app_color_black"
                             android:textSize="16sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="*"
-                            android:textColor="#ff0000" />
+                            android:textColor="@color/app_txt_color_red_2" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -156,20 +155,22 @@
                                 android:text="@string/send_available_balance_txt" />
 
 
-
                         </LinearLayout>
 
                     </LinearLayout>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:layout_gravity="end"
+                        android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true">
+
                             <TextView
                                 android:id="@+id/accountAvailableBalanceTv"
                                 android:layout_width="wrap_content"
@@ -178,11 +179,11 @@
                                 android:textColor="@color/app_color_font_main" />
 
                             <TextView
-                                    android:id="@+id/tokenCodeTv"
+                                android:id="@+id/tokenCodeTv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="5dp"
                                 android:paddingStart="5dp"
+                                android:paddingLeft="5dp"
                                 android:text="BU"
                                 android:textColor="@color/app_color_font_main" />
                         </LinearLayout>
@@ -200,7 +201,7 @@
                             android:background="@null"
                             android:hint="@string/send_hint_txt1"
                             android:inputType=""
-                            android:textColor="#333333"
+                            android:textColor="@color/app_color_black"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -209,14 +210,13 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0.5dip"
                         android:layout_marginTop="8dp"
-                        android:background="#E3E3E3" />
-                    />
+                        android:background="@color/app_txt_color_gray_3" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
+                    android:background="@color/app_color_white"
                     android:orientation="vertical"
                     android:padding="15dp">
 
@@ -234,7 +234,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/send_note_title"
-                            android:textColor="#333333"
+                            android:textColor="@color/app_color_black"
                             android:textSize="16sp" />
                     </LinearLayout>
 
@@ -250,7 +250,7 @@
                             android:background="@null"
                             android:hint="@string/send_hint_txt2"
                             android:inputType=""
-                            android:textColor="#333333"
+                            android:textColor="@color/app_color_black"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -259,14 +259,13 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0.5dip"
                         android:layout_marginTop="8dp"
-                        android:background="#E3E3E3" />
-                    />
+                        android:background="@color/app_txt_color_gray_3" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
+                    android:background="@color/app_color_white"
                     android:orientation="vertical"
                     android:padding="15dp">
 
@@ -284,14 +283,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/send_fee_title"
-                            android:textColor="#333333"
+                            android:textColor="@color/app_color_black"
                             android:textSize="16sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="*"
-                            android:textColor="#ff0000" />
+                            android:textColor="@color/app_txt_color_red_2" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -307,7 +306,7 @@
                             android:hint="@string/send_hint_txt3"
                             android:inputType=""
                             android:text="0.01"
-                            android:textColor="#333333"
+                            android:textColor="@color/app_color_black"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -316,8 +315,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0.5dip"
                         android:layout_marginTop="8dp"
-                        android:background="#E3E3E3" />
-                    />
+                        android:background="@color/app_txt_color_gray_3" />
                 </LinearLayout>
             </LinearLayout>
 

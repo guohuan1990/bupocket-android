@@ -1,8 +1,10 @@
 package com.bupocket.fragment;
 
-import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -11,23 +13,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bupocket.BPApplication;
-import com.bupocket.BPMainActivity;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.HiddenFunctionStatusEnum;
-import com.bupocket.fragment.home.HomeFragment;
-import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.utils.SocketUtil;
 import com.bupocket.wallet.Wallet;
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import org.bitcoinj.crypto.MnemonicCode;
@@ -38,6 +38,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.bupocket.R.string.user_info_logout_notice;
 
 public class BPUserInfoFragment extends BaseFragment {
@@ -59,7 +60,7 @@ public class BPUserInfoFragment extends BaseFragment {
     private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private List<String> mnemonicCodeList;
-
+    private QMUIPopup identityIdExplainPopup;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_user_info, null);
@@ -159,18 +160,36 @@ public class BPUserInfoFragment extends BaseFragment {
         });
 
         mTipsIv.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
-                new QMUIDialog.MessageDialogBuilder(getActivity())
-                        .setMessage(getString(R.string.identity_id_explain_txt))
-                        .addAction(getString(R.string.i_knew_btn_txt), new QMUIDialogAction.ActionListener() {
-                            @Override
-                            public void onClick(QMUIDialog dialog, int index) {
-                                dialog.dismiss();
-                            }
-                        }).setCanceledOnTouchOutside(false).create().show();
+//                initEasyPopup();
+                initPopup();
+                identityIdExplainPopup.setAnimStyle(QMUIPopup.ANIM_GROW_FROM_CENTER);
+                identityIdExplainPopup.setPreferredDirection(QMUIPopup.DIRECTION_BOTTOM);
+                identityIdExplainPopup.show(v);
+                ImageView arrowUp = identityIdExplainPopup.getDecorView().findViewById(R.id.arrow_up);
+                arrowUp.setImageDrawable(getResources().getDrawable(R.mipmap.triangle));
             }
         });
+    }
+
+    private void initPopup() {
+        if (identityIdExplainPopup == null) {
+            identityIdExplainPopup = new QMUIPopup(getContext(), QMUIPopup.DIRECTION_NONE);
+            TextView textView = new TextView(getContext());
+            textView.setLayoutParams(identityIdExplainPopup.generateLayoutParam(
+                    QMUIDisplayHelper.dp2px(getContext(), 250),
+                    WRAP_CONTENT
+            ));
+            textView.setLineSpacing(QMUIDisplayHelper.dp2px(getContext(), 4), 1.0f);
+            int padding = QMUIDisplayHelper.dp2px(getContext(), 20);
+            textView.setPadding(padding, padding, padding, padding);
+            textView.setText(getString(R.string.identity_id_explain_txt));
+            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_white));
+            textView.setBackgroundColor(getResources().getColor(R.color.popup_background_color));
+            identityIdExplainPopup.setContentView(textView);
+        }
     }
 
     private void go2BPCreateWalletShowMneonicCodeFragment(){
@@ -225,9 +244,8 @@ public class BPUserInfoFragment extends BaseFragment {
         QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
         ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
         TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
-        TextView mPpasswordConfirmTitle = qmuiDialog.findViewById(R.id.passwordConfirmTitle);
         mPasswordConfirmNotice.setText(R.string.user_info_logout_warning);
-        mPpasswordConfirmTitle.setText(R.string.common_dialog_input_pwd);
+        mPasswordConfirmNotice.setTextColor(getResources().getColor(R.color.qmui_config_color_red));
 
         mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
             @Override

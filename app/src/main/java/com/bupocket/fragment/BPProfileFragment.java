@@ -48,9 +48,11 @@ public class BPProfileFragment extends BaseFragment{
     TextView mCurrentTestNetTipsTv;
     @BindView(R.id.meLinearLayout)
     LinearLayout mMeLinearLayout;
+    @BindView(R.id.versionRL)
+    RelativeLayout mVersionRl;
 
-    final static int CLICKCOUNTS = 5;
-    final static long DURATION = 3 * 1000;
+    private final static int CLICKCOUNTS = 5;
+    private final static long DURATION = 2 * 1000;
 
     @Override
     protected View onCreateView() {
@@ -103,17 +105,21 @@ public class BPProfileFragment extends BaseFragment{
             }
         });
 
-        mVersionNameTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                click();
-            }
-        });
+        int hiddenFunctionStatus = sharedPreferencesHelper.getInt("hiddenFunctionStatus",HiddenFunctionStatusEnum.DISABLE.getCode());
+        if(HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionStatus){
+            mVersionRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    straightClick();
+                }
+            });
+        }
 
     }
 
     long[] mHits = new long[CLICKCOUNTS];
-    public void click(){
+    public void straightClick(){
+        // Listening to the straight click 5 times
         System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
         mHits[mHits.length - 1] = SystemClock.uptimeMillis();
         if(mHits[0] > SystemClock.uptimeMillis() - DURATION){

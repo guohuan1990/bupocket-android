@@ -42,6 +42,10 @@
             android:padding="@dimen/view_padding">
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:id="@+id/walletScanBtn"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:drawableStart="@mipmap/icon_scan_white"
+                android:drawableLeft="@mipmap/icon_scan_white"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/bp_btn_hight"
                 android:layout_weight="1"
@@ -56,6 +60,10 @@
                 android:textSize="@dimen/bp_btn_text_size"/>
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:id="@+id/walletSendBtn"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:drawableStart="@mipmap/icon_send_img"
+                android:drawableLeft="@mipmap/icon_send_img"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/bp_btn_hight"
                 android:layout_marginLeft="5dp"

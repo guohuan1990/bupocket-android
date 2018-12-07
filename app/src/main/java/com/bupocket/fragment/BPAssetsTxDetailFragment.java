@@ -72,8 +72,6 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
     TextView mTxDetailTxInfoTXFeeTv;
     @BindView(R.id.txDetailTxInfoNonceTv)
     TextView mTxDetailTxInfoNonceTv;
-    @BindView(R.id.txDetailTxInfoLedgerSeqTv)
-    TextView mTxDetailTxInfoLedgerSeqTv;
     @BindView(R.id.txDetailBlockInfoBlockHeightTv)
     TextView mTxDetailBlockInfoBlockHeightTv;
     @BindView(R.id.txDetailBlockInfoBlockHashTv)
@@ -178,7 +176,6 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     mTxDetailTxInfoAmountTv.setText(CommonUtil.addSuffix(txInfoRespBoBean.getAmount(),assetCode));
                     mTxDetailTxInfoTXFeeTv.setText(txInfoRespBoBean.getFee() + " BU");
                     mTxDetailTxInfoNonceTv.setText(txInfoRespBoBean.getNonce() + "");
-                    mTxDetailTxInfoLedgerSeqTv.setText(txInfoRespBoBean.getLedgerSeq() + "");
 
                     String signatureStr = txInfoRespBoBean.getSignatureStr();
                     JSONArray signatureArr = JSON.parseArray(signatureStr);

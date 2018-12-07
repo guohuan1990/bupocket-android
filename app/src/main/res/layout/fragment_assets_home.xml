@@ -42,6 +42,9 @@
                         
                         <TextView
                             android:id="@+id/currentTestNetTipsTv"
+                            android:gravity="center"
+                            android:paddingLeft="35dp"
+                            android:paddingRight="35dp"
                             android:layout_centerInParent="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

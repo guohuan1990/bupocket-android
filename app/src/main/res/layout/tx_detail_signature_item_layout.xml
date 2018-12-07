@@ -14,12 +14,12 @@ android:orientation="vertical">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/view_padding"
-            android:background="#F8F8F8"
+            android:background="@color/app_bg_color_gray_3"
             android:orientation="horizontal">
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#888888"
+                android:textColor="@color/app_txt_color_gray_5"
                 android:layout_weight="6"
                 android:text="Public Key"/>
         <TextView
@@ -39,7 +39,7 @@ android:orientation="vertical">
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#888888"
+                android:textColor="@color/app_txt_color_gray_5"
                 android:layout_weight="6"
                 android:text="Singed Data"/>
         <TextView
