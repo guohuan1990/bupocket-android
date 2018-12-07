@@ -119,6 +119,12 @@ public class BPAssetsHomeFragment extends BaseFragment {
         return root;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        initBackground();
+    }
+
     private void setListeners() {
         mHomeScanLl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -355,7 +361,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         if(tokensCache != null){
             handleTokens(tokensCache);
         }
-        initBackground();
+//        initBackground();
         initTokensView();
         refreshLayout.autoRefresh();
     }
