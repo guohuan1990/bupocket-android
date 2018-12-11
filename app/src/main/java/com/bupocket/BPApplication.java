@@ -49,7 +49,7 @@ public class BPApplication extends Application {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        Log.e("TAG", "onConfigurationChanged");
+//        Log.e("TAG", "onConfigurationChanged");
         LocaleUtil.setLanguage(context, newConfig);
     }
 

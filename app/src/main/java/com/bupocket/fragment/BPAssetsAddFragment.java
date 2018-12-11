@@ -42,6 +42,8 @@ public class BPAssetsAddFragment extends BaseFragment {
     DrawableEditText mSearchTokenEt;
 
     SearchTokenAdapter searchTokenAdapter;
+    private SharedPreferencesHelper sharedPreferencesHelper;
+    private String currentAccAddress;
 
     @Override
     protected View onCreateView() {
@@ -49,6 +51,8 @@ public class BPAssetsAddFragment extends BaseFragment {
         ButterKnife.bind(this, root);
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+        currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
 
         mSearchTokenEt.setOnDrawableClickListener(new DrawableEditText.OnDrawableClickListener() {
             @Override
@@ -77,6 +81,7 @@ public class BPAssetsAddFragment extends BaseFragment {
     private void searchToken(String assetCode){
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         Map<String, Object> parmasMap = new HashMap<>();
+        parmasMap.put("address",currentAccAddress);
         parmasMap.put("assetCode",assetCode);
         parmasMap.put("startPage", 1);
         parmasMap.put("pageSize", 100);
@@ -88,7 +93,7 @@ public class BPAssetsAddFragment extends BaseFragment {
                 if(respDto != null){
                     handleSearchTokenData(respDto.getData());
                 }else {
-                    mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data),null);
+                    mEmptyView.show(getResources().getString(R.string.search_result_not_found),null);
                 }
             }
 
@@ -103,7 +108,7 @@ public class BPAssetsAddFragment extends BaseFragment {
     private void handleSearchTokenData(SearchTokenRespDto searchTokenRespDto){
         if(searchTokenRespDto != null || searchTokenRespDto.getTokenList() != null){
             if(searchTokenRespDto.getTokenList() == null || searchTokenRespDto.getTokenList().size() == 0) {
-                mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
+                mEmptyView.show(getResources().getString(R.string.search_result_not_found), null);
             }else{
                 mEmptyView.show(null, null);
             }

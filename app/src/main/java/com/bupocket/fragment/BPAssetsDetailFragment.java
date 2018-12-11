@@ -192,7 +192,6 @@ public class BPAssetsDetailFragment extends BaseFragment {
             public void onResponse(Call<ApiResult<GetMyTxsRespDto>> call, Response<ApiResult<GetMyTxsRespDto>> response) {
                 ApiResult<GetMyTxsRespDto> respDto = response.body();
                 if(respDto != null){
-                    Log.d("GetMyTxsRespDto:", JSON.toJSONString(respDto));
                     mEmptyView.show(null,null);
                     if(isAdded()){
                         handleMyTxs(respDto.getData());

@@ -13,18 +13,16 @@
     <string name="wallet_create_txt">创建数字身份</string>
     <string name="wallet_create_create_btn_txt" >立即创建</string>
     <string name="wallet_create_recover_btn_txt" >恢复身份</string>
-    <string name="hint_wallet_create_form_input_identity_name" >身份名</string>
-    <string name="hint_wallet_create_form_input_password" >密码</string>
-    <string name="hint_wallet_create_form_input_rePassword" >确认密码</string>
+    <string name="hint_wallet_create_form_input_identity_name" >请创建身份名</string>
+    <string name="hint_wallet_create_form_input_password" >请设置密码</string>
+    <string name="hint_wallet_create_form_input_rePassword" >请再次确认密码</string>
 
     <string name="wallet_create_form_input_identity_name_empty" >请输入身份名</string>
     <string name="wallet_create_form_input_password_empty" >请输入密码</string>
-    <string name="wallet_create_form_input_rePassword_empty" >请确认密码</string>
+    <string name="wallet_create_form_input_rePassword_empty" >请再次确认密码</string>
     <string name="wallet_create_form_error1" >密码与确认密码不一致</string>
     <string name="wallet_create_form_error2" >密码长度为8~20个字符，且内容仅限字母和数字</string>
-    <string name="wallet_create_form_error3" >密码长度为8~20个字符，且内容仅限字母和数字</string>
     <string name="wallet_create_form_error4" >身份名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
-    <string name="wallet_create_form_error5" >密码长度为8~20个字符，且内容仅限字母和数字</string>
 
     <string name="wallet_create_creating_txt" >创建中</string>
     <string name="wallet_create_created_txt" >创建成功</string>
@@ -33,13 +31,13 @@
     <string name="hint_wallet_create_form_create_btn_txt" >创建</string>
     <string name="otc_top_bar_buy_txt" >购买</string>
     <string name="otc_top_bar_sell_txt" >出售</string>
-    <string name="view_title_backup_wallet" >备份身份</string>
+    <string name="view_title_backup_wallet" >备份钱包</string>
     <string name="view_title_create_wallet_identity" >创建身份</string>
     <string name="create_wallet_prompt_dialog_title" >温馨提示</string>
     <string name="create_wallet_prompt_txt1" >密码用于加密保护私钥，以及转账、调用合约等，所以强度非常重要。
         小布口袋不存储密码，也无法帮您找回，请务必牢记。</string>
     <string name="create_wallet_prompt_txt2" >密码长度为8~20个字符，且内容仅限字母和数字</string>
-    <string name="backup_wallet_txt1" >没有妥善备份就无法保障资产安全，删除程序或退出身份后，你需要备份文件来恢复身份</string>
+    <string name="backup_wallet_txt1" >没有妥善备份就无法保障资产安全，删除程序或钱包后，你需要备份文件来恢复钱包</string>
     <string name="backup_wallet_txt2" >请确保在四周无人，没有摄像头的安全环境下备份</string>
     <string name="backup_wallet_btn_txt" >备份助记词</string>
     <string name="view_title_backup_mneonic_code" >备份助记词</string>
@@ -72,7 +70,7 @@
     <string name="password_comfirm_dialog_to_backup" >请填写身份密码以确认备份</string>
     <!-- 恢复身份 -->
     <string name="recover_wallet_title" >恢复身份</string>
-    <string name="recover_edit_mneonic_code_hint" >请输入助记词，用空格分割</string>
+    <string name="recover_edit_mneonic_code_hint" >输入助记词，用空格分割</string>
     <string name="recover_mneonic_input_error" >助记词输入有误，请重新输入</string>
     <string name="recover_edit_new_wallet_name_hint" >请输入新身份名</string>
     <string name="recover_input_wallet_name_error" >只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
@@ -92,7 +90,7 @@
     <string name="no_backup_tips_btn" >请备份</string>
 
     <string name="send_amount_title" >转账数量</string>
-    <string name="send_hint_txt1" ></string>
+    <string name="send_hint_txt1" >请输入转账数量</string>
     <string name="send_hint_txt2" >备注限20字符内</string>
     <string name="send_hint_txt3" >请输交易费用</string>
     <string name="send_status_success_txt" >转账成功</string>
@@ -156,7 +154,7 @@
     <string name="amount_too_small" >转账数量单笔不可少于</string>
     <string name="amount_too_big" >转账数量单笔不可超过 1000000000</string>
     <string name="invalid_tx_fee" >最多支付交易费用格式有误，请重新输入</string>
-    <string name="tx_fee_too_small" >最多支付交易费用不可少于 0.005 BU</string>
+    <string name="tx_fee_too_small">最多支付交易费用不可少于 0.005 BU</string>
     <string name="tx_fee_too_big">最多支付交易费用不可大于 10 BU</string>
     <string name="balance_not_enough" >可用余额不足</string>
     <string name="send_token_note_too_long" >备注信息不能超过20个字符</string>
@@ -188,7 +186,7 @@
 
     <string name="help_title_txt" >您遇到的问题或建议</string>
     <string name="contact_title_txt" >您的联系方式</string>
-    <string name="help_hint" >请输入您的问题或建议</string>
+    <string name="help_hint" >请输入您遇到的问题或建议</string>
     <string name="contact_hint" >请输入您的联系方式</string>
     <string name="submit_feedback_btn_txt" >提交</string>
 
@@ -199,7 +197,7 @@
     <string name="user_info_logout">退出当前身份</string>
     <string name="user_info_logout_loading" >退出中</string>
     <string name="user_info_backup_loading" >加载中</string>
-    <string name="user_info_logout_notice">即将退出当前身份，请确保身份已备份</string>
+    <string name="user_info_logout_notice">即将移除身份，请确保身份已备份</string>
     <string name="user_info_logout_warning" >警告：若未妥善备份，退出后将无法找回身份，请慎重处理该操作</string>
 
     <string name="common_dialog_cancel">取消</string>
@@ -218,7 +216,7 @@
     <string name="set_success">设置成功</string>
     <string name="handling" >处理中...</string>
     <string name="i_knew_btn_txt" >我知道了</string>
-    <string name="network_error_msg" >网络不给力，请稍后再试</string>
+    <string name="network_error_msg" >您的网络好像不太给力，请稍后再试</string>
     <string name="capture_activity_label" >自定义扫描界面</string>
     <string name="capture_activity_title" >扫一扫</string>
     <string name="time_day_ago">天前</string>
@@ -248,7 +246,7 @@
     <string name="total_assets_title_txt">总资产</string>
     <string name="assets_add_txt">添加资产</string>
     <string name="my_assets_title_txt">我的资产</string>
-    <string name="add_token_search_hint">请输入完整的TOKEN代码</string>s
+    <string name="add_token_search_hint">请输入完整的资产代码</string>s
     <string name="add_token_btn_txt">添加</string>
     <string name="delete_token_btn_txt">删除</string>
     <string name="register_token_page_title">登记资产确认</string>
@@ -316,5 +314,6 @@
     <string name="safety_tips_title">安全提示</string>
     <string name="safety_tips_content_txt">您的钱包助记词尚未备份，为防止忘记密码、删除App或丢失手机等情况导致资产损失，请务必备份助记词</string>
     <string name="backup_immediately_txt">立即备份</string>
+    <string name="search_result_not_found">未找到搜索结果</string>
 
 </resources>
