@@ -154,7 +154,7 @@
     <string name="amount_too_small" >转账数量单笔不可少于</string>
     <string name="amount_too_big" >转账数量单笔不可超过 1000000000</string>
     <string name="invalid_tx_fee" >最多支付交易费用格式有误，请重新输入</string>
-    <string name="tx_fee_too_small">最多支付交易费用不可少于 0.005 BU</string>
+    <string name="tx_fee_too_small">最多支付交易费用不可少于 0.01 BU</string>
     <string name="tx_fee_too_big">最多支付交易费用不可超过10 BU</string>
     <string name="balance_not_enough" >可用余额不足</string>
     <string name="send_token_note_too_long" >备注信息不能超过20个字</string>
@@ -257,7 +257,7 @@
     <string name="issue_token_fee_txt">预估交易费</string>
     <string name="register_token_fee_txt">预估交易费</string>
     <string name="confirm_register_token_btn_txt">确认登记</string>
-    <string name="register_token_password_confirm_txt">请填写钱包密码</string>
+    <string name="register_token_password_confirm_txt">请填写身份密码以确认登记</string>
     <string name="register_token_success_txt">登记成功</string>
     <string name="register_token_failure_txt">登记失败</string>
     <string name="register_token_timeout_txt">登记超时</string>
@@ -315,5 +315,8 @@
     <string name="safety_tips_content_txt">您的钱包助记词尚未备份，为防止忘记密码、删除App或丢失手机等情况导致资产损失，请务必备份助记词</string>
     <string name="backup_immediately_txt">立即备份</string>
     <string name="search_result_not_found">未找到搜索结果</string>
+    <string name="switch_to_test_net_message_txt">您已开启测试网</string>
+    <string name="issue_token_password_confirm_txt">请填写身份密码以确认发行</string>
+    <string name="recover_identity_confirm_message_txt">是否确认更新密码及导入身份</string>
 
 </resources>

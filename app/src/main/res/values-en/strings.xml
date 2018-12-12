@@ -258,7 +258,7 @@
     <string name="issue_token_fee_txt">Estimated transaction fee</string>
     <string name="register_token_fee_txt">Estimated transaction fee</string>
     <string name="confirm_register_token_btn_txt">Confirm registration</string>
-    <string name="register_token_password_confirm_txt">Please fill in your wallet password</string>
+    <string name="register_token_password_confirm_txt">Please fill in the identity password to confirm the registration</string>
     <string name="register_token_success_txt">Registration is successful</string>
     <string name="register_token_failure_txt">Registration failed</string>
     <string name="register_token_timeout_txt">Registration is overtime</string>
@@ -316,4 +316,7 @@
     <string name="safety_tips_content_txt">Your wallet mnemonics have not been backed up. To prevent loss of assets due to forgetting passwords, deleting apps, or losing your phone, be sure to back up your mnemonics.</string>
     <string name="backup_immediately_txt">Back up now</string>
     <string name="search_result_not_found">No search results found</string>
+    <string name="switch_to_test_net_message_txt">You have started the test network</string>
+    <string name="issue_token_password_confirm_txt">Please fill in the identity password to confirm the issuance</string>
+    <string name="recover_identity_confirm_message_txt">Are you sure to update your password and import your identity</string>
 </resources>

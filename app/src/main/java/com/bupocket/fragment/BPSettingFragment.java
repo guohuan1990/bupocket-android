@@ -87,7 +87,7 @@ public class BPSettingFragment extends BaseFragment {
             }
 
             private void ShowSwitchTestNetConfirmDialog() {
-                new QMUIDialog.MessageDialogBuilder(getActivity())
+                /*new QMUIDialog.MessageDialogBuilder(getActivity())
                         .setMessage(getString(R.string.switch_test_net_message_txt))
                         .addAction(getString(R.string.no_txt), new QMUIDialogAction.ActionListener() {
                             @Override
@@ -108,7 +108,19 @@ public class BPSettingFragment extends BaseFragment {
                             }
                         })
                         .setCanceledOnTouchOutside(false)
-                        .create().show();
+                        .create().show();*/
+                new QMUIDialog.MessageDialogBuilder(getActivity())
+                        .setMessage(getString(R.string.switch_to_test_net_message_txt))
+                        .addAction(getString(R.string.i_knew_btn_txt), new QMUIDialogAction.ActionListener() {
+                            @Override
+                            public void onClick(QMUIDialog dialog, int index) {
+                                SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
+                                BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
+                                dialog.dismiss();
+                                switchNode.getSwitch().setButtonDrawable(getResources().getDrawable(R.mipmap.icon_switch_checked));
+                                startFragment(new HomeFragment());
+                            }
+                        }).setCanceledOnTouchOutside(false).create().show();
             }
 
             private void showSwitchMainNetDialog() {
