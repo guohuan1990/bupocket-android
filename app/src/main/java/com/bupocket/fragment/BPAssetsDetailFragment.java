@@ -246,11 +246,11 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 }
                 long optNo = obj.getOptNo();
 
-                if(!tokenTxInfoMap.containsKey(obj.getTxHash())){
+                if(!tokenTxInfoMap.containsKey(String.valueOf(obj.getOptNo()))){
                     TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime(),getContext()), amountStr, txStartStr, String.valueOf(optNo));
                     tokenTxInfo.setTxHash(obj.getTxHash());
                     tokenTxInfo.setOutinType(obj.getOutinType());
-                    tokenTxInfoMap.put(obj.getTxHash(), tokenTxInfo);
+                    tokenTxInfoMap.put(String.valueOf(obj.getOptNo()), tokenTxInfo);
                     tokenTxInfoList.add(tokenTxInfo);
                 }
             }
