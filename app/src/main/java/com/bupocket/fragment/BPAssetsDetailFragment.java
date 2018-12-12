@@ -217,7 +217,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
             page = getMyTxsRespDto.getPage();
             tokenBalance = getMyTxsRespDto.getAssetData().getBalance();
             assetAmount = getMyTxsRespDto.getAssetData().getTotalAmount();
-            mAmountTv.setText(tokenBalance + " " + assetCode);
+            mAmountTv.setText(CommonUtil.rvZeroAndDot(tokenBalance) + " " + assetCode);
             mAssetAmountTv.setText(CommonUtil.addCurrencySymbol(assetAmount,currencyType));
             if(getMyTxsRespDto.getTxRecord() == null || getMyTxsRespDto.getTxRecord().size() == 0) {
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);

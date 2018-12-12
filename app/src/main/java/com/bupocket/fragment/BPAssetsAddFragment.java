@@ -57,8 +57,11 @@ public class BPAssetsAddFragment extends BaseFragment {
         mSearchTokenEt.setOnDrawableClickListener(new DrawableEditText.OnDrawableClickListener() {
             @Override
             public void onDrawableClick() {
-                String input = mSearchTokenEt.getText().toString();
-                if(CommonUtil.isNull(input)){return;}
+                String input = mSearchTokenEt.getText().toString().trim();
+                if(CommonUtil.isNull(input)){
+                    mEmptyView.show(getResources().getString(R.string.search_result_not_found),null);
+                    return;
+                }
                 mSearchTokenEt.clearFocus();
                 searchToken(input);
             }
@@ -67,8 +70,11 @@ public class BPAssetsAddFragment extends BaseFragment {
         mSearchTokenEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                String input = mSearchTokenEt.getText().toString();
-                if(CommonUtil.isNull(input)){return false;}
+                String input = mSearchTokenEt.getText().toString().trim();
+                if(CommonUtil.isNull(input)){
+                    mEmptyView.show(getResources().getString(R.string.search_result_not_found),null);
+                    return false;
+                }
                 searchToken(input);
                 mSearchTokenEt.clearFocus();
                 return true;
@@ -106,7 +112,7 @@ public class BPAssetsAddFragment extends BaseFragment {
     }
 
     private void handleSearchTokenData(SearchTokenRespDto searchTokenRespDto){
-        if(searchTokenRespDto != null || searchTokenRespDto.getTokenList() != null){
+        if(searchTokenRespDto != null || null != searchTokenRespDto.getTokenList()){
             if(searchTokenRespDto.getTokenList() == null || searchTokenRespDto.getTokenList().size() == 0) {
                 mEmptyView.show(getResources().getString(R.string.search_result_not_found), null);
             }else{

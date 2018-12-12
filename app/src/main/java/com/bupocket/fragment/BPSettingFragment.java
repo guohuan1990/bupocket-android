@@ -117,6 +117,8 @@ public class BPSettingFragment extends BaseFragment {
                                 SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
                                 BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
                                 dialog.dismiss();
+                                sharedPreferencesHelper.put("tokensInfoCache","");
+                                sharedPreferencesHelper.put("tokenBalance","");
                                 switchNode.getSwitch().setButtonDrawable(getResources().getDrawable(R.mipmap.icon_switch_checked));
                                 startFragment(new HomeFragment());
                             }
@@ -130,6 +132,8 @@ public class BPSettingFragment extends BaseFragment {
                             @Override
                             public void onClick(QMUIDialog dialog, int index) {
                                 dialog.dismiss();
+                                sharedPreferencesHelper.put("tokensInfoCache","");
+                                sharedPreferencesHelper.put("tokenBalance","");
                                 switchNode.getSwitch().setButtonDrawable(getResources().getDrawable(R.mipmap.icon_switch_normal));
                                 startFragment(new HomeFragment());
                             }
