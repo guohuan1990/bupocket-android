@@ -4,12 +4,16 @@ import android.app.Activity;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.LanguageEnum;
 import com.bupocket.http.api.dto.resp.GetCurrentVersionRespDto;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.UpdateAppHttpUtil;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
+
+import java.util.Locale;
 
 public class BPUpgradeManager {
     public static final int INVALIDATE_VERSION_CODE = -1;
@@ -39,6 +43,23 @@ public class BPUpgradeManager {
                 .checkNewApp(new UpdateCallback(){
                     @Override
                     protected UpdateAppBean parseJson(String json) {
+                        int language = SharedPreferencesHelper.getInstance().getInt("currentLanguage", LanguageEnum.UNDEFINED.getId());
+                        if(language == LanguageEnum.UNDEFINED.getId()){
+                            String myLocaleStr = Locale.getDefault().getLanguage();
+                            switch (myLocaleStr){
+                                case "zh": {
+                                    language = LanguageEnum.CHINESE.getId();
+                                    break;
+                                }
+                                case "en": {
+                                    language = LanguageEnum.ENGLISH.getId();
+                                    break;
+                                }
+                                default : {
+                                    language = LanguageEnum.ENGLISH.getId();
+                                }
+                            }
+                        }
                         GetCurrentVersionRespDto resp = JSON.parseObject(json, GetCurrentVersionRespDto.class);
 
                         UpdateAppBean updateAppBean = new UpdateAppBean();
@@ -47,7 +68,7 @@ public class BPUpgradeManager {
                                 .setNewVersion(resp.getVerNumber())
                                 .setApkFileUrl(resp.getDownloadLink())
                                 .setTargetSize(CommonUtil.isNull(resp.getAppSize()) ? "" : resp.getAppSize())
-                                .setUpdateLog(resp.getVerContents())
+                                .setUpdateLog(language == LanguageEnum.CHINESE.getId() ? resp.getVerContents() : resp.getEnglishVerContents())
                                 .setConstraint(resp.getVerType() == 0 ? false : true);
 
                         return updateAppBean;

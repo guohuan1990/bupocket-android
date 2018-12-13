@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.enums.LanguageEnum;
 import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -27,7 +28,7 @@ public class BPLanguageFragment extends BaseFragment{
     @BindView(R.id.enSelectedIV)
     ImageView mEnSelectedIV;
 
-    private int currentLanguage = -1;
+    private int currentLanguage = LanguageEnum.UNDEFINED.getId();
 
     @Override
     protected View onCreateView() {
@@ -39,7 +40,7 @@ public class BPLanguageFragment extends BaseFragment{
         mLanguageCNRL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentLanguage = 0;
+                currentLanguage = LanguageEnum.CHINESE.getId();
                 LocaleUtil.changeAppLanguage(getContext(), currentLanguage);
                 mCnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
                 mEnSelectedIV.setBackgroundResource(R.color.app_color_white);
@@ -48,7 +49,7 @@ public class BPLanguageFragment extends BaseFragment{
         mLanguageENRL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentLanguage = 1;
+                currentLanguage = LanguageEnum.ENGLISH.getId();
                 LocaleUtil.changeAppLanguage(getContext(), currentLanguage);
                 mCnSelectedIV.setBackgroundResource(R.color.app_color_white);
                 mEnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
@@ -59,34 +60,28 @@ public class BPLanguageFragment extends BaseFragment{
 
     private void getLanguage() {
         int language = SharedPreferencesHelper.getInstance().getInt("currentLanguage", currentLanguage);
-        if(language == -1){
+        if(LanguageEnum.UNDEFINED.getId() == language){
             String myLocaleStr = getContext().getResources().getConfiguration().locale.getLanguage();
             switch (myLocaleStr){
                 case "zh": {
-                    language = 0;
+                    language = LanguageEnum.CHINESE.getId();
                     break;
                 }
                 case "en": {
-                    language = 1;
+                    language = LanguageEnum.ENGLISH.getId();
                     break;
                 }
                 default : {
-                    language = 1;
+                    language = LanguageEnum.ENGLISH.getId();
                 }
             }
 
-        }
-        switch (language) {
-            case 0:{
-                mCnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
-                mLanguageCNRL.setEnabled(false);
-                break;
-            }
-            case 1:{
-                mEnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
-                mLanguageENRL.setEnabled(false);
-                break;
-            }
+        }else if(LanguageEnum.CHINESE.getId() == language){
+            mCnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
+            mLanguageCNRL.setEnabled(false);
+        }else if(LanguageEnum.ENGLISH.getId() == language){
+            mEnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
+            mLanguageENRL.setEnabled(false);
         }
     }
 
