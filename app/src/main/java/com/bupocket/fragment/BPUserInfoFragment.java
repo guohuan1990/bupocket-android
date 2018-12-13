@@ -179,7 +179,7 @@ public class BPUserInfoFragment extends BaseFragment {
             identityIdExplainPopup = new QMUIPopup(getContext(), QMUIPopup.DIRECTION_NONE);
             TextView textView = new TextView(getContext());
             textView.setLayoutParams(identityIdExplainPopup.generateLayoutParam(
-                    QMUIDisplayHelper.dp2px(getContext(), 250),
+                    QMUIDisplayHelper.dp2px(getContext(), 280),
                     WRAP_CONTENT
             ));
             textView.setLineSpacing(QMUIDisplayHelper.dp2px(getContext(), 4), 1.0f);

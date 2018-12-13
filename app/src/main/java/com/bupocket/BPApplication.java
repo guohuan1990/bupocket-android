@@ -49,7 +49,7 @@ public class BPApplication extends Application {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        Log.e("TAG", "onConfigurationChanged");
+//        Log.e("TAG", "onConfigurationChanged");
         LocaleUtil.setLanguage(context, newConfig);
     }
 
@@ -58,8 +58,6 @@ public class BPApplication extends Application {
         Wallet.getInstance().setNull4Wallet();
         SocketUtil.getInstance().SetNull4SocketUtil();
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(context,"buPocket");
-        sharedPreferencesHelper.put("tokensInfoCache","");
-        sharedPreferencesHelper.put("tokenBalance","");
         int netTypeCode = sharedPreferencesHelper.getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
         Boolean isMainNetConfig = true;
         if(BumoNodeEnum.TEST.getCode() == netTypeCode){

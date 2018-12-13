@@ -143,7 +143,7 @@ public class BPIssueTokenFragment extends BaseFragment {
         TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
         TextView mPasswordConfirmTitle = qmuiDialog.findViewById(R.id.passwordConfirmTitle);
 
-        mPasswordConfirmNotice.setText(getString(R.string.register_token_password_confirm_txt));
+        mPasswordConfirmNotice.setText(getString(R.string.issue_token_password_confirm_txt));
         mPasswordConfirmTitle.setText(getString(R.string.password_comfirm_dialog_title));
 
         mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {

@@ -192,7 +192,6 @@ public class BPAssetsDetailFragment extends BaseFragment {
             public void onResponse(Call<ApiResult<GetMyTxsRespDto>> call, Response<ApiResult<GetMyTxsRespDto>> response) {
                 ApiResult<GetMyTxsRespDto> respDto = response.body();
                 if(respDto != null){
-                    Log.d("GetMyTxsRespDto:", JSON.toJSONString(respDto));
                     mEmptyView.show(null,null);
                     if(isAdded()){
                         handleMyTxs(respDto.getData());
@@ -218,7 +217,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
             page = getMyTxsRespDto.getPage();
             tokenBalance = getMyTxsRespDto.getAssetData().getBalance();
             assetAmount = getMyTxsRespDto.getAssetData().getTotalAmount();
-            mAmountTv.setText(tokenBalance + " " + assetCode);
+            mAmountTv.setText(CommonUtil.rvZeroAndDot(tokenBalance) + " " + assetCode);
             mAssetAmountTv.setText(CommonUtil.addCurrencySymbol(assetAmount,currencyType));
             if(getMyTxsRespDto.getTxRecord() == null || getMyTxsRespDto.getTxRecord().size() == 0) {
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
@@ -247,11 +246,11 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 }
                 long optNo = obj.getOptNo();
 
-                if(!tokenTxInfoMap.containsKey(obj.getTxHash())){
+                if(!tokenTxInfoMap.containsKey(String.valueOf(obj.getOptNo()))){
                     TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime(),getContext()), amountStr, txStartStr, String.valueOf(optNo));
                     tokenTxInfo.setTxHash(obj.getTxHash());
                     tokenTxInfo.setOutinType(obj.getOutinType());
-                    tokenTxInfoMap.put(obj.getTxHash(), tokenTxInfo);
+                    tokenTxInfoMap.put(String.valueOf(obj.getOptNo()), tokenTxInfo);
                     tokenTxInfoList.add(tokenTxInfo);
                 }
             }
