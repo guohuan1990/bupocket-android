@@ -112,6 +112,8 @@ public class TxDetailRespDto {
         private String sourceAddress;
         private Integer status;
         private String originalMetadata;
+        private String txMetadata;
+        private String operaMetadata;
         private String errorMsg;
 
         public String getAmount() {
@@ -176,6 +178,22 @@ public class TxDetailRespDto {
 
         public void setErrorMsg(String errorMsg) {
             this.errorMsg = errorMsg;
+        }
+
+        public String getTxMetadata() {
+            return txMetadata;
+        }
+
+        public void setTxMetadata(String txMetadata) {
+            this.txMetadata = txMetadata;
+        }
+
+        public String getOperaMetadata() {
+            return operaMetadata;
+        }
+
+        public void setOperaMetadata(String operaMetadata) {
+            this.operaMetadata = operaMetadata;
         }
     }
 

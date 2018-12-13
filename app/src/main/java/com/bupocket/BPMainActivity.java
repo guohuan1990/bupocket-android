@@ -43,7 +43,6 @@ public class BPMainActivity extends BaseFragmentActivity {
             }
         }catch (Exception e){
             e.printStackTrace();
-            Log.e("出错了：","ddd",e);
         }
 
         BPUpgradeManager.getInstance(this).init();

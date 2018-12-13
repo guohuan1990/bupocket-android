@@ -611,9 +611,9 @@ public class BPSendTokenFragment extends BaseFragment {
                     timerTimes++;
                     System.out.println("timerTimes:" + timerTimes);
                     TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
-                    Map<String, Object> parmasMap = new HashMap<>();
-                    parmasMap.put("hash",hash);
-                    Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetail(parmasMap);
+                    Map<String, Object> paramsMap = new HashMap<>();
+                    paramsMap.put("hash",hash);
+                    Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetailByHash(paramsMap);
                     call.enqueue(new retrofit2.Callback<ApiResult<TxDetailRespDto>>(){
 
                         @Override

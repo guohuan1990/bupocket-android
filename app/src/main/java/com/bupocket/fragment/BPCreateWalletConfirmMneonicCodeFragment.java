@@ -74,7 +74,6 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
                 sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode());
                 sharedPreferencesHelper.put("isFirstCreateWallet", "0");
                 sharedPreferencesHelper.put("mnemonicWordBackupState","0");
-//                getActivity().getSupportFragmentManager().popBackStack(new HomeFragment().getClass().getSimpleName(),0);
                 startFragment(new HomeFragment());
             }
         });
@@ -100,8 +99,6 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
             mnemonicCodeList.add(mnemonicWord);
         }
         Collections.shuffle(mnemonicCodeList);
-//        System.out.println("srcMnemonicCodeList:" + JSON.toJSONString(srcMnemonicCodeList));
-//        System.out.println("mnemonicCodeList:" + JSON.toJSONString(mnemonicCodeList));
     }
 
     private void initData(){
@@ -120,8 +117,8 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             textView.setText(mnemonicCodeList.get(i).getCode());
             textView.setHint(mnemonicCodeList.get(i).getWordId());
-            textView.setTextColor(0xFF36B3FF);
-            textView.setBackgroundColor(0xFFF5F5F5);
+            textView.setTextColor(getResources().getColor(R.color.app_color_main));
+            textView.setBackgroundColor(getResources().getColor(R.color.app_bg_color_gray));
             textView.setOnClickListener(clickListener);
             GridLayout.Spec rowSpec = GridLayout.spec(i / 4, 1.0f);
             GridLayout.Spec columnSpec = GridLayout.spec(i % 4, 1.0f);
@@ -165,12 +162,12 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
             mnemonicWord.setCode(code);
             mnemonicWord.setWordId(wordId);
             if(!mnemonicCodeListSelected.contains(mnemonicWord)){
-                textView.setTextColor(0xFFFFFFFF);
-                textView.setBackgroundColor(0xFF36B3FF);
+                textView.setTextColor(getResources().getColor(R.color.app_color_white));
+                textView.setBackgroundColor(getResources().getColor(R.color.app_color_main));
                 mnemonicCodeListSelected.add(mnemonicWord);
             } else {
-                textView.setTextColor(0xFF36B3FF);
-                textView.setBackgroundColor(0xFFF5F5F5);
+                textView.setTextColor(getResources().getColor(R.color.app_color_main));
+                textView.setBackgroundColor(getResources().getColor(R.color.app_bg_color_gray));
                 mnemonicCodeListSelected.remove(mnemonicWord);
             }
             printMneonicCodeSelected();
@@ -186,12 +183,8 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
                 mCompleteMnemonicCodeBtn.setEnabled(false);
                 mCompleteMnemonicCodeBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
             }
-//            System.out.println("ssss:" + textView.getText());
         }
     };
-
-
-
 
 
     private void initTopBar() {

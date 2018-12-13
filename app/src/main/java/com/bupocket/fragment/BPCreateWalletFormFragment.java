@@ -135,7 +135,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
             return false;
         }
         if(password.length() < 8){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error3,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.wallet_create_form_error2,Toast.LENGTH_SHORT).show();
             return false;
         }
         if(password.length() > 20){
@@ -143,7 +143,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
             return false;
         }
         if(!CommonUtil.validatePassword(password)){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error5,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.wallet_create_form_error2,Toast.LENGTH_SHORT).show();
             return false;
         }
 

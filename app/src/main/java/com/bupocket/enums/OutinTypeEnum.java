@@ -1,13 +1,13 @@
 package com.bupocket.enums;
 
 public enum OutinTypeEnum {
-    OUT(1,"out"),
-    IN(0,"in")
+    OUT("0","out"),
+    IN("1","in")
     ;
-    private Integer code;
+    private String code;
     private String name;
 
-    private OutinTypeEnum(Integer code,String name) {
+    private OutinTypeEnum(String code,String name) {
         this.code = code;
         this.name = name;
     }
@@ -16,7 +16,7 @@ public enum OutinTypeEnum {
         return name;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 }

@@ -71,12 +71,12 @@ public class TokensAdapter extends BaseAdapter {
         holder.amountTv.setText(datas.get(position).getAmount());
 
         if(CommonUtil.isNull(datas.get(position).getIcon())){
-            holder.assetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
+            holder.assetIconIv.setImageDrawable(convertView.getResources().getDrawable(R.mipmap.icon_token_default_icon));
         }else{
             try{
                 holder.assetIconIv.setImageBitmap(CommonUtil.base64ToBitmap(datas.get(position).getIcon()));
             }catch (Exception e){
-                holder.assetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
+                holder.assetIconIv.setImageDrawable(convertView.getResources().getDrawable(R.mipmap.icon_token_default_icon));
             }
         }
         return convertView;

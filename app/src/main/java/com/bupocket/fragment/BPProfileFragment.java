@@ -2,8 +2,11 @@ package com.bupocket.fragment;
 
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,13 +46,15 @@ public class BPProfileFragment extends BaseFragment{
     @BindView(R.id.versionNameTv)
     TextView mVersionNameTv;
     @BindView(R.id.profileAvatarIv)
-    QMUIRadiusImageView mProfileAvatarIv;
+    ImageView mProfileAvatarIv;
     @BindView(R.id.currentTestNetTipsTv)
     TextView mCurrentTestNetTipsTv;
     @BindView(R.id.meLinearLayout)
     LinearLayout mMeLinearLayout;
     @BindView(R.id.versionRL)
     RelativeLayout mVersionRl;
+    @BindView(R.id.avatarNickLl)
+    LinearLayout mAvatarNickLl;
 
     private final static int CLICKCOUNTS = 5;
     private final static long DURATION = 2 * 1000;
@@ -71,7 +76,12 @@ public class BPProfileFragment extends BaseFragment{
     private void initUI() {
         if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE)== BumoNodeEnum.TEST.getCode()){
             mCurrentTestNetTipsTv.setText(getString(R.string.current_test_message_txt));
-            mMeLinearLayout.setBackgroundColor(getResources().getColor(R.color.test_net_background_color));
+            mMeLinearLayout.setBackgroundResource(R.mipmap.ic_me_header_bg_test_net);
+        }
+        userNickTx.setText(currentAccNick);
+        mVersionNameTv.setText(CommonUtil.packageName(getContext()));
+        if(userNickTx.getWidth() > 260){
+            userNickTx.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT,Gravity.LEFT));
         }
     }
 
@@ -150,8 +160,6 @@ public class BPProfileFragment extends BaseFragment{
     private void initData(){
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
-        userNickTx.setText(currentAccNick);
-        mVersionNameTv.setText(CommonUtil.packageName(getContext()));
     }
 
 

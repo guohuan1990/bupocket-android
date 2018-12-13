@@ -5,14 +5,16 @@ public class TokenTxInfo {
     private String txDate;
     private String txAmount;
     private String txStatus;
-    private Integer outinType;
+    private String outinType;
     private String txHash;
+    private String optNo;
 
-    public TokenTxInfo(String txAccountAddress, String txDate, String txAmount, String txStatus) {
+    public TokenTxInfo(String txAccountAddress, String txDate, String txAmount, String txStatus,String optNo) {
         this.txAccountAddress = txAccountAddress;
         this.txDate = txDate;
         this.txAmount = txAmount;
         this.txStatus = txStatus;
+        this.optNo = optNo;
     }
 
     public String getTxAccountAddress() {
@@ -55,11 +57,19 @@ public class TokenTxInfo {
         this.txHash = txHash;
     }
 
-    public Integer getOutinType() {
+    public String getOutinType() {
         return outinType;
     }
 
-    public void setOutinType(Integer outinType) {
+    public void setOutinType(String outinType) {
         this.outinType = outinType;
+    }
+
+    public String getOptNo() {
+        return optNo;
+    }
+
+    public void setOptNo(String optNo) {
+        this.optNo = optNo;
     }
 }

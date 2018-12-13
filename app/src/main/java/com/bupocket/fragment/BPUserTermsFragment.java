@@ -90,47 +90,17 @@ public class BPUserTermsFragment extends BaseFragment {
 
         switch (lang) {
             case 0: {
-//                    in_s = res.openRawResource(R.raw.use_terms_cn);
                 mUseTermsContentWv.loadData(getRawFileFromResource(R.raw.use_terms_html_cn), "text/html; charset=UTF-8", null);
                 break;
             }
             case 1: {
-//                    in_s = res.openRawResource(R.raw.use_terms_en);
                 mUseTermsContentWv.loadData(getRawFileFromResource(R.raw.use_terms_html_en), "text/html; charset=UTF-8", null);
                 break;
             }
             default: {
-//                    in_s = res.openRawResource(R.raw.use_terms_cn);
                 mUseTermsContentWv.loadData(getRawFileFromResource(R.raw.use_terms_html_cn), "text/html; charset=UTF-8", null);
             }
         }
- /**
-        try {
-//            Resources res = getResources();
-//            InputStream in_s;
-            switch (lang) {
-                case 0: {
-//                    in_s = res.openRawResource(R.raw.use_terms_cn);
-                    mUseTermsContentWv.loadData(getRawFileFromResource(R.raw.use_terms_html_cn), "text/html; charset=UTF-8", null);
-                    break;
-                }
-                case 1: {
-//                    in_s = res.openRawResource(R.raw.use_terms_en);
-                    mUseTermsContentWv.loadData(getRawFileFromResource(R.raw.use_terms_html_en), "text/html; charset=UTF-8", null);
-                    break;
-                }
-                default: {
-//                    in_s = res.openRawResource(R.raw.use_terms_cn);
-                    mUseTermsContentWv.loadData(getRawFileFromResource(R.raw.use_terms_html_cn), "text/html; charset=UTF-8", null);
-                }
-            }
-//            byte[] b = new byte[in_s.available()];
-//            in_s.read(b);
-//            mUserTermsContentTv.setText(new String(b));
-        }catch (IOException e) {
-//            mUserTermsContentTv.setText(new String("loading"));
-        }
-  */
     }
 
     private void eventListeners() {
@@ -140,7 +110,7 @@ public class BPUserTermsFragment extends BaseFragment {
                 isAgreeTerms = isChecked;
                 if (isAgreeTerms) {
                     mUserTermsNext.setEnabled(true);
-                    mUserTermsNext.setBackgroundColor(getResources().getColor(R.color.app_btn_color_blue));
+                    mUserTermsNext.setBackgroundColor(getResources().getColor(R.color.app_color_main));
                 } else {
                     mUserTermsNext.setEnabled(false);
                     mUserTermsNext.setBackgroundColor(getResources().getColor(R.color.terms_unagree_btn_grey));

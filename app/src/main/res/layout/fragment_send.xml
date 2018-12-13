@@ -100,7 +100,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:contentDescription="TODO"
-                                android:src="@mipmap/icon_scan_blue" />
+                                android:src="@mipmap/icon_scan_green_little" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -176,7 +176,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/app_color_font_main" />
+                                android:textColor="@color/app_color_main" />
 
                             <TextView
                                 android:id="@+id/tokenCodeTv"
@@ -185,7 +185,7 @@
                                 android:paddingStart="5dp"
                                 android:paddingLeft="5dp"
                                 android:text="BU"
-                                android:textColor="@color/app_color_font_main" />
+                                android:textColor="@color/app_color_main" />
                         </LinearLayout>
                     </RelativeLayout>
 

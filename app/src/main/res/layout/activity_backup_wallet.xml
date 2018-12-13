@@ -64,8 +64,8 @@
                     android:text="@string/backup_wallet_btn_txt"
                     android:textColor="@color/app_color_font"
                     android:textSize="18sp"
-                    app:qmui_backgroundColor="@color/app_btn_color_blue"
-                    app:qmui_borderColor="@color/app_btn_color_blue"
+                    app:qmui_backgroundColor="@color/app_color_main"
+                    app:qmui_borderColor="@color/app_color_main"
                     app:qmui_radius="5dp" />
 
             </RelativeLayout>

@@ -16,6 +16,9 @@ import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.MyTokenTxAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.enums.AssetTypeEnum;
+import com.bupocket.enums.OutinTypeEnum;
+import com.bupocket.enums.TokenTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TokenService;
@@ -175,31 +178,26 @@ public class BPAssetsDetailFragment extends BaseFragment {
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
         Call<ApiResult<GetMyTxsRespDto>> call;
-        if(assetCode.equals("BU") && issuer.equals("")){
-            Map<String, Object> parmasMap = new HashMap<>();
-            parmasMap.put("walletAddress",currentAccAddress);
-            parmasMap.put("startPage", pageStart);
-            parmasMap.put("pageSize", pageSize);
-            parmasMap.put("currencyType", currencyType);
-            call = txService.getMyTxs(parmasMap);
-        }else {
-            Map<String, Object> parmasMap = new HashMap<>();
-            parmasMap.put("assetCode",assetCode);
-            parmasMap.put("issuer",issuer);
-            parmasMap.put("address",currentAccAddress);
-            parmasMap.put("startPage", pageStart);
-            parmasMap.put("pageSize", pageSize);
-            parmasMap.put("currencyType", currencyType);
-            call = tokenService.getTokenTxs(parmasMap);
-        }
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("tokenType",tokenType);
+        paramsMap.put("assetCode",assetCode);
+        paramsMap.put("issuer",issuer);
+        paramsMap.put("address",currentAccAddress);
+        paramsMap.put("startPage", pageStart);
+        paramsMap.put("pageSize", pageSize);
+        paramsMap.put("currencyType", currencyType);
+        call = txService.getMyTxs(paramsMap);
         call.enqueue(new Callback<ApiResult<GetMyTxsRespDto>>() {
             @Override
             public void onResponse(Call<ApiResult<GetMyTxsRespDto>> call, Response<ApiResult<GetMyTxsRespDto>> response) {
                 ApiResult<GetMyTxsRespDto> respDto = response.body();
-                Log.d("GetMyTxsRespDto:", JSON.toJSONString(respDto));
-                mEmptyView.show(null,null);
-                if(isAdded()){
-                    handleMyTxs(respDto.getData());
+                if(respDto != null){
+                    mEmptyView.show(null,null);
+                    if(isAdded()){
+                        handleMyTxs(respDto.getData());
+                    }
+                }else{
+                    mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
                 }
             }
 
@@ -217,9 +215,9 @@ public class BPAssetsDetailFragment extends BaseFragment {
 
         if(getMyTxsRespDto != null){
             page = getMyTxsRespDto.getPage();
-            tokenBalance = getMyTxsRespDto.getTokenBalance();
-            assetAmount = getMyTxsRespDto.getAssetAmount();
-            mAmountTv.setText(tokenBalance + " " + assetCode);
+            tokenBalance = getMyTxsRespDto.getAssetData().getBalance();
+            assetAmount = getMyTxsRespDto.getAssetData().getTotalAmount();
+            mAmountTv.setText(CommonUtil.rvZeroAndDot(tokenBalance) + " " + assetCode);
             mAssetAmountTv.setText(CommonUtil.addCurrencySymbol(assetAmount,currencyType));
             if(getMyTxsRespDto.getTxRecord() == null || getMyTxsRespDto.getTxRecord().size() == 0) {
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
@@ -232,10 +230,10 @@ public class BPAssetsDetailFragment extends BaseFragment {
 
             for (GetMyTxsRespDto.TxRecordBean obj : getMyTxsRespDto.getTxRecord()) {
 
-                String txAccountAddress = AddressUtil.anonymous((obj.getOutinType() == 0) ? obj.getToAddress() : obj.getFromAddress());
+                String txAccountAddress = AddressUtil.anonymous((obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())) ? obj.getToAddress() : obj.getFromAddress());
                 String amountStr = null;
                 String txStartStr = null;
-                if(obj.getOutinType() == 0){
+                if(obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())){
                     amountStr = "-" + CommonUtil.addSuffix(obj.getAmount(),assetCode);
                 }else {
                     amountStr = "+" + CommonUtil.addSuffix(obj.getAmount(),assetCode);
@@ -246,12 +244,13 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 }else{
                     txStartStr = TxStatusEnum.FAIL.getName();
                 }
+                long optNo = obj.getOptNo();
 
-                if(!tokenTxInfoMap.containsKey(obj.getTxHash())){
-                    TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime(),getContext()), amountStr, txStartStr);
+                if(!tokenTxInfoMap.containsKey(String.valueOf(obj.getOptNo()))){
+                    TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime(),getContext()), amountStr, txStartStr, String.valueOf(optNo));
                     tokenTxInfo.setTxHash(obj.getTxHash());
                     tokenTxInfo.setOutinType(obj.getOutinType());
-                    tokenTxInfoMap.put(obj.getTxHash(), tokenTxInfo);
+                    tokenTxInfoMap.put(String.valueOf(obj.getOptNo()), tokenTxInfo);
                     tokenTxInfoList.add(tokenTxInfo);
                 }
             }
@@ -270,8 +269,10 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 TokenTxInfo currentItem = (TokenTxInfo) myTokenTxAdapter.getItem(position);
                 Bundle argz = new Bundle();
                 argz.putString("txHash", currentItem.getTxHash());
-                argz.putInt("outinType",currentItem.getOutinType());
+                argz.putString("outinType",currentItem.getOutinType());
                 argz.putString("assetCode",assetCode);
+                argz.putString("currentAccAddress",currentAccAddress);
+                argz.putString("optNo",currentItem.getOptNo());
                 BPAssetsTxDetailFragment bpAssetsTxDetailFragment = new BPAssetsTxDetailFragment();
                 bpAssetsTxDetailFragment.setArguments(argz);
                 startFragment(bpAssetsTxDetailFragment);
