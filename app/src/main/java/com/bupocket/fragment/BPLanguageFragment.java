@@ -76,7 +76,9 @@ public class BPLanguageFragment extends BaseFragment{
                 }
             }
 
-        }else if(LanguageEnum.CHINESE.getId() == language){
+        }
+
+        if(LanguageEnum.CHINESE.getId() == language){
             mCnSelectedIV.setBackgroundResource(R.mipmap.icon_language_selected);
             mLanguageCNRL.setEnabled(false);
         }else if(LanguageEnum.ENGLISH.getId() == language){
