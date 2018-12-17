@@ -23,7 +23,7 @@ public class BPCreateWalletFragment extends BaseFragment {
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_create_wallet, null);
         ButterKnife.bind(this, root);
-        QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         mCreateWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

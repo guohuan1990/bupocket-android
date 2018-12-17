@@ -24,6 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,7 @@ public class BPAssetsAddFragment extends BaseFragment {
     SearchTokenAdapter searchTokenAdapter;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentAccAddress;
+    private List<SearchTokenRespDto.TokenListBean> respTokenList = new ArrayList<>();
 
     @Override
     protected View onCreateView() {
@@ -99,6 +101,7 @@ public class BPAssetsAddFragment extends BaseFragment {
                 if(respDto != null){
                     handleSearchTokenData(respDto.getData());
                 }else {
+                    respTokenList.clear();
                     mEmptyView.show(getResources().getString(R.string.search_result_not_found),null);
                 }
             }
@@ -106,27 +109,37 @@ public class BPAssetsAddFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ApiResult<SearchTokenRespDto>> call, Throwable t) {
                 t.printStackTrace();
+                respTokenList.clear();
+                loadTokenAdapter();
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
             }
         });
     }
 
     private void handleSearchTokenData(SearchTokenRespDto searchTokenRespDto){
+
         if(searchTokenRespDto != null || null != searchTokenRespDto.getTokenList()){
             if(searchTokenRespDto.getTokenList() == null || searchTokenRespDto.getTokenList().size() == 0) {
+                respTokenList.clear();
                 mEmptyView.show(getResources().getString(R.string.search_result_not_found), null);
             }else{
+                respTokenList = searchTokenRespDto.getTokenList();
                 mEmptyView.show(null, null);
             }
 
         }else{
+            respTokenList.clear();
             mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
             return;
         }
 
-        searchTokenAdapter = new SearchTokenAdapter(searchTokenRespDto.getTokenList(), getContext());
-        mSearchTokenListView.setAdapter(searchTokenAdapter);
+        loadTokenAdapter();
 
+    }
+
+    private void loadTokenAdapter() {
+        searchTokenAdapter = new SearchTokenAdapter(respTokenList, getContext());
+        mSearchTokenListView.setAdapter(searchTokenAdapter);
     }
 
     private void initTopBar() {

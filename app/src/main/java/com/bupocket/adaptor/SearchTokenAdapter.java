@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -152,7 +153,7 @@ public class SearchTokenAdapter extends BaseAdapter {
         private TextView assetCodeTv;
         private TextView assetNameTv;
         private TextView assetIssuerTv;
-        private QMUIRoundButton tokenOptAddBtn;
-        private QMUIRoundButton tokenOptCancelCBtn;
+        private ImageView tokenOptAddBtn;
+        private ImageView tokenOptCancelCBtn;
     }
 }
