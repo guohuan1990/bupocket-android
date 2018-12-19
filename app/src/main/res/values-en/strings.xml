@@ -289,6 +289,7 @@
     <string name="register_token_balance_insufficient_message_txt">Your BU balance is insufficient and you cannot register your tokens. Please recharge</string>
     <string name="register_already_have_message_txt">You have already registered this token</string>
     <string name="token_version">ATP10</string>
+    <string name="error_token_register_overflow_message_txt">The tokens you have registered have exceeded the maximum limit</string>
     <string name="error_issue_amount_message_txt">Invalid circulation</string>
     <string name="error_issue_unregistered_message_txt">The code of your issued tokens:%1$s has not been registered yet, so it cannot be issued.</string>
     <string name="error_issue_already_issue_message_txt">You have already issued the token</string>

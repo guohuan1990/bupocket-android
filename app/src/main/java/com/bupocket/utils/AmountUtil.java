@@ -55,6 +55,10 @@ public class AmountUtil {
 		return (new BigDecimal(amount).divide(new BigDecimal(100000000)).setScale(8, BigDecimal.ROUND_HALF_UP)).toString();
 	}
 
+	public static String amountDivision10ForDecimal(String amount, int decimal){
+		return (new BigDecimal(amount).divide(new BigDecimal(Math.pow(10,decimal))).setScale(decimal, BigDecimal.ROUND_DOWN)).toString();
+	}
+
 	public static String amountAddition(String amount,String amount2){
 		return new BigDecimal(amount).add(new BigDecimal(amount2)).stripTrailingZeros().toPlainString();
 	}

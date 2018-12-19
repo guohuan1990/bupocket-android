@@ -148,5 +148,16 @@ public class DecimalCalculate {
         BigDecimal b2 = new BigDecimal(v2);
         return b1.compareTo(b2);
     }
+    /**
+     * 精确对比两个字符串
+     * @param v1 需要被对比的第一个数
+     * @param v2 需要被对比的第二个数
+     * @return 如果两个数一样则返回0，如果第一个数比第二个数大则返回1，反之返回-1
+     */
+    public static int compareStringTo(String v1,String v2){
+        BigDecimal b1 = new BigDecimal(v1);
+        BigDecimal b2 = new BigDecimal(v2);
+        return b1.compareTo(b2);
+    }
 
 }

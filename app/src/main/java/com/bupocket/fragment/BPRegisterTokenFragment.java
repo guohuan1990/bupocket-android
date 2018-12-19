@@ -31,7 +31,9 @@ import com.bupocket.http.api.dto.resp.GetTokenDetailRespDto;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.model.RegisterStatusInfo;
 import com.bupocket.model.RegisterTokenInfo;
+import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.SocketUtil;
 import com.bupocket.wallet.Wallet;
@@ -192,10 +194,13 @@ public class BPRegisterTokenFragment extends BaseFragment {
         mRegisterConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(Double.valueOf(buBalance) < Double.valueOf(Constants.REGISTER_TOKEN_FEE)){
                     Toast.makeText(getActivity(), R.string.register_token_balance_insufficient_message_txt, Toast.LENGTH_SHORT).show();
                 }else if(getTokenDetailErrorCode.equals("0")){
                     Toast.makeText(getActivity(), R.string.register_already_have_message_txt, Toast.LENGTH_SHORT).show();
+                } else if (DecimalCalculate.compareStringTo(issueAmount, AmountUtil.amountDivision10ForDecimal(String.valueOf(Long.MAX_VALUE), Integer.parseInt(tokenDecimals))) == 1) {
+                    Toast.makeText(getActivity(), R.string.error_token_register_overflow_message_txt, Toast.LENGTH_SHORT).show();
                 }else{
                     showPasswordConfirmDialog();
                 }
