@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.provider.Settings;
 import android.util.Base64;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.bupocket.enums.CurrencyTypeEnum;
 
@@ -736,4 +738,34 @@ public class CommonUtil {
         }
         return null;
     }
+
+    /**
+     * 显示软键盘
+     */
+    public static void showInputMethod(Context context, View view) {
+        if (context == null || view == null) {
+            return;
+        }
+
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    /**
+     * 关闭软键盘
+     */
+    public static boolean hideInputMethod(Context context, View view) {
+        if (context == null || view == null) {
+            return false;
+        }
+
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null && imm.isActive()) {
+            return imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        return false;
+    }
+
 }

@@ -42,10 +42,13 @@ public class BPAssetsAddFragment extends BaseFragment {
     @BindView(R.id.searchTokenEt)
     DrawableEditText mSearchTokenEt;
 
-    SearchTokenAdapter searchTokenAdapter;
+    private SearchTokenAdapter searchTokenAdapter;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentAccAddress;
     private List<SearchTokenRespDto.TokenListBean> respTokenList = new ArrayList<>();
+    private boolean searchLoading = false;
+    private boolean loadFailFlag = false;
+    private String currentSearchInput = "";
 
     @Override
     protected View onCreateView() {
@@ -59,12 +62,20 @@ public class BPAssetsAddFragment extends BaseFragment {
         mSearchTokenEt.setOnDrawableClickListener(new DrawableEditText.OnDrawableClickListener() {
             @Override
             public void onDrawableClick() {
+                if (searchLoading) {
+                    return;
+                }
                 String input = mSearchTokenEt.getText().toString().trim();
                 if(CommonUtil.isNull(input)){
                     mEmptyView.show(getResources().getString(R.string.search_result_not_found),null);
                     return;
                 }
+                if (currentSearchInput.equals(input)) {
+                    return;
+                }
+                currentSearchInput = input;
                 mSearchTokenEt.clearFocus();
+                CommonUtil.hideInputMethod(getContext(), mSearchTokenEt);
                 searchToken(input);
             }
         });
@@ -72,13 +83,21 @@ public class BPAssetsAddFragment extends BaseFragment {
         mSearchTokenEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (searchLoading) {
+                    return false;
+                }
                 String input = mSearchTokenEt.getText().toString().trim();
                 if(CommonUtil.isNull(input)){
                     mEmptyView.show(getResources().getString(R.string.search_result_not_found),null);
                     return false;
                 }
+                if (currentSearchInput.equals(input) && !loadFailFlag) {
+                    return false;
+                }
+                currentSearchInput = input;
                 searchToken(input);
                 mSearchTokenEt.clearFocus();
+                CommonUtil.hideInputMethod(getContext(), mSearchTokenEt);
                 return true;
             }
         });
@@ -87,27 +106,37 @@ public class BPAssetsAddFragment extends BaseFragment {
     }
 
     private void searchToken(String assetCode){
+        searchLoading= true;
+        respTokenList.clear();
+        loadTokenAdapter();
+        mEmptyView.show(true);
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         Map<String, Object> parmasMap = new HashMap<>();
-        parmasMap.put("address",currentAccAddress);
-        parmasMap.put("assetCode",assetCode);
+        parmasMap.put("address", currentAccAddress);
+        parmasMap.put("assetCode", assetCode);
+        parmasMap.put("supportFuzzy", true);
         parmasMap.put("startPage", 1);
         parmasMap.put("pageSize", 100);
         Call<ApiResult<SearchTokenRespDto>> call = tokenService.queryTokens(parmasMap);
         call.enqueue(new Callback<ApiResult<SearchTokenRespDto>>() {
             @Override
             public void onResponse(Call<ApiResult<SearchTokenRespDto>> call, Response<ApiResult<SearchTokenRespDto>> response) {
+                searchLoading= false;
+                loadFailFlag = false;
                 ApiResult<SearchTokenRespDto> respDto = response.body();
                 if(respDto != null){
                     handleSearchTokenData(respDto.getData());
                 }else {
                     respTokenList.clear();
+                    loadTokenAdapter();
                     mEmptyView.show(getResources().getString(R.string.search_result_not_found),null);
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResult<SearchTokenRespDto>> call, Throwable t) {
+                searchLoading= false;
+                loadFailFlag = true;
                 t.printStackTrace();
                 respTokenList.clear();
                 loadTokenAdapter();
@@ -129,8 +158,8 @@ public class BPAssetsAddFragment extends BaseFragment {
 
         }else{
             respTokenList.clear();
+            loadFailFlag = true;
             mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
-            return;
         }
 
         loadTokenAdapter();
