@@ -68,7 +68,7 @@ public class BPSendTokenFragment extends BaseFragment {
     @BindView(R.id.sendFormTxFeeEt)
     EditText sendFormTxFeeEt;
     @BindView(R.id.completeMnemonicCodeBtn)
-    QMUIRoundButton mCompleteMnemonicCodeBtn;
+    QMUIRoundButton mConfirmSendBtn;
     @BindView(R.id.sendFormScanIv)
     ImageView mSendFormScanIv;
     @BindView(R.id.tokenCodeTv)
@@ -113,14 +113,14 @@ public class BPSendTokenFragment extends BaseFragment {
         TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                mCompleteMnemonicCodeBtn.setEnabled(false);
-                mCompleteMnemonicCodeBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+                mConfirmSendBtn.setEnabled(false);
+                mConfirmSendBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mCompleteMnemonicCodeBtn.setEnabled(false);
-                mCompleteMnemonicCodeBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+                mConfirmSendBtn.setEnabled(false);
+                mConfirmSendBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
             }
 
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -130,11 +130,11 @@ public class BPSendTokenFragment extends BaseFragment {
                 boolean signAmount = sendAmountET.getText().length() > 0;
                 boolean signTxFee = sendFormTxFeeEt.getText().length() > 0;
                 if(signAccountAddress && signAmount && signTxFee){
-                    mCompleteMnemonicCodeBtn.setEnabled(true);
-                    mCompleteMnemonicCodeBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
+                    mConfirmSendBtn.setEnabled(true);
+                    mConfirmSendBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
                 }else {
-                    mCompleteMnemonicCodeBtn.setEnabled(false);
-                    mCompleteMnemonicCodeBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
+                    mConfirmSendBtn.setEnabled(false);
+                    mConfirmSendBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
             }
         };
@@ -251,7 +251,7 @@ public class BPSendTokenFragment extends BaseFragment {
 
     private void confirmSendInfo(){
 
-        mCompleteMnemonicCodeBtn.setOnClickListener(new View.OnClickListener() {
+        mConfirmSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final QMUITipDialog tipDialog;
@@ -289,7 +289,7 @@ public class BPSendTokenFragment extends BaseFragment {
 
 
 
-                final String sendAmount = sendAmountET.getText().toString().trim();
+                final String sendAmount = CommonUtil.rvZeroAndDot(sendAmountET.getText().toString().trim());
                 if(!CommonUtil.isBU(sendAmount) || CommonUtil.isNull(sendAmount) || CommonUtil.checkSendAmountDecimals(sendAmount,tokenDecimals)){
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.invalid_amount))
@@ -329,7 +329,7 @@ public class BPSendTokenFragment extends BaseFragment {
                     }, 1500);
                     return;
                 }
-                if (Double.parseDouble(sendAmount) > com.bupocket.common.Constants.MAX_SEND_AMOUNT) {
+                if ((TokenTypeEnum.BU.getCode().equals(tokenType)) && (Double.parseDouble(sendAmount) > com.bupocket.common.Constants.MAX_SEND_AMOUNT)) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(CommonUtil.addSuffix(getResources().getString(R.string.amount_too_big),tokenCode))
                             .create();
@@ -359,24 +359,11 @@ public class BPSendTokenFragment extends BaseFragment {
                     return;
                 }
 
-                final String txFee = sendFormTxFeeEt.getText().toString();
+                final String txFee = CommonUtil.rvZeroAndDot(sendFormTxFeeEt.getText().toString());
 
-                if(!CommonUtil.isBU(txFee) || CommonUtil.isNull(txFee)){
+                if(!CommonUtil.isBU(txFee) || CommonUtil.isNull(txFee) || CommonUtil.checkSendAmountDecimals(txFee, Constants.BU_DECIMAL.toString())){
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.invalid_tx_fee))
-                            .create();
-                    tipDialog.show();
-                    sendFormTxFeeEt.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            tipDialog.dismiss();
-                        }
-                    }, 1500);
-                    return;
-                }
-                if (Double.parseDouble(txFee) < com.bupocket.common.Constants.MIN_FEE) {
-                    tipDialog = new QMUITipDialog.Builder(getContext())
-                            .setTipWord(getResources().getString(R.string.tx_fee_too_small))
                             .create();
                     tipDialog.show();
                     sendFormTxFeeEt.postDelayed(new Runnable() {

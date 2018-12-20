@@ -2,11 +2,13 @@ package com.bupocket.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -133,13 +135,19 @@ public class BPRegisterTokenFragment extends BaseFragment {
         parmasMap.put("issueAddress",issueAddress);
         Call<ApiResult<GetTokenDetailRespDto>> call = tokenService.getTokenDetail(parmasMap);
         call.enqueue(new Callback<ApiResult<GetTokenDetailRespDto>>() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onResponse(Call<ApiResult<GetTokenDetailRespDto>> call, Response<ApiResult<GetTokenDetailRespDto>> response) {
                 getTokenDetailErrorCode = response.body().getErrCode();
+                mRegisterConfirmBtn.setEnabled(true);
+                mRegisterConfirmBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onFailure(Call<ApiResult<GetTokenDetailRespDto>> call, Throwable t) {
+                mRegisterConfirmBtn.setEnabled(false);
+                mRegisterConfirmBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
             }
         });
