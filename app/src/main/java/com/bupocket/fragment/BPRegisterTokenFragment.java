@@ -324,8 +324,8 @@ public class BPRegisterTokenFragment extends BaseFragment {
             switch (msg.what) {
                 case 1:
                     if(timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES){
-                        timerTask.cancel();
                         txSendingTipDialog.dismiss();
+                        timerTask.cancel();
                         Bundle argz = new Bundle();
                         argz.putString("txStatus","timeout");
                         argz.putString("tokenName",tokenName);

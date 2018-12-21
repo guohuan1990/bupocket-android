@@ -289,8 +289,9 @@ public class BPSendTokenFragment extends BaseFragment {
 
 
 
+                String sendAmountInput = sendAmountET.getText().toString().trim();
                 final String sendAmount = CommonUtil.rvZeroAndDot(sendAmountET.getText().toString().trim());
-                if(!CommonUtil.isBU(sendAmount) || CommonUtil.isNull(sendAmount) || CommonUtil.checkSendAmountDecimals(sendAmount,tokenDecimals)){
+                if(!CommonUtil.isBU(sendAmountInput) || CommonUtil.isNull(sendAmountInput) || CommonUtil.checkSendAmountDecimals(sendAmountInput,tokenDecimals)){
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.invalid_amount))
                             .create();
@@ -303,7 +304,7 @@ public class BPSendTokenFragment extends BaseFragment {
                     }, 1500);
                     return;
                 }
-                if (Double.parseDouble(sendAmount) < com.bupocket.common.Constants.MIN_SEND_AMOUNT) {
+                if (Double.parseDouble(sendAmountInput) < com.bupocket.common.Constants.MIN_SEND_AMOUNT) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(CommonUtil.addSuffix(CommonUtil.addSuffix(getResources().getString(R.string.amount_too_small),CommonUtil.calculateMinSendAmount(tokenDecimals)),tokenCode))
                             .create();
@@ -316,7 +317,7 @@ public class BPSendTokenFragment extends BaseFragment {
                     }, 1500);
                     return;
                 }
-                if(Double.parseDouble(mAccountAvailableBalanceTv.getText().toString()) < Double.parseDouble(sendAmount)){
+                if(Double.parseDouble(mAccountAvailableBalanceTv.getText().toString()) < Double.parseDouble(sendAmountInput)){
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.balance_not_enough))
                             .create();
@@ -329,7 +330,7 @@ public class BPSendTokenFragment extends BaseFragment {
                     }, 1500);
                     return;
                 }
-                if ((TokenTypeEnum.BU.getCode().equals(tokenType)) && (Double.parseDouble(sendAmount) > com.bupocket.common.Constants.MAX_SEND_AMOUNT)) {
+                if ((TokenTypeEnum.BU.getCode().equals(tokenType)) && (Double.parseDouble(sendAmountInput) > com.bupocket.common.Constants.MAX_SEND_AMOUNT)) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(CommonUtil.addSuffix(getResources().getString(R.string.amount_too_big),tokenCode))
                             .create();
@@ -613,6 +614,9 @@ public class BPSendTokenFragment extends BaseFragment {
                                 txDeatilRespBoBean = resp.getData().getTxDeatilRespBo();
                                 timerTask.cancel();
                                 txSendingTipDialog.dismiss();
+                                if (ExceptionEnum.BU_NOT_ENOUGH_FOR_PAYMENT.getCode().equals(txDeatilRespBoBean.getErrorCode())) {
+                                    Toast.makeText(getActivity(), R.string.balance_not_enough, Toast.LENGTH_SHORT).show();
+                                }
                                 Bundle argz = new Bundle();
                                 argz.putString("destAccAddr",txDeatilRespBoBean.getDestAddress());
                                 argz.putString("sendAmount",txDeatilRespBoBean.getAmount());

@@ -1,6 +1,7 @@
 package com.bupocket.wallet.enums;
 
 public enum ExceptionEnum {
+    BU_NOT_ENOUGH_FOR_PAYMENT("100", "bu not enough for payment"),
     SYS_ERR("10000","system exception"),
     INVALID_PASSWORD("10001","Invalid password"),
     FEE_NOT_ENOUGH("10002","Fee not enough"),
