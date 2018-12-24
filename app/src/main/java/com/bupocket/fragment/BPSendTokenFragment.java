@@ -607,7 +607,6 @@ public class BPSendTokenFragment extends BaseFragment {
                         @Override
                         public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
                             ApiResult<TxDetailRespDto> resp = response.body();
-                            System.out.println(JSON.toJSONString(resp));
                             if(!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())){
                                 return;
                             }else{
