@@ -405,18 +405,8 @@ public class BPIssueTokenFragment extends BaseFragment {
                         @Override
                         public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
                             timerTask.cancel();
-                            Bundle argz = new Bundle();
-                            argz.putString("txStatus","timeout");
-                            argz.putString("assetName",assetName);
-                            argz.putString("assetCode",assetCode);
-                            argz.putString("issueAmount",issueAmount);
-                            argz.putString("totalSupply",totalSupply);
-                            argz.putString("tokenDecimals",tokenDecimals);
-                            argz.putString("tokenDescription",tokenDescription);
-                            argz.putString("issueAddress",issueAddress);
-                            BPIssueTokenStatusFragment bpIssueTokenStatusFragment = new BPIssueTokenStatusFragment();
-                            bpIssueTokenStatusFragment.setArguments(argz);
-                            startFragmentAndDestroyCurrent(bpIssueTokenStatusFragment);
+                            txSendingTipDialog.dismiss();
+                            Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
                         }
                     });
                     break;
