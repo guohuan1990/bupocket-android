@@ -86,7 +86,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
     private String tokenDesc;
     private String issueAddress;
     private String getTokenDetailErrorCode;
-    private String buBalance;
+    private String buBalance = "";
     protected SharedPreferencesHelper sharedPreferencesHelper;
     QMUITipDialog txSendingTipDialog;
     private String hash;
@@ -340,7 +340,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
                         return;
                     }
                     timerTimes++;
-                    System.out.println("timerTimes:" + timerTimes);
+                    System.out.println("timerTimes: " + timerTimes);
                     TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
                     Map<String, Object> parmasMap = new HashMap<>();
                     parmasMap.put("hash",hash);
