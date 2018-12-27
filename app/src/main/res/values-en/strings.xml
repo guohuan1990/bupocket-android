@@ -59,6 +59,7 @@
     <string name="wallet_scan_notice">Automatically scan the QR code in the box</string>
     <string name="wallet_scan_cancel">Cancel</string>
     <string name="recently_tx_txt">Transaction history</string>
+    <string name="no_recently_tx_record">No transaction records</string>
     <string name="tx_status_success_txt">Succeeded</string>
     <string name="tx_status_fail_txt">Failed</string>
     <string name="tx_status_success_txt1">Succeeded</string>

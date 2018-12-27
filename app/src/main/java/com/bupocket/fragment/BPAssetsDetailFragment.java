@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +61,8 @@ public class BPAssetsDetailFragment extends BaseFragment {
     RefreshLayout refreshLayout;
     @BindView(R.id.emptyView)
     QMUIEmptyView mEmptyView;
+    @BindView(R.id.recentlyTxRecordEmptyLL)
+    LinearLayout mRecentlyTxRecordEmptyLL;
     @BindView(R.id.myTokenTxLv)
     ListView mMyTokenTxLv;
     @BindView(R.id.walletScanBtn)
@@ -220,9 +223,11 @@ public class BPAssetsDetailFragment extends BaseFragment {
             mAmountTv.setText(CommonUtil.rvZeroAndDot(tokenBalance) + " " + assetCode);
             mAssetAmountTv.setText(CommonUtil.addCurrencySymbol(assetAmount,currencyType));
             if(getMyTxsRespDto.getTxRecord() == null || getMyTxsRespDto.getTxRecord().size() == 0) {
-                mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
+//                mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
+                showOrHideNoRecord(true);
                 return;
             }else{
+                showOrHideNoRecord(false);
                 mEmptyView.show(null, null);
             }
 
@@ -301,6 +306,16 @@ public class BPAssetsDetailFragment extends BaseFragment {
         currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
         currencyType = sharedPreferencesHelper.getSharedPreference("currencyType","CNY").toString();
         refreshData();
+    }
+
+    private void showOrHideNoRecord(boolean showFlag) {
+        if (showFlag) {
+            mRecentlyTxRecordEmptyLL.setVisibility(View.VISIBLE);
+            mMyTokenTxLv.setVisibility(View.GONE);
+        } else {
+            mRecentlyTxRecordEmptyLL.setVisibility(View.GONE);
+            mMyTokenTxLv.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initTopBar() {
