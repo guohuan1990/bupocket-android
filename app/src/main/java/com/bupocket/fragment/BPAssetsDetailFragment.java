@@ -69,6 +69,8 @@ public class BPAssetsDetailFragment extends BaseFragment {
     QMUIRoundButton mWalletScanBtn;
     @BindView(R.id.walletSendBtn)
     QMUIRoundButton mWalletSendBtn;
+    @BindView(R.id.myTokenTxTitleTv)
+    TextView mMyTokenTxTitleTv;
 
     protected SharedPreferencesHelper sharedPreferencesHelper;
     private String assetCode;
@@ -221,7 +223,11 @@ public class BPAssetsDetailFragment extends BaseFragment {
             tokenBalance = getMyTxsRespDto.getAssetData().getBalance();
             assetAmount = getMyTxsRespDto.getAssetData().getTotalAmount();
             mAmountTv.setText(CommonUtil.rvZeroAndDot(tokenBalance) + " " + assetCode);
-            mAssetAmountTv.setText(CommonUtil.addCurrencySymbol(assetAmount,currencyType));
+            if("~".equals(assetAmount)){
+                mAssetAmountTv.setText(assetAmount);
+            }else{
+                mAssetAmountTv.setText(CommonUtil.addCurrencySymbol(assetAmount,currencyType));
+            }
             if(getMyTxsRespDto.getTxRecord() == null || getMyTxsRespDto.getTxRecord().size() == 0) {
 //                mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
                 showOrHideNoRecord(true);
@@ -312,6 +318,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
         if (showFlag) {
             mRecentlyTxRecordEmptyLL.setVisibility(View.VISIBLE);
             mMyTokenTxLv.setVisibility(View.GONE);
+            mMyTokenTxTitleTv.setVisibility(View.GONE);
         } else {
             mRecentlyTxRecordEmptyLL.setVisibility(View.GONE);
             mMyTokenTxLv.setVisibility(View.VISIBLE);
