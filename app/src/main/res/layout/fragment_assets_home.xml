@@ -37,16 +37,31 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/currentTestNetTipsTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:gravity="center"
-                        android:paddingLeft="35dp"
-                        android:paddingRight="35dp"
-                        android:textColor="@color/app_color_green"
-                        android:textSize="15sp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/currentTestNetTipsTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/app_color_green"
+                            android:paddingTop="10dp"
+                            android:paddingRight="35dp"
+                            android:paddingLeft="35dp"
+                            android:gravity="center"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:id="@+id/manageWalletBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/icon_wallet_white"
+                            android:layout_alignParentRight="true"
+                            android:paddingRight="10dp"
+                            android:paddingTop="10dp"/>
+                    </RelativeLayout>
 
 
                     <LinearLayout
