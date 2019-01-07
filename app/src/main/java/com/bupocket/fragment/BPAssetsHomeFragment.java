@@ -352,6 +352,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
     private void initData() {
         QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
+//        QMUIStatusBarHelper.translucent(getActivity());
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
         currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();

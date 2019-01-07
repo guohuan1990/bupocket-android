@@ -6,6 +6,8 @@ import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import com.bupocket.utils.CommonUtil;
+
 public class DrawableEditText extends AppCompatEditText {
     final int DRAWABLE_LEFT = 0;
     final int DRAWABLE_TOP = 1;
@@ -39,6 +41,7 @@ public class DrawableEditText extends AppCompatEditText {
                 if (event.getX() >= (getWidth() - getPaddingRight() - drawableRight.getIntrinsicWidth())) {
                     setFocusableInTouchMode(false);
                     setFocusable(false);
+                    CommonUtil.hideInputMethod(getContext(), getRootView());
                     if (OnDrawableClickListener != null) {
                         OnDrawableClickListener.onDrawableClick();
                     }

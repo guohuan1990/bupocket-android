@@ -59,30 +59,24 @@
             android:layout_height="25dp"
             android:orientation="horizontal"
             android:layout_gravity="center_vertical">
-            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            <ImageView
                 android:id="@+id/tokenOptAddBtn"
                 android:layout_width="53dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="0dp"
                 android:focusable="false"
                 android:text="@string/add_token_btn_txt"
-                app:qmui_borderColor="@color/app_color_main"
-                app:qmui_backgroundColor="@color/app_color_main"
-                app:qmui_radius="1dp"
-                android:textColor="@color/app_color_font"
+                android:src="@mipmap/icon_switch_normal"
                 android:visibility="visible" />
 
-            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            <ImageView
                 android:id="@+id/tokenOptCancelCBtn"
                 android:layout_width="53dp"
                 android:layout_height="25dp"
                 android:text="@string/delete_token_btn_txt"
                 android:layout_marginRight="0dp"
                 android:focusable="false"
-                app:qmui_borderColor="@color/app_color_main"
-                app:qmui_backgroundColor="@color/app_color_main"
-                app:qmui_radius="1dp"
-                android:textColor="@color/app_color_font"
+                android:src="@mipmap/icon_switch_checked"
                 android:visibility="gone" />
         </LinearLayout>
 

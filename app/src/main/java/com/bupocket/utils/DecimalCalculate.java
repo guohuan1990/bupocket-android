@@ -45,6 +45,17 @@ public class DecimalCalculate {
         return b1.multiply(b2).doubleValue();
     }
     /**
+     * 提供精确的乘法运算。
+     * @param v1 被乘数
+     * @param v2 乘数
+     * @return 两个参数的积
+     */
+    public static double mulStr(String v1,String v2){
+        BigDecimal b1 = new BigDecimal(v1);
+        BigDecimal b2 = new BigDecimal(v2);
+        return b1.multiply(b2).doubleValue();
+    }
+    /**
      * 提供（相对）精确的除法运算，当发生除不尽的情况时，精确到
      * 小数点以后10位，以后的数字四舍五入。
      * @param v1 被除数
@@ -144,6 +155,17 @@ public class DecimalCalculate {
      * @return 如果两个数一样则返回0，如果第一个数比第二个数大则返回1，反之返回-1
      */
     public static int compareTo(double v1,double v2){
+        BigDecimal b1 = new BigDecimal(v1);
+        BigDecimal b2 = new BigDecimal(v2);
+        return b1.compareTo(b2);
+    }
+    /**
+     * 精确对比两个字符串
+     * @param v1 需要被对比的第一个数
+     * @param v2 需要被对比的第二个数
+     * @return 如果两个数一样则返回0，如果第一个数比第二个数大则返回1，反之返回-1
+     */
+    public static int compareStringTo(String v1,String v2){
         BigDecimal b1 = new BigDecimal(v1);
         BigDecimal b2 = new BigDecimal(v2);
         return b1.compareTo(b2);

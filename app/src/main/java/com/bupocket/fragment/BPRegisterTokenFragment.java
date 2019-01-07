@@ -2,11 +2,13 @@ package com.bupocket.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +33,9 @@ import com.bupocket.http.api.dto.resp.GetTokenDetailRespDto;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.model.RegisterStatusInfo;
 import com.bupocket.model.RegisterTokenInfo;
+import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.SocketUtil;
 import com.bupocket.wallet.Wallet;
@@ -82,7 +86,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
     private String tokenDesc;
     private String issueAddress;
     private String getTokenDetailErrorCode;
-    private String buBalance;
+    private String buBalance = "";
     protected SharedPreferencesHelper sharedPreferencesHelper;
     QMUITipDialog txSendingTipDialog;
     private String hash;
@@ -131,13 +135,19 @@ public class BPRegisterTokenFragment extends BaseFragment {
         parmasMap.put("issueAddress",issueAddress);
         Call<ApiResult<GetTokenDetailRespDto>> call = tokenService.getTokenDetail(parmasMap);
         call.enqueue(new Callback<ApiResult<GetTokenDetailRespDto>>() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onResponse(Call<ApiResult<GetTokenDetailRespDto>> call, Response<ApiResult<GetTokenDetailRespDto>> response) {
                 getTokenDetailErrorCode = response.body().getErrCode();
+                mRegisterConfirmBtn.setEnabled(true);
+                mRegisterConfirmBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onFailure(Call<ApiResult<GetTokenDetailRespDto>> call, Throwable t) {
+                mRegisterConfirmBtn.setEnabled(false);
+                mRegisterConfirmBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
             }
         });
@@ -192,10 +202,13 @@ public class BPRegisterTokenFragment extends BaseFragment {
         mRegisterConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(Double.valueOf(buBalance) < Double.valueOf(Constants.REGISTER_TOKEN_FEE)){
                     Toast.makeText(getActivity(), R.string.register_token_balance_insufficient_message_txt, Toast.LENGTH_SHORT).show();
                 }else if(getTokenDetailErrorCode.equals("0")){
                     Toast.makeText(getActivity(), R.string.register_already_have_message_txt, Toast.LENGTH_SHORT).show();
+                } else if (DecimalCalculate.compareStringTo(issueAmount, AmountUtil.amountDivision10ForDecimal(String.valueOf(Long.MAX_VALUE), Integer.parseInt(tokenDecimals))) == 1) {
+                    Toast.makeText(getActivity(), R.string.error_token_register_overflow_message_txt, Toast.LENGTH_SHORT).show();
                 }else{
                     showPasswordConfirmDialog();
                 }
@@ -311,8 +324,8 @@ public class BPRegisterTokenFragment extends BaseFragment {
             switch (msg.what) {
                 case 1:
                     if(timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES){
-                        timerTask.cancel();
                         txSendingTipDialog.dismiss();
+                        timerTask.cancel();
                         Bundle argz = new Bundle();
                         argz.putString("txStatus","timeout");
                         argz.putString("tokenName",tokenName);
@@ -327,7 +340,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
                         return;
                     }
                     timerTimes++;
-                    System.out.println("timerTimes:" + timerTimes);
+                    System.out.println("timerTimes: " + timerTimes);
                     TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
                     Map<String, Object> parmasMap = new HashMap<>();
                     parmasMap.put("hash",hash);
@@ -337,7 +350,6 @@ public class BPRegisterTokenFragment extends BaseFragment {
                         @Override
                         public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
                             ApiResult<TxDetailRespDto> resp = response.body();
-                            System.out.println(JSON.toJSONString(resp));
                             if(!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())){
                                 return;
                             }else{
@@ -364,17 +376,8 @@ public class BPRegisterTokenFragment extends BaseFragment {
                         @Override
                         public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
                             timerTask.cancel();
-                            Bundle argz = new Bundle();
-                            argz.putString("txStatus","timeout");
-                            argz.putString("tokenName",tokenName);
-                            argz.putString("tokenCode",tokenCode);
-                            argz.putString("issueAmount",issueAmount);
-                            argz.putString("tokenDecimals",tokenDecimals);
-                            argz.putString("tokenDesc",tokenDesc);
-                            argz.putString("issueAddress",issueAddress);
-                            BPRegisterTokenStatusFragment bpRegisterTokenStatusFragment = new BPRegisterTokenStatusFragment();
-                            bpRegisterTokenStatusFragment.setArguments(argz);
-                            startFragmentAndDestroyCurrent(bpRegisterTokenStatusFragment);
+                            txSendingTipDialog.dismiss();
+                            Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
                         }
                     });
                     break;

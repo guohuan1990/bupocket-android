@@ -115,6 +115,15 @@ public class TxDetailRespDto {
         private String txMetadata;
         private String operaMetadata;
         private String errorMsg;
+        private String errorCode;
+
+        public String getErrorCode() {
+            return errorCode;
+        }
+
+        public void setErrorCode(String errorCode) {
+            this.errorCode = errorCode;
+        }
 
         public String getAmount() {
             return amount;

@@ -59,6 +59,7 @@
     <string name="wallet_scan_notice" >将二维码放入框中，即可自动扫描</string>
     <string name="wallet_scan_cancel" >取消扫描</string>
     <string name="recently_tx_txt">最近交易记录</string>
+    <string name="no_recently_tx_record">暂无交易记录</string>
     <string name="tx_status_success_txt" >成功</string>
     <string name="tx_status_fail_txt" >失败</string>
     <string name="tx_status_success_txt1" >转账成功</string>
@@ -152,9 +153,8 @@
     <string name="send_err1" >不能给自己转账</string>
     <string name="invalid_amount" >无效的转账数量</string>
     <string name="amount_too_small" >转账数量单笔不可少于</string>
-    <string name="amount_too_big" >转账数量单笔不可超过 1000000000</string>
+    <string name="amount_too_big" >转账数量单笔不可超过 1,000,000</string>
     <string name="invalid_tx_fee" >最多支付交易费用格式有误，请重新输入</string>
-    <string name="tx_fee_too_small">最多支付交易费用不可少于 0.01 BU</string>
     <string name="tx_fee_too_big">最多支付交易费用不可超过10 BU</string>
     <string name="balance_not_enough" >可用余额不足</string>
     <string name="send_token_note_too_long" >备注信息不能超过20个字</string>
@@ -288,6 +288,7 @@
     <string name="register_token_balance_insufficient_message_txt">您的BU余额不足，无法登记资产，请充值</string>
     <string name="register_already_have_message_txt">您已登记过该资产</string>
     <string name="token_version">ATP10</string>
+    <string name="error_token_register_overflow_message_txt">您的资产登记总量超过了最大上限</string>
     <string name="error_issue_amount_message_txt">无效的发行量</string>
     <string name="error_issue_unregistered_message_txt">您所发行的资产代码：%1$s暂未登记，无法发行</string>
     <string name="error_issue_already_issue_message_txt">您已发行过该资产</string>

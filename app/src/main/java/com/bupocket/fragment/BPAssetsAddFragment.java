@@ -24,6 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,12 +39,18 @@ public class BPAssetsAddFragment extends BaseFragment {
     @BindView(R.id.emptyView)
     QMUIEmptyView mEmptyView;
 
+    @BindView(R.id.searchResultEmptyLL)
+    LinearLayout mSearchResultEmptyLL;
+
     @BindView(R.id.searchTokenEt)
     DrawableEditText mSearchTokenEt;
 
-    SearchTokenAdapter searchTokenAdapter;
+    private SearchTokenAdapter searchTokenAdapter;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentAccAddress;
+    private List<SearchTokenRespDto.TokenListBean> respTokenList = new ArrayList<>();
+    private boolean searchLoading = false;
+    private boolean loadFailFlag = false;
 
     @Override
     protected View onCreateView() {
@@ -57,12 +64,19 @@ public class BPAssetsAddFragment extends BaseFragment {
         mSearchTokenEt.setOnDrawableClickListener(new DrawableEditText.OnDrawableClickListener() {
             @Override
             public void onDrawableClick() {
+                if (searchLoading) {
+                    return;
+                }
+                mSearchResultEmptyLL.setVisibility(View.GONE);
                 String input = mSearchTokenEt.getText().toString().trim();
                 if(CommonUtil.isNull(input)){
-                    mEmptyView.show(getResources().getString(R.string.search_result_not_found),null);
+//                    mEmptyView.show(getResources().getString(R.string.search_result_not_found),null);
+                    mEmptyView.show(false);
+                    showOrHideNoResult(true);
                     return;
                 }
                 mSearchTokenEt.clearFocus();
+                CommonUtil.hideInputMethod(getContext(), mSearchTokenEt);
                 searchToken(input);
             }
         });
@@ -70,13 +84,19 @@ public class BPAssetsAddFragment extends BaseFragment {
         mSearchTokenEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (searchLoading) {
+                    return false;
+                }
+                mSearchResultEmptyLL.setVisibility(View.GONE);
                 String input = mSearchTokenEt.getText().toString().trim();
                 if(CommonUtil.isNull(input)){
-                    mEmptyView.show(getResources().getString(R.string.search_result_not_found),null);
+                    mEmptyView.show(false);
+                    showOrHideNoResult(true);
                     return false;
                 }
                 searchToken(input);
                 mSearchTokenEt.clearFocus();
+                CommonUtil.hideInputMethod(getContext(), mSearchTokenEt);
                 return true;
             }
         });
@@ -85,48 +105,85 @@ public class BPAssetsAddFragment extends BaseFragment {
     }
 
     private void searchToken(String assetCode){
+        searchLoading= true;
+        respTokenList.clear();
+        loadTokenAdapter();
+        mEmptyView.show(true);
+        showOrHideNoResult(false);
+        mSearchResultEmptyLL.setVisibility(View.GONE);
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         Map<String, Object> parmasMap = new HashMap<>();
-        parmasMap.put("address",currentAccAddress);
-        parmasMap.put("assetCode",assetCode);
+        parmasMap.put("address", currentAccAddress);
+        parmasMap.put("assetCode", assetCode);
+        parmasMap.put("supportFuzzy", true);
         parmasMap.put("startPage", 1);
         parmasMap.put("pageSize", 100);
         Call<ApiResult<SearchTokenRespDto>> call = tokenService.queryTokens(parmasMap);
         call.enqueue(new Callback<ApiResult<SearchTokenRespDto>>() {
             @Override
             public void onResponse(Call<ApiResult<SearchTokenRespDto>> call, Response<ApiResult<SearchTokenRespDto>> response) {
+                searchLoading= false;
+                loadFailFlag = false;
                 ApiResult<SearchTokenRespDto> respDto = response.body();
                 if(respDto != null){
                     handleSearchTokenData(respDto.getData());
                 }else {
-                    mEmptyView.show(getResources().getString(R.string.search_result_not_found),null);
+                    respTokenList.clear();
+                    loadTokenAdapter();
+                    mEmptyView.show(false);
+                    showOrHideNoResult(true);
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResult<SearchTokenRespDto>> call, Throwable t) {
+                searchLoading= false;
+                loadFailFlag = true;
                 t.printStackTrace();
+                respTokenList.clear();
+                loadTokenAdapter();
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
             }
         });
     }
 
     private void handleSearchTokenData(SearchTokenRespDto searchTokenRespDto){
+
         if(searchTokenRespDto != null || null != searchTokenRespDto.getTokenList()){
             if(searchTokenRespDto.getTokenList() == null || searchTokenRespDto.getTokenList().size() == 0) {
-                mEmptyView.show(getResources().getString(R.string.search_result_not_found), null);
+                respTokenList.clear();
+                mEmptyView.show(false);
+                showOrHideNoResult(true);
             }else{
+                respTokenList = searchTokenRespDto.getTokenList();
                 mEmptyView.show(null, null);
+                loadTokenAdapter();
             }
 
         }else{
+            respTokenList.clear();
+            loadFailFlag = true;
             mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
-            return;
+            loadTokenAdapter();
         }
+    }
 
-        searchTokenAdapter = new SearchTokenAdapter(searchTokenRespDto.getTokenList(), getContext());
+    private void loadTokenAdapter() {
+        mSearchTokenListView.setVisibility(View.VISIBLE);
+        searchTokenAdapter = new SearchTokenAdapter(respTokenList, getContext());
         mSearchTokenListView.setAdapter(searchTokenAdapter);
+    }
 
+    private void showOrHideNoResult(boolean showFlag) {
+        if (showFlag) {
+//            show
+            mSearchResultEmptyLL.setVisibility(View.VISIBLE);
+            mSearchTokenListView.setVisibility(View.GONE);
+        } else {
+//            hide
+            mSearchResultEmptyLL.setVisibility(View.GONE);
+            mSearchTokenListView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initTopBar() {

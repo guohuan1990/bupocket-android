@@ -59,10 +59,11 @@
     <string name="wallet_scan_notice">Automatically scan the QR code in the box</string>
     <string name="wallet_scan_cancel">Cancel</string>
     <string name="recently_tx_txt">Transaction history</string>
-    <string name="tx_status_success_txt">Succeeded</string>
-    <string name="tx_status_fail_txt">Failed</string>
-    <string name="tx_status_success_txt1">Succeeded</string>
-    <string name="tx_status_fail_txt1">Failed</string>
+    <string name="no_recently_tx_record">No transaction records</string>
+    <string name="tx_status_success_txt">Success</string>
+    <string name="tx_status_fail_txt">Failure</string>
+    <string name="tx_status_success_txt1">Success</string>
+    <string name="tx_status_fail_txt1">Failure</string>
     <string name="tx_timeout_txt1">Request timeout</string>
 
     <string name="password_comfirm_dialog_title">Confirm password</string>
@@ -119,7 +120,7 @@
     <!-- 二维码页面 -->
     <string name="qr_pocket_address_title">Wallet address</string>
     <string name="qr_cancel_btn_des">Cancel</string>
-    <string name="qr_copy_btn_text">Copy wallet address</string>
+    <string name="qr_copy_btn_text">Copy the wallet address</string>
     <string name="qr_pic_name_text">QR code of the wallet address </string>
     <string name="qr_copy_success_message">It has been copied to the clipboard</string>
     <!-- 我的 -->
@@ -151,9 +152,8 @@
     <string name="send_err1">You can\'t transfer BU to yourself</string>
     <string name="invalid_amount">Invalid transfer amount</string>
     <string name="amount_too_small">Each transfer cannot be less than</string>
-    <string name="amount_too_big">Each transfer cannot exceed 100,000,000</string>
+    <string name="amount_too_big">Each transfer cannot exceed 1,000,000</string>
     <string name="invalid_tx_fee">The format of maximum payment transaction fee is incorrect. Please enter again</string>
-    <string name="tx_fee_too_small">The maximum transaction fee cannot be less than 0.005 BU</string>
     <string name="balance_not_enough">Insufficient balance available</string>
     <string name="send_token_note_too_long">Remarks cannot exceed 20 characterscharacters</string>
     <string name="send_loading">Processing...</string>
@@ -183,7 +183,7 @@
 
 
     <string name="help_title_txt">Your questions or suggestions</string>
-    <string name="contact_title_txt">Your contact</string>
+    <string name="contact_title_txt">Your contacts</string>
     <string name="help_hint">Please enter your questions or suggestions</string>
     <string name="contact_hint">Please enter your contacts</string>
     <string name="submit_feedback_btn_txt">Submit</string>
@@ -289,6 +289,7 @@
     <string name="register_token_balance_insufficient_message_txt">Your BU balance is insufficient and you cannot register your tokens. Please recharge</string>
     <string name="register_already_have_message_txt">You have already registered this token</string>
     <string name="token_version">ATP10</string>
+    <string name="error_token_register_overflow_message_txt">The tokens you have registered have exceeded the maximum limit</string>
     <string name="error_issue_amount_message_txt">Invalid circulation</string>
     <string name="error_issue_unregistered_message_txt">The code of your issued tokens:%1$s has not been registered yet, so it cannot be issued.</string>
     <string name="error_issue_already_issue_message_txt">You have already issued the token</string>
@@ -311,7 +312,7 @@
     <string name="current_test_message_txt">The current environment is the test network environment</string>
     <string name="identity_id_explain_txt">It is used to secure the data that you store on the blockchain, which is stored in a distributed manner. Only those who have the identity can use the data, so as to ensure that your data sovereignty is not violated.</string>
 
-    <string name="receive_qr_txt">Payment code</string>
+    <string name="receive_qr_txt">Receive</string>
     <string name="safety_tips_title">Safety tips</string>
     <string name="safety_tips_content_txt">Your wallet mnemonics have not been backed up. To prevent loss of assets due to forgetting passwords, deleting apps, or losing your phone, be sure to back up your mnemonics.</string>
     <string name="backup_immediately_txt">Back up now</string>
