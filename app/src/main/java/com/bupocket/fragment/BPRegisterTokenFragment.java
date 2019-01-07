@@ -86,7 +86,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
     private String tokenDesc;
     private String issueAddress;
     private String getTokenDetailErrorCode;
-    private String buBalance;
+    private String buBalance = "";
     protected SharedPreferencesHelper sharedPreferencesHelper;
     QMUITipDialog txSendingTipDialog;
     private String hash;
@@ -340,7 +340,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
                         return;
                     }
                     timerTimes++;
-                    System.out.println("timerTimes:" + timerTimes);
+                    System.out.println("timerTimes: " + timerTimes);
                     TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
                     Map<String, Object> parmasMap = new HashMap<>();
                     parmasMap.put("hash",hash);
@@ -376,17 +376,8 @@ public class BPRegisterTokenFragment extends BaseFragment {
                         @Override
                         public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
                             timerTask.cancel();
-                            Bundle argz = new Bundle();
-                            argz.putString("txStatus","timeout");
-                            argz.putString("tokenName",tokenName);
-                            argz.putString("tokenCode",tokenCode);
-                            argz.putString("issueAmount",issueAmount);
-                            argz.putString("tokenDecimals",tokenDecimals);
-                            argz.putString("tokenDesc",tokenDesc);
-                            argz.putString("issueAddress",issueAddress);
-                            BPRegisterTokenStatusFragment bpRegisterTokenStatusFragment = new BPRegisterTokenStatusFragment();
-                            bpRegisterTokenStatusFragment.setArguments(argz);
-                            startFragmentAndDestroyCurrent(bpRegisterTokenStatusFragment);
+                            txSendingTipDialog.dismiss();
+                            Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
                         }
                     });
                     break;

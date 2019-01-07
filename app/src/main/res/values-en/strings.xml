@@ -59,10 +59,11 @@
     <string name="wallet_scan_notice">Automatically scan the QR code in the box</string>
     <string name="wallet_scan_cancel">Cancel</string>
     <string name="recently_tx_txt">Transaction history</string>
-    <string name="tx_status_success_txt">Succeeded</string>
-    <string name="tx_status_fail_txt">Failed</string>
-    <string name="tx_status_success_txt1">Succeeded</string>
-    <string name="tx_status_fail_txt1">Failed</string>
+    <string name="no_recently_tx_record">No transaction records</string>
+    <string name="tx_status_success_txt">Success</string>
+    <string name="tx_status_fail_txt">Failure</string>
+    <string name="tx_status_success_txt1">Success</string>
+    <string name="tx_status_fail_txt1">Failure</string>
     <string name="tx_timeout_txt1">Request timeout</string>
 
     <string name="password_comfirm_dialog_title">Confirm password</string>
@@ -119,7 +120,7 @@
     <!-- 二维码页面 -->
     <string name="qr_pocket_address_title">Wallet address</string>
     <string name="qr_cancel_btn_des">Cancel</string>
-    <string name="qr_copy_btn_text">Copy wallet address</string>
+    <string name="qr_copy_btn_text">Copy the wallet address</string>
     <string name="qr_pic_name_text">QR code of the wallet address </string>
     <string name="qr_copy_success_message">It has been copied to the clipboard</string>
     <!-- 我的 -->
@@ -182,7 +183,7 @@
 
 
     <string name="help_title_txt">Your questions or suggestions</string>
-    <string name="contact_title_txt">Your contact</string>
+    <string name="contact_title_txt">Your contacts</string>
     <string name="help_hint">Please enter your questions or suggestions</string>
     <string name="contact_hint">Please enter your contacts</string>
     <string name="submit_feedback_btn_txt">Submit</string>
@@ -311,7 +312,7 @@
     <string name="current_test_message_txt">The current environment is the test network environment</string>
     <string name="identity_id_explain_txt">It is used to secure the data that you store on the blockchain, which is stored in a distributed manner. Only those who have the identity can use the data, so as to ensure that your data sovereignty is not violated.</string>
 
-    <string name="receive_qr_txt">Payment code</string>
+    <string name="receive_qr_txt">Receive</string>
     <string name="safety_tips_title">Safety tips</string>
     <string name="safety_tips_content_txt">Your wallet mnemonics have not been backed up. To prevent loss of assets due to forgetting passwords, deleting apps, or losing your phone, be sure to back up your mnemonics.</string>
     <string name="backup_immediately_txt">Back up now</string>

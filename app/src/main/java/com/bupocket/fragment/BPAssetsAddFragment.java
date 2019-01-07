@@ -39,6 +39,9 @@ public class BPAssetsAddFragment extends BaseFragment {
     @BindView(R.id.emptyView)
     QMUIEmptyView mEmptyView;
 
+    @BindView(R.id.searchResultEmptyLL)
+    LinearLayout mSearchResultEmptyLL;
+
     @BindView(R.id.searchTokenEt)
     DrawableEditText mSearchTokenEt;
 
@@ -48,7 +51,6 @@ public class BPAssetsAddFragment extends BaseFragment {
     private List<SearchTokenRespDto.TokenListBean> respTokenList = new ArrayList<>();
     private boolean searchLoading = false;
     private boolean loadFailFlag = false;
-    private String currentSearchInput = "";
 
     @Override
     protected View onCreateView() {
@@ -65,15 +67,14 @@ public class BPAssetsAddFragment extends BaseFragment {
                 if (searchLoading) {
                     return;
                 }
+                mSearchResultEmptyLL.setVisibility(View.GONE);
                 String input = mSearchTokenEt.getText().toString().trim();
                 if(CommonUtil.isNull(input)){
-                    mEmptyView.show(getResources().getString(R.string.search_result_not_found),null);
+//                    mEmptyView.show(getResources().getString(R.string.search_result_not_found),null);
+                    mEmptyView.show(false);
+                    showOrHideNoResult(true);
                     return;
                 }
-                if (currentSearchInput.equals(input)) {
-                    return;
-                }
-                currentSearchInput = input;
                 mSearchTokenEt.clearFocus();
                 CommonUtil.hideInputMethod(getContext(), mSearchTokenEt);
                 searchToken(input);
@@ -86,15 +87,13 @@ public class BPAssetsAddFragment extends BaseFragment {
                 if (searchLoading) {
                     return false;
                 }
+                mSearchResultEmptyLL.setVisibility(View.GONE);
                 String input = mSearchTokenEt.getText().toString().trim();
                 if(CommonUtil.isNull(input)){
-                    mEmptyView.show(getResources().getString(R.string.search_result_not_found),null);
+                    mEmptyView.show(false);
+                    showOrHideNoResult(true);
                     return false;
                 }
-                if (currentSearchInput.equals(input) && !loadFailFlag) {
-                    return false;
-                }
-                currentSearchInput = input;
                 searchToken(input);
                 mSearchTokenEt.clearFocus();
                 CommonUtil.hideInputMethod(getContext(), mSearchTokenEt);
@@ -110,6 +109,8 @@ public class BPAssetsAddFragment extends BaseFragment {
         respTokenList.clear();
         loadTokenAdapter();
         mEmptyView.show(true);
+        showOrHideNoResult(false);
+        mSearchResultEmptyLL.setVisibility(View.GONE);
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         Map<String, Object> parmasMap = new HashMap<>();
         parmasMap.put("address", currentAccAddress);
@@ -129,7 +130,8 @@ public class BPAssetsAddFragment extends BaseFragment {
                 }else {
                     respTokenList.clear();
                     loadTokenAdapter();
-                    mEmptyView.show(getResources().getString(R.string.search_result_not_found),null);
+                    mEmptyView.show(false);
+                    showOrHideNoResult(true);
                 }
             }
 
@@ -150,25 +152,38 @@ public class BPAssetsAddFragment extends BaseFragment {
         if(searchTokenRespDto != null || null != searchTokenRespDto.getTokenList()){
             if(searchTokenRespDto.getTokenList() == null || searchTokenRespDto.getTokenList().size() == 0) {
                 respTokenList.clear();
-                mEmptyView.show(getResources().getString(R.string.search_result_not_found), null);
+                mEmptyView.show(false);
+                showOrHideNoResult(true);
             }else{
                 respTokenList = searchTokenRespDto.getTokenList();
                 mEmptyView.show(null, null);
+                loadTokenAdapter();
             }
 
         }else{
             respTokenList.clear();
             loadFailFlag = true;
             mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
+            loadTokenAdapter();
         }
-
-        loadTokenAdapter();
-
     }
 
     private void loadTokenAdapter() {
+        mSearchTokenListView.setVisibility(View.VISIBLE);
         searchTokenAdapter = new SearchTokenAdapter(respTokenList, getContext());
         mSearchTokenListView.setAdapter(searchTokenAdapter);
+    }
+
+    private void showOrHideNoResult(boolean showFlag) {
+        if (showFlag) {
+//            show
+            mSearchResultEmptyLL.setVisibility(View.VISIBLE);
+            mSearchTokenListView.setVisibility(View.GONE);
+        } else {
+//            hide
+            mSearchResultEmptyLL.setVisibility(View.GONE);
+            mSearchTokenListView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initTopBar() {

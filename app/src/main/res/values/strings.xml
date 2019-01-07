@@ -59,6 +59,7 @@
     <string name="wallet_scan_notice" >将二维码放入框中，即可自动扫描</string>
     <string name="wallet_scan_cancel" >取消扫描</string>
     <string name="recently_tx_txt">最近交易记录</string>
+    <string name="no_recently_tx_record">暂无交易记录</string>
     <string name="tx_status_success_txt" >成功</string>
     <string name="tx_status_fail_txt" >失败</string>
     <string name="tx_status_success_txt1" >转账成功</string>

@@ -36,14 +36,43 @@
             android:layout_height="match_parent"
             android:background="@color/qmui_config_color_white">
 
-            <ListView
-                android:id="@+id/searchTokenListView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:descendantFocusability="blocksDescendants"
-                android:padding="10dp">
+                android:orientation="vertical">
+                <ListView
+                    android:id="@+id/searchTokenListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:descendantFocusability="blocksDescendants"
+                    android:padding="10dp">
 
-            </ListView>
+                </ListView>
+                <LinearLayout
+                    android:id="@+id/searchResultEmptyLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:background="@color/app_color_white"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:src="@mipmap/icon_search_no_result">
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@string/search_result_not_found">
+                    </TextView>
+
+                </LinearLayout>
+            </LinearLayout>
         </com.qmuiteam.qmui.widget.QMUIEmptyView>
 
 
