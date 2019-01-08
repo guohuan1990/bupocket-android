@@ -5,16 +5,15 @@ import android.view.View;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.QMUITopBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BPManageWalletFragment extends BaseFragment {
+public class BPWalletManageFragment extends BaseFragment {
 
     @BindView(R.id.topbar)
-    QMUITopBarLayout mTopBar;
+    QMUITopBar mTopBar;
 
     @Override
     protected View onCreateView() {
@@ -25,21 +24,25 @@ public class BPManageWalletFragment extends BaseFragment {
     }
 
     private void init() {
+        initData();
         initUI();
     }
 
+    private void initData() {
+
+    }
+
     private void initUI() {
-        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
     }
 
     private void initTopBar() {
-        mTopBar.setBackgroundDividerEnabled(false);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popBackStack();
             }
         });
+        mTopBar.setTitle(getString(R.string.manage_txt));
     }
 }

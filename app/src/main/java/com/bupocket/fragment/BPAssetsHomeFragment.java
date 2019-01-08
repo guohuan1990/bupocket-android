@@ -5,7 +5,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.session.MediaSession;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,8 +32,6 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TokenService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
-import com.bupocket.model.IssueTokenInfo;
-import com.bupocket.model.RegisterTokenInfo;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
@@ -44,7 +41,6 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
-import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -166,7 +162,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         mManageWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFragment(new BPManageWalletFragment());
+                startFragment(new BPWalletsHomeFragment());
             }
         });
     }

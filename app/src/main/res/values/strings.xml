@@ -126,7 +126,6 @@
     <string name="qr_copy_success_message" >已复制到剪切板</string>
     <!-- 我的 -->
     <string name="change_the_password_txt" >修改密码</string>
-    <string name="export_keystore_txt" >导出Keystore</string>
     <string name="help_txt" >帮助与反馈</string>
     <string name="version_txt" >版本号</string>
     <string name="language_txt" >多语言</string>
@@ -324,6 +323,9 @@
     <string name="current_identity_wallet_title_txt">当前身份下的钱包</string>
     <string name="imported_wallet_title_txt">导入的钱包</string>
     <string name="manage_txt">管理</string>
+    <string name="export_keystore_txt">导出Keystore</string>
+    <string name="export_private_txt">导出私钥</string>
+    <string name="delete_wallet_txt">删除钱包</string>
 
 
 </resources>
