@@ -67,7 +67,7 @@
                 </LinearLayout>
 
                 <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                    android:id="@+id/manageWalletBtn"
+                    android:id="@+id/manageIdentityWalletBtn"
                     android:layout_width="53dp"
                     android:layout_height="25dp"
                     android:layout_alignParentRight="true"

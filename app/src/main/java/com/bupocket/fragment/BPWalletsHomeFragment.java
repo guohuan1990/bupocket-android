@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -23,8 +24,8 @@ public class BPWalletsHomeFragment extends BaseFragment {
     TextView mCurrentIdentityWalletNameTv;
     @BindView(R.id.currentIdentityWalletAddressTv)
     TextView mCurrentIdentityWalletAddressTv;
-    @BindView(R.id.manageWalletBtn)
-    QMUIRoundButton mManageWalletBtn;
+    @BindView(R.id.manageIdentityWalletBtn)
+    QMUIRoundButton mManageIdentityWalletBtn;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentIdentityWalletName;
@@ -34,8 +35,14 @@ public class BPWalletsHomeFragment extends BaseFragment {
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_wallets_home, null);
         ButterKnife.bind(this, root);
-        init();
+
         return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        init();
     }
 
     private void init() {
@@ -73,10 +80,14 @@ public class BPWalletsHomeFragment extends BaseFragment {
     }
 
     private void setListener() {
-        mManageWalletBtn.setOnClickListener(new View.OnClickListener() {
+        mManageIdentityWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFragment(new BPWalletManageFragment());
+                Bundle argz = new Bundle();
+                argz.putString("walletPublicAddress",currentIdentityWalletAddress);
+                BPWalletManageFragment bpWalletManageFragment = new BPWalletManageFragment();
+                bpWalletManageFragment.setArguments(argz);
+                startFragment(bpWalletManageFragment);
             }
         });
     }

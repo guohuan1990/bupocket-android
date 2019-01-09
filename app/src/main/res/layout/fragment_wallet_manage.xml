@@ -13,6 +13,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/walletInfoLl"
             android:layout_width="match_parent"
             android:layout_height="85dp"
             android:layout_marginLeft="12.5dp"
@@ -23,6 +24,7 @@
             android:gravity="center">
 
             <RelativeLayout
+                android:id="@+id/walletNameRl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -129,7 +131,7 @@
             android:gravity="center">
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                android:id="@+id/userInfoLogoutWalletTv"
+                android:id="@+id/deleteWalletBtn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bp_btn_hight"
                 android:gravity="center"
