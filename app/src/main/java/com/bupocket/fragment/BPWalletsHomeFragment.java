@@ -35,18 +35,17 @@ public class BPWalletsHomeFragment extends BaseFragment {
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_wallets_home, null);
         ButterKnife.bind(this, root);
-
+        init();
         return root;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        init();
+        initData();
     }
 
     private void init() {
-        initData();
         initUI();
         setListener();
     }
