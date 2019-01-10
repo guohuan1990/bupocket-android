@@ -53,6 +53,7 @@
                 android:textColor="@color/app_txt_color_gray_2"/>
 
             <TextView
+                android:id="@+id/walletAddressTv"
                 android:layout_marginTop="9dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,18 +70,18 @@
                 android:textColor="@color/app_txt_color_gray_2"/>
 
             <TextView
+                android:id="@+id/walletPrivateTv"
                 android:layout_marginTop="9dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                tools:text="privbw99K9WGkaFVBsZDvv97a6JLnkbYt55r5P1tLZCad8PRZocVn86a
-"
+                tools:text="privbw99K9WGkaFVBsZDvv97a6JLnkbYt55r5P1tLZCad8PRZocVn86a"
                 android:textColor="@color/app_txt_color_gray_2"/>
 
         </LinearLayout>
 
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-            android:id="@+id/copyKeystoreBtn"
+            android:id="@+id/copyPrivateBtn"
             android:layout_width="match_parent"
             android:layout_height="43.5dp"
             android:gravity="center"

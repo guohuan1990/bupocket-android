@@ -555,4 +555,41 @@ public class Wallet {
         return txHash;
     }
 
+    public String exportKeyStore(String password, String accountBPData, String walletPublicAddress) throws Exception {
+        String senderPrivateKey = null;
+        String keystore = null;
+        List<WalletBPData.AccountsBean> accountsBeans = JSON.parseArray(accountBPData, WalletBPData.AccountsBean.class);
+
+        if (accountsBeans.size() > 0) {
+            for (WalletBPData.AccountsBean accountsBean : accountsBeans) {
+                if (walletPublicAddress.equals(accountsBean.getAddress())) {
+                    senderPrivateKey = KeyStore.decodeMsg(password, JSON.parseObject(accountsBean.getSecret().toString(), BaseKeyStoreEntity.class));
+                    if (!senderPrivateKey.startsWith("priv")) {
+                        throw new Exception();
+                    }
+                    keystore = accountsBean.getSecret();
+                    break;
+                }
+            }
+        }
+        return keystore;
+    }
+
+    public String exportPrivateKey(String password, String accountBPData, String walletPublicAddress) throws Exception{
+        String senderPrivateKey = null;
+        List<WalletBPData.AccountsBean> accountsBeans = JSON.parseArray(accountBPData, WalletBPData.AccountsBean.class);
+
+        if (accountsBeans.size() > 0) {
+            for (WalletBPData.AccountsBean accountsBean : accountsBeans) {
+                if (walletPublicAddress.equals(accountsBean.getAddress())) {
+                    senderPrivateKey = KeyStore.decodeMsg(password, JSON.parseObject(accountsBean.getSecret().toString(), BaseKeyStoreEntity.class));
+                    if (!senderPrivateKey.startsWith("priv")) {
+                        throw new Exception();
+                    }
+                    break;
+                }
+            }
+        }
+        return senderPrivateKey;
+    }
 }
