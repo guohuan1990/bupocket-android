@@ -43,11 +43,12 @@ public class BPWalletsHomeFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         initData();
+        initUI();
+        setListener();
     }
 
     private void init() {
-        initUI();
-        setListener();
+        initTopBar();
     }
 
     private void initData() {
@@ -60,7 +61,6 @@ public class BPWalletsHomeFragment extends BaseFragment {
     private void initUI() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initCurrentIdentityView();
-        initTopBar();
     }
 
     private void initCurrentIdentityView() {
