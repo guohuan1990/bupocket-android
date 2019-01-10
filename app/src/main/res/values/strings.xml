@@ -339,5 +339,17 @@
     <string name="export_private_password_confirm_txt">请填写钱包密码以确认导出私钥</string>
     <string name="current_wallet_sign_txt">当前使用</string>
     <string name="import_wallet_btn_txt">立即导入</string>
+    <string name="import_wallet_title_txt">导入钱包</string>
+    <string name="mnemonic_word_txt">助记词</string>
+    <string name="keystore_txt">Keystore</string>
+    <string name="private_key_txt">私钥</string>
+    <string name="wallet_import_mnemonic_word_tips_txt">请输入钱包助记词（12个英文单词），按空格分离</string>
+    <string name="wallet_import_mnemonic_word_et_hint_txt">请输入助记词</string>
+    <string name="wallet_import_wallet_name_txt">钱包名称</string>
+    <string name="wallet_import_wallet_name_et_hint_txt">输入钱包名称，以便区分其它钱包</string>
+    <string name="wallet_import_set_password_txt">设置密码</string>
+    <string name="wallet_import_confirm_password_txt">确认密码</string>
+    <string name="start_import_wallet">开始导入</string>
+    <string name="understand_mnemonic_txt">了解助记词</string>
 
 </resources>

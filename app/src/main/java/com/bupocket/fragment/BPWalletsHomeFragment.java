@@ -121,5 +121,23 @@ public class BPWalletsHomeFragment extends BaseFragment {
                 startFragment(bpWalletManageFragment);
             }
         });
+
+        mImportSmallWalletBtnIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                importWallet();
+            }
+        });
+
+        mImportBigWalletBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                importWallet();
+            }
+        });
+    }
+
+    private void importWallet() {
+        startFragment(new BPWalletImportFragment());
     }
 }
