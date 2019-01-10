@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.AddressUtil;
@@ -12,6 +14,8 @@ import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +34,8 @@ public class BPWalletsHomeFragment extends BaseFragment {
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentIdentityWalletName;
     private String currentIdentityWalletAddress;
+    private String currentWalletAddress;
+    private List<String> importedWallets;
 
     @Override
     protected View onCreateView() {
@@ -55,7 +61,8 @@ public class BPWalletsHomeFragment extends BaseFragment {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
         currentIdentityWalletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName","Wallet-1").toString();
-
+        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
+        importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets","").toString(),String.class);
     }
 
     private void initUI() {
