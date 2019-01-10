@@ -337,6 +337,7 @@
     <string name="wallet_private_txt">钱包私钥</string>
     <string name="export_keystore_password_confirm_txt">请填写钱包密码以确认导出Keystore</string>
     <string name="export_private_password_confirm_txt">请填写钱包密码以确认导出私钥</string>
-
+    <string name="current_wallet_sign_txt">当前使用</string>
+    <string name="import_wallet_btn_txt">立即导入</string>
 
 </resources>

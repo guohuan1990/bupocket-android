@@ -3,6 +3,8 @@ package com.bupocket.fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
@@ -15,6 +17,7 @@ import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,12 +33,20 @@ public class BPWalletsHomeFragment extends BaseFragment {
     TextView mCurrentIdentityWalletAddressTv;
     @BindView(R.id.manageIdentityWalletBtn)
     QMUIRoundButton mManageIdentityWalletBtn;
+    @BindView(R.id.currentIdentityWalletSignTv)
+    TextView mCurrentIdentityWalletSignTv;
+    @BindView(R.id.importSmallWalletBtnIv)
+    ImageView mImportSmallWalletBtnIv;
+    @BindView(R.id.importBigWalletBtn)
+    QMUIRoundButton mImportBigWalletBtn;
+    @BindView(R.id.importWalletsLv)
+    ListView mImportWalletsLv;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentIdentityWalletName;
     private String currentIdentityWalletAddress;
     private String currentWalletAddress;
-    private List<String> importedWallets;
+    private List<String> importedWallets = new ArrayList<>();
 
     @Override
     protected View onCreateView() {
@@ -68,11 +79,25 @@ public class BPWalletsHomeFragment extends BaseFragment {
     private void initUI() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initCurrentIdentityView();
+        initImportedWalletView();
+    }
+
+    private void initImportedWalletView() {
+        if(importedWallets == null || importedWallets.size() == 0){
+            mImportSmallWalletBtnIv.setVisibility(View.GONE);
+            mImportWalletsLv.setVisibility(View.GONE);
+            mImportBigWalletBtn.setVisibility(View.VISIBLE);
+        }else{
+
+        }
     }
 
     private void initCurrentIdentityView() {
         mCurrentIdentityWalletNameTv.setText(currentIdentityWalletName);
         mCurrentIdentityWalletAddressTv.setText(AddressUtil.anonymous(currentIdentityWalletAddress));
+        if(currentWalletAddress.equals(currentIdentityWalletAddress)){
+            mCurrentIdentityWalletSignTv.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initTopBar() {
