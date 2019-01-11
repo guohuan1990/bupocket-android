@@ -46,7 +46,7 @@
     <color name="app_color_description">@color/qmui_config_color_gray_5</color>
     
     <color name="edit_text_color_control_normal">#E3E3E3</color>
-    <color name="edit_text_color_control_activated">#5745C3</color>
+    <color name="edit_text_color_control_activated">#02CA71</color>
 
     <color name="bar_divider">#D4D6D8</color>
     <color name="tab_panel_bg">#ffffff</color>

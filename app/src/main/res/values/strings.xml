@@ -359,5 +359,10 @@
     <string name="wallet_import_private_tips_txt">粘贴私钥（Private Key）字符串</string>
     <string name="wallet_import_private_et_hint_txt">私钥（Private Key）字符串</string>
     <string name="understand_private_txt">了解私钥字符串</string>
+    <string name="import_success_message_txt">导入成功</string>
+    <string name="error_already_import_meaaage_txt">该钱包已导入</string>
+    <string name="error_import_wallet_name_message_txt">钱包名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
+    <string name="importing_loading_txt">导入中</string>
+
 
 </resources>

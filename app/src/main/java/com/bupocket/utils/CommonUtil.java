@@ -45,6 +45,8 @@ public class CommonUtil {
 
     public static final Pattern NICKNAME_PATTERN = Pattern.compile("^((?!\\d{5})[\\u4E00-\\u9FBF(.|·)|0-9A-Za-z_]){1,20}$");
 
+    public static final Pattern WalletNAME_PATTERN = Pattern.compile("^((?!\\d{5})[\\u4E00-\\u9FBF(.|·)|0-9A-Za-z_]){1,15}$");
+
 //    public static final Pattern PASSWORD_PATTERN = Pattern.compile("^[\\s\\S]{8,20}$");
     public static final Pattern PASSWORD_PATTERN = Pattern.compile("^[A-Za-z0-9]{8,20}$");
 
@@ -768,4 +770,11 @@ public class CommonUtil {
         return false;
     }
 
+    public static boolean validateWalletname(String walletName) {
+        if (isEmpty(walletName)) {
+            return false;
+        }
+        Matcher m = WalletNAME_PATTERN.matcher(walletName);
+        return m.matches();
+    }
 }
