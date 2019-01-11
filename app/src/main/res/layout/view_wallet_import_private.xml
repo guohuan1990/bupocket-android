@@ -112,7 +112,7 @@
 
 
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-            android:id="@+id/startImportprivateBtn"
+            android:id="@+id/startImportPrivateBtn"
             android:layout_width="match_parent"
             android:layout_height="43.5dp"
             android:layout_marginTop="25dp"
@@ -125,7 +125,7 @@
             app:qmui_radius="5dp" />
 
         <LinearLayout
-            android:id="@+id/understandprivateBtn"
+            android:id="@+id/understandPrivateLl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"

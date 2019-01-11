@@ -363,6 +363,8 @@
     <string name="error_already_import_meaaage_txt">该钱包已导入</string>
     <string name="error_import_wallet_name_message_txt">钱包名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
     <string name="importing_loading_txt">导入中</string>
+    <string name="error_import_keystore_message_txt">您的Keystore不合法</string>
+    <string name="error_import_private_message_txt">您的私钥不合法</string>
 
 
 </resources>

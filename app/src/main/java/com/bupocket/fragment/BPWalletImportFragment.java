@@ -44,6 +44,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.bumo.encryption.key.PrivateKey;
 
 public class BPWalletImportFragment extends BaseFragment {
 
@@ -489,8 +490,8 @@ public class BPWalletImportFragment extends BaseFragment {
                             public void run() {
                                 try {
                                     String keystore = mKeystoreEt.getText().toString().trim();
-                                    /*WalletBPData walletBPData = Wallet.getInstance().importKeystore(password,keystore);
-                                    String address = walletBPData.getAccounts().get(1).getAddress();
+                                    WalletBPData walletBPData = Wallet.getInstance().importKeystore(password,keystore);
+                                    String address = walletBPData.getAccounts().get(0).getAddress();
                                     String walletName = mWalletNameEt.getText().toString();
                                     String bpData = JSON.toJSONString(walletBPData.getAccounts());
                                     importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets","").toString(),String.class);
@@ -502,13 +503,13 @@ public class BPWalletImportFragment extends BaseFragment {
                                         importedWallets.add(address);
                                         sharedPreferencesHelper.put("importedWallets",JSONObject.toJSONString(importedWallets));
                                         Toast.makeText(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT).show();
-                                    }*/
+                                    }
                                     startFragment(new BPWalletsHomeFragment());
                                     tipDialog.dismiss();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Looper.prepare();
-                                    Toast.makeText(getActivity(), R.string.recover_wallet_error_tip, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), R.string.error_import_keystore_message_txt, Toast.LENGTH_SHORT).show();
                                     tipDialog.dismiss();
                                     Looper.loop();
                                     return;
@@ -541,6 +542,194 @@ public class BPWalletImportFragment extends BaseFragment {
 
             } else if (page == ContentPage.PrivateKey) {
                 contentView = inflater.inflate(R.layout.view_wallet_import_private, null);
+                final EditText mPrivateKeyEt = contentView.findViewById(R.id.privateKeyEt);
+                final EditText mWalletNameEt = contentView.findViewById(R.id.walletNameEt);
+                final EditText mPasswordEt = contentView.findViewById(R.id.passwordEt);
+                final EditText mPasswordConfirmEt = contentView.findViewById(R.id.passwordConfirmEt);
+                final ImageView mPasswordIv = contentView.findViewById(R.id.passwordIv);
+                final ImageView mPasswordConfirmIv = contentView.findViewById(R.id.passwordConfirmIv);
+                final QMUIRoundButton mStartImportPrivateBtn = contentView.findViewById(R.id.startImportPrivateBtn);
+
+                TextWatcher textWatcher = new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        mStartImportPrivateBtn.setEnabled(false);
+                        mStartImportPrivateBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        mStartImportPrivateBtn.setEnabled(false);
+                        mStartImportPrivateBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        boolean signMnemonicCode = mPrivateKeyEt.getText().toString().trim().length() > 0;
+                        boolean signWalletName = mWalletNameEt.getText().toString().trim().length() > 0;
+                        boolean signPwd = mPasswordEt.getText().toString().trim().length() > 0;
+                        boolean signConfirm = mPasswordConfirmEt.getText().toString().trim().length() > 0;
+                        if (signMnemonicCode && signWalletName && signPwd && signConfirm) {
+                            mStartImportPrivateBtn.setEnabled(true);
+                            mStartImportPrivateBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
+                        } else {
+                            mStartImportPrivateBtn.setEnabled(false);
+                            mStartImportPrivateBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
+                        }
+                    }
+                };
+                mPrivateKeyEt.addTextChangedListener(textWatcher);
+                mWalletNameEt.addTextChangedListener(textWatcher);
+                mPasswordEt.addTextChangedListener(textWatcher);
+                mPasswordConfirmEt.addTextChangedListener(textWatcher);
+
+                mPasswordIv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (!isPwdHideFirst) {
+                            mPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
+                            mPasswordEt.setInputType(InputType.TYPE_CLASS_TEXT);
+                            mPasswordEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            mPasswordEt.setSelection(mPasswordEt.getText().length());
+                            isPwdHideFirst = true;
+                        } else {
+                            mPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
+                            mPasswordEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                            mPasswordEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            mPasswordEt.setSelection(mPasswordEt.getText().length());
+                            isPwdHideFirst = false;
+                        }
+                    }
+                });
+                mPasswordConfirmIv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (!isConfirmPwdHideFirst) {
+                            mPasswordConfirmIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
+                            mPasswordConfirmEt.setInputType(InputType.TYPE_CLASS_TEXT);
+                            mPasswordConfirmEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            mPasswordConfirmEt.setSelection(mPasswordConfirmEt.getText().length());
+                            isConfirmPwdHideFirst = true;
+                        } else {
+                            mPasswordConfirmIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
+                            mPasswordConfirmEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                            mPasswordConfirmEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            mPasswordConfirmEt.setSelection(mPasswordConfirmEt.getText().length());
+                            isConfirmPwdHideFirst = false;
+                        }
+                    }
+                });
+
+                mStartImportPrivateBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!privateKeyFlag()) {
+                            return;
+                        } else if (!walletNameFlag()) {
+                            return;
+                        } else if (!pwdFlag()) {
+                            return;
+                        } else if (!confirmPwdFlag()) {
+                            return;
+                        }
+                        final String password = mPasswordEt.getText().toString().trim();
+                        final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                .setTipWord(getResources().getString(R.string.importing_loading_txt))
+                                .create();
+                        tipDialog.show();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    String privateKey = mPrivateKeyEt.getText().toString().trim();
+                                    WalletBPData walletBPData = Wallet.getInstance().importPrivateKey(password, privateKey);
+                                    String address = walletBPData.getAccounts().get(1).getAddress();
+                                    String walletName = mWalletNameEt.getText().toString();
+                                    String bpData = JSON.toJSONString(walletBPData.getAccounts());
+                                    importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets","").toString(),String.class);
+                                    if(address.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","")) || importedWallets.contains(address)){
+                                        Toast.makeText(getActivity(), R.string.error_already_import_meaaage_txt, Toast.LENGTH_SHORT).show();
+                                    }else {
+                                        sharedPreferencesHelper.put(address + "-walletName", walletName);
+                                        sharedPreferencesHelper.put(address + "-BPdata", bpData);
+                                        importedWallets.add(address);
+                                        sharedPreferencesHelper.put("importedWallets",JSONObject.toJSONString(importedWallets));
+                                        Toast.makeText(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT).show();
+                                    }
+                                    startFragment(new BPWalletsHomeFragment());
+                                    tipDialog.dismiss();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Looper.prepare();
+                                    Toast.makeText(getActivity(), R.string.recover_wallet_error_tip, Toast.LENGTH_SHORT).show();
+                                    tipDialog.dismiss();
+                                    Looper.loop();
+                                    return;
+                                }
+                            }
+                        }).start();
+                    }
+
+                    private boolean confirmPwdFlag() {
+                        String pwd = mPasswordEt.getText().toString().trim();
+                        String confirmPwd = mPasswordConfirmEt.getText().toString().trim();
+                        String regex = ".{8,20}";
+                        if ("".equals(confirmPwd)) {
+                            Toast.makeText(getActivity(), R.string.recover_confirm_pwd_hint, Toast.LENGTH_SHORT).show();
+                            return false;
+                        } else if (!confirmPwd.matches(regex)) {
+                            Toast.makeText(getActivity(), R.string.recover_set_pwd_error, Toast.LENGTH_SHORT).show();
+                            return false;
+                        } else if (!confirmPwd.equals(pwd)) {
+                            Toast.makeText(getActivity(), R.string.recover_confirm_pwd_error, Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                        return true;
+                    }
+
+                    private boolean pwdFlag() {
+                        String password = mPasswordEt.getText().toString().trim();
+                        if ("".equals(password)) {
+                            Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty, Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                        if (password.length() < 8) {
+                            Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                        if (password.length() > 20) {
+                            Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                        if (!CommonUtil.validatePassword(password)) {
+                            Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                        return true;
+                    }
+
+                    private boolean walletNameFlag() {
+                        String walletName = mWalletNameEt.getText().toString().trim();
+                        if ("".equals(walletName)) {
+                            Toast.makeText(getActivity(), R.string.wallet_import_wallet_name_et_hint_txt, Toast.LENGTH_SHORT).show();
+                            return false;
+                        } else if (!CommonUtil.validateNickname(walletName)) {
+                            Toast.makeText(getActivity(), R.string.error_import_wallet_name_message_txt, Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                        return true;
+                    }
+
+                    private boolean privateKeyFlag() {
+                        String privateKey = mPrivateKeyEt.getText().toString().trim();
+                        if(!PrivateKey.isPrivateKeyValid(privateKey)){
+                            Toast.makeText(getActivity(), R.string.error_import_private_message_txt, Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                        return true;
+                    }
+                });
             }
             view = contentView;
             mPageMap.put(page, view);
