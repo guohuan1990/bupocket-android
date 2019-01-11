@@ -351,5 +351,13 @@
     <string name="wallet_import_confirm_password_txt">确认密码</string>
     <string name="start_import_wallet">开始导入</string>
     <string name="understand_mnemonic_txt">了解助记词</string>
+    <string name="wallet_import_keystore_tips_txt">复制粘贴BUMO官方钱包Keystore文件内容至输入框</string>
+    <string name="wallet_import_keystore_et_hint_txt">Keystore文件内容</string>
+    <string name="password_for_keystore_txt">Keystore密码</string>
+    <string name="password_for_keystore_et_hint_txt">请输入原Keystore文件内容的密码</string>
+    <string name="understand_keystore_txt">了解Keystore</string>
+    <string name="wallet_import_private_tips_txt">粘贴私钥（Private Key）字符串</string>
+    <string name="wallet_import_private_et_hint_txt">私钥（Private Key）字符串</string>
+    <string name="understand_private_txt">了解私钥字符串</string>
 
 </resources>
