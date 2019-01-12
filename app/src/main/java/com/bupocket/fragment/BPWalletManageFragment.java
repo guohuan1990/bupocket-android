@@ -45,7 +45,7 @@ public class BPWalletManageFragment extends BaseFragment {
     @BindView(R.id.exportPrivateRl)
     RelativeLayout mExportPrivateRl;
 
-    private String walletPublicAddress;
+    private String walletAddress;
     private String walletName;
     private String keystoreStr;
     private String privateKeyStr;
@@ -150,7 +150,7 @@ public class BPWalletManageFragment extends BaseFragment {
                             public void run() {
                                 try {
                                     String bpData = getAccountBPData();
-                                    keystoreStr = Wallet.getInstance().exportKeyStore(password,bpData,walletPublicAddress);
+                                    keystoreStr = Wallet.getInstance().exportKeyStore(password,bpData,walletAddress);
                                     exportingTipDialog.dismiss();
                                     Bundle argz = new Bundle();
                                     argz.putString("keystoreStr",keystoreStr);
@@ -222,10 +222,10 @@ public class BPWalletManageFragment extends BaseFragment {
                             public void run() {
                                 String bpData = getAccountBPData();
                                 try {
-                                    privateKeyStr = Wallet.getInstance().exportPrivateKey(password,bpData,walletPublicAddress);
+                                    privateKeyStr = Wallet.getInstance().exportPrivateKey(password,bpData,walletAddress);
                                     exportingTipDialog.dismiss();
                                     Bundle argz = new Bundle();
-                                    argz.putString("address",walletPublicAddress);
+                                    argz.putString("address",walletAddress);
                                     argz.putString("privateKey",privateKeyStr);
                                     BPWalletExportPrivateFragment bpWalletExportPrivateFragment = new BPWalletExportPrivateFragment();
                                     bpWalletExportPrivateFragment.setArguments(argz);
@@ -259,16 +259,16 @@ public class BPWalletManageFragment extends BaseFragment {
         if(whetherIdentityWallet) {
             accountBPData = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
         }else {
-            accountBPData = sharedPreferencesHelper.getSharedPreference("BPData-"+walletPublicAddress, "").toString();
+            accountBPData = sharedPreferencesHelper.getSharedPreference(walletAddress+ "-BPdata", "").toString();
         }
         return accountBPData;
     }
 
     private void initData() {
         Bundle argz = getArguments();
-        walletPublicAddress = argz.getString("walletPublicAddress");
+        walletAddress = argz.getString("walletAddress");
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        if(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString().equals(walletPublicAddress)){
+        if(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString().equals(walletAddress)){
             walletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName","Wallet-1").toString();
             whetherIdentityWallet = true;
         }
@@ -281,7 +281,7 @@ public class BPWalletManageFragment extends BaseFragment {
 
     private void initView() {
         mWalletNameTv.setText(walletName);
-        mWalletAddressTv.setText(AddressUtil.anonymous(walletPublicAddress));
+        mWalletAddressTv.setText(AddressUtil.anonymous(walletAddress));
         if(whetherIdentityWallet){
             mDeleteWalletBtn.setVisibility(View.GONE);
         }

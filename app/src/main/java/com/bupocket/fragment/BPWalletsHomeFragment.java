@@ -3,15 +3,18 @@ package com.bupocket.fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
+import com.bupocket.adaptor.ImportWalletAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.model.WalletInfo;
 import com.bupocket.utils.AddressUtil;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -73,6 +76,9 @@ public class BPWalletsHomeFragment extends BaseFragment {
         currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
         currentIdentityWalletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName","Wallet-1").toString();
         currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
+        if(CommonUtil.isNull(currentWalletAddress)){
+            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+        }
         importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets","").toString(),String.class);
     }
 
@@ -88,6 +94,43 @@ public class BPWalletsHomeFragment extends BaseFragment {
             mImportWalletsLv.setVisibility(View.GONE);
             mImportBigWalletBtn.setVisibility(View.VISIBLE);
         }else{
+            mImportSmallWalletBtnIv.setVisibility(View.VISIBLE);
+            mImportWalletsLv.setVisibility(View.VISIBLE);
+            mImportBigWalletBtn.setVisibility(View.GONE);
+
+            final List<WalletInfo> walletInfoList = new ArrayList<>();
+
+            for(String address : importedWallets){
+                WalletInfo walletInfo = new WalletInfo();
+                String walletName = sharedPreferencesHelper.getSharedPreference(address + "-walletName","").toString();
+                walletInfo.setWalletName(walletName);
+                walletInfo.setWalletAddress(address);
+                walletInfoList.add(walletInfo);
+            }
+
+            final ImportWalletAdapter importWalletAdapter = new ImportWalletAdapter(walletInfoList, getContext(), currentWalletAddress);
+            mImportWalletsLv.setAdapter(importWalletAdapter);
+            importWalletAdapter.setOnManageWalletBtnListener(new ImportWalletAdapter.OnManageWalletBtnListener() {
+                @Override
+                public void onClick(int i) {
+                    Bundle argz = new Bundle();
+                    WalletInfo walletInfo = walletInfoList.get(i);
+                    argz.putString("walletAddress",walletInfo.getWalletAddress());
+                    BPWalletManageFragment bpWalletManageFragment = new BPWalletManageFragment();
+                    bpWalletManageFragment.setArguments(argz);
+                    startFragment(bpWalletManageFragment);
+                }
+            });
+
+            mImportWalletsLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    WalletInfo walletInfo = (WalletInfo) importWalletAdapter.getItem(position);
+                    String address = walletInfo.getWalletAddress();
+                    sharedPreferencesHelper.put("currentWalletAddress",address);
+                    
+                }
+            });
 
         }
     }
@@ -115,7 +158,7 @@ public class BPWalletsHomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Bundle argz = new Bundle();
-                argz.putString("walletPublicAddress",currentIdentityWalletAddress);
+                argz.putString("walletAddress",currentIdentityWalletAddress);
                 BPWalletManageFragment bpWalletManageFragment = new BPWalletManageFragment();
                 bpWalletManageFragment.setArguments(argz);
                 startFragment(bpWalletManageFragment);
