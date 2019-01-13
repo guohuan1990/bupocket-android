@@ -34,6 +34,7 @@
                 android:textSize="15sp" />
 
             <RelativeLayout
+                android:id="@+id/identityWalletInfoRl"
                 android:layout_width="match_parent"
                 android:layout_height="85dp"
                 android:layout_marginLeft="12.5dp"
@@ -64,6 +65,8 @@
                         <TextView
                             android:id="@+id/currentIdentityWalletSignTv"
                             android:layout_marginLeft="10.5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/current_wallet_sign_txt"
@@ -144,9 +147,14 @@
                 android:visibility="visible"/>
             
             <ListView
+                android:padding="12.5dp"
                 android:id="@+id/importWalletsLv"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:divider="@color/tx_list_view_background_col"
+                android:dividerHeight="10dp"
+                android:scrollbars="none"
+                android:fadeScrollbars="false">
 
             </ListView>
 

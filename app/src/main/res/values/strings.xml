@@ -365,6 +365,7 @@
     <string name="importing_loading_txt">导入中</string>
     <string name="error_import_keystore_message_txt">您的Keystore不合法</string>
     <string name="error_import_private_message_txt">您的私钥不合法</string>
-
+    <string name="delete_wallet_password_confirm_txt">请填写钱包密码以确认删除</string>
+    <string name="delete_wallet_success_message_txt">删除成功</string>
 
 </resources>

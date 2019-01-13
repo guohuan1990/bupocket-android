@@ -9,19 +9,18 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bupocket.R;
-import com.bupocket.fragment.BPWalletManageFragment;
 import com.bupocket.model.WalletInfo;
 import com.bupocket.utils.AddressUtil;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.List;
 
-public class ImportWalletAdapter extends BaseAdapter {
+public class ImportedWalletAdapter extends BaseAdapter {
     private List<WalletInfo> datas;
     private Context mContext;
     private String mCurrentWalletAddress;
 
-    public ImportWalletAdapter(List<WalletInfo> datas, Context mContext, String mCurrentWalletAddress){
+    public ImportedWalletAdapter(List<WalletInfo> datas, Context mContext, String mCurrentWalletAddress){
         this.datas = datas;
         this.mContext = mContext;
         this.mCurrentWalletAddress = mCurrentWalletAddress;
@@ -63,6 +62,8 @@ public class ImportWalletAdapter extends BaseAdapter {
             holder.walletAddressTv.setText(AddressUtil.anonymous(address));
             if(mCurrentWalletAddress.equals(address)){
                 holder.walletSignTv.setVisibility(View.VISIBLE);
+            }else {
+                holder.walletSignTv.setVisibility(View.GONE);
             }
             holder.manageWalletBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

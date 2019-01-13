@@ -331,7 +331,7 @@ public class BPWalletImportFragment extends BaseFragment {
                                         Looper.prepare();
                                         Toast.makeText(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT).show();
                                         tipDialog.dismiss();
-                                        startFragment(new BPWalletsHomeFragment());
+                                        startFragmentAndDestroyCurrent(new BPWalletsHomeFragment());
                                         Looper.loop();
                                     }
                                 } catch (Exception e) {
@@ -513,7 +513,7 @@ public class BPWalletImportFragment extends BaseFragment {
                                         Looper.prepare();
                                         Toast.makeText(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT).show();
                                         tipDialog.dismiss();
-                                        startFragment(new BPWalletsHomeFragment());
+                                        startFragmentAndDestroyCurrent(new BPWalletsHomeFragment());
                                         Looper.loop();
                                     }
 
@@ -656,7 +656,7 @@ public class BPWalletImportFragment extends BaseFragment {
                                 try {
                                     String privateKey = mPrivateKeyEt.getText().toString().trim();
                                     WalletBPData walletBPData = Wallet.getInstance().importPrivateKey(password, privateKey);
-                                    String address = walletBPData.getAccounts().get(1).getAddress();
+                                    String address = walletBPData.getAccounts().get(0).getAddress();
                                     String walletName = mWalletNameEt.getText().toString();
                                     String bpData = JSON.toJSONString(walletBPData.getAccounts());
                                     importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets","[]").toString(),String.class);
@@ -673,13 +673,13 @@ public class BPWalletImportFragment extends BaseFragment {
                                         Looper.prepare();
                                         Toast.makeText(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT).show();
                                         tipDialog.dismiss();
-                                        startFragment(new BPWalletsHomeFragment());
+                                        startFragmentAndDestroyCurrent(new BPWalletsHomeFragment());
                                         Looper.loop();
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Looper.prepare();
-                                    Toast.makeText(getActivity(), R.string.recover_wallet_error_tip, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), R.string.error_import_private_message_txt, Toast.LENGTH_SHORT).show();
                                     tipDialog.dismiss();
                                     Looper.loop();
                                     return;
