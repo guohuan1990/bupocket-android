@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -219,6 +220,14 @@ public class BPWalletImportFragment extends BaseFragment {
                 final ImageView mPasswordIv = contentView.findViewById(R.id.passwordIv);
                 final ImageView mPasswordConfirmIv = contentView.findViewById(R.id.passwordConfirmIv);
                 final QMUIRoundButton mStartImportMnemonicWordBtn = contentView.findViewById(R.id.startImportMnemonicWordBtn);
+                final LinearLayout mUnderstandMnemonicWordLl = contentView.findViewById(R.id.understandMnemonicWordLl);
+
+                mUnderstandMnemonicWordLl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startFragment(new BPWalletUnderstandMnemonicWordFragment());
+                    }
+                });
 
                 TextWatcher textWatcher = new TextWatcher() {
                     @Override
@@ -425,6 +434,14 @@ public class BPWalletImportFragment extends BaseFragment {
                 final EditText mPasswordEt = contentView.findViewById(R.id.passwordEt);
                 final ImageView mPasswordIv = contentView.findViewById(R.id.passwordIv);
                 final QMUIRoundButton mStartImportKeystoreBtn = contentView.findViewById(R.id.startImportKeystoreBtn);
+                final LinearLayout mUnderstandKeystoreLl = contentView.findViewById(R.id.understandKeystoreLl);
+
+                mUnderstandKeystoreLl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startFragment(new BPWalletUnderstandKeystoreFragment());
+                    }
+                });
 
                 TextWatcher textWatcher = new TextWatcher() {
                     @Override
@@ -561,6 +578,14 @@ public class BPWalletImportFragment extends BaseFragment {
                 final ImageView mPasswordIv = contentView.findViewById(R.id.passwordIv);
                 final ImageView mPasswordConfirmIv = contentView.findViewById(R.id.passwordConfirmIv);
                 final QMUIRoundButton mStartImportPrivateBtn = contentView.findViewById(R.id.startImportPrivateBtn);
+                final LinearLayout mUnderstandPrivateLl = contentView.findViewById(R.id.understandPrivateLl);
+
+                mUnderstandPrivateLl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startFragment(new BPWalletUnderstandPrivateKeyFragment());
+                    }
+                });
 
                 TextWatcher textWatcher = new TextWatcher() {
                     @Override

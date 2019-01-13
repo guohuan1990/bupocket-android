@@ -148,13 +148,9 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
         }else {
             String actualSupply = bundle.getString("actualSupply");
             if(totalSupply.equals("0")){
-//                Double accumulativeIssueAmount = Double.valueOf(actualSupply);
-//                mAccumulativeIssueAmountTv.setText(accumulativeIssueAmount.toString());
                 mAccumulativeIssueAmountTv.setText(CommonUtil.thousandSeparator(actualSupply));
             }else {
                 mAccumulativeIssueAmountTitleTv.setText(getString(R.string.surplus_issue_amount_txt));
-//                Double surplusAmount = Double.valueOf(totalSupply) - Double.valueOf(actualSupply);
-//                mAccumulativeIssueAmountTv.setText(surplusAmount.toString());
                 mAccumulativeIssueAmountTv.setText(CommonUtil.thousandSeparator(AmountUtil.amountSubtraction(totalSupply,actualSupply)));
             }
             String txHash = bundle.getString("txHash");

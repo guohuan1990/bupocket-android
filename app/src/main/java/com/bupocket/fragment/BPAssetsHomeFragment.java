@@ -96,7 +96,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
     protected SharedPreferencesHelper sharedPreferencesHelper;
     private TokensAdapter mTokensAdapter;
-    private String currentAccAddress;
+    private String currentWalletAddress;
     private String currentAccNick;
     private MaterialHeader mMaterialHeader;
     List<GetTokensRespDto.TokenListBean> mLocalTokenList = new ArrayList<>();
@@ -179,9 +179,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
         final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
         qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.show_address_layout,null));
         TextView accountAddressTv = qmuiBottomSheet.findViewById(R.id.printAccAddressTv);
-        accountAddressTv.setText(currentAccAddress);
+        accountAddressTv.setText(currentWalletAddress);
 
-        Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(currentAccAddress, 356, 356);
+        Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(currentWalletAddress, 356, 356);
         ImageView mImageView = qmuiBottomSheet.findViewById(R.id.qr_pocket_address_image);
         mImageView.setImageBitmap(mBitmap);
 
@@ -189,7 +189,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData mClipData = ClipData.newPlainText("Label", currentAccAddress);
+                ClipData mClipData = ClipData.newPlainText("Label", currentWalletAddress);
                 cm.setPrimaryClip(mClipData);
                 final QMUITipDialog copySuccessDiglog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
@@ -220,7 +220,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     };
 
     private void initWalletInfoView() {
-        String shortCurrentAccAddress = AddressUtil.anonymous(currentAccAddress);
+        String shortCurrentAccAddress = AddressUtil.anonymous(currentWalletAddress);
     }
 
     private void initTokensView() {
@@ -257,7 +257,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         Runnable getBalanceRunnable = new Runnable() {
             @Override
             public void run() {
-                tokenBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
+                tokenBalance = Wallet.getInstance().getAccountBUBalance(currentWalletAddress);
                 if(!CommonUtil.isNull(tokenBalance)){
                     sharedPreferencesHelper.put("tokenBalance",tokenBalance);
                 }
@@ -278,7 +278,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         }
         String currencyType = sharedPreferencesHelper.getSharedPreference("currencyType","CNY").toString();
         Map<String, Object> parmasMap = new HashMap<>();
-        parmasMap.put("address",currentAccAddress);
+        parmasMap.put("address",currentWalletAddress);
         parmasMap.put("currencyType",currencyType);
         parmasMap.put("tokenList", mLocalTokenList);
         Call<ApiResult<GetTokensRespDto>> call = tokenService.getTokens(parmasMap);
@@ -359,7 +359,10 @@ public class BPAssetsHomeFragment extends BaseFragment {
 //        QMUIStatusBarHelper.translucent(getActivity());
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
-        currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
+        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
+        if(CommonUtil.isNull(currentWalletAddress)){
+            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+        }
         currencyType = sharedPreferencesHelper.getSharedPreference("currencyType","CNY").toString();
         bumoNodeType = sharedPreferencesHelper.getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
         GetTokensRespDto tokensCache = JSON.parseObject(sharedPreferencesHelper.getSharedPreference("tokensInfoCache", "").toString(), GetTokensRespDto.class);

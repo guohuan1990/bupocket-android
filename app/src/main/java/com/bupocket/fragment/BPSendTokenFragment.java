@@ -56,9 +56,6 @@ public class BPSendTokenFragment extends BaseFragment {
     QMUITopBarLayout mTopBar;
     @BindView(R.id.accountAvailableBalanceTv)
     TextView mAccountAvailableBalanceTv;
-
-    private String currentAccAddress;
-    protected SharedPreferencesHelper sharedPreferencesHelper;
     @BindView(R.id.destAccountAddressEt)
     EditText destAccountAddressEt;
     @BindView(R.id.sendAmountEt)
@@ -79,12 +76,15 @@ public class BPSendTokenFragment extends BaseFragment {
 
 
     private String hash;
-    String tokenCode;
-    String tokenType;
-    String tokenIssuer;
-    String tokenDecimals;
+    private String tokenCode;
+    private String tokenType;
+    private String tokenIssuer;
+    private String tokenDecimals;
     private String availableTokenBalance;
-    QMUITipDialog txSendingTipDialog;
+    private QMUITipDialog txSendingTipDialog;
+    private String currentWalletAddress;
+    private Boolean whetherIdentityWallet = false;
+    protected SharedPreferencesHelper sharedPreferencesHelper;
 
     private TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean;
     @Override
@@ -198,7 +198,11 @@ public class BPSendTokenFragment extends BaseFragment {
 
     private void initData(){
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
+        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
+        if(CommonUtil.isNull(currentWalletAddress)){
+            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+            whetherIdentityWallet = true;
+        }
 
         tokenCode = getArguments().getString("tokenCode");
         tokenType = getArguments().getString("tokenType");
@@ -240,8 +244,16 @@ public class BPSendTokenFragment extends BaseFragment {
         mAccountAvailableBalanceTv.setText(availableTokenBalance);
     }
     private String getAccountBPData(){
-        String data = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
-        return data;
+//        String data = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
+//        return data;
+
+        String accountBPData = null;
+        if(whetherIdentityWallet) {
+            accountBPData = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
+        }else {
+            accountBPData = sharedPreferencesHelper.getSharedPreference(currentWalletAddress+ "-BPdata", "").toString();
+        }
+        return accountBPData;
     }
 
 
@@ -273,7 +285,7 @@ public class BPSendTokenFragment extends BaseFragment {
                     return;
                 }
 
-                if(address.equals(currentAccAddress)){
+                if(address.equals(currentWalletAddress)){
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.send_err1))
                             .create();
@@ -470,9 +482,9 @@ public class BPSendTokenFragment extends BaseFragment {
                                         try {
 
                                             if(TokenTypeEnum.BU.getCode().equals(tokenType)){
-                                                hash = Wallet.getInstance().sendBu(password,accountBPData, currentAccAddress, destAddess, sendAmount, note,txFee);
+                                                hash = Wallet.getInstance().sendBu(password,accountBPData, currentWalletAddress, destAddess, sendAmount, note,txFee);
                                             }else if(TokenTypeEnum.ATP10.getCode().equals(tokenType)){
-                                                hash = Wallet.getInstance().sendToken(password,accountBPData,currentAccAddress,destAddess,tokenCode,tokenIssuer, sendAmount,tokenDecimals,note, txFee);
+                                                hash = Wallet.getInstance().sendToken(password,accountBPData,currentWalletAddress,destAddess,tokenCode,tokenIssuer, sendAmount,tokenDecimals,note, txFee);
                                             }
 
 
