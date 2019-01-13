@@ -51,7 +51,7 @@ public class BPWalletManageFragment extends BaseFragment {
     private String privateKeyStr;
     private SharedPreferencesHelper sharedPreferencesHelper;
 
-    private Boolean whetherIdentityWallet;
+    private Boolean whetherIdentityWallet = false;
 
     public QMUITipDialog exportingTipDialog;
 

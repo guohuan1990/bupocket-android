@@ -600,7 +600,7 @@ public class Wallet {
             throw new Exception();
         }
         String address = new PrivateKey(privateKey).getEncAddress();
-        KeyStoreEntity keyStoreEntity = KeyStore.generateKeyStore(password, privateKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 1);
+        KeyStoreEntity keyStoreEntity = KeyStore.generateKeyStore(password, privateKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 2);
         WalletBPData walletBPData = new WalletBPData();
         List<WalletBPData.AccountsBean> accountsBeans = new ArrayList<>();
         WalletBPData.AccountsBean accountsBean = new WalletBPData.AccountsBean();
@@ -614,7 +614,7 @@ public class Wallet {
 
     public WalletBPData importPrivateKey(String password, String privateKey) throws Exception {
         String address = new PrivateKey(privateKey).getEncAddress();
-        KeyStoreEntity keyStoreEntity = KeyStore.generateKeyStore(password, privateKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 1);
+        KeyStoreEntity keyStoreEntity = KeyStore.generateKeyStore(password, privateKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 2);
         WalletBPData walletBPData = new WalletBPData();
         List<WalletBPData.AccountsBean> accountsBeans = new ArrayList<>();
         WalletBPData.AccountsBean accountsBean = new WalletBPData.AccountsBean();

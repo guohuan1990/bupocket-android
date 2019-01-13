@@ -317,18 +317,23 @@ public class BPWalletImportFragment extends BaseFragment {
                                     String address = walletBPData.getAccounts().get(1).getAddress();
                                     String walletName = mWalletNameEt.getText().toString();
                                     String bpData = JSON.toJSONString(walletBPData.getAccounts());
-                                    importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets","").toString(),String.class);
+                                    importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets","[]").toString(),String.class);
                                     if(address.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","")) || importedWallets.contains(address)){
+                                        Looper.prepare();
                                         Toast.makeText(getActivity(), R.string.error_already_import_meaaage_txt, Toast.LENGTH_SHORT).show();
+                                        tipDialog.dismiss();
+                                        Looper.loop();
                                     }else {
                                         sharedPreferencesHelper.put(address + "-walletName", walletName);
                                         sharedPreferencesHelper.put(address + "-BPdata", bpData);
                                         importedWallets.add(address);
                                         sharedPreferencesHelper.put("importedWallets",JSONObject.toJSONString(importedWallets));
+                                        Looper.prepare();
                                         Toast.makeText(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT).show();
+                                        tipDialog.dismiss();
+                                        startFragment(new BPWalletsHomeFragment());
+                                        Looper.loop();
                                     }
-                                    startFragment(new BPWalletsHomeFragment());
-                                    tipDialog.dismiss();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Looper.prepare();
@@ -494,18 +499,24 @@ public class BPWalletImportFragment extends BaseFragment {
                                     String address = walletBPData.getAccounts().get(0).getAddress();
                                     String walletName = mWalletNameEt.getText().toString();
                                     String bpData = JSON.toJSONString(walletBPData.getAccounts());
-                                    importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets","").toString(),String.class);
+                                    importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets","[]").toString(),String.class);
                                     if(address.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","")) || importedWallets.contains(address)){
+                                        Looper.prepare();
                                         Toast.makeText(getActivity(), R.string.error_already_import_meaaage_txt, Toast.LENGTH_SHORT).show();
+                                        tipDialog.dismiss();
+                                        Looper.loop();
                                     }else {
                                         sharedPreferencesHelper.put(address + "-walletName", walletName);
                                         sharedPreferencesHelper.put(address + "-BPdata", bpData);
                                         importedWallets.add(address);
                                         sharedPreferencesHelper.put("importedWallets",JSONObject.toJSONString(importedWallets));
+                                        Looper.prepare();
                                         Toast.makeText(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT).show();
+                                        tipDialog.dismiss();
+                                        startFragment(new BPWalletsHomeFragment());
+                                        Looper.loop();
                                     }
-                                    startFragment(new BPWalletsHomeFragment());
-                                    tipDialog.dismiss();
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Looper.prepare();
@@ -516,6 +527,7 @@ public class BPWalletImportFragment extends BaseFragment {
                                 }
                             }
                         }).start();
+
                     }
 
                     private boolean pwdFlag() {
@@ -647,18 +659,23 @@ public class BPWalletImportFragment extends BaseFragment {
                                     String address = walletBPData.getAccounts().get(1).getAddress();
                                     String walletName = mWalletNameEt.getText().toString();
                                     String bpData = JSON.toJSONString(walletBPData.getAccounts());
-                                    importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets","").toString(),String.class);
+                                    importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets","[]").toString(),String.class);
                                     if(address.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","")) || importedWallets.contains(address)){
+                                        Looper.prepare();
                                         Toast.makeText(getActivity(), R.string.error_already_import_meaaage_txt, Toast.LENGTH_SHORT).show();
+                                        tipDialog.dismiss();
+                                        Looper.loop();
                                     }else {
                                         sharedPreferencesHelper.put(address + "-walletName", walletName);
                                         sharedPreferencesHelper.put(address + "-BPdata", bpData);
                                         importedWallets.add(address);
                                         sharedPreferencesHelper.put("importedWallets",JSONObject.toJSONString(importedWallets));
+                                        Looper.prepare();
                                         Toast.makeText(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT).show();
+                                        tipDialog.dismiss();
+                                        startFragment(new BPWalletsHomeFragment());
+                                        Looper.loop();
                                     }
-                                    startFragment(new BPWalletsHomeFragment());
-                                    tipDialog.dismiss();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Looper.prepare();

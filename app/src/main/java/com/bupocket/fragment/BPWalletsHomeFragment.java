@@ -79,7 +79,7 @@ public class BPWalletsHomeFragment extends BaseFragment {
         if(CommonUtil.isNull(currentWalletAddress)){
             currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
         }
-        importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets","").toString(),String.class);
+        importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets","[]").toString(),String.class);
     }
 
     private void initUI() {
@@ -128,7 +128,7 @@ public class BPWalletsHomeFragment extends BaseFragment {
                     WalletInfo walletInfo = (WalletInfo) importWalletAdapter.getItem(position);
                     String address = walletInfo.getWalletAddress();
                     sharedPreferencesHelper.put("currentWalletAddress",address);
-                    
+                    importWalletAdapter.notifyDataSetChanged();
                 }
             });
 
