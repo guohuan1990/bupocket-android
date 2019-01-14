@@ -262,7 +262,7 @@ public class BPIssueTokenFragment extends BaseFragment {
         assetCode = issueTokenInfo.getCode();
         issueAmount = issueTokenInfo.getAmount();
         issueAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
-        if(CommonUtil.isNull(issueAddress)){
+        if(CommonUtil.isNull(issueAddress) || sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString().equals(issueAddress)){
             issueAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
             whetherIdentityWallet = true;
         }

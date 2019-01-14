@@ -199,7 +199,7 @@ public class BPSendTokenFragment extends BaseFragment {
     private void initData(){
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
-        if(CommonUtil.isNull(currentWalletAddress)){
+        if(CommonUtil.isNull(currentWalletAddress) || sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString().equals(currentWalletAddress)){
             currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
             whetherIdentityWallet = true;
         }
@@ -329,19 +329,7 @@ public class BPSendTokenFragment extends BaseFragment {
                     }, 1500);
                     return;
                 }
-                if(Double.parseDouble(mAccountAvailableBalanceTv.getText().toString()) < Double.parseDouble(sendAmountInput)){
-                    tipDialog = new QMUITipDialog.Builder(getContext())
-                            .setTipWord(getResources().getString(R.string.balance_not_enough))
-                            .create();
-                    tipDialog.show();
-                    mAccountAvailableBalanceTv.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            tipDialog.dismiss();
-                        }
-                    }, 1500);
-                    return;
-                }
+
                 if ((TokenTypeEnum.BU.getCode().equals(tokenType)) && (Double.parseDouble(sendAmountInput) > com.bupocket.common.Constants.MAX_SEND_AMOUNT)) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(CommonUtil.addSuffix(getResources().getString(R.string.amount_too_big),tokenCode))
@@ -400,6 +388,37 @@ public class BPSendTokenFragment extends BaseFragment {
                     }, 1500);
                     return;
                 }
+
+                if(TokenTypeEnum.BU.getCode().equals(tokenType)){
+                    if(Double.parseDouble(mAccountAvailableBalanceTv.getText().toString()) < Double.parseDouble(sendAmountInput) + Double.parseDouble(txFee)){
+                        tipDialog = new QMUITipDialog.Builder(getContext())
+                                .setTipWord(getResources().getString(R.string.balance_not_enough))
+                                .create();
+                        tipDialog.show();
+                        mAccountAvailableBalanceTv.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                tipDialog.dismiss();
+                            }
+                        }, 1500);
+                        return;
+                    }
+                }else{
+                    if(Double.parseDouble(mAccountAvailableBalanceTv.getText().toString()) < Double.parseDouble(sendAmountInput)){
+                        tipDialog = new QMUITipDialog.Builder(getContext())
+                                .setTipWord(getResources().getString(R.string.balance_not_enough))
+                                .create();
+                        tipDialog.show();
+                        mAccountAvailableBalanceTv.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                tipDialog.dismiss();
+                            }
+                        }, 1500);
+                        return;
+                    }
+                }
+
 
 
 

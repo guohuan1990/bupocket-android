@@ -128,7 +128,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
         }
         mRegisterFeeTv.setText(CommonUtil.addSuffix(Constants.REGISTER_TOKEN_FEE,"BU"));
         issueAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
-        if(CommonUtil.isNull(issueAddress)){
+        if(CommonUtil.isNull(issueAddress) || sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString().equals(issueAddress)){
             issueAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
             whetherIdentityWallet = true;
         }
