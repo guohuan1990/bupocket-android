@@ -327,8 +327,6 @@
     <string name="export_private_txt">导出私钥</string>
     <string name="delete_wallet_txt">删除钱包</string>
     <string name="change_wallet_name_title">更改钱包名称</string>
-    <string name="change_wallet_name_edit_hint">请输入新名称</string>
-    <string name="error_wallet_name_empty_message_txt">钱包名称不能为空</string>
     <string name="export_keystore_tips_txt">请复制keystone文件到安全的地方保存</string>
     <string name="copy_keystore_txt">复制Keystore</string>
     <string name="copy_private_txt">复制私钥</string>
