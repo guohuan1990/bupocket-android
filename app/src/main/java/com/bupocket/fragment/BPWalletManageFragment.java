@@ -103,6 +103,9 @@ public class BPWalletManageFragment extends BaseFragment {
                         if(CommonUtil.isNull(walletNewName)){
                             Toast.makeText(getActivity(), R.string.error_wallet_name_empty_message_txt, Toast.LENGTH_SHORT).show();
                             return;
+                        }else if(!CommonUtil.validateNickname(walletName)){
+                            Toast.makeText(getActivity(), R.string.error_import_wallet_name_message_txt, Toast.LENGTH_SHORT).show();
+                            return;
                         }
                         if(whetherIdentityWallet){
                             sharedPreferencesHelper.put("currentIdentityWalletName",walletNewName);
