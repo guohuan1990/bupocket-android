@@ -102,6 +102,7 @@ public class BPWalletManageFragment extends BaseFragment {
                         String walletNewName = walletNewNameEt.getText().toString().trim();
                         if(CommonUtil.isNull(walletNewName)){
                             Toast.makeText(getActivity(), R.string.error_wallet_name_empty_message_txt, Toast.LENGTH_SHORT).show();
+                            return;
                         }
                         if(whetherIdentityWallet){
                             sharedPreferencesHelper.put("currentIdentityWalletName",walletNewName);
@@ -311,6 +312,9 @@ public class BPWalletManageFragment extends BaseFragment {
                                     sharedPreferencesHelper.put(walletAddress + "-BPdata", "");
                                     sharedPreferencesHelper.put("importedWallets",JSONObject.toJSONString(importedWallets));
                                     Looper.prepare();
+                                    if(walletAddress.equals(currentWalletAddress)){
+                                        sharedPreferencesHelper.put("currentWalletAddress",sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString());
+                                    }
                                     Toast.makeText(getActivity(), R.string.delete_wallet_success_message_txt, Toast.LENGTH_SHORT).show();
                                     exportingTipDialog.dismiss();
                                     startFragmentAndDestroyCurrent(new BPWalletsHomeFragment());
@@ -379,7 +383,7 @@ public class BPWalletManageFragment extends BaseFragment {
     private void initView() {
         mWalletNameTv.setText(walletName);
         mWalletAddressTv.setText(AddressUtil.anonymous(walletAddress));
-        if(whetherIdentityWallet || walletAddress.equals(currentWalletAddress)){
+        if(whetherIdentityWallet){
             mDeleteWalletBtn.setVisibility(View.GONE);
         }
     }

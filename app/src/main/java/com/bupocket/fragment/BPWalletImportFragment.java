@@ -346,7 +346,7 @@ public class BPWalletImportFragment extends BaseFragment {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Looper.prepare();
-                                    Toast.makeText(getActivity(), R.string.error_import_mnemonic_message_txt, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), R.string.error_import_message_txt, Toast.LENGTH_SHORT).show();
                                     tipDialog.dismiss();
                                     Looper.loop();
                                     return;
@@ -419,7 +419,7 @@ public class BPWalletImportFragment extends BaseFragment {
                             Toast.makeText(getActivity(), R.string.recover_edit_mneonic_code_hint, Toast.LENGTH_SHORT).show();
                             return false;
                         } else if (!mneonic.matches(regex)) {
-                            Toast.makeText(getActivity(), R.string.recover_mneonic_input_error, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.error_import_mneonic_input_txt, Toast.LENGTH_SHORT).show();
                             return false;
                         }
                         return true;
@@ -704,7 +704,7 @@ public class BPWalletImportFragment extends BaseFragment {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Looper.prepare();
-                                    Toast.makeText(getActivity(), R.string.error_import_private_message_txt, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), R.string.error_import_message_txt, Toast.LENGTH_SHORT).show();
                                     tipDialog.dismiss();
                                     Looper.loop();
                                     return;

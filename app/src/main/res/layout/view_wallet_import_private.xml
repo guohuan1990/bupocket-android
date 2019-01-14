@@ -28,6 +28,7 @@
             android:background="@drawable/shape_corner_gray"
             android:gravity="top"
             android:hint="@string/wallet_import_private_et_hint_txt"
+            android:textSize="15sp"
             android:paddingLeft="15dp"
             android:paddingTop="12dp" />
 

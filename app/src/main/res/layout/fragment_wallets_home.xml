@@ -145,19 +145,24 @@
                 android:paddingLeft="50dp"
                 android:paddingRight="50dp"
                 android:visibility="visible"/>
-            
-            <ListView
-                android:padding="12.5dp"
-                android:id="@+id/importWalletsLv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:divider="@color/tx_list_view_background_col"
-                android:dividerHeight="10dp"
-                android:scrollbars="none"
-                android:fadeScrollbars="false">
 
-            </ListView>
+            <com.qmuiteam.qmui.widget.QMUIEmptyView
+                android:id="@+id/emptyView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+                <ListView
+                    android:padding="12.5dp"
+                    android:id="@+id/importWalletsLv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@color/tx_list_view_background_col"
+                    android:dividerHeight="10dp"
+                    android:scrollbars="none"
+                    android:fadeScrollbars="false">
+
+                </ListView>
+            </com.qmuiteam.qmui.widget.QMUIEmptyView>
 
         </LinearLayout>
     </LinearLayout>
