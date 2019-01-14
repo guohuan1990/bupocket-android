@@ -50,6 +50,7 @@ public class BPWalletManageFragment extends BaseFragment {
     RelativeLayout mExportPrivateRl;
 
     private String walletAddress;
+    private String currentWalletAddress;
     private String walletName;
     private String keystoreStr;
     private String privateKeyStr;
@@ -358,6 +359,10 @@ public class BPWalletManageFragment extends BaseFragment {
         Bundle argz = getArguments();
         walletAddress = argz.getString("walletAddress");
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
+        if(CommonUtil.isNull(currentWalletAddress)){
+            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+        }
         if(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString().equals(walletAddress)){
             walletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName","Wallet-1").toString();
             whetherIdentityWallet = true;
@@ -374,7 +379,7 @@ public class BPWalletManageFragment extends BaseFragment {
     private void initView() {
         mWalletNameTv.setText(walletName);
         mWalletAddressTv.setText(AddressUtil.anonymous(walletAddress));
-        if(whetherIdentityWallet){
+        if(whetherIdentityWallet || walletAddress.equals(currentWalletAddress)){
             mDeleteWalletBtn.setVisibility(View.GONE);
         }
     }
