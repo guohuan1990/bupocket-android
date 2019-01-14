@@ -3,6 +3,8 @@ package com.bupocket.fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,8 +87,9 @@ public class BPWalletManageFragment extends BaseFragment {
                 qmuiDialog.show();
 
                 TextView cancelTv = qmuiDialog.findViewById(R.id.changeNameCancel);
-                TextView confirmTv = qmuiDialog.findViewById(R.id.changeNameConfirm);
-
+                final TextView confirmTv = qmuiDialog.findViewById(R.id.changeNameConfirm);
+                final EditText walletNewNameEt = qmuiDialog.findViewById(R.id.walletNewNameEt);
+                walletNewNameEt.setHint(walletName);
 
                 cancelTv.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -95,14 +98,37 @@ public class BPWalletManageFragment extends BaseFragment {
                     }
                 });
 
+                TextWatcher watcher = new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        confirmTv.setClickable(false);
+                        confirmTv.setEnabled(false);
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        confirmTv.setClickable(false);
+                        confirmTv.setEnabled(false);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        if(walletNewNameEt.getText().toString().trim().length() > 0){
+                            confirmTv.setClickable(true);
+                            confirmTv.setEnabled(true);
+                        }
+                    }
+                };
+                walletNewNameEt.addTextChangedListener(watcher);
+
                 confirmTv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         EditText walletNewNameEt = qmuiDialog.findViewById(R.id.walletNewNameEt);
                         String walletNewName = walletNewNameEt.getText().toString().trim();
                         if(CommonUtil.isNull(walletNewName)){
-                            Toast.makeText(getActivity(), R.string.error_wallet_name_empty_message_txt, Toast.LENGTH_SHORT).show();
-                            return;
+                                Toast.makeText(getActivity(), R.string.error_wallet_name_empty_message_txt, Toast.LENGTH_SHORT).show();
+                                return;
                         }else if(!CommonUtil.validateNickname(walletName)){
                             Toast.makeText(getActivity(), R.string.error_import_wallet_name_message_txt, Toast.LENGTH_SHORT).show();
                             return;

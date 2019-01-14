@@ -37,7 +37,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="26dp"
                 android:background="@drawable/edit_border_bg_white"
-                android:hint="@string/change_wallet_name_edit_hint"
                 android:paddingLeft="10dp"
                 android:paddingTop="20dp"
                 android:paddingRight="10dp"
@@ -79,6 +78,8 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textColor="@color/app_color_main"
+                    android:clickable="false"
+                    android:enabled="false"
                     android:text="@string/common_dialog_confirm"/>
             </LinearLayout>
 
