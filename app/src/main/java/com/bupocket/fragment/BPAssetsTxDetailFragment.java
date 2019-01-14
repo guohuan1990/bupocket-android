@@ -254,6 +254,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
             pkLayout.addView(pkLabelTv);
 
             TextView pkVTv = new TextView(getContext());
+            pkVTv.setTextIsSelectable(true);
             pkVTv.setText(signature.getPublicKey());
             pkVTv.setPadding(20,10,20,20);
             pkLayout.addView(pkVTv);
@@ -274,6 +275,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
             skLayout.addView(sdLabelTv);
 
             TextView sdVTv = new TextView(getContext());
+            sdVTv.setTextIsSelectable(true);
             sdVTv.setText(signature.getSignData());
             sdVTv.setPadding(20,10,20,20);
             skLayout.addView(sdVTv);

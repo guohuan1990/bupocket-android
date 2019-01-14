@@ -118,6 +118,7 @@
 
                                 <TextView
                                     android:id="@+id/txFromAccAddrTv"
+                                    android:textIsSelectable="true"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="4"
@@ -144,6 +145,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="4"
                                     android:gravity="end"
+                                    android:textIsSelectable="true"
                                     android:text="buQs9npaCq9mNFZG18qu88ZcmXYqd6bqpTU3" />
                             </LinearLayout>
 
@@ -253,6 +255,7 @@
 
                                     <TextView
                                         android:id="@+id/txDetailTXHashTv"
+                                        android:textIsSelectable="true"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
@@ -278,6 +281,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
                                         android:gravity="end"
+                                        android:textIsSelectable="true"
                                         android:text="buQs9npaCq9mNFZG18qu88ZcmXYqd6bqpTU3" />
                                 </LinearLayout>
 
@@ -300,6 +304,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
                                         android:gravity="end"
+                                        android:textIsSelectable="true"
                                         android:text="buQs9npaCq9mNFZG18qu88ZcmXYqd6bqpTU3" />
                                 </LinearLayout>
 
@@ -455,6 +460,7 @@
 
                                     <TextView
                                         android:id="@+id/txDetailBlockInfoBlockHashTv"
+                                        android:textIsSelectable="true"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
@@ -477,6 +483,7 @@
 
                                     <TextView
                                         android:id="@+id/txDetailBlockInfoPrevBlockHashTv"
+                                        android:textIsSelectable="true"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"

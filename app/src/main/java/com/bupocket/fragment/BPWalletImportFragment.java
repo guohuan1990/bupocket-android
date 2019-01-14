@@ -346,7 +346,7 @@ public class BPWalletImportFragment extends BaseFragment {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Looper.prepare();
-                                    Toast.makeText(getActivity(), R.string.recover_wallet_error_tip, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), R.string.error_import_mnemonic_message_txt, Toast.LENGTH_SHORT).show();
                                     tipDialog.dismiss();
                                     Looper.loop();
                                     return;

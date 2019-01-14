@@ -67,7 +67,7 @@
     <string name="tx_timeout_txt1" >请求超时</string>
 
     <string name="password_comfirm_dialog_title" >密码确认</string>
-    <string name="password_comfirm_dialog_sub_txt" >请填写身份密码以确认转出</string>
+    <string name="password_comfirm_dialog_sub_txt" >请填写钱包密码以确认转出</string>
     <string name="password_comfirm_dialog_to_backup" >请填写身份密码以确认备份</string>
     <!-- 恢复身份 -->
     <string name="recover_wallet_title" >恢复身份</string>
@@ -257,7 +257,7 @@
     <string name="issue_token_fee_txt">预估交易费</string>
     <string name="register_token_fee_txt">预估交易费</string>
     <string name="confirm_register_token_btn_txt">确认登记</string>
-    <string name="register_token_password_confirm_txt">请填写身份密码以确认登记</string>
+    <string name="register_token_password_confirm_txt">请填写钱包密码以确认登记</string>
     <string name="register_token_success_txt">登记成功</string>
     <string name="register_token_failure_txt">登记失败</string>
     <string name="register_token_timeout_txt">登记超时</string>
@@ -317,6 +317,6 @@
     <string name="backup_immediately_txt">立即备份</string>
     <string name="search_result_not_found">未找到搜索结果</string>
     <string name="switch_to_test_net_message_txt">您已开启测试网</string>
-    <string name="issue_token_password_confirm_txt">请填写身份密码以确认发行</string>
+    <string name="issue_token_password_confirm_txt">请填写钱包密码以确认发行</string>
     <string name="recover_identity_confirm_message_txt">是否确认更新密码及导入身份</string>
 </resources>
