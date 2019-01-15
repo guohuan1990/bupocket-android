@@ -371,7 +371,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         }
 //        initBackground();
         initTokensView();
-        refreshLayout.autoRefresh();
+//        refreshLayout.autoRefresh();
     }
 
     private void initBackground() {

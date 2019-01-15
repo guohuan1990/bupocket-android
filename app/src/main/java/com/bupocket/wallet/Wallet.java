@@ -568,7 +568,7 @@ public class Wallet {
                     if (!senderPrivateKey.startsWith("priv")) {
                         throw new Exception();
                     }
-                    keystore = accountsBean.getSecret();
+                    keystore = JSON.toJSONString(KeyStore.generateKeyStore(password, senderPrivateKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 2));
                     break;
                 }
             }
@@ -595,7 +595,7 @@ public class Wallet {
     }
 
     public WalletBPData importKeystore(String password, String keystore) throws Exception {
-        String privateKey = KeyStore.decodeMsg(password, JSON.parseObject(keystore, BaseKeyStoreEntity.class));
+        String privateKey = KeyStore.decipherKeyStore(password, JSON.parseObject(keystore, KeyStoreEntity.class));
         if(!privateKey.startsWith("priv")){
             throw new Exception();
         }

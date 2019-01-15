@@ -1,6 +1,7 @@
 package com.bupocket.fragment;
 
 import android.annotation.TargetApi;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -31,6 +32,8 @@ import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.view.DrawableEditText;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
+import com.bupocket.wallet.enums.ExceptionEnum;
+import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -105,7 +108,6 @@ public class BPWalletImportFragment extends BaseFragment {
         }
     };
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected View onCreateView() {
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_wallet_import, null);
@@ -114,19 +116,16 @@ public class BPWalletImportFragment extends BaseFragment {
         return rootView;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void init() {
         initData();
         initUI();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void initUI() {
         initTopBar();
         initTabAndPager();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void initTabAndPager() {
         mContentViewPager.setAdapter(mPagerAdapter);
         mContentViewPager.setCurrentItem(mDestPage.getPosition(), false);
@@ -136,7 +135,7 @@ public class BPWalletImportFragment extends BaseFragment {
         mTabSegment.addTab(new QMUITabSegment.Tab(getString(R.string.mnemonic_word_txt)));
         mTabSegment.addTab(new QMUITabSegment.Tab(getString(R.string.keystore_txt)));
         mTabSegment.addTab(new QMUITabSegment.Tab(getString(R.string.private_key_txt)));
-        mTabSegment.setDefaultSelectedColor(getContext().getColor(R.color.app_color_main));
+        mTabSegment.setDefaultSelectedColor(Color.parseColor("#02CA71"));
         mTabSegment.setupWithViewPager(mContentViewPager, false);
         mTabSegment.setMode(QMUITabSegment.MODE_FIXED);
         mTabSegment.addOnTabSelectedListener(new QMUITabSegment.OnTabSelectedListener() {
@@ -534,10 +533,17 @@ public class BPWalletImportFragment extends BaseFragment {
                                         Looper.loop();
                                     }
 
-                                } catch (Exception e) {
+                                } catch (WalletException e){
                                     e.printStackTrace();
                                     Looper.prepare();
                                     Toast.makeText(getActivity(), R.string.error_import_keystore_message_txt, Toast.LENGTH_SHORT).show();
+                                    tipDialog.dismiss();
+                                    Looper.loop();
+                                    return;
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Looper.prepare();
+                                    Toast.makeText(getActivity(), R.string.error_import_keystore_password_message_txt, Toast.LENGTH_SHORT).show();
                                     tipDialog.dismiss();
                                     Looper.loop();
                                     return;

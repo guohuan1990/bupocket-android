@@ -206,24 +206,26 @@ public class BPWalletsHomeFragment extends BaseFragment {
                 sharedPreferencesHelper.put("currentWalletAddress",currentIdentityWalletAddress);
                 mCurrentIdentityWalletSignTv.setVisibility(View.VISIBLE);
                 currentWalletAddress = currentIdentityWalletAddress;
-                importedWalletAdapter = new ImportedWalletAdapter(walletInfoList, getContext(), currentWalletAddress);
-                mImportWalletsLv.setAdapter(importedWalletAdapter);
-                importedWalletAdapter.setOnManageWalletBtnListener(new ImportedWalletAdapter.OnManageWalletBtnListener() {
-                    @Override
-                    public void onClick(int i) {
-                        Bundle argz = new Bundle();
-                        WalletInfo walletInfo = walletInfoList.get(i);
-                        argz.putString("walletAddress",walletInfo.getWalletAddress());
-                        BPWalletManageFragment bpWalletManageFragment = new BPWalletManageFragment();
-                        bpWalletManageFragment.setArguments(argz);
-                        startFragment(bpWalletManageFragment);
-                    }
-                });
+                if (walletInfoList != null && walletInfoList.size() > 0){
+                    importedWalletAdapter = new ImportedWalletAdapter(walletInfoList, getContext(), currentWalletAddress);
+                    mImportWalletsLv.setAdapter(importedWalletAdapter);
+                    importedWalletAdapter.setOnManageWalletBtnListener(new ImportedWalletAdapter.OnManageWalletBtnListener() {
+                        @Override
+                        public void onClick(int i) {
+                            Bundle argz = new Bundle();
+                            WalletInfo walletInfo = walletInfoList.get(i);
+                            argz.putString("walletAddress",walletInfo.getWalletAddress());
+                            BPWalletManageFragment bpWalletManageFragment = new BPWalletManageFragment();
+                            bpWalletManageFragment.setArguments(argz);
+                            startFragment(bpWalletManageFragment);
+                        }
+                    });
+                }
             }
         });
     }
 
     private void importWallet() {
-        startFragment(new BPWalletImportFragment());
+        startFragmentAndDestroyCurrent(new BPWalletImportFragment());
     }
 }

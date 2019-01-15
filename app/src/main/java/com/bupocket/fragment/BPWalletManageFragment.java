@@ -126,7 +126,7 @@ public class BPWalletManageFragment extends BaseFragment {
                     public void onClick(View v) {
                         EditText walletNewNameEt = qmuiDialog.findViewById(R.id.walletNewNameEt);
                         String walletNewName = walletNewNameEt.getText().toString().trim();
-                        if(!CommonUtil.validateNickname(walletName)){
+                        if(!CommonUtil.validateNickname(walletNewName)){
                             Toast.makeText(getActivity(), R.string.error_import_wallet_name_message_txt, Toast.LENGTH_SHORT).show();
                             return;
                         }
