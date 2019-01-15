@@ -125,7 +125,7 @@
     <string name="qr_pic_name_text" >钱包地址二维码</string>
     <string name="qr_copy_success_message" >已复制到剪切板</string>
     <!-- 我的 -->
-    <string name="change_the_password_txt" >修改密码</string>
+    <string name="change_the_password_txt" >修改身份密码</string>
     <string name="help_txt" >帮助与反馈</string>
     <string name="version_txt" >版本号</string>
     <string name="language_txt" >多语言</string>
@@ -307,7 +307,7 @@
     <string name="switch_main_net_message_txt">您已关闭测试网</string>
     <string name="yes_txt">是</string>
     <string name="no_txt">否</string>
-    <string name="current_test_message_txt">当前为测试网环境</string>
+    <string name="current_test_message_txt">测试网</string>
     <string name="identity_id_explain_txt">用来维护你存储在区块链上的数据，这些信息会以分布式存储的方式进行保存，只有拥有该身份的人可以动用数据，充分确保你的数据主权不受侵犯。</string>
 
     <string name="receive_qr_txt">收款码</string>
@@ -327,8 +327,6 @@
     <string name="export_private_txt">导出私钥</string>
     <string name="delete_wallet_txt">删除钱包</string>
     <string name="change_wallet_name_title">更改钱包名称</string>
-    <string name="change_wallet_name_edit_hint">请输入新名称</string>
-    <string name="error_wallet_name_empty_message_txt">钱包名称不能为空</string>
     <string name="export_keystore_tips_txt">请复制keystone文件到安全的地方保存</string>
     <string name="copy_keystore_txt">复制Keystore</string>
     <string name="copy_private_txt">复制私钥</string>
@@ -357,15 +355,14 @@
     <string name="password_for_keystore_txt">Keystore密码</string>
     <string name="password_for_keystore_et_hint_txt">请输入原Keystore文件内容的密码</string>
     <string name="understand_keystore_txt">了解Keystore</string>
-    <string name="wallet_import_private_tips_txt">粘贴私钥（Private Key）</string>
+    <string name="wallet_import_private_tips_txt">粘贴私钥（Private Key）至输入框内</string>
     <string name="wallet_import_private_et_hint_txt">私钥（Private Key）</string>
     <string name="understand_private_txt">了解私钥</string>
     <string name="import_success_message_txt">钱包导入成功</string>
     <string name="error_already_import_meaaage_txt">该钱包已导入，无需重复导入</string>
     <string name="error_import_wallet_name_message_txt">钱包名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
     <string name="importing_loading_txt">导入中</string>
-    <string name="error_import_keystore_message_txt">Keystore不合法，请进行修改</string>
-    <string name="error_import_keystore_password_message_txt">Keystore密码不正确，请进行修改</string>
+    <string name="error_import_keystore_message_txt">Keystore不合法或密码不正确，请进行修改</string>
     <string name="error_import_private_message_txt">私钥不合法，请进行修改</string>
     <string name="error_import_mneonic_input_txt">助记词不合法，请进行修改</string>
     <string name="error_import_message_txt">钱包导入失败，请重新导入</string>

@@ -124,7 +124,7 @@
     <string name="qr_pic_name_text">QR code of the wallet address </string>
     <string name="qr_copy_success_message">It has been copied to the clipboard</string>
     <!-- 我的 -->
-    <string name="change_the_password_txt">Change password</string>
+    <string name="change_the_password_txt">Change the Identity Password</string>
     <string name="export_keystore_txt">Export Keystore</string>
     <string name="help_txt">Feedback</string>
     <string name="version_txt">Version</string>
@@ -149,7 +149,7 @@
     <string name="emptyView_mode_desc_retry">Click to retry</string>
     <string name="emptyView_mode_desc_no_data">No data available</string>
     <string name="invalid_address">BU address is incorrect, please enter again</string>
-    <string name="send_err1">You can\'t transfer BU to yourself</string>
+    <string name="send_err1">You can\'t transfer to yourself</string>
     <string name="invalid_amount">Invalid transfer amount</string>
     <string name="amount_too_small">Each transfer cannot be less than</string>
     <string name="amount_too_big">Each transfer cannot exceed 1,000,000</string>
@@ -309,7 +309,7 @@
     <string name="switch_main_net_message_txt">You have stopped the test network</string>
     <string name="yes_txt">Yes</string>
     <string name="no_txt">No</string>
-    <string name="current_test_message_txt">The current environment is the test network environment</string>
+    <string name="current_test_message_txt">Test Network</string>
     <string name="identity_id_explain_txt">It is used to secure the data that you store on the blockchain, which is stored in a distributed manner. Only those who have the identity can use the data, so as to ensure that your data sovereignty is not violated.</string>
 
     <string name="receive_qr_txt">Receive</string>
@@ -355,7 +355,7 @@
     <string name="password_for_keystore_txt">Keystore Password</string>
     <string name="password_for_keystore_et_hint_txt">Please input the password of the original Keystore file</string>
     <string name="understand_keystore_txt">About Keystore</string>
-    <string name="wallet_import_private_tips_txt">Paste Your Private Key</string>
+    <string name="wallet_import_private_tips_txt">Paste the private key to the input box</string>
     <string name="wallet_import_private_et_hint_txt">Private key</string>
     <string name="understand_private_txt">About Private Key</string>
     <string name="import_success_message_txt">The wallet is imported successfully</string>
