@@ -43,8 +43,7 @@ public class CommonUtil {
 
     public static final Pattern NAME_PATTERN = Pattern.compile("^[\\u4E00-\\u9FBF][\\u4E00-\\u9FBF(.|·)]{0,13}[\\u4E00-\\u9FBF]$");
 
-    public static final Pattern NICKNAME_PATTERN = Pattern.compile("^((?!\\d{5})[\\u4E00-\\u9FBF(.|·)|0-9A-Za-z_]){1,20}$");
-
+    public static final Pattern NICKNAME_PATTERN = Pattern.compile("^((?!\\d{21})[\\u4E00-\\u9FBF(.|·)|0-9A-Za-z_]){1,20}$");
 //    public static final Pattern PASSWORD_PATTERN = Pattern.compile("^[\\s\\S]{8,20}$");
     public static final Pattern PASSWORD_PATTERN = Pattern.compile("^[A-Za-z0-9]{8,20}$");
 
@@ -165,11 +164,12 @@ public class CommonUtil {
      */
     public static boolean validateNickname(String nickname) {
 
-        //规则 不能包含5个数字 允许中英文和数字 2-11位
-        if (isEmpty(nickname) || nickname.replaceAll("[^0-9]", "").length() > 4) {
+        //规则
+        if (isEmpty(nickname)) {
             return false;
         }
         Matcher m = NICKNAME_PATTERN.matcher(nickname);
+        boolean flag = m.matches();
         return m.matches();
     }
 
@@ -767,5 +767,4 @@ public class CommonUtil {
         }
         return false;
     }
-
 }

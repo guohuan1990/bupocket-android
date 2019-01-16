@@ -47,7 +47,7 @@ public class BPAssetsAddFragment extends BaseFragment {
 
     private SearchTokenAdapter searchTokenAdapter;
     private SharedPreferencesHelper sharedPreferencesHelper;
-    private String currentAccAddress;
+    private String currentWalletAddress;
     private List<SearchTokenRespDto.TokenListBean> respTokenList = new ArrayList<>();
     private boolean searchLoading = false;
     private boolean loadFailFlag = false;
@@ -59,7 +59,10 @@ public class BPAssetsAddFragment extends BaseFragment {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
+        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
+        if(CommonUtil.isNull(currentWalletAddress)){
+            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+        }
 
         mSearchTokenEt.setOnDrawableClickListener(new DrawableEditText.OnDrawableClickListener() {
             @Override
@@ -113,7 +116,7 @@ public class BPAssetsAddFragment extends BaseFragment {
         mSearchResultEmptyLL.setVisibility(View.GONE);
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         Map<String, Object> parmasMap = new HashMap<>();
-        parmasMap.put("address", currentAccAddress);
+        parmasMap.put("address", currentWalletAddress);
         parmasMap.put("assetCode", assetCode);
         parmasMap.put("supportFuzzy", true);
         parmasMap.put("startPage", 1);

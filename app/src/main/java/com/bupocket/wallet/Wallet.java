@@ -31,6 +31,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.math.BigDecimal;
+import java.security.Key;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -555,4 +556,73 @@ public class Wallet {
         return txHash;
     }
 
+    public String exportKeyStore(String password, String accountBPData, String walletPublicAddress) throws Exception {
+        String senderPrivateKey = null;
+        String keystore = null;
+        List<WalletBPData.AccountsBean> accountsBeans = JSON.parseArray(accountBPData, WalletBPData.AccountsBean.class);
+
+        if (accountsBeans.size() > 0) {
+            for (WalletBPData.AccountsBean accountsBean : accountsBeans) {
+                if (walletPublicAddress.equals(accountsBean.getAddress())) {
+                    senderPrivateKey = KeyStore.decodeMsg(password, JSON.parseObject(accountsBean.getSecret().toString(), BaseKeyStoreEntity.class));
+                    if (!senderPrivateKey.startsWith("priv")) {
+                        throw new Exception();
+                    }
+                    keystore = JSON.toJSONString(KeyStore.generateKeyStore(password, senderPrivateKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 2));
+                    break;
+                }
+            }
+        }
+        return keystore;
+    }
+
+    public String exportPrivateKey(String password, String accountBPData, String walletPublicAddress) throws Exception{
+        String senderPrivateKey = null;
+        List<WalletBPData.AccountsBean> accountsBeans = JSON.parseArray(accountBPData, WalletBPData.AccountsBean.class);
+
+        if (accountsBeans.size() > 0) {
+            for (WalletBPData.AccountsBean accountsBean : accountsBeans) {
+                if (walletPublicAddress.equals(accountsBean.getAddress())) {
+                    senderPrivateKey = KeyStore.decodeMsg(password, JSON.parseObject(accountsBean.getSecret().toString(), BaseKeyStoreEntity.class));
+                    if (!senderPrivateKey.startsWith("priv")) {
+                        throw new Exception();
+                    }
+                    break;
+                }
+            }
+        }
+        return senderPrivateKey;
+    }
+
+    public WalletBPData importKeystore(String password, String keystore) throws Exception {
+        String privateKey = KeyStore.decipherKeyStore(password, JSON.parseObject(keystore, KeyStoreEntity.class));
+        if(!privateKey.startsWith("priv")){
+            throw new Exception();
+        }
+        String address = new PrivateKey(privateKey).getEncAddress();
+        KeyStoreEntity keyStoreEntity = KeyStore.generateKeyStore(password, privateKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 2);
+        WalletBPData walletBPData = new WalletBPData();
+        List<WalletBPData.AccountsBean> accountsBeans = new ArrayList<>();
+        WalletBPData.AccountsBean accountsBean = new WalletBPData.AccountsBean();
+        accountsBean.setAddress(address);
+        accountsBean.setSecret(JSON.toJSONString(keyStoreEntity));
+        accountsBeans.add(accountsBean);
+        walletBPData.setAccounts(accountsBeans);
+
+        return walletBPData;
+    }
+
+    public WalletBPData importPrivateKey(String password, String privateKey) throws Exception {
+        String address = new PrivateKey(privateKey).getEncAddress();
+        KeyStoreEntity keyStoreEntity = KeyStore.generateKeyStore(password, privateKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 2);
+        WalletBPData walletBPData = new WalletBPData();
+        List<WalletBPData.AccountsBean> accountsBeans = new ArrayList<>();
+        WalletBPData.AccountsBean accountsBean = new WalletBPData.AccountsBean();
+        accountsBean.setAddress(address);
+        accountsBean.setSecret(JSON.toJSONString(keyStoreEntity));
+        accountsBeans.add(accountsBean);
+        walletBPData.setAccounts(accountsBeans);
+
+        return walletBPData;
+    }
 }

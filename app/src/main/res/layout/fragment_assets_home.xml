@@ -2,7 +2,8 @@
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -37,16 +38,44 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/currentTestNetTipsTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:gravity="center"
-                        android:paddingLeft="35dp"
-                        android:paddingRight="35dp"
-                        android:textColor="@color/app_color_green"
-                        android:textSize="15sp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/currentTestNetTipsTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/app_color_green"
+                            android:paddingTop="10dp"
+                            android:paddingRight="35dp"
+                            android:paddingLeft="10dp"
+                            android:layout_alignParentLeft="true"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/currentWalletNameTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:paddingTop="10dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginRight="40dp"
+                            android:textColor="@color/app_color_white"
+                            android:textSize="20sp"
+                            android:gravity="center"
+                            tools:text="有钱的钱包"/>
+
+                        <ImageView
+                            android:id="@+id/manageWalletBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/icon_wallet_white"
+                            android:layout_alignParentRight="true"
+                            android:paddingRight="10dp"
+                            android:paddingTop="10dp"/>
+                    </RelativeLayout>
 
 
                     <LinearLayout

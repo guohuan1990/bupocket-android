@@ -91,6 +91,7 @@
                         android:textAlignment="textStart"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp"
+                        android:textIsSelectable="true"
                         tools:ignore="RtlCompat"
                         tools:text="buQWJtxqTzUaMUxuC93zA5aoJcDdHPQ21d92asdasdasdasdasdasd" />
 

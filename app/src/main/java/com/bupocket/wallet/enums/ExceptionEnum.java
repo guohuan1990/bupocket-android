@@ -5,7 +5,9 @@ public enum ExceptionEnum {
     SYS_ERR("10000","system exception"),
     INVALID_PASSWORD("10001","Invalid password"),
     FEE_NOT_ENOUGH("10002","Fee not enough"),
-    BU_NOT_ENOUGH("10003","bu not enough");
+    BU_NOT_ENOUGH("10003","bu not enough"),
+    IMPORT_KEYSTORE_VERSION_ERROR("20001","the keyStore version was wrong"),
+    IMPORT_KEYSTORE_ADDRESS_ERROR("20002","the address in the keyStore was wrong, please check");
 
     private final String code;
     private final String message;

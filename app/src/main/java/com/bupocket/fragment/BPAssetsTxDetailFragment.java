@@ -98,7 +98,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
     private String txHash;
     private String outinType;
     private String assetCode;
-    private String currentAccAddress;
+    private String currentWalletAddress;
     private String optNo;
 
     @Override
@@ -123,7 +123,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
         txHash = getTxHash();
         outinType = getArguments().getString("outinType");
         assetCode = getArguments().getString("assetCode");
-        currentAccAddress = getArguments().getString("currentAccAddress");
+        currentWalletAddress = getArguments().getString("currentAccAddress");
         optNo = getArguments().getString("optNo");
         mAssetCodeTv.setText(assetCode);
     }
@@ -136,7 +136,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
     private void initTxDetailView() {
         TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
         Map<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("address",currentAccAddress);
+        paramsMap.put("address",currentWalletAddress);
         paramsMap.put("optNo",optNo);
         Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetailByOptNo(paramsMap);
         call.enqueue(new Callback<ApiResult<TxDetailRespDto>>() {
@@ -254,6 +254,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
             pkLayout.addView(pkLabelTv);
 
             TextView pkVTv = new TextView(getContext());
+            pkVTv.setTextIsSelectable(true);
             pkVTv.setText(signature.getPublicKey());
             pkVTv.setPadding(20,10,20,20);
             pkLayout.addView(pkVTv);
@@ -274,6 +275,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
             skLayout.addView(sdLabelTv);
 
             TextView sdVTv = new TextView(getContext());
+            sdVTv.setTextIsSelectable(true);
             sdVTv.setText(signature.getSignData());
             sdVTv.setPadding(20,10,20,20);
             skLayout.addView(sdVTv);
