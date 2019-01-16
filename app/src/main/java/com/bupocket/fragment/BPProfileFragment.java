@@ -55,6 +55,8 @@ public class BPProfileFragment extends BaseFragment{
     RelativeLayout mVersionRl;
     @BindView(R.id.avatarNickLl)
     LinearLayout mAvatarNickLl;
+    @BindView(R.id.manageWalletRl)
+    RelativeLayout mManageWalletRl;
 
     private final static int CLICKCOUNTS = 5;
     private final static long DURATION = 2 * 1000;
@@ -90,6 +92,12 @@ public class BPProfileFragment extends BaseFragment{
             @Override
             public void onClick(View v) {
                 gotoChangePwdFragment();
+            }
+        });
+        mManageWalletRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoManageWalletFragment();
             }
         });
         mHelpRL.setOnClickListener(new View.OnClickListener() {
@@ -173,5 +181,9 @@ public class BPProfileFragment extends BaseFragment{
 
     private void gotoSettingFragment(){
         startFragment(new BPSettingFragment());
+    }
+
+    private void gotoManageWalletFragment() {
+        startFragment(new BPWalletsHomeFragment());
     }
 }

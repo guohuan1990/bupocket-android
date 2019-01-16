@@ -93,10 +93,13 @@ public class BPAssetsHomeFragment extends BaseFragment {
     LinearLayout mSafetyTipsLl;
     @BindView(R.id.manageWalletBtn)
     ImageView mManageWalletBtn;
+    @BindView(R.id.currentWalletNameTv)
+    TextView mCurrentWalletNameTv;
 
     protected SharedPreferencesHelper sharedPreferencesHelper;
     private TokensAdapter mTokensAdapter;
     private String currentWalletAddress;
+    private String currentWalletName;
     private String currentAccNick;
     private MaterialHeader mMaterialHeader;
     List<GetTokensRespDto.TokenListBean> mLocalTokenList = new ArrayList<>();
@@ -360,8 +363,11 @@ public class BPAssetsHomeFragment extends BaseFragment {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
         currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
-        if(CommonUtil.isNull(currentWalletAddress)){
+        if(CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString())){
             currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+            currentWalletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName","Wallet-1").toString();
+        }else {
+            currentWalletName = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "-walletName","").toString();
         }
         currencyType = sharedPreferencesHelper.getSharedPreference("currencyType","CNY").toString();
         bumoNodeType = sharedPreferencesHelper.getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
@@ -377,6 +383,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     private void initBackground() {
         if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE)== BumoNodeEnum.TEST.getCode()){
             mCurrentTestNetTipsTv.setText(getString(R.string.current_test_message_txt));
+            mCurrentWalletNameTv.setText(currentWalletName);
             mAssetLinearLayout.setBackgroundResource(R.drawable.bg_asset_home_test_net);
         }
     }
