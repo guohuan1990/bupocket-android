@@ -389,34 +389,18 @@ public class BPSendTokenFragment extends BaseFragment {
                     return;
                 }
 
-                if(TokenTypeEnum.BU.getCode().equals(tokenType)){
-                    if(Double.parseDouble(mAccountAvailableBalanceTv.getText().toString()) < Double.parseDouble(sendAmountInput) + Double.parseDouble(txFee)){
-                        tipDialog = new QMUITipDialog.Builder(getContext())
-                                .setTipWord(getResources().getString(R.string.balance_not_enough))
-                                .create();
-                        tipDialog.show();
-                        mAccountAvailableBalanceTv.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                tipDialog.dismiss();
-                            }
-                        }, 1500);
-                        return;
-                    }
-                }else{
-                    if(Double.parseDouble(mAccountAvailableBalanceTv.getText().toString()) < Double.parseDouble(sendAmountInput)){
-                        tipDialog = new QMUITipDialog.Builder(getContext())
-                                .setTipWord(getResources().getString(R.string.balance_not_enough))
-                                .create();
-                        tipDialog.show();
-                        mAccountAvailableBalanceTv.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                tipDialog.dismiss();
-                            }
-                        }, 1500);
-                        return;
-                    }
+                if(Double.parseDouble(mAccountAvailableBalanceTv.getText().toString()) < Double.parseDouble(sendAmountInput)){
+                    tipDialog = new QMUITipDialog.Builder(getContext())
+                            .setTipWord(getResources().getString(R.string.balance_not_enough))
+                            .create();
+                    tipDialog.show();
+                    mAccountAvailableBalanceTv.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            tipDialog.dismiss();
+                        }
+                    }, 1500);
+                    return;
                 }
 
 
