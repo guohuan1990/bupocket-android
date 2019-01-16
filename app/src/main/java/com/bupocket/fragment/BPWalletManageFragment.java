@@ -2,6 +2,7 @@ package com.bupocket.fragment;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -343,7 +344,14 @@ public class BPWalletManageFragment extends BaseFragment {
                                     }
                                     Toast.makeText(getActivity(), R.string.delete_wallet_success_message_txt, Toast.LENGTH_SHORT).show();
                                     exportingTipDialog.dismiss();
-                                    startFragmentAndDestroyCurrent(new BPWalletsHomeFragment());
+
+                                    Handler handler = new Handler(Looper.getMainLooper());
+                                    class PopBackStackThread implements Runnable {
+                                        public void run() {
+                                            popBackStack();
+                                        }
+                                    }
+                                    handler.post(new PopBackStackThread());
                                     Looper.loop();
                                 } catch (Exception e) {
                                     e.printStackTrace();

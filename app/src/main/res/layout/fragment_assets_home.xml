@@ -60,8 +60,11 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:paddingTop="10dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginRight="40dp"
                             android:textColor="@color/app_color_white"
                             android:textSize="20sp"
+                            android:gravity="center"
                             tools:text="有钱的钱包"/>
 
                         <ImageView

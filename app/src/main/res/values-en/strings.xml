@@ -149,7 +149,7 @@
     <string name="emptyView_mode_desc_retry">Click to retry</string>
     <string name="emptyView_mode_desc_no_data">No data available</string>
     <string name="invalid_address">BU address is incorrect, please enter again</string>
-    <string name="send_err1">You can\'t transfer to yourself</string>
+    <string name="send_err1">You can\'t transfer tokens to yourself</string>
     <string name="invalid_amount">Invalid transfer amount</string>
     <string name="amount_too_small">Each transfer cannot be less than</string>
     <string name="amount_too_big">Each transfer cannot exceed 1,000,000</string>

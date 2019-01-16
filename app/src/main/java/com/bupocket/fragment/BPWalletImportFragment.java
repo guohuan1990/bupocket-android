@@ -3,6 +3,7 @@ package com.bupocket.fragment;
 import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -339,7 +340,13 @@ public class BPWalletImportFragment extends BaseFragment {
                                         Looper.prepare();
                                         Toast.makeText(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT).show();
                                         tipDialog.dismiss();
-                                        startFragmentAndDestroyCurrent(new BPWalletsHomeFragment());
+                                        Handler handler = new Handler(Looper.getMainLooper());
+                                        class PopBackStackThread implements Runnable {
+                                            public void run() {
+                                                popBackStack();
+                                            }
+                                        }
+                                        handler.post(new PopBackStackThread());
                                         Looper.loop();
                                     }
                                 } catch (Exception e) {
@@ -529,7 +536,13 @@ public class BPWalletImportFragment extends BaseFragment {
                                         Looper.prepare();
                                         Toast.makeText(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT).show();
                                         tipDialog.dismiss();
-                                        startFragmentAndDestroyCurrent(new BPWalletsHomeFragment());
+                                        Handler handler = new Handler(Looper.getMainLooper());
+                                        class PopBackStackThread implements Runnable {
+                                            public void run() {
+                                                popBackStack();
+                                            }
+                                        }
+                                        handler.post(new PopBackStackThread());
                                         Looper.loop();
                                     }
 
@@ -704,7 +717,13 @@ public class BPWalletImportFragment extends BaseFragment {
                                         Looper.prepare();
                                         Toast.makeText(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT).show();
                                         tipDialog.dismiss();
-                                        startFragmentAndDestroyCurrent(new BPWalletsHomeFragment());
+                                        Handler handler = new Handler(Looper.getMainLooper());
+                                        class PopBackStackThread implements Runnable {
+                                            public void run() {
+                                                popBackStack();
+                                            }
+                                        }
+                                        handler.post(new PopBackStackThread());
                                         Looper.loop();
                                     }
                                 } catch (Exception e) {
