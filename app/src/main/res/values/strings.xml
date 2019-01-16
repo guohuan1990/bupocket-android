@@ -158,7 +158,7 @@
     <string name="balance_not_enough" >可用余额不足</string>
     <string name="send_token_note_too_long" >备注信息不能超过20个字</string>
     <string name="send_loading" >处理中...</string>
-    <string name="splash_txt0" >小布口袋</string>
+    <string name="splash_txt0" >Bu Pocket</string>
     <string name="splash_txt1" >泛在价值流通区块链网络</string>
 
     <string name="change_pwd_old_pwd" >旧密码</string>
