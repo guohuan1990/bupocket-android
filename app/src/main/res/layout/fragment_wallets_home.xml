@@ -89,7 +89,7 @@
 
                 <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                     android:id="@+id/manageIdentityWalletBtn"
-                    android:layout_width="53dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -98,6 +98,8 @@
                     android:text="@string/manage_txt"
                     android:textColor="@color/app_color_main"
                     android:textSize="15sp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     app:qmui_backgroundColor="@color/app_color_white"
                     app:qmui_borderColor="@color/app_color_main"
                     app:qmui_radius="5dp" />
