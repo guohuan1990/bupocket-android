@@ -150,6 +150,7 @@ public class BPWalletsHomeFragment extends BaseFragment {
                             startFragment(bpWalletManageFragment);
                         }
                     });
+                    startFragment(new HomeFragment());
                 }
             });
 
@@ -221,6 +222,7 @@ public class BPWalletsHomeFragment extends BaseFragment {
                         }
                     });
                 }
+                startFragment(new HomeFragment());
             }
         });
     }
