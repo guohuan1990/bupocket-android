@@ -279,6 +279,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
                                             sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
                                             sharedPreferencesHelper.put("identityId", walletBPData.getAccounts().get(0).getAddress());
                                             sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode());
+                                            sharedPreferencesHelper.put("currentWalletAddress",walletBPData.getAccounts().get(1).getAddress());
                                             sharedPreferencesHelper.put("mnemonicWordBackupState", "0");
                                             tipDialog.dismiss();
                                             startFragmentAndDestroyCurrent(new HomeFragment(), false);

@@ -44,7 +44,8 @@
             android:paddingRight="20dp"
             android:textColor="@color/app_color_black"
             tools:text="9223372036854775807"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/assetAmountTv"

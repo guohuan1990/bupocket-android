@@ -5,7 +5,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.session.MediaSession;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,8 +32,6 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TokenService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
-import com.bupocket.model.IssueTokenInfo;
-import com.bupocket.model.RegisterTokenInfo;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
@@ -44,7 +41,6 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
-import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -95,10 +91,15 @@ public class BPAssetsHomeFragment extends BaseFragment {
     QMUIRoundButton mNotBackupBtn;
     @BindView(R.id.safetyTipsLl)
     LinearLayout mSafetyTipsLl;
+    @BindView(R.id.manageWalletBtn)
+    ImageView mManageWalletBtn;
+    @BindView(R.id.currentWalletNameTv)
+    TextView mCurrentWalletNameTv;
 
     protected SharedPreferencesHelper sharedPreferencesHelper;
     private TokensAdapter mTokensAdapter;
-    private String currentAccAddress;
+    private String currentWalletAddress;
+    private String currentWalletName;
     private String currentAccNick;
     private MaterialHeader mMaterialHeader;
     List<GetTokensRespDto.TokenListBean> mLocalTokenList = new ArrayList<>();
@@ -161,6 +162,12 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 sharedPreferencesHelper.put("backupTipsState",BackupTipsStateEnum.HIDE.getCode());
             }
         });
+        mManageWalletBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPWalletsHomeFragment());
+            }
+        });
     }
 
     private void backupState() {
@@ -175,9 +182,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
         final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
         qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.show_address_layout,null));
         TextView accountAddressTv = qmuiBottomSheet.findViewById(R.id.printAccAddressTv);
-        accountAddressTv.setText(currentAccAddress);
+        accountAddressTv.setText(currentWalletAddress);
 
-        Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(currentAccAddress, 356, 356);
+        Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(currentWalletAddress, 356, 356);
         ImageView mImageView = qmuiBottomSheet.findViewById(R.id.qr_pocket_address_image);
         mImageView.setImageBitmap(mBitmap);
 
@@ -185,7 +192,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData mClipData = ClipData.newPlainText("Label", currentAccAddress);
+                ClipData mClipData = ClipData.newPlainText("Label", currentWalletAddress);
                 cm.setPrimaryClip(mClipData);
                 final QMUITipDialog copySuccessDiglog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
@@ -216,7 +223,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     };
 
     private void initWalletInfoView() {
-        String shortCurrentAccAddress = AddressUtil.anonymous(currentAccAddress);
+        String shortCurrentAccAddress = AddressUtil.anonymous(currentWalletAddress);
     }
 
     private void initTokensView() {
@@ -253,7 +260,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         Runnable getBalanceRunnable = new Runnable() {
             @Override
             public void run() {
-                tokenBalance = Wallet.getInstance().getAccountBUBalance(currentAccAddress);
+                tokenBalance = Wallet.getInstance().getAccountBUBalance(currentWalletAddress);
                 if(!CommonUtil.isNull(tokenBalance)){
                     sharedPreferencesHelper.put("tokenBalance",tokenBalance);
                 }
@@ -274,7 +281,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         }
         String currencyType = sharedPreferencesHelper.getSharedPreference("currencyType","CNY").toString();
         Map<String, Object> parmasMap = new HashMap<>();
-        parmasMap.put("address",currentAccAddress);
+        parmasMap.put("address",currentWalletAddress);
         parmasMap.put("currencyType",currencyType);
         parmasMap.put("tokenList", mLocalTokenList);
         Call<ApiResult<GetTokensRespDto>> call = tokenService.getTokens(parmasMap);
@@ -355,7 +362,13 @@ public class BPAssetsHomeFragment extends BaseFragment {
 //        QMUIStatusBarHelper.translucent(getActivity());
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
-        currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
+        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
+        if(CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString())){
+            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+            currentWalletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName","Wallet-1").toString();
+        }else {
+            currentWalletName = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "-walletName","").toString();
+        }
         currencyType = sharedPreferencesHelper.getSharedPreference("currencyType","CNY").toString();
         bumoNodeType = sharedPreferencesHelper.getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
         GetTokensRespDto tokensCache = JSON.parseObject(sharedPreferencesHelper.getSharedPreference("tokensInfoCache", "").toString(), GetTokensRespDto.class);
@@ -372,6 +385,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
             mCurrentTestNetTipsTv.setText(getString(R.string.current_test_message_txt));
             mAssetLinearLayout.setBackgroundResource(R.drawable.bg_asset_home_test_net);
         }
+        mCurrentWalletNameTv.setText(currentWalletName);
     }
 
     private void refreshData(){

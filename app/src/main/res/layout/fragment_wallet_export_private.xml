@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/app_color_white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_color_white"
+        android:fitsSystemWindows="false"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp">
+
+            <ImageView
+                android:id="@+id/assetIconBgIv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/icon_export_private_bg"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:textColor="@color/app_txt_color_gray"
+            android:gravity="center"
+            android:layout_marginLeft="26.5dp"
+            android:layout_marginRight="26.5dp"
+            android:text="@string/export_private_tips_txt"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp"
+            android:paddingLeft="12.5dp"
+            android:paddingRight="12.5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wallet_address_txt"
+                android:textSize="16sp"
+                android:textColor="@color/app_txt_color_gray_2"/>
+
+            <TextView
+                android:id="@+id/walletAddressTv"
+                android:layout_marginTop="9dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                tools:text="buQaSaFMhB7XT4hD1wj6WxGqNJjtwhHfJ17U"
+                android:textColor="@color/app_txt_color_gray_2"/>
+
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wallet_private_txt"
+                android:textSize="16sp"
+                android:textColor="@color/app_txt_color_gray_2"/>
+
+            <TextView
+                android:id="@+id/walletPrivateTv"
+                android:layout_marginTop="9dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                tools:text="privbw99K9WGkaFVBsZDvv97a6JLnkbYt55r5P1tLZCad8PRZocVn86a"
+                android:textColor="@color/app_txt_color_gray_2"/>
+
+        </LinearLayout>
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/copyPrivateBtn"
+            android:layout_width="match_parent"
+            android:layout_height="43.5dp"
+            android:gravity="center"
+            android:layout_marginLeft="12.5dp"
+            android:layout_marginRight="12.5dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="60dp"
+            android:text="@string/copy_private_txt"
+            app:qmui_borderColor="@color/app_color_main"
+            app:qmui_backgroundColor="@color/app_color_main"
+            app:qmui_radius="5dp"
+            android:textColor="@color/app_color_font"
+            android:textSize="@dimen/bp_btn_text_size"/>
+    </LinearLayout>
+
+
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height"
+        app:qmui_topbar_bg_color="@color/qmui_config_color_transparent"
+        app:qmui_topbar_need_separator="false"
+        app:qmui_topbar_title_color="@color/app_color_black" />
+</android.support.design.widget.CoordinatorLayout>

@@ -85,6 +85,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
     private String tokenDecimals;
     private String tokenDesc;
     private String issueAddress;
+    private Boolean whetherIdentityWallet = false;
     private String getTokenDetailErrorCode;
     private String buBalance = "";
     protected SharedPreferencesHelper sharedPreferencesHelper;
@@ -126,7 +127,11 @@ public class BPRegisterTokenFragment extends BaseFragment {
             mTokenAmountTv.setText(CommonUtil.thousandSeparator(issueAmount));
         }
         mRegisterFeeTv.setText(CommonUtil.addSuffix(Constants.REGISTER_TOKEN_FEE,"BU"));
-        issueAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
+        issueAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
+        if(CommonUtil.isNull(issueAddress) || sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString().equals(issueAddress)){
+            issueAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+            whetherIdentityWallet = true;
+        }
         buBalance = bundle.getString("buBalance");
 
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
@@ -311,8 +316,13 @@ public class BPRegisterTokenFragment extends BaseFragment {
     }
 
     private String getAccountBPData(){
-        String data = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
-        return data;
+        String accountBPData = null;
+        if(whetherIdentityWallet) {
+            accountBPData = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
+        }else {
+            accountBPData = sharedPreferencesHelper.getSharedPreference(issueAddress+ "-BPdata", "").toString();
+        }
+        return accountBPData;
     }
 
     private int timerTimes = 0;

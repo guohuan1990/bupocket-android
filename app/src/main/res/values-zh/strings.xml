@@ -67,7 +67,7 @@
     <string name="tx_timeout_txt1" >请求超时</string>
 
     <string name="password_comfirm_dialog_title" >密码确认</string>
-    <string name="password_comfirm_dialog_sub_txt" >请填写身份密码以确认转出</string>
+    <string name="password_comfirm_dialog_sub_txt" >请填写钱包密码以确认转出</string>
     <string name="password_comfirm_dialog_to_backup" >请填写身份密码以确认备份</string>
     <!-- 恢复身份 -->
     <string name="recover_wallet_title" >恢复身份</string>
@@ -125,8 +125,7 @@
     <string name="qr_pic_name_text" >钱包地址二维码</string>
     <string name="qr_copy_success_message" >已复制到剪切板</string>
     <!-- 我的 -->
-    <string name="change_the_password_txt" >修改密码</string>
-    <string name="export_keystore_txt" >导出Keystore</string>
+    <string name="change_the_password_txt" >修改身份密码</string>
     <string name="help_txt" >帮助与反馈</string>
     <string name="version_txt" >版本号</string>
     <string name="language_txt" >多语言</string>
@@ -159,7 +158,7 @@
     <string name="balance_not_enough" >可用余额不足</string>
     <string name="send_token_note_too_long" >备注信息不能超过20个字</string>
     <string name="send_loading" >处理中...</string>
-    <string name="splash_txt0" >小布口袋</string>
+    <string name="splash_txt0" >Bu Pocket</string>
     <string name="splash_txt1" >泛在价值流通区块链网络</string>
 
     <string name="change_pwd_old_pwd" >旧密码</string>
@@ -257,7 +256,7 @@
     <string name="issue_token_fee_txt">预估交易费</string>
     <string name="register_token_fee_txt">预估交易费</string>
     <string name="confirm_register_token_btn_txt">确认登记</string>
-    <string name="register_token_password_confirm_txt">请填写身份密码以确认登记</string>
+    <string name="register_token_password_confirm_txt">请填写钱包密码以确认登记</string>
     <string name="register_token_success_txt">登记成功</string>
     <string name="register_token_failure_txt">登记失败</string>
     <string name="register_token_timeout_txt">登记超时</string>
@@ -308,7 +307,7 @@
     <string name="switch_main_net_message_txt">您已关闭测试网</string>
     <string name="yes_txt">是</string>
     <string name="no_txt">否</string>
-    <string name="current_test_message_txt">当前为测试网环境</string>
+    <string name="current_test_message_txt">测试网</string>
     <string name="identity_id_explain_txt">用来维护你存储在区块链上的数据，这些信息会以分布式存储的方式进行保存，只有拥有该身份的人可以动用数据，充分确保你的数据主权不受侵犯。</string>
 
     <string name="receive_qr_txt">收款码</string>
@@ -317,6 +316,63 @@
     <string name="backup_immediately_txt">立即备份</string>
     <string name="search_result_not_found">未找到搜索结果</string>
     <string name="switch_to_test_net_message_txt">您已开启测试网</string>
-    <string name="issue_token_password_confirm_txt">请填写身份密码以确认发行</string>
+    <string name="issue_token_password_confirm_txt">请填写钱包密码以确认发行</string>
     <string name="recover_identity_confirm_message_txt">是否确认更新密码及导入身份</string>
+
+    <string name="wallet_management_txt">钱包管理</string>
+    <string name="current_identity_wallet_title_txt">当前身份下的钱包</string>
+    <string name="imported_wallet_title_txt">导入的钱包</string>
+    <string name="manage_txt">管理</string>
+    <string name="export_keystore_txt">导出Keystore</string>
+    <string name="export_private_txt">导出私钥</string>
+    <string name="delete_wallet_txt">删除钱包</string>
+    <string name="change_wallet_name_title">更改钱包名称</string>
+    <string name="export_keystore_tips_txt">请复制keystone文件到安全的地方保存</string>
+    <string name="copy_keystore_txt">复制Keystore</string>
+    <string name="copy_private_txt">复制私钥</string>
+    <string name="export_private_tips_txt">为了保证您的账户资产安全，请注意周围是否有他人在浏览您的隐私信息！</string>
+    <string name="wallet_address_txt">钱包地址</string>
+    <string name="wallet_private_txt">钱包私钥</string>
+    <string name="export_keystore_password_confirm_txt">请填写钱包密码</string>
+    <string name="export_private_password_confirm_txt">请填写钱包密码</string>
+    <string name="current_wallet_sign_txt">当前使用</string>
+    <string name="import_wallet_btn_txt">立即导入</string>
+    <string name="import_wallet_title_txt">导入钱包</string>
+    <string name="mnemonic_word_txt">助记词</string>
+    <string name="keystore_txt">Keystore</string>
+    <string name="private_key_txt">私钥</string>
+    <string name="private_key_string_txt">私钥</string>
+    <string name="wallet_import_mnemonic_word_tips_txt">请输入钱包助记词（12个英文单词），按空格分离</string>
+    <string name="wallet_import_mnemonic_word_et_hint_txt">请输入助记词</string>
+    <string name="wallet_import_wallet_name_txt">钱包名称</string>
+    <string name="wallet_import_wallet_name_et_hint_txt">输入钱包名称，以便区分其它钱包</string>
+    <string name="wallet_import_set_password_txt">设置密码</string>
+    <string name="wallet_import_confirm_password_txt">确认密码</string>
+    <string name="start_import_wallet">开始导入</string>
+    <string name="understand_mnemonic_txt">了解助记词</string>
+    <string name="wallet_import_keystore_tips_txt">复制粘贴BUMO官方钱包Keystore文件内容至输入框</string>
+    <string name="wallet_import_keystore_et_hint_txt">Keystore文件内容</string>
+    <string name="password_for_keystore_txt">Keystore密码</string>
+    <string name="password_for_keystore_et_hint_txt">请输入原Keystore文件内容的密码</string>
+    <string name="understand_keystore_txt">了解Keystore</string>
+    <string name="wallet_import_private_tips_txt">粘贴私钥（Private Key）至输入框内</string>
+    <string name="wallet_import_private_et_hint_txt">私钥（Private Key）</string>
+    <string name="understand_private_txt">了解私钥</string>
+    <string name="import_success_message_txt">钱包导入成功</string>
+    <string name="error_already_import_meaaage_txt">该钱包已导入，无需重复导入</string>
+    <string name="error_import_wallet_name_message_txt">钱包名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
+    <string name="importing_loading_txt">导入中</string>
+    <string name="error_import_keystore_message_txt">Keystore不合法或密码不正确，请进行修改</string>
+    <string name="error_import_private_message_txt">私钥不合法，请进行修改</string>
+    <string name="error_import_mneonic_input_txt">助记词不合法，请进行修改</string>
+    <string name="error_import_message_txt">钱包导入失败，请重新导入</string>
+    <string name="delete_wallet_password_confirm_txt">请填写钱包密码</string>
+    <string name="delete_wallet_success_message_txt">删除钱包成功</string>
+    <string name="understand_mnemonic_word_title_txt">什么是助记词？</string>
+    <string name="understand_keystore_title_txt">什么是Keystore？</string>
+    <string name="understand_private_key_title_txt">什么是私钥？</string>
+    <string name="understand_mnemonic_word_introduce_txt">创建钱包后会出现12个英文单词，这12个单词就是助记词。助记词由一个随机字符串通过算法在2048个单词库中得出的12个单词。助记词算法可以派生出私钥，所以助记词是私钥的另一种表现形式。用助记词是为了帮助用户记忆复杂的私钥。任何人拿到了您的助记词，就可以拿走您的数字资产，因此必须保管好您的助记词。</string>
+    <string name="understand_keystore_introduce_txt">Keystore文件是钱包存储私钥的一种文件格式 (JSON)。它使用用户自定义密码加密，以起到一定程度上的保护作用，而保护的程度取决于用户加密该钱包的密码强度，如果类似于123456这样的密码，是极为不安全的。密码忘记是无法找回的，所以一定要保管好Keystore文件及密码。</string>
+    <string name="understand_private_key_introduce_txt">私钥是在区块链交易中用于生成交易签名，以证明账户身份。所以私钥必须安全保管，一旦私钥被任何人拿到，就可以拿走您的数字资产。</string>
+
 </resources>

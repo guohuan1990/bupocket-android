@@ -192,7 +192,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
                             sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
                             sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode());
 
-
+                            sharedPreferencesHelper.put("currentWalletAddress",walletBPData.getAccounts().get(1).getAddress());
 
                             BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
                             Bundle argz = new Bundle();

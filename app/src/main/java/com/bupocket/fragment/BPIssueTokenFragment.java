@@ -86,6 +86,7 @@ public class BPIssueTokenFragment extends BaseFragment {
     protected SharedPreferencesHelper sharedPreferencesHelper;
     private String assetCode;
     private String issueAddress;
+    private Boolean whetherIdentityWallet = false;
     private String issueAmount;
     private String actualSupply;
     private String assetName;
@@ -95,7 +96,7 @@ public class BPIssueTokenFragment extends BaseFragment {
     private String tokenVersion;
     private String errorMsg;
     private String buBalance;
-    QMUITipDialog txSendingTipDialog;
+    private QMUITipDialog txSendingTipDialog;
     private String hash;
     private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
 
@@ -260,7 +261,11 @@ public class BPIssueTokenFragment extends BaseFragment {
         IssueTokenInfo issueTokenInfo = IssueTokenInfo.objectFromData(tokenData);
         assetCode = issueTokenInfo.getCode();
         issueAmount = issueTokenInfo.getAmount();
-        issueAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
+        issueAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
+        if(CommonUtil.isNull(issueAddress) || sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString().equals(issueAddress)){
+            issueAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+            whetherIdentityWallet = true;
+        }
         buBalance = bundle.getString("buBalance");
         getTokenDetail();
     }
@@ -337,8 +342,13 @@ public class BPIssueTokenFragment extends BaseFragment {
     }
 
     private String getAccountBPData(){
-        String data = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
-        return data;
+        String accountBPData = null;
+        if(whetherIdentityWallet) {
+            accountBPData = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
+        }else {
+            accountBPData = sharedPreferencesHelper.getSharedPreference(issueAddress+ "-BPdata", "").toString();
+        }
+        return accountBPData;
     }
 
     private int timerTimes = 0;

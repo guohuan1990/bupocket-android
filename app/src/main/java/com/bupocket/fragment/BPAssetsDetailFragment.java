@@ -80,7 +80,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
     private GetMyTxsRespDto.PageBean page;
     private String pageSize = "10";
     private Integer pageStart = 1;
-    private String currentAccAddress;
+    private String currentWalletAddress;
     private String issuer;
     private String decimals;
     private String tokenBalance = "~";
@@ -187,7 +187,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
         paramsMap.put("tokenType",tokenType);
         paramsMap.put("assetCode",assetCode);
         paramsMap.put("issuer",issuer);
-        paramsMap.put("address",currentAccAddress);
+        paramsMap.put("address",currentWalletAddress);
         paramsMap.put("startPage", pageStart);
         paramsMap.put("pageSize", pageSize);
         paramsMap.put("currencyType", currencyType);
@@ -245,9 +245,9 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 String amountStr = null;
                 String txStartStr = null;
                 if(obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())){
-                    amountStr = "-" + CommonUtil.addSuffix(obj.getAmount(),assetCode);
+                    amountStr = "-" + obj.getAmount();
                 }else {
-                    amountStr = "+" + CommonUtil.addSuffix(obj.getAmount(),assetCode);
+                    amountStr = "+" + obj.getAmount();
                 }
 
                 if(TxStatusEnum.SUCCESS.getCode().equals(obj.getTxStatus())){
@@ -282,7 +282,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 argz.putString("txHash", currentItem.getTxHash());
                 argz.putString("outinType",currentItem.getOutinType());
                 argz.putString("assetCode",assetCode);
-                argz.putString("currentAccAddress",currentAccAddress);
+                argz.putString("currentAccAddress",currentWalletAddress);
                 argz.putString("optNo",currentItem.getOptNo());
                 BPAssetsTxDetailFragment bpAssetsTxDetailFragment = new BPAssetsTxDetailFragment();
                 bpAssetsTxDetailFragment.setArguments(argz);
@@ -309,7 +309,10 @@ public class BPAssetsDetailFragment extends BaseFragment {
             mAssetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
         }
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        currentAccAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
+        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
+        if(CommonUtil.isNull(currentWalletAddress)){
+            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+        }
         currencyType = sharedPreferencesHelper.getSharedPreference("currencyType","CNY").toString();
         refreshData();
     }

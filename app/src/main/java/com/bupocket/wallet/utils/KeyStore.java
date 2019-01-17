@@ -1,5 +1,7 @@
 package com.bupocket.wallet.utils;
 
+import com.bupocket.wallet.enums.ExceptionEnum;
+import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.utils.keystore.BaseKeyStoreEntity;
 import com.bupocket.wallet.utils.keystore.KeyStoreEntity;
 
@@ -73,10 +75,15 @@ public class KeyStore {
     }
 
     public static String decipherKeyStore(String password, KeyStoreEntity keyStoreEntity) throws Exception {
+        int version = keyStoreEntity.getVersion();
+        if(version != 2){
+            throw new WalletException(ExceptionEnum.IMPORT_KEYSTORE_VERSION_ERROR);
+        }
         ScryptParamsEty scryptParams = keyStoreEntity.getScrypt_params();
         int n = scryptParams.getN();
         int r = scryptParams.getR();
         int p = scryptParams.getP();
+
         byte[] salt = HexFormat.hexToByte(scryptParams.getSalt());
         int keyLen = 32;
         byte[] aesIv = HexFormat.hexToByte(keyStoreEntity.getAesctr_iv());
@@ -86,7 +93,7 @@ public class KeyStore {
         String encPrivateKey = AesCtr.decrypt(cypherText, dk, aesIv);
         PrivateKey privateKey = new PrivateKey(encPrivateKey);
         if (!privateKey.getEncAddress().equals(address)) {
-            throw new Exception("the address in the keyStore was wrong, please check");
+            throw new WalletException(ExceptionEnum.IMPORT_KEYSTORE_ADDRESS_ERROR);
         } else {
             return encPrivateKey;
         }

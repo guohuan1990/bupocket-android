@@ -67,7 +67,7 @@
     <string name="tx_timeout_txt1">Request timeout</string>
 
     <string name="password_comfirm_dialog_title">Confirm password</string>
-    <string name="password_comfirm_dialog_sub_txt">Please fill in the identity password to confirm the transfer</string>
+    <string name="password_comfirm_dialog_sub_txt">Please fill in the wallet password to confirm the transfer</string>
     <string name="password_comfirm_dialog_to_backup">Please enter the identity password to confirm the backup</string>
     <!-- 恢复身份 -->
     <string name="recover_wallet_title">Recover identity</string>
@@ -124,7 +124,7 @@
     <string name="qr_pic_name_text">QR code of the wallet address </string>
     <string name="qr_copy_success_message">It has been copied to the clipboard</string>
     <!-- 我的 -->
-    <string name="change_the_password_txt">Change password</string>
+    <string name="change_the_password_txt">Change the Identity Password</string>
     <string name="export_keystore_txt">Export Keystore</string>
     <string name="help_txt">Feedback</string>
     <string name="version_txt">Version</string>
@@ -149,7 +149,7 @@
     <string name="emptyView_mode_desc_retry">Click to retry</string>
     <string name="emptyView_mode_desc_no_data">No data available</string>
     <string name="invalid_address">BU address is incorrect, please enter again</string>
-    <string name="send_err1">You can\'t transfer BU to yourself</string>
+    <string name="send_err1">You can\'t transfer tokens to yourself</string>
     <string name="invalid_amount">Invalid transfer amount</string>
     <string name="amount_too_small">Each transfer cannot be less than</string>
     <string name="amount_too_big">Each transfer cannot exceed 1,000,000</string>
@@ -157,7 +157,7 @@
     <string name="balance_not_enough">Insufficient balance available</string>
     <string name="send_token_note_too_long">Remarks cannot exceed 20 characterscharacters</string>
     <string name="send_loading">Processing...</string>
-    <string name="splash_txt0">BuPocket</string>
+    <string name="splash_txt0">Bu Pocket</string>
     <string name="splash_txt1">A ubiquitous trust blockchain network of value circulation</string>
 
     <string name="change_pwd_old_pwd">Old password</string>
@@ -258,7 +258,7 @@
     <string name="issue_token_fee_txt">Estimated transaction fee</string>
     <string name="register_token_fee_txt">Estimated transaction fee</string>
     <string name="confirm_register_token_btn_txt">Confirm registration</string>
-    <string name="register_token_password_confirm_txt">Please fill in the identity password to confirm the registration</string>
+    <string name="register_token_password_confirm_txt">Please fill in the wallet password to confirm the registration</string>
     <string name="register_token_success_txt">Registration is successful</string>
     <string name="register_token_failure_txt">Registration failed</string>
     <string name="register_token_timeout_txt">Registration is overtime</string>
@@ -309,7 +309,7 @@
     <string name="switch_main_net_message_txt">You have stopped the test network</string>
     <string name="yes_txt">Yes</string>
     <string name="no_txt">No</string>
-    <string name="current_test_message_txt">The current environment is the test network environment</string>
+    <string name="current_test_message_txt">Test Network</string>
     <string name="identity_id_explain_txt">It is used to secure the data that you store on the blockchain, which is stored in a distributed manner. Only those who have the identity can use the data, so as to ensure that your data sovereignty is not violated.</string>
 
     <string name="receive_qr_txt">Receive</string>
@@ -318,6 +318,60 @@
     <string name="backup_immediately_txt">Back up now</string>
     <string name="search_result_not_found">No search results found</string>
     <string name="switch_to_test_net_message_txt">You have started the test network</string>
-    <string name="issue_token_password_confirm_txt">Please fill in the identity password to confirm the issuance</string>
+    <string name="issue_token_password_confirm_txt">Please fill in the wallet password to confirm the issuance</string>
     <string name="recover_identity_confirm_message_txt">Are you sure to update your password and import your identity</string>
+    <string name="wallet_management_txt">Wallet Management</string>
+    <string name="current_identity_wallet_title_txt">Wallet in the Current Identity</string>
+    <string name="imported_wallet_title_txt">Imported Wallets</string>
+    <string name="manage_txt">Manage</string>
+    <string name="export_private_txt">Export Private Key</string>
+    <string name="delete_wallet_txt">Delete Wallet</string>
+    <string name="change_wallet_name_title">Change wallet name</string>
+    <string name="export_keystore_tips_txt">Please copy the Keystore file to a safe place to save it</string>
+    <string name="copy_keystore_txt">Copy Keystore</string>
+    <string name="copy_private_txt">Copy Private Key</string>
+    <string name="export_private_tips_txt">For your account assets safety, please make sure no one is peeping your private information!</string>
+    <string name="wallet_address_txt">Wallet Address</string>
+    <string name="wallet_private_txt">Wallet Private Key</string>
+    <string name="export_keystore_password_confirm_txt">Please enter the wallet password</string>
+    <string name="export_private_password_confirm_txt">Please enter the wallet password</string>
+    <string name="current_wallet_sign_txt">Currently Used</string>
+    <string name="import_wallet_btn_txt">Import Now</string>
+    <string name="import_wallet_title_txt">Import Wallet</string>
+    <string name="mnemonic_word_txt">Mnemonics</string>
+    <string name="keystore_txt">Keystore</string>
+    <string name="private_key_txt">Private Key</string>
+    <string name="private_key_string_txt">Private Key</string>
+    <string name="wallet_import_mnemonic_word_tips_txt">Please input your mnemonics (12 in total ) separated with spaces</string>
+    <string name="wallet_import_mnemonic_word_et_hint_txt">Please input your mnemonics</string>
+    <string name="wallet_import_wallet_name_txt">Wallet Name</string>
+    <string name="wallet_import_wallet_name_et_hint_txt">Input your wallet name to distinguish it from other wallets</string>
+    <string name="wallet_import_set_password_txt">Set Password</string>
+    <string name="wallet_import_confirm_password_txt">Confirm Password</string>
+    <string name="start_import_wallet">Start Importing</string>
+    <string name="understand_mnemonic_txt">About Mnemonics</string>
+    <string name="wallet_import_keystore_tips_txt">Copy the content of the Keystore file of BUMO official wallet and paste it to the input box</string>
+    <string name="wallet_import_keystore_et_hint_txt">The content of the Keystore file</string>
+    <string name="password_for_keystore_txt">Keystore Password</string>
+    <string name="password_for_keystore_et_hint_txt">Please input the password of the original Keystore file</string>
+    <string name="understand_keystore_txt">About Keystore</string>
+    <string name="wallet_import_private_tips_txt">Paste the private key to the input box</string>
+    <string name="wallet_import_private_et_hint_txt">Private key</string>
+    <string name="understand_private_txt">About Private Key</string>
+    <string name="import_success_message_txt">The wallet is imported successfully</string>
+    <string name="error_already_import_meaaage_txt">The wallet has already been imported</string>
+    <string name="importing_loading_txt">Importing</string>
+    <string name="error_import_keystore_message_txt">The Keystore file is invalid or your password is incorrect. Please change it.</string>
+    <string name="error_import_private_message_txt">The private key is invalid. Please change it</string>
+    <string name="error_import_mneonic_input_txt">Mnemonics are illegal. Please revise them</string>
+    <string name="error_import_message_txt">Failed to import the wallet. Please try again</string>
+    <string name="delete_wallet_password_confirm_txt">Please enter the wallet password</string>
+    <string name="understand_mnemonic_word_title_txt">About Mnemonics</string>
+    <string name="understand_keystore_title_txt">About Keystore</string>
+    <string name="understand_private_key_title_txt">About Pirvate Key</string>
+    <string name="understand_mnemonic_word_introduce_txt">Mnemonics including 12 English words will be generated after the wallet is created. Mnemonics are 12 words derived from a random string and fetched from the word library of 2048 words by an algorithm. Mnemonics are used to help the users remember the complex private key. Anyone who has your mnemonics can get your digital assets, so you must keep your mnemonics safe.</string>
+    <string name="understand_keystore_introduce_txt">The Keystore file is a file in JSON format for the wallet to store the private key. The private key is encrypted with user-defined password for protection.The degree of security depends on the password strength. For example, 123456 is extremely unsafe. The password cannot be retrieved once lost, so you have to keep your Keystore file and your password safe.</string>
+    <string name="understand_private_key_introduce_txt">A private key is used to generate signatures for transactions on a blockchain, so that the account identity can be verified. The private key must be kept safe, because once it is stolen, your digital assets are susceptible to loss.</string>
+    <string name="delete_wallet_success_message_txt">The wallet is deleted successfully</string>
+    <string name="error_import_wallet_name_message_txt">The wallet names is only allowed to enter letters, characters, numbers, underscores, and it cannot exceed 20 characters in length.</string>
 </resources>
