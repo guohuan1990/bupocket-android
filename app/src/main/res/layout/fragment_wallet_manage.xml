@@ -63,7 +63,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="117dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="12.5dp"
             android:layout_marginTop="12dp"
             android:layout_marginRight="12.5dp"
@@ -74,8 +74,7 @@
             <RelativeLayout
                 android:id="@+id/exportKeystoreRl"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="58.5dp"
                 android:gravity="center">
 
                 <ImageView
@@ -103,8 +102,7 @@
             <RelativeLayout
                 android:id="@+id/exportPrivateRl"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="58.5dp"
                 android:gravity="center_vertical">
 
                 <ImageView
@@ -120,6 +118,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/export_private_txt"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_right_arrow"
+                    android:layout_alignParentRight="true"
+                    android:paddingRight="15dp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/backupMnemonicRl"
+                android:layout_width="match_parent"
+                android:layout_height="58.5dp"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/backupMnemonicIconIv"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_export_private"/>
+
+                <TextView
+                    android:layout_toRightOf="@+id/backupMnemonicIconIv"
+                    android:layout_marginLeft="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/view_title_backup_mneonic_code"/>
 
                 <ImageView
                     android:layout_width="wrap_content"

@@ -69,6 +69,11 @@ public class BPProfileFragment extends BaseFragment{
         return root;
     }
 
+    @Override
+    protected boolean canDragBack() {
+        return false;
+    }
+
     private void init() {
         initData();
         initUI();

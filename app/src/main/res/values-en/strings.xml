@@ -157,7 +157,7 @@
     <string name="balance_not_enough">Insufficient balance available</string>
     <string name="send_token_note_too_long">Remarks cannot exceed 20 characterscharacters</string>
     <string name="send_loading">Processing...</string>
-    <string name="splash_txt0">Bu Pocket</string>
+    <string name="splash_txt0">BU Pocket</string>
     <string name="splash_txt1">A ubiquitous trust blockchain network of value circulation</string>
 
     <string name="change_pwd_old_pwd">Old password</string>
