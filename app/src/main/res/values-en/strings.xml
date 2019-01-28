@@ -52,8 +52,8 @@
     <string name="confirm_mneonic_code_btn_txt">Done</string>
     <string name="wallet_password_confirm_title">Confirm password</string>
     <string name="wallet_password_confirm_txt1">Please fill in the identity password to confirm the backup</string>
-    <string name="hint_wallet_passwrod_confirm_txt1">8~20 letters and numbers</string>
-    <string name="hint_wallet_passwrod_confirm_submit_btn">Confirm</string>
+    <string name="hint_wallet_password_confirm_txt1">8~20 letters and numbers</string>
+    <string name="hint_wallet_password_confirm_submit_btn">Confirm</string>
     <string name="wallet_send_txt">Transfer</string>
     <string name="wallet_scan_txt">Scan</string>
     <string name="wallet_scan_notice">Automatically scan the QR code in the box</string>
