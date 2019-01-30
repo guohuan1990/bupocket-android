@@ -222,6 +222,12 @@ public class BPSendTokenFragment extends BaseFragment {
                 popBackStack();
             }
         });
+        mTopBar.addRightImageButton(R.mipmap.icon_scan_green_little,R.id.walletScanBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startScan();
+            }
+        });
     }
 
     private void getAccountAvailableTokenBalance(String tokenType,String tokenBalance){

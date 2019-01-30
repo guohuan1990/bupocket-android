@@ -99,7 +99,6 @@
                                 android:id="@+id/sendFormScanIv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:contentDescription="TODO"
                                 android:src="@mipmap/icon_scan_green_little" />
                         </LinearLayout>
 
