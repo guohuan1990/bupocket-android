@@ -376,4 +376,17 @@
     <string name="understand_private_key_introduce_txt">私钥是在区块链交易中用于生成交易签名，以证明账户身份。所以私钥必须安全保管，一旦私钥被任何人拿到，就可以拿走您的数字资产。</string>
 
     <string name="address_book_txt">地址薄</string>
+    <string name="add_address_title">新建联系人</string>
+    <string name="edit_address_title">编辑联系人</string>
+    <string name="add_address_name">名称</string>
+    <string name="add_address_name_hint">输入账户地址对应的名称，以便识别账户</string>
+    <string name="add_address_describe">描述</string>
+    <string name="optional">（选填）</string>
+    <string name="add_address_describe_hint">账户地址描述</string>
+    <string name="add_address_public_addr">地址</string>
+    <string name="add_address_public_addr_hint">区块链账户地址</string>
+    <string name="save">保存</string>
+    <string name="delete_address">删除联系人</string>
+    <string name="delete_address_confirm">确定删除联系人？</string>
+
 </resources>

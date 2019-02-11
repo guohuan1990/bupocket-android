@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import butterknife.BindView;
@@ -32,6 +33,7 @@ public class BPAddressBookFragment extends BaseFragment {
     }
 
     private void initUI() {
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
     }
 
@@ -41,6 +43,12 @@ public class BPAddressBookFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 popBackStack();
+            }
+        });
+        mTopBar.addRightImageButton(R.mipmap.icon_import_wallet,R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPAddressAddFragment());
             }
         });
     }
