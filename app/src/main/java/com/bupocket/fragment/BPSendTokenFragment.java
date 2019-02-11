@@ -66,8 +66,8 @@ public class BPSendTokenFragment extends BaseFragment {
     EditText sendFormTxFeeEt;
     @BindView(R.id.completeMnemonicCodeBtn)
     QMUIRoundButton mConfirmSendBtn;
-    @BindView(R.id.sendFormScanIv)
-    ImageView mSendFormScanIv;
+    @BindView(R.id.openAddressBookBtn)
+    ImageView mOpenAddressBookBtn;
     @BindView(R.id.tokenCodeTv)
     TextView mTokenCodeTv;
 
@@ -98,10 +98,10 @@ public class BPSendTokenFragment extends BaseFragment {
         initTopBar();
         setDestAddress();
 
-        mSendFormScanIv.setOnClickListener(new View.OnClickListener() {
+        mOpenAddressBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startScan();
+                startFragment(new BPAddressBookFragment());
             }
         });
         buildWatcher();
