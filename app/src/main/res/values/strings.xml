@@ -388,5 +388,6 @@
     <string name="save">保存</string>
     <string name="delete_address">删除联系人</string>
     <string name="delete_address_confirm">确定删除联系人？</string>
+    <string name="no_record">暂无记录</string>
 
 </resources>
