@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.http.api.dto.resp.GetAddressBookRespDto;
+import com.bupocket.utils.AddressUtil;
 
 import java.util.List;
 
@@ -60,7 +61,11 @@ public class AddressAdapter extends BaseAdapter {
             holder = (AddressAdapter.ViewHolder) convertView.getTag();
         }
 
-
+        if(datas.size() != 0){
+            holder.addressNameTv.setText(datas.get(position).getNickName());
+            holder.addressTv.setText(AddressUtil.anonymous(datas.get(position).getLinkmanAddress()));
+            holder.addressDescribeTv.setText(datas.get(position).getRemark());
+        }
 
         return convertView;
     }

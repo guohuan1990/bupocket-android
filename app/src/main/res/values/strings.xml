@@ -389,5 +389,8 @@
     <string name="delete_address">删除联系人</string>
     <string name="delete_address_confirm">确定删除联系人？</string>
     <string name="no_record">暂无记录</string>
+    <string name="address_name_format_error_message_txt">名称只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
+    <string name="describe_format_error_message_txt">描述长度最多30个字符，请进行修改</string>
+    <string name="address_format_error_meaage_txt">地址格式不正确</string>
 
 </resources>

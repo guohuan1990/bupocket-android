@@ -1,30 +1,48 @@
 package com.bupocket.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.view.DrawableEditText;
+import com.bupocket.wallet.Wallet;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
+import java.security.PublicKey;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.bumo.encryption.key.PrivateKey;
 
 public class BPAddressAddFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
     @BindView(R.id.saveAddressBtn)
-    QMUIRoundButton mSaveAddressBt;
+    QMUIRoundButton mSaveAddressBtn;
+    @BindView(R.id.addressNameEt)
+    EditText mAddressNameEt;
+    @BindView(R.id.addressDescribeEt)
+    EditText mAddressDescribeEt;
     @BindView(R.id.newAddressEt)
     DrawableEditText mNewAddressEt;
+
+    private String flag;
+    private String identityAddress;
+    private SharedPreferencesHelper sharedPreferencesHelper;
 
     @Override
     protected View onCreateView() {
@@ -37,7 +55,39 @@ public class BPAddressAddFragment extends BaseFragment {
     private void init() {
         initData();
         initUI();
+        buildWatcher();
         setListener();
+    }
+
+    private void buildWatcher() {
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                mSaveAddressBtn.setEnabled(false);
+                mSaveAddressBtn.setBackgroundResource(R.drawable.radius_button_disable_bg);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mSaveAddressBtn.setEnabled(false);
+                mSaveAddressBtn.setBackgroundResource(R.drawable.radius_button_disable_bg);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                boolean signAddressName = mAddressNameEt.getText().toString().trim().length() > 0;
+                boolean signAddress = mNewAddressEt.getText().toString().trim().length() > 0;
+                if(signAddressName && signAddress){
+                    mSaveAddressBtn.setEnabled(true);
+                    mSaveAddressBtn.setBackgroundResource(R.drawable.radius_button_able_bg);
+                }else {
+                    mSaveAddressBtn.setEnabled(false);
+                    mSaveAddressBtn.setBackgroundResource(R.drawable.radius_button_disable_bg);
+                }
+            }
+        };
+        mAddressNameEt.addTextChangedListener(textWatcher);
+        mNewAddressEt.addTextChangedListener(textWatcher);
     }
 
     private void setListener() {
@@ -47,6 +97,55 @@ public class BPAddressAddFragment extends BaseFragment {
                 startScan();
             }
         });
+        mSaveAddressBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitAddress();
+            }
+        });
+    }
+
+    private void submitAddress() {
+        if(!addressNameFlag()){
+            return;
+        }else if(!describeFlag()){
+            return;
+        }else if(addressFlag()){
+            return;
+        }
+        final String addressName = mAddressNameEt.getText().toString().trim();
+        final String describe = mAddressDescribeEt.getText().toString().trim();
+        final String address = mNewAddressEt.getText().toString().trim();
+
+
+
+    }
+
+    private boolean addressNameFlag() {
+        final String addressName = mAddressNameEt.getText().toString().trim();
+        if (!CommonUtil.validateNickname(addressName)) {
+            Toast.makeText(getActivity(), R.string.address_name_format_error_message_txt, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean describeFlag() {
+        final String describe = mAddressDescribeEt.getText().toString().trim();
+        if(describe.length() > 30){
+            Toast.makeText(getActivity(), R.string.describe_format_error_message_txt, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean addressFlag() {
+        final String address = mNewAddressEt.getText().toString().trim();
+        if(!PrivateKey.isAddressValid(address)){
+            Toast.makeText(getActivity(), R.string.address_format_error_meaage_txt, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private void initUI() {
@@ -55,7 +154,10 @@ public class BPAddressAddFragment extends BaseFragment {
     }
 
     private void initData() {
-
+        Bundle bundle = getArguments();
+        flag = bundle.getString("flag");
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+        identityAddress = sharedPreferencesHelper.getSharedPreference("identityId","").toString();
     }
 
     private void startScan(){
@@ -89,7 +191,11 @@ public class BPAddressAddFragment extends BaseFragment {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popBackStack();
+                Bundle argz = new Bundle();
+                argz.putString("flag",flag);
+                BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
+                bpAddressBookFragment.setArguments(argz);
+                startFragment(bpAddressBookFragment);
             }
         });
         mTopBar.setTitle(R.string.add_address_title);

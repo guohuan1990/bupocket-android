@@ -133,6 +133,9 @@ public class BPRegisterTokenFragment extends BaseFragment {
             whetherIdentityWallet = true;
         }
         buBalance = bundle.getString("buBalance");
+        if(null == buBalance){
+            buBalance = "0";
+        }
 
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         Map<String, Object> parmasMap = new HashMap<>();
