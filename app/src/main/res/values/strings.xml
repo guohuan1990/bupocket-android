@@ -21,7 +21,7 @@
     <string name="wallet_create_form_input_password_empty" >请输入密码</string>
     <string name="wallet_create_form_input_rePassword_empty" >请再次确认密码</string>
     <string name="wallet_create_form_error1" >密码与确认密码不一致</string>
-    <string name="wallet_create_form_error2" >密码长度为8~20个字符，且内容仅限字母和数字</string>
+    <string name="wallet_create_form_error2" >6~30个字符，建议混合大小写字母加数字</string>
     <string name="wallet_create_form_error4" >身份名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
 
     <string name="wallet_create_creating_txt" >创建中</string>
@@ -36,7 +36,7 @@
     <string name="create_wallet_prompt_dialog_title" >温馨提示</string>
     <string name="create_wallet_prompt_txt1" >密码用于加密保护私钥，以及转账、调用合约等，所以强度非常重要。
         小布口袋不存储密码，也无法帮您找回，请务必牢记。</string>
-    <string name="create_wallet_prompt_txt2" >密码长度为8~20个字符，且内容仅限字母和数字</string>
+    <string name="create_wallet_prompt_txt2" >6~30个字符，建议混合大小写字母加数字</string>
     <string name="backup_wallet_txt1" >没有妥善备份就无法保障资产安全，删除程序或钱包后，你需要备份文件来恢复钱包</string>
     <string name="backup_wallet_txt2" >请确保在四周无人，没有摄像头的安全环境下备份</string>
     <string name="backup_wallet_btn_txt" >备份助记词</string>
@@ -52,8 +52,8 @@
     <string name="confirm_mneonic_code_btn_txt" >完成</string>
     <string name="wallet_password_confirm_title" >密码确认</string>
     <string name="wallet_password_confirm_txt1" >请填写身份密码以确认备份</string>
-    <string name="hint_wallet_passwrod_confirm_txt1" >8~20个字符，且内容仅限字母和数字</string>
-    <string name="hint_wallet_passwrod_confirm_submit_btn" >确认</string>
+    <string name="hint_wallet_password_confirm_txt1" >6~30个字符，建议混合大小写字母加数字</string>
+    <string name="hint_wallet_password_confirm_submit_btn" >确认</string>
     <string name="wallet_send_txt" >转账</string>
     <string name="wallet_scan_txt" >扫一扫</string>
     <string name="wallet_scan_notice" >将二维码放入框中，即可自动扫描</string>
@@ -76,7 +76,7 @@
     <string name="recover_edit_new_wallet_name_hint" >请输入新身份名</string>
     <string name="recover_input_wallet_name_error" >只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
     <string name="recover_set_pwd_hint" >请设置密码</string>
-    <string name="recover_set_pwd_error" >密码长度为8~20个字符，且内容仅限字母和数字</string>
+    <string name="recover_set_pwd_error" >6~30个字符，建议混合大小写字母加数字</string>
     <string name="recover_confirm_pwd_hint" >请确认密码</string>
     <string name="recover_confirm_pwd_error" >密码与确认密码不一致</string>
     <string name="recover_wallet_next_btn" >恢复</string>
@@ -158,7 +158,7 @@
     <string name="balance_not_enough" >可用余额不足</string>
     <string name="send_token_note_too_long" >备注信息不能超过20个字</string>
     <string name="send_loading" >处理中...</string>
-    <string name="splash_txt0" >Bu Pocket</string>
+    <string name="splash_txt0" >BU Pocket</string>
     <string name="splash_txt1" >泛在价值流通区块链网络</string>
 
     <string name="change_pwd_old_pwd" >旧密码</string>
@@ -174,10 +174,10 @@
     <string name="change_pwd_err4" >请输入旧密码</string>
     <string name="change_pwd_err5" >请输入旧密码</string>
     <string name="change_pwd_form_error1" >密码和确认密码输入不一致，请重新输入</string>
-    <string name="change_pwd_form_error2" >密码长度为8~20个字符，且内容仅限字母和数字</string>
-    <string name="change_pwd_form_error3" >密码长度为8~20个字符，且内容仅限字母和数字</string>
+    <string name="change_pwd_form_error2" >6~30个字符，建议混合大小写字母加数字</string>
+    <string name="change_pwd_form_error3" >6~30个字符，建议混合大小写字母加数字</string>
     <string name="change_pwd_form_error4" >身份名格式不对</string>
-    <string name="change_pwd_form_error5" >密码长度为8~20个字符，且内容仅限字母和数字</string>
+    <string name="change_pwd_form_error5" >6~30个字符，建议混合大小写字母加数字</string>
     <string name="change_pwd_form_error6" >旧密码错误</string>
     <string name="change_pwd_changing_txt" >密码修改中...</string>
     <string name="change_pwd_change_success_txt" >密码修改成功</string>
@@ -374,5 +374,28 @@
     <string name="understand_mnemonic_word_introduce_txt">创建钱包后会出现12个英文单词，这12个单词就是助记词。助记词由一个随机字符串通过算法在2048个单词库中得出的12个单词。助记词算法可以派生出私钥，所以助记词是私钥的另一种表现形式。用助记词是为了帮助用户记忆复杂的私钥。任何人拿到了您的助记词，就可以拿走您的数字资产，因此必须保管好您的助记词。</string>
     <string name="understand_keystore_introduce_txt">Keystore文件是钱包存储私钥的一种文件格式 (JSON)。它使用用户自定义密码加密，以起到一定程度上的保护作用，而保护的程度取决于用户加密该钱包的密码强度，如果类似于123456这样的密码，是极为不安全的。密码忘记是无法找回的，所以一定要保管好Keystore文件及密码。</string>
     <string name="understand_private_key_introduce_txt">私钥是在区块链交易中用于生成交易签名，以证明账户身份。所以私钥必须安全保管，一旦私钥被任何人拿到，就可以拿走您的数字资产。</string>
+
+    <string name="address_book_txt">地址薄</string>
+    <string name="add_address_title">新建联系人</string>
+    <string name="edit_address_title">编辑联系人</string>
+    <string name="add_address_name">名称</string>
+    <string name="add_address_name_hint">输入账户地址对应的名称，以便识别账户</string>
+    <string name="add_address_describe">描述</string>
+    <string name="optional">（选填）</string>
+    <string name="add_address_describe_hint">账户地址描述</string>
+    <string name="add_address_public_addr">地址</string>
+    <string name="add_address_public_addr_hint">BU账户地址</string>
+    <string name="save">保存</string>
+    <string name="delete_address">删除联系人</string>
+    <string name="delete_address_confirm">确定删除联系人？</string>
+    <string name="no_record">暂无记录</string>
+    <string name="address_name_format_error_message_txt">名称只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
+    <string name="describe_format_error_message_txt">描述长度最多30个字符，请进行修改</string>
+    <string name="address_format_error_message_txt">无效地址</string>
+    <string name="save_address_failure_message_txt">保存失败，请稍后重试</string>
+    <string name="save_address_success_message_txt">保存成功</string>
+    <string name="delete_address_failure_message_txt">删除失败，请稍后重试</string>
+    <string name="delete_address_success_message_txt">删除成功</string>
+    <string name="address_already_exist_message_txt">该联系人已存在</string>
 
 </resources>

@@ -68,7 +68,7 @@ public class SearchTokenAdapter extends BaseAdapter {
             tokenList = getTokensRespDto.getTokenList();
         }
         final SearchTokenAdapter.ViewHolder holder;
-        if(convertView == null){
+        /*if(convertView == null){
             holder = new SearchTokenAdapter.ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.search_token_result_item_layout, null);
             holder.assetIconIv = convertView.findViewById(R.id.assetIconIv);
@@ -80,7 +80,17 @@ public class SearchTokenAdapter extends BaseAdapter {
             convertView.setTag(holder);
         } else {
             holder = (SearchTokenAdapter.ViewHolder) convertView.getTag();
-        }
+        }*/
+
+        holder = new SearchTokenAdapter.ViewHolder();
+        convertView = LayoutInflater.from(mContext).inflate(R.layout.search_token_result_item_layout, null);
+        holder.assetIconIv = convertView.findViewById(R.id.assetIconIv);
+        holder.assetCodeTv = convertView.findViewById(R.id.assetCodeTv);
+        holder.assetNameTv = convertView.findViewById(R.id.assetNameTv);
+        holder.assetIssuerTv = convertView.findViewById(R.id.assetIssuerTv);
+        holder.tokenOptAddBtn = convertView.findViewById(R.id.tokenOptAddBtn);
+        holder.tokenOptCancelCBtn = convertView.findViewById(R.id.tokenOptCancelCBtn);
+        convertView.setTag(holder);
 
         if(datas.size() != 0){
             final String assetCode = datas.get(i).getAssetCode();

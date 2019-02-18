@@ -95,12 +95,16 @@
                             android:layout_weight="2"
                             android:gravity="right">
 
-                            <ImageView
+                            <!--<ImageView
                                 android:id="@+id/sendFormScanIv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:contentDescription="TODO"
-                                android:src="@mipmap/icon_scan_green_little" />
+                                android:src="@mipmap/icon_scan_green_little" />-->
+                            <ImageView
+                                android:id="@+id/openAddressBookBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/icon_address_book" />
                         </LinearLayout>
 
                     </LinearLayout>

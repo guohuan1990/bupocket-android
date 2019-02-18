@@ -21,6 +21,7 @@ import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.AddressClickEventEnum;
 import com.bupocket.enums.TokenTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
@@ -66,8 +67,8 @@ public class BPSendTokenFragment extends BaseFragment {
     EditText sendFormTxFeeEt;
     @BindView(R.id.completeMnemonicCodeBtn)
     QMUIRoundButton mConfirmSendBtn;
-    @BindView(R.id.sendFormScanIv)
-    ImageView mSendFormScanIv;
+    @BindView(R.id.openAddressBookBtn)
+    ImageView mOpenAddressBookBtn;
     @BindView(R.id.tokenCodeTv)
     TextView mTokenCodeTv;
 
@@ -98,10 +99,18 @@ public class BPSendTokenFragment extends BaseFragment {
         initTopBar();
         setDestAddress();
 
-        mSendFormScanIv.setOnClickListener(new View.OnClickListener() {
+        mOpenAddressBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startScan();
+                Bundle argz = new Bundle();
+                argz.putString("flag", AddressClickEventEnum.CHOOSE.getCode());
+                argz.putString("tokenType",tokenType);
+                argz.putString("tokenCode",tokenCode);
+                argz.putString("tokenDecimals",tokenDecimals);
+                argz.putString("tokenIssuer",tokenIssuer);
+                BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
+                bpAddressBookFragment.setArguments(argz);
+                startFragment(bpAddressBookFragment);
             }
         });
         buildWatcher();
@@ -220,6 +229,12 @@ public class BPSendTokenFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 popBackStack();
+            }
+        });
+        mTopBar.addRightImageButton(R.mipmap.icon_scan_green_little,R.id.walletScanBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startScan();
             }
         });
     }

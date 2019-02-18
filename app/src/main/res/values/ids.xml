@@ -3,4 +3,5 @@
     <item name="bupocket" type="id"/>
 
     <item name="topbar_left_arrow" type="id"/>
+    <item name="topbar_right_button" type="id"/>
 </resources>

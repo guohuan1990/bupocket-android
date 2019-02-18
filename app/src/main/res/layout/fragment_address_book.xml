@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:background="@color/app_bg_color_gray"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/address_book_txt"
+            android:theme="@style/BPViewTitle" />
+
+        <com.qmuiteam.qmui.widget.QMUIEmptyView
+            android:id="@+id/addressEv"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/refreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srlEnableScrollContentWhenLoaded="true"
+                app:srlEnableFooterFollowWhenLoadFinished="true">
+
+                <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <ListView
+                        android:id="@+id/addressBookLv"
+                        android:paddingLeft="12.5dp"
+                        android:paddingRight="12.5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="@color/tx_list_view_background_col"
+                        android:dividerHeight="10dp"
+                        android:scrollbars="none"
+                        android:fadeScrollbars="false"/>
+                    <LinearLayout
+                        android:id="@+id/addressRecordEmptyLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@color/app_bg_color_gray"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:src="@mipmap/icon_no_recently_record">
+                        </ImageView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:text="@string/no_record">
+                        </TextView>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srlClassicsSpinnerStyle="Translate"/>
+
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        </com.qmuiteam.qmui.widget.QMUIEmptyView>
+    </LinearLayout>
+
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true" />
+
+</android.support.design.widget.CoordinatorLayout>

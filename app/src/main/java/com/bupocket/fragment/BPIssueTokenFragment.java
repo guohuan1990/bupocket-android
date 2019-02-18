@@ -267,6 +267,9 @@ public class BPIssueTokenFragment extends BaseFragment {
             whetherIdentityWallet = true;
         }
         buBalance = bundle.getString("buBalance");
+        if(null == buBalance){
+            buBalance = "0";
+        }
         getTokenDetail();
     }
 

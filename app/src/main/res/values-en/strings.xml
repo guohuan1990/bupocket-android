@@ -52,8 +52,8 @@
     <string name="confirm_mneonic_code_btn_txt">Done</string>
     <string name="wallet_password_confirm_title">Confirm password</string>
     <string name="wallet_password_confirm_txt1">Please fill in the identity password to confirm the backup</string>
-    <string name="hint_wallet_passwrod_confirm_txt1">8~20 letters and numbers</string>
-    <string name="hint_wallet_passwrod_confirm_submit_btn">Confirm</string>
+    <string name="hint_wallet_password_confirm_txt1">8~20 letters and numbers</string>
+    <string name="hint_wallet_password_confirm_submit_btn">Confirm</string>
     <string name="wallet_send_txt">Transfer</string>
     <string name="wallet_scan_txt">Scan</string>
     <string name="wallet_scan_notice">Automatically scan the QR code in the box</string>
@@ -157,7 +157,7 @@
     <string name="balance_not_enough">Insufficient balance available</string>
     <string name="send_token_note_too_long">Remarks cannot exceed 20 characterscharacters</string>
     <string name="send_loading">Processing...</string>
-    <string name="splash_txt0">Bu Pocket</string>
+    <string name="splash_txt0">BU Pocket</string>
     <string name="splash_txt1">A ubiquitous trust blockchain network of value circulation</string>
 
     <string name="change_pwd_old_pwd">Old password</string>
@@ -374,4 +374,27 @@
     <string name="understand_private_key_introduce_txt">A private key is used to generate signatures for transactions on a blockchain, so that the account identity can be verified. The private key must be kept safe, because once it is stolen, your digital assets are susceptible to loss.</string>
     <string name="delete_wallet_success_message_txt">The wallet is deleted successfully</string>
     <string name="error_import_wallet_name_message_txt">The wallet names is only allowed to enter letters, characters, numbers, underscores, and it cannot exceed 20 characters in length.</string>
+
+    <string name="address_book_txt">Address list</string>
+    <string name="add_address_title">New contact</string>
+    <string name="edit_address_title">Edit contact</string>
+    <string name="add_address_name">Name</string>
+    <string name="add_address_name_hint">Enter a name which corresponds to the account address to identify the account</string>
+    <string name="add_address_describe">Description</string>
+    <string name="optional">(Optional)</string>
+    <string name="add_address_describe_hint">Description of the account address</string>
+    <string name="add_address_public_addr">Address</string>
+    <string name="add_address_public_addr_hint">Account address (BU)</string>
+    <string name="save">Save</string>
+    <string name="delete_address">Delete contact</string>
+    <string name="delete_address_confirm">Are you sure to delete?</string>
+    <string name="no_record">No record</string>
+    <string name="address_name_format_error_message_txt">Only letters, characters, numbers and underscores are allowed, and they cannot exceed 20 characters in length.</string>
+    <string name="describe_format_error_message_txt">At most 30 characters are allowed for the description. Please modify</string>
+    <string name="address_format_error_message_txt">Invalid address</string>
+    <string name="save_address_failure_message_txt">Failed to save; please try again later</string>
+    <string name="save_address_success_message_txt">Saved successfully</string>
+    <string name="delete_address_failure_message_txt">Failed to delete; please try again later</string>
+    <string name="delete_address_success_message_txt">Deleted successfully</string>
+    <string name="address_already_exist_message_txt">The contact is already existed</string>
 </resources>
