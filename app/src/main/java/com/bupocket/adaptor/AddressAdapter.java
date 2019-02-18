@@ -52,7 +52,7 @@ public class AddressAdapter extends BaseAdapter {
         AddressAdapter.ViewHolder holder;
         if(convertView == null){
             holder = new AddressAdapter.ViewHolder();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.my_token_tx_item_layout, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.view_address_list_item, null);
             holder.addressNameTv = convertView.findViewById(R.id.addressNameTv);
             holder.addressTv = convertView.findViewById(R.id.addressTv);
             holder.addressDescribeTv = convertView.findViewById(R.id.addressDescribeTv);
@@ -65,6 +65,9 @@ public class AddressAdapter extends BaseAdapter {
             holder.addressNameTv.setText(datas.get(position).getNickName());
             holder.addressTv.setText(AddressUtil.anonymous(datas.get(position).getLinkmanAddress()));
             holder.addressDescribeTv.setText(datas.get(position).getRemark());
+            if(datas.get(position).getRemark().length() == 0){
+                holder.addressDescribeTv.setVisibility(View.GONE);
+            }
         }
 
         return convertView;

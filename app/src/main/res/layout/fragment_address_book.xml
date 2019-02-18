@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
-        android:background="@color/qmui_config_color_white"
+        android:background="@color/app_bg_color_gray"
         android:orientation="vertical">
 
         <TextView
@@ -19,6 +19,7 @@
 
         <com.qmuiteam.qmui.widget.QMUIEmptyView
             android:id="@+id/addressEv"
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible">
@@ -40,6 +41,8 @@
                     android:orientation="vertical">
                     <ListView
                         android:id="@+id/addressBookLv"
+                        android:paddingLeft="12.5dp"
+                        android:paddingRight="12.5dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:divider="@color/tx_list_view_background_col"
@@ -47,7 +50,7 @@
                         android:scrollbars="none"
                         android:fadeScrollbars="false"/>
                     <LinearLayout
-                        android:id="@+id/recentlyTxRecordEmptyLL"
+                        android:id="@+id/addressRecordEmptyLL"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"

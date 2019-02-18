@@ -21,6 +21,7 @@ import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.AddressClickEventEnum;
 import com.bupocket.enums.TokenTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
@@ -101,7 +102,15 @@ public class BPSendTokenFragment extends BaseFragment {
         mOpenAddressBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFragment(new BPAddressBookFragment());
+                Bundle argz = new Bundle();
+                argz.putString("flag", AddressClickEventEnum.CHOOSE.getCode());
+                argz.putString("tokenType",tokenType);
+                argz.putString("tokenCode",tokenCode);
+                argz.putString("tokenDecimals",tokenDecimals);
+                argz.putString("tokenIssuer",tokenIssuer);
+                BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
+                bpAddressBookFragment.setArguments(argz);
+                startFragment(bpAddressBookFragment);
             }
         });
         buildWatcher();

@@ -1,6 +1,7 @@
 package com.bupocket.fragment;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -41,12 +42,12 @@ public class BPAddressBookFragment extends BaseFragment {
     QMUITopBarLayout mTopBar;
     @BindView(R.id.addressEv)
     QMUIEmptyView mAddressEv;
-    @BindView(R.id.recentlyTxRecordEmptyLL)
-    LinearLayout mRecentlyTxRecordEmptyLL;
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
     @BindView(R.id.addressBookLv)
     ListView mAddressBookLv;
+    @BindView(R.id.addressRecordEmptyLL)
+    LinearLayout mAddressRecordEmptyLL;
 
     private String flag;
     private SharedPreferencesHelper sharedPreferencesHelper;
@@ -56,6 +57,10 @@ public class BPAddressBookFragment extends BaseFragment {
     private AddressAdapter addressAdapter;
     private GetAddressBookRespDto.PageBean page;
     private String tokenBalance;
+    private String tokenCode;
+    private String tokenDecimals;
+    private String tokenIssuer;
+    private String tokenType;
     private String currentWalletAddress;
 
     private List<GetAddressBookRespDto.AddressBookListBean> addressBookListBeanList = new ArrayList<>();
@@ -68,6 +73,12 @@ public class BPAddressBookFragment extends BaseFragment {
         return root;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        refreshData();
+    }
+
     private void init() {
         initData();
         initUI();
@@ -78,6 +89,12 @@ public class BPAddressBookFragment extends BaseFragment {
         identityAddress = sharedPreferencesHelper.getSharedPreference("identityId","").toString();
         Bundle bundle = getArguments();
         flag = bundle != null ? bundle.getString("flag") : AddressClickEventEnum.EDIT.getCode();
+        if(AddressClickEventEnum.CHOOSE.getCode().equals(flag)){
+            tokenCode = bundle.getString("tokenCode");
+            tokenDecimals = bundle.getString("tokenDecimals");
+            tokenIssuer = bundle.getString("tokenIssuer");
+            tokenType = bundle.getString("tokenType");
+        }
         currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
         if(CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString())){
             currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
@@ -140,6 +157,7 @@ public class BPAddressBookFragment extends BaseFragment {
                 }, 500);
             }
         });
+        refreshData();
     }
 
     private void refreshData() {
@@ -169,8 +187,13 @@ public class BPAddressBookFragment extends BaseFragment {
                 ApiResult<GetAddressBookRespDto> respDto = response.body();
                 if(null != respDto && null != respDto.getData()){
                     mAddressEv.show(null,null);
-                    if(isAdded()){
+                    if(isAdded() && null != respDto.getData().getAddressBookList()){
+                        mAddressBookLv.setVisibility(View.VISIBLE);
+                        mAddressRecordEmptyLL.setVisibility(View.GONE);
                         handleAddressList(respDto.getData());
+                    }else{
+                        mAddressBookLv.setVisibility(View.GONE);
+                        mAddressRecordEmptyLL.setVisibility(View.VISIBLE);
                     }
                 }else{
                     mAddressEv.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
@@ -190,13 +213,6 @@ public class BPAddressBookFragment extends BaseFragment {
     private void handleAddressList(GetAddressBookRespDto getAddressBookRespDto) {
         page = getAddressBookRespDto.getPage();
         addressBookListBeanList = getAddressBookRespDto.getAddressBookList();
-        if(addressBookListBeanList.size() != 0){
-
-        }else{
-
-            return;
-        }
-
         addressAdapter = new AddressAdapter(addressBookListBeanList,getContext());
         addressAdapter.setPage(page);
         mAddressBookLv.setAdapter(addressAdapter);
@@ -207,11 +223,11 @@ public class BPAddressBookFragment extends BaseFragment {
                     GetAddressBookRespDto.AddressBookListBean currentItem = (GetAddressBookRespDto.AddressBookListBean)addressAdapter.getItem(position);
                     Bundle argz = new Bundle();
                     argz.putString("destAddress",currentItem.getLinkmanAddress());
-                    argz.putString("tokenCode","BU");
-                    argz.putString("tokenDecimals","8");
-                    argz.putString("tokenIssuer","");
+                    argz.putString("tokenCode",tokenCode);
+                    argz.putString("tokenDecimals",tokenDecimals);
+                    argz.putString("tokenIssuer",tokenIssuer);
                     argz.putString("tokenBalance",tokenBalance);
-                    argz.putString("tokenType","0");
+                    argz.putString("tokenType",tokenType);
                     BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
                     sendTokenFragment.setArguments(argz);
                     startFragment(sendTokenFragment);
@@ -223,9 +239,10 @@ public class BPAddressBookFragment extends BaseFragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     GetAddressBookRespDto.AddressBookListBean currentItem = (GetAddressBookRespDto.AddressBookListBean)addressAdapter.getItem(position);
                     Bundle argz = new Bundle();
-                    argz.putString("addressName",currentItem.getNickName());
-                    argz.putString("address",currentItem.getLinkmanAddress());
-                    argz.putString("addressDescribe",currentItem.getRemark());
+                    argz.putString("oldAddressName",currentItem.getNickName());
+                    argz.putString("oldLinkmanAddress",currentItem.getLinkmanAddress());
+                    argz.putString("oldAddressDescribe",currentItem.getRemark());
+                    argz.putString("flag",flag);
                     BPAddressEditFragment bpAddressEditFragment = new BPAddressEditFragment();
                     bpAddressEditFragment.setArguments(argz);
                     startFragment(bpAddressEditFragment);

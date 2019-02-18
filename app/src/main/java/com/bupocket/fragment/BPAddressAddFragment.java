@@ -12,21 +12,28 @@ import android.widget.Toast;
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.http.api.AddressBookService;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.view.DrawableEditText;
-import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.enums.ExceptionEnum;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
-import java.security.PublicKey;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.bumo.encryption.key.PrivateKey;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BPAddressAddFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -110,15 +117,49 @@ public class BPAddressAddFragment extends BaseFragment {
             return;
         }else if(!describeFlag()){
             return;
-        }else if(addressFlag()){
+        }else if(!addressFlag()){
             return;
         }
         final String addressName = mAddressNameEt.getText().toString().trim();
         final String describe = mAddressDescribeEt.getText().toString().trim();
-        final String address = mNewAddressEt.getText().toString().trim();
+        final String linkmanAddress = mNewAddressEt.getText().toString().trim();
 
+        AddressBookService addressBookService = RetrofitFactory.getInstance().getRetrofit().create(AddressBookService.class);
+        Call<ApiResult> call;
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("identityAddress",identityAddress);
+        paramsMap.put("linkmanAddress",linkmanAddress);
+        paramsMap.put("nickName",addressName);
+        paramsMap.put("remark",describe);
+        call = addressBookService.addAddress(paramsMap);
+        call.enqueue(new Callback<ApiResult>() {
+            @Override
+            public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+                ApiResult respDto = response.body();
+                if(null != respDto){
+                    if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
+                        Toast.makeText(getContext(),getString(R.string.save_address_success_message_txt),Toast.LENGTH_SHORT).show();
+//                        Bundle argz = new Bundle();
+//                        argz.putString("flag",flag);
+//                        BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
+//                        startFragmentAndDestroyCurrent(bpAddressBookFragment);
+                        popBackStack();
+                    }else if(ExceptionEnum.ADDRESS_ALREADY_EXISTED.getCode().equals(respDto.getErrCode())){
+                        Toast.makeText(getContext(),getString(R.string.address_already_exist_message_txt),Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(getContext(),getString(R.string.save_address_failure_message_txt),Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(getContext(),getString(R.string.save_address_failure_message_txt),Toast.LENGTH_SHORT).show();
+                }
+            }
 
-
+            @Override
+            public void onFailure(Call<ApiResult> call, Throwable t) {
+                Toast.makeText(getContext(),getString(R.string.save_address_failure_message_txt),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private boolean addressNameFlag() {
@@ -142,7 +183,7 @@ public class BPAddressAddFragment extends BaseFragment {
     private boolean addressFlag() {
         final String address = mNewAddressEt.getText().toString().trim();
         if(!PrivateKey.isAddressValid(address)){
-            Toast.makeText(getActivity(), R.string.address_format_error_meaage_txt, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.address_format_error_message_txt, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -191,11 +232,12 @@ public class BPAddressAddFragment extends BaseFragment {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle argz = new Bundle();
-                argz.putString("flag",flag);
-                BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
-                bpAddressBookFragment.setArguments(argz);
-                startFragment(bpAddressBookFragment);
+//                Bundle argz = new Bundle();
+//                argz.putString("flag",flag);
+//                BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
+//                bpAddressBookFragment.setArguments(argz);
+//                startFragmentAndDestroyCurrent(bpAddressBookFragment);
+                popBackStack();
             }
         });
         mTopBar.setTitle(R.string.add_address_title);
