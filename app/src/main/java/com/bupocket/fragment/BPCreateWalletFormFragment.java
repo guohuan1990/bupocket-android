@@ -134,11 +134,11 @@ public class BPCreateWalletFormFragment extends BaseFragment {
             Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty,Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(password.length() < 8){
+        if(password.length() < 6){
             Toast.makeText(getActivity(), R.string.wallet_create_form_error2,Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(password.length() > 20){
+        if(password.length() > 30){
             Toast.makeText(getActivity(), R.string.wallet_create_form_error2,Toast.LENGTH_SHORT).show();
             return false;
         }
