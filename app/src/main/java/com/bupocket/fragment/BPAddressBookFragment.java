@@ -211,6 +211,7 @@ public class BPAddressBookFragment extends BaseFragment {
     }
 
     private void handleAddressList(GetAddressBookRespDto getAddressBookRespDto) {
+        refreshLayout.setEnableLoadMore(true);
         page = getAddressBookRespDto.getPage();
         addressBookListBeanList = getAddressBookRespDto.getAddressBookList();
         addressAdapter = new AddressAdapter(addressBookListBeanList,getContext());

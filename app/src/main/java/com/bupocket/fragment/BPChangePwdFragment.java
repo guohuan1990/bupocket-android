@@ -245,32 +245,6 @@ public class BPChangePwdFragment extends BaseFragment{
             return false;
         }
 
-        if(newPwd.length() < 8){
-            tipDialog = new QMUITipDialog.Builder(getContext())
-                    .setTipWord(getResources().getString(R.string.change_pwd_form_error3))
-                    .create();
-            tipDialog.show();
-            mNewPasswordET.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    tipDialog.dismiss();
-                }
-            }, 1500);
-            return false;
-        }
-        if(newPwd.length() > 20){
-            tipDialog = new QMUITipDialog.Builder(getContext())
-                    .setTipWord(getResources().getString(R.string.change_pwd_form_error2))
-                    .create();
-            tipDialog.show();
-            mNewPasswordET.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    tipDialog.dismiss();
-                }
-            }, 1500);
-            return false;
-        }
         if(!CommonUtil.validatePassword(newPwd)){
             tipDialog = new QMUITipDialog.Builder(getContext())
                     .setTipWord(getResources().getString(R.string.change_pwd_form_error5))

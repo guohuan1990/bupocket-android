@@ -371,7 +371,7 @@ public class BPWalletImportFragment extends BaseFragment {
                     private boolean confirmPwdFlag() {
                         String pwd = mPasswordEt.getText().toString().trim();
                         String confirmPwd = mPasswordConfirmEt.getText().toString().trim();
-                        String regex = ".{8,20}";
+                        String regex = ".{6,30}";
                         if ("".equals(confirmPwd)) {
                             Toast.makeText(getActivity(), R.string.recover_confirm_pwd_hint, Toast.LENGTH_SHORT).show();
                             return false;
@@ -389,14 +389,6 @@ public class BPWalletImportFragment extends BaseFragment {
                         String password = mPasswordEt.getText().toString().trim();
                         if ("".equals(password)) {
                             Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty, Toast.LENGTH_SHORT).show();
-                            return false;
-                        }
-                        if (password.length() < 8) {
-                            Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
-                            return false;
-                        }
-                        if (password.length() > 20) {
-                            Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
                             return false;
                         }
                         if (!CommonUtil.validatePassword(password)) {
@@ -741,7 +733,7 @@ public class BPWalletImportFragment extends BaseFragment {
                     private boolean confirmPwdFlag() {
                         String pwd = mPasswordEt.getText().toString().trim();
                         String confirmPwd = mPasswordConfirmEt.getText().toString().trim();
-                        String regex = ".{8,20}";
+                        String regex = ".{6,30}";
                         if ("".equals(confirmPwd)) {
                             Toast.makeText(getActivity(), R.string.recover_confirm_pwd_hint, Toast.LENGTH_SHORT).show();
                             return false;
