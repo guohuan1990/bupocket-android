@@ -761,14 +761,6 @@ public class BPWalletImportFragment extends BaseFragment {
                             Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty, Toast.LENGTH_SHORT).show();
                             return false;
                         }
-                        if (password.length() < 8) {
-                            Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
-                            return false;
-                        }
-                        if (password.length() > 20) {
-                            Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
-                            return false;
-                        }
                         if (!CommonUtil.validatePassword(password)) {
                             Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
                             return false;
