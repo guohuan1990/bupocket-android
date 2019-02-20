@@ -250,9 +250,9 @@ public class BPCreateWalletFormFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                boolean signIdentityName = mSetIdentityNameEt.getText().length() > 0;
-                boolean signSetPwd = mSetPwdEt.getText().length() > 0;
-                boolean signRepeatPwd = mRepeatPwdEt.getText().length() >0;
+                boolean signIdentityName = mSetIdentityNameEt.getText().toString().trim().length() > 0;
+                boolean signSetPwd = mSetPwdEt.getText().toString().trim().length() > 0;
+                boolean signRepeatPwd = mRepeatPwdEt.getText().toString().trim().length() >0;
                 if(signIdentityName && signSetPwd && signRepeatPwd){
                     mCreateWalletSubmitBtn.setEnabled(true);
                     mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));

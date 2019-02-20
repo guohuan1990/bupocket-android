@@ -139,7 +139,7 @@
                     android:enabled="false"
                     android:focusable="true"
                     android:gravity="center"
-                    android:text="@string/send_form_next_btn_txt"
+                    android:text="@string/wallet_create_ok_btn"
                     android:textColor="@color/app_color_font"
                     android:textSize="@dimen/bp_btn_text_size"
                     app:qmui_backgroundColor="@color/disabled_btn_color"

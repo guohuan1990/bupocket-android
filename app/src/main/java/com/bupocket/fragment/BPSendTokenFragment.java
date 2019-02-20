@@ -135,9 +135,9 @@ public class BPSendTokenFragment extends BaseFragment {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void afterTextChanged(Editable s) {
-                boolean signAccountAddress = destAccountAddressEt.getText().length() > 0;
-                boolean signAmount = sendAmountET.getText().length() > 0;
-                boolean signTxFee = sendFormTxFeeEt.getText().length() > 0;
+                boolean signAccountAddress = destAccountAddressEt.getText().toString().trim().length() > 0;
+                boolean signAmount = sendAmountET.getText().toString().trim().length() > 0;
+                boolean signTxFee = sendFormTxFeeEt.getText().toString().trim().length() > 0;
                 if(signAccountAddress && signAmount && signTxFee){
                     mConfirmSendBtn.setEnabled(true);
                     mConfirmSendBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
