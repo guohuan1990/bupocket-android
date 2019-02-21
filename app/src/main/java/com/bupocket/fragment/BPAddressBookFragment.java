@@ -102,13 +102,13 @@ public class BPAddressBookFragment extends BaseFragment {
         if(CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString())){
             currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
         }
-        tokenBalance = sharedPreferencesHelper.getSharedPreference("tokenBalance","0").toString();
+        tokenBalance = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "tokenBalance","0").toString();
         Runnable getBalanceRunnable = new Runnable() {
             @Override
             public void run() {
                 tokenBalance = Wallet.getInstance().getAccountBUBalance(currentWalletAddress);
                 if(!CommonUtil.isNull(tokenBalance)){
-                    sharedPreferencesHelper.put("tokenBalance",tokenBalance);
+                    sharedPreferencesHelper.put(currentWalletAddress + "tokenBalance",tokenBalance);
                 }
             }
         };
