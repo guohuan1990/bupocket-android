@@ -33,6 +33,11 @@ public class AddressAdapter extends BaseAdapter {
         mContext = Context;
     }
 
+    public void loadMore(List<GetAddressBookRespDto.AddressBookListBean> data){
+        mData.addAll(data);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return mData.size();

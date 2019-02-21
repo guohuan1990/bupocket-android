@@ -216,24 +216,18 @@ public class BPAddressBookFragment extends BaseFragment {
         refreshLayout.setEnableLoadMore(true);
         page = getAddressBookRespDto.getPage();
         addressList.addAll(getAddressBookRespDto.getAddressBookList());
-        addressAdapter = new AddressAdapter(addressList,getContext());
-        addressAdapter.setPage(page);
-        mAddressBookLv.setAdapter(addressAdapter);
+        if(addressAdapter == null){
+            addressAdapter = new AddressAdapter(addressList,getContext());
+            addressAdapter.setPage(page);
+            mAddressBookLv.setAdapter(addressAdapter);
+        }else {
+            addressAdapter.loadMore(getAddressBookRespDto.getAddressBookList());
+        }
         if(AddressClickEventEnum.CHOOSE.getCode().equals(flag)){
             mAddressBookLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     GetAddressBookRespDto.AddressBookListBean currentItem = (GetAddressBookRespDto.AddressBookListBean)addressAdapter.getItem(position);
-//                    Bundle argz = new Bundle();
-//                    argz.putString("destAddress",currentItem.getLinkmanAddress());
-//                    argz.putString("tokenCode",tokenCode);
-//                    argz.putString("tokenDecimals",tokenDecimals);
-//                    argz.putString("tokenIssuer",tokenIssuer);
-//                    argz.putString("tokenBalance",tokenBalance);
-//                    argz.putString("tokenType",tokenType);
-//                    BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
-//                    sendTokenFragment.setArguments(argz);
-//                    startFragmentAndDestroyCurrent(sendTokenFragment);
                     Intent intent = new Intent();
                     intent.putExtra("destAddress",currentItem.getLinkmanAddress());
                     setFragmentResult(RESULT_OK, intent);
