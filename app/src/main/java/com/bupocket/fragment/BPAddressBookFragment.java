@@ -65,8 +65,7 @@ public class BPAddressBookFragment extends BaseFragment {
     private String tokenIssuer;
     private String tokenType;
     private String currentWalletAddress;
-
-    private List<GetAddressBookRespDto.AddressBookListBean> addressBookListBeanList = new ArrayList<>();
+    private List<GetAddressBookRespDto.AddressBookListBean> addressList = new ArrayList<>();
 
     @Override
     protected View onCreateView() {
@@ -79,11 +78,12 @@ public class BPAddressBookFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
+        initData();
         refreshData();
+        initListView();
     }
 
     private void init() {
-        initData();
         initUI();
     }
 
@@ -118,10 +118,10 @@ public class BPAddressBookFragment extends BaseFragment {
     private void initUI() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
-        initListView();
     }
 
     private void initListView() {
+        refreshLayout.setNoMoreData(false);
         mAddressEv.show(true);
         refreshLayout.setEnableLoadMore(false);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -160,12 +160,11 @@ public class BPAddressBookFragment extends BaseFragment {
                 }, 500);
             }
         });
-        refreshData();
     }
 
     private void refreshData() {
         pageStart = 1;
-        addressBookListBeanList.clear();
+        addressList.clear();
         loadAddressList();
     }
 
@@ -216,8 +215,8 @@ public class BPAddressBookFragment extends BaseFragment {
     private void handleAddressList(GetAddressBookRespDto getAddressBookRespDto) {
         refreshLayout.setEnableLoadMore(true);
         page = getAddressBookRespDto.getPage();
-        addressBookListBeanList = getAddressBookRespDto.getAddressBookList();
-        addressAdapter = new AddressAdapter(addressBookListBeanList,getContext());
+        addressList.addAll(getAddressBookRespDto.getAddressBookList());
+        addressAdapter = new AddressAdapter(addressList,getContext());
         addressAdapter.setPage(page);
         mAddressBookLv.setAdapter(addressAdapter);
         if(AddressClickEventEnum.CHOOSE.getCode().equals(flag)){

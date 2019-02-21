@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:textStyle="bold"
+        android:textColor="@color/app_color_black"
         tools:text="火币充值地址"/>
 
     <TextView
