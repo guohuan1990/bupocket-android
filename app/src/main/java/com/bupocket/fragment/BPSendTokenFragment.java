@@ -75,6 +75,7 @@ public class BPSendTokenFragment extends BaseFragment {
     @BindView(R.id.sendTokenAmountLable)
     TextView mSendTokenAmountLable;
 
+    private static final int CHOOSE_ADDRESS_CODE = 1;
 
     private String hash;
     private String tokenCode;
@@ -110,7 +111,7 @@ public class BPSendTokenFragment extends BaseFragment {
                 argz.putString("tokenIssuer",tokenIssuer);
                 BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
                 bpAddressBookFragment.setArguments(argz);
-                startFragment(bpAddressBookFragment);
+                startFragmentForResult(bpAddressBookFragment,CHOOSE_ADDRESS_CODE);
             }
         });
         buildWatcher();
@@ -611,6 +612,20 @@ public class BPSendTokenFragment extends BaseFragment {
         }
     }
 
+    @Override
+    protected void onFragmentResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case CHOOSE_ADDRESS_CODE: {
+                if (resultCode == RESULT_OK) {
+                    if(null != data){
+                        String destAddress = data.getStringExtra("destAddress");
+                        destAccountAddressEt.setText(destAddress);
+                    }
+                }
+                break;
+            }
+        }
+    }
 
     private int timerTimes = 0;
     private final Timer timer = new Timer();

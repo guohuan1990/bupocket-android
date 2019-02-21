@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -36,6 +37,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
 
 public class BPAddressBookFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -222,16 +225,20 @@ public class BPAddressBookFragment extends BaseFragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     GetAddressBookRespDto.AddressBookListBean currentItem = (GetAddressBookRespDto.AddressBookListBean)addressAdapter.getItem(position);
-                    Bundle argz = new Bundle();
-                    argz.putString("destAddress",currentItem.getLinkmanAddress());
-                    argz.putString("tokenCode",tokenCode);
-                    argz.putString("tokenDecimals",tokenDecimals);
-                    argz.putString("tokenIssuer",tokenIssuer);
-                    argz.putString("tokenBalance",tokenBalance);
-                    argz.putString("tokenType",tokenType);
-                    BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
-                    sendTokenFragment.setArguments(argz);
-                    startFragment(sendTokenFragment);
+//                    Bundle argz = new Bundle();
+//                    argz.putString("destAddress",currentItem.getLinkmanAddress());
+//                    argz.putString("tokenCode",tokenCode);
+//                    argz.putString("tokenDecimals",tokenDecimals);
+//                    argz.putString("tokenIssuer",tokenIssuer);
+//                    argz.putString("tokenBalance",tokenBalance);
+//                    argz.putString("tokenType",tokenType);
+//                    BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
+//                    sendTokenFragment.setArguments(argz);
+//                    startFragmentAndDestroyCurrent(sendTokenFragment);
+                    Intent intent = new Intent();
+                    intent.putExtra("destAddress",currentItem.getLinkmanAddress());
+                    setFragmentResult(RESULT_OK, intent);
+                    popBackStack();
                 }
             });
         }else if(AddressClickEventEnum.EDIT.getCode().equals(flag)){
