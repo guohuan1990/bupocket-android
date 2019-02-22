@@ -379,7 +379,7 @@
     <string name="add_address_title">新建联系人</string>
     <string name="edit_address_title">编辑联系人</string>
     <string name="add_address_name">名称</string>
-    <string name="add_address_name_hint">输入账户地址对应的名称，以便识别账户</string>
+    <string name="add_address_name_hint">输入账户地址对应的名称</string>
     <string name="add_address_describe">描述</string>
     <string name="optional">（选填）</string>
     <string name="add_address_describe_hint">账户地址描述</string>
