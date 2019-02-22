@@ -3,11 +3,13 @@ package com.bupocket.fragment;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayout;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +21,7 @@ import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TO;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
+import com.qmuiteam.qmui.util.QMUIViewHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -39,8 +42,6 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
     TextView mMnemonicCodeListSelected;
     @BindView(R.id.completeMnemonicCodeBtn)
     QMUIRoundButton mCompleteMnemonicCodeBtn;
-    @BindView(R.id.skipBackupBtn)
-    QMUIRoundButton mSkipBackupBtn;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
     private List<String> srcMnemonicCodeList = new ArrayList<>();
@@ -74,14 +75,6 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
                 sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode());
                 sharedPreferencesHelper.put("isFirstCreateWallet", "0");
                 sharedPreferencesHelper.put("mnemonicWordBackupState","0");
-                startFragment(new HomeFragment());
-            }
-        });
-
-        mSkipBackupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sharedPreferencesHelper.put("isFirstCreateWallet", "0");
                 startFragment(new HomeFragment());
             }
         });
@@ -195,6 +188,15 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
                 popBackStack();
             }
         });
+        mTopBar.addRightTextButton(R.string.skip_backup_mneonic_btn_code, R.id.skipBackupBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharedPreferencesHelper.put("isFirstCreateWallet", "0");
+                startFragment(new HomeFragment());
+            }
+        });
+        Button skipBackuoBtn = mTopBar.findViewById(R.id.skipBackupBtn);
+        skipBackuoBtn.setTextColor(ContextCompat.getColor(getContext(),R.color.app_color_main));
     }
 
     private class MnemonicWord{

@@ -256,13 +256,13 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
     private void loadAssetList() {
-        tokenBalance = sharedPreferencesHelper.getSharedPreference("tokenBalance","0").toString();
+        tokenBalance = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "tokenBalance","0").toString();
         Runnable getBalanceRunnable = new Runnable() {
             @Override
             public void run() {
                 tokenBalance = Wallet.getInstance().getAccountBUBalance(currentWalletAddress);
                 if(!CommonUtil.isNull(tokenBalance)){
-                    sharedPreferencesHelper.put("tokenBalance",tokenBalance);
+                    sharedPreferencesHelper.put(currentWalletAddress + "tokenBalance",tokenBalance);
                 }
             }
         };
@@ -292,7 +292,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 ApiResult<GetTokensRespDto> respDtoApiResult = response.body();
 
                 if(respDtoApiResult != null){
-                    sharedPreferencesHelper.put("tokensInfoCache", JSON.toJSONString(respDtoApiResult.getData()));
+                    sharedPreferencesHelper.put(currentWalletAddress + "tokensInfoCache", JSON.toJSONString(respDtoApiResult.getData()));
                     if(isAdded()){
                         handleTokens(respDtoApiResult.getData());
                     }
@@ -371,7 +371,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         }
         currencyType = sharedPreferencesHelper.getSharedPreference("currencyType","CNY").toString();
         bumoNodeType = sharedPreferencesHelper.getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
-        GetTokensRespDto tokensCache = JSON.parseObject(sharedPreferencesHelper.getSharedPreference("tokensInfoCache", "").toString(), GetTokensRespDto.class);
+        GetTokensRespDto tokensCache = JSON.parseObject(sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "tokensInfoCache", "").toString(), GetTokensRespDto.class);
         if(tokensCache != null){
             handleTokens(tokensCache);
         }

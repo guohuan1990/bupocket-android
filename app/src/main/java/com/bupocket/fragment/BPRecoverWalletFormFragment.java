@@ -100,10 +100,10 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                boolean signMneonicCode = mMneonicCodeEt.getText().length() > 0;
-                boolean signWalleName = mWalletNameEt.getText().length() > 0;
-                boolean signPwd = mPwdEt.getText().length() > 0;
-                boolean signConfirm = mConfirmPwdEt.getText().length() > 0;
+                boolean signMneonicCode = mMneonicCodeEt.getText().toString().trim().length() > 0;
+                boolean signWalleName = mWalletNameEt.getText().toString().trim().length() > 0;
+                boolean signPwd = mPwdEt.getText().toString().trim().length() > 0;
+                boolean signConfirm = mConfirmPwdEt.getText().toString().trim().length() > 0;
                 if (signMneonicCode && signWalleName && signPwd && signConfirm) {
                     recoverSubmit.setEnabled(true);
                     recoverSubmit.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
@@ -167,14 +167,6 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
             Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (password.length() < 8) {
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (password.length() > 20) {
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
-            return false;
-        }
         if (!CommonUtil.validatePassword(password)) {
             Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
             return false;
@@ -185,11 +177,10 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
     private boolean confirmPwdFlag() {
         String pwd = mPwdEt.getText().toString().trim();
         String confirmPwd = mConfirmPwdEt.getText().toString().trim();
-        String regex = ".{8,20}";
         if ("".equals(confirmPwd)) {
             Toast.makeText(getActivity(), R.string.recover_confirm_pwd_hint, Toast.LENGTH_SHORT).show();
             return false;
-        } else if (!confirmPwd.matches(regex)) {
+        } else if (!CommonUtil.validatePassword(confirmPwd)) {
             Toast.makeText(getActivity(), R.string.recover_set_pwd_error, Toast.LENGTH_SHORT).show();
             return false;
         } else if (!confirmPwd.equals(pwd)) {

@@ -63,7 +63,7 @@
                 android:id="@+id/passwordEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_wallet_passwrod_confirm_txt1"
+                android:hint="@string/recover_set_pwd_hint"
                 android:inputType="textPassword"
                 android:textSize="14sp"
                 android:theme="@style/BPEditText" />
@@ -94,7 +94,7 @@
                 android:id="@+id/passwordConfirmEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_wallet_passwrod_confirm_txt1"
+                android:hint="@string/recover_confirm_pwd_hint"
                 android:inputType="textPassword"
                 android:textSize="14sp"
                 android:theme="@style/BPEditText" />

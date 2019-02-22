@@ -21,6 +21,7 @@ import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.AddressClickEventEnum;
 import com.bupocket.enums.TokenTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
@@ -66,14 +67,15 @@ public class BPSendTokenFragment extends BaseFragment {
     EditText sendFormTxFeeEt;
     @BindView(R.id.completeMnemonicCodeBtn)
     QMUIRoundButton mConfirmSendBtn;
-    @BindView(R.id.sendFormScanIv)
-    ImageView mSendFormScanIv;
+    @BindView(R.id.openAddressBookBtn)
+    ImageView mOpenAddressBookBtn;
     @BindView(R.id.tokenCodeTv)
     TextView mTokenCodeTv;
 
     @BindView(R.id.sendTokenAmountLable)
     TextView mSendTokenAmountLable;
 
+    private static final int CHOOSE_ADDRESS_CODE = 1;
 
     private String hash;
     private String tokenCode;
@@ -98,10 +100,18 @@ public class BPSendTokenFragment extends BaseFragment {
         initTopBar();
         setDestAddress();
 
-        mSendFormScanIv.setOnClickListener(new View.OnClickListener() {
+        mOpenAddressBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startScan();
+                Bundle argz = new Bundle();
+                argz.putString("flag", AddressClickEventEnum.CHOOSE.getCode());
+                argz.putString("tokenType",tokenType);
+                argz.putString("tokenCode",tokenCode);
+                argz.putString("tokenDecimals",tokenDecimals);
+                argz.putString("tokenIssuer",tokenIssuer);
+                BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
+                bpAddressBookFragment.setArguments(argz);
+                startFragmentForResult(bpAddressBookFragment,CHOOSE_ADDRESS_CODE);
             }
         });
         buildWatcher();
@@ -126,9 +136,9 @@ public class BPSendTokenFragment extends BaseFragment {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void afterTextChanged(Editable s) {
-                boolean signAccountAddress = destAccountAddressEt.getText().length() > 0;
-                boolean signAmount = sendAmountET.getText().length() > 0;
-                boolean signTxFee = sendFormTxFeeEt.getText().length() > 0;
+                boolean signAccountAddress = destAccountAddressEt.getText().toString().trim().length() > 0;
+                boolean signAmount = sendAmountET.getText().toString().trim().length() > 0;
+                boolean signTxFee = sendFormTxFeeEt.getText().toString().trim().length() > 0;
                 if(signAccountAddress && signAmount && signTxFee){
                     mConfirmSendBtn.setEnabled(true);
                     mConfirmSendBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
@@ -220,6 +230,12 @@ public class BPSendTokenFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 popBackStack();
+            }
+        });
+        mTopBar.addRightImageButton(R.mipmap.icon_scan_green_little,R.id.walletScanBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startScan();
             }
         });
     }
@@ -596,6 +612,20 @@ public class BPSendTokenFragment extends BaseFragment {
         }
     }
 
+    @Override
+    protected void onFragmentResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case CHOOSE_ADDRESS_CODE: {
+                if (resultCode == RESULT_OK) {
+                    if(null != data){
+                        String destAddress = data.getStringExtra("destAddress");
+                        destAccountAddressEt.setText(destAddress);
+                    }
+                }
+                break;
+            }
+        }
+    }
 
     private int timerTimes = 0;
     private final Timer timer = new Timer();
