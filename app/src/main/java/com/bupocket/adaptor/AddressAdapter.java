@@ -12,9 +12,13 @@ import com.bupocket.R;
 import com.bupocket.http.api.dto.resp.GetAddressBookRespDto;
 import com.bupocket.utils.AddressUtil;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AddressAdapter extends BaseAdapter {
+    private Map<String, GetAddressBookRespDto.AddressBookListBean> addressMap = new HashMap<>();
     private List<GetAddressBookRespDto.AddressBookListBean> mData;
     private GetAddressBookRespDto.PageBean page;
     private Context mContext;
@@ -34,7 +38,12 @@ public class AddressAdapter extends BaseAdapter {
     }
 
     public void loadMore(List<GetAddressBookRespDto.AddressBookListBean> data){
-        mData.addAll(data);
+        for(GetAddressBookRespDto.AddressBookListBean addressBookListBean : data){
+            if(addressMap.containsKey(addressBookListBean.getLinkmanAddress())){
+                addressMap.put(addressBookListBean.getLinkmanAddress(),addressBookListBean);
+                mData.add(addressBookListBean);
+            }
+        }
         notifyDataSetChanged();
     }
 

@@ -221,7 +221,6 @@ public class BPAddressBookFragment extends BaseFragment {
             addressAdapter.setPage(page);
             mAddressBookLv.setAdapter(addressAdapter);
         }else {
-
             addressAdapter.loadMore(getAddressBookRespDto.getAddressBookList());
         }
         if(AddressClickEventEnum.CHOOSE.getCode().equals(flag)){
