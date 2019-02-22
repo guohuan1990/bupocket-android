@@ -134,14 +134,6 @@ public class BPCreateWalletFormFragment extends BaseFragment {
             Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty,Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(password.length() < 8){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error2,Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(password.length() > 20){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error2,Toast.LENGTH_SHORT).show();
-            return false;
-        }
         if(!CommonUtil.validatePassword(password)){
             Toast.makeText(getActivity(), R.string.wallet_create_form_error2,Toast.LENGTH_SHORT).show();
             return false;
@@ -258,9 +250,9 @@ public class BPCreateWalletFormFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                boolean signIdentityName = mSetIdentityNameEt.getText().length() > 0;
-                boolean signSetPwd = mSetPwdEt.getText().length() > 0;
-                boolean signRepeatPwd = mRepeatPwdEt.getText().length() >0;
+                boolean signIdentityName = mSetIdentityNameEt.getText().toString().trim().length() > 0;
+                boolean signSetPwd = mSetPwdEt.getText().toString().trim().length() > 0;
+                boolean signRepeatPwd = mRepeatPwdEt.getText().toString().trim().length() >0;
                 if(signIdentityName && signSetPwd && signRepeatPwd){
                     mCreateWalletSubmitBtn.setEnabled(true);
                     mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));

@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -37,6 +38,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
+
 public class BPAddressBookFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
@@ -62,8 +65,7 @@ public class BPAddressBookFragment extends BaseFragment {
     private String tokenIssuer;
     private String tokenType;
     private String currentWalletAddress;
-
-    private List<GetAddressBookRespDto.AddressBookListBean> addressBookListBeanList = new ArrayList<>();
+    private List<GetAddressBookRespDto.AddressBookListBean> addressList = new ArrayList<>();
 
     @Override
     protected View onCreateView() {
@@ -76,11 +78,12 @@ public class BPAddressBookFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
+        initData();
         refreshData();
+        initListView();
     }
 
     private void init() {
-        initData();
         initUI();
     }
 
@@ -99,13 +102,13 @@ public class BPAddressBookFragment extends BaseFragment {
         if(CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString())){
             currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
         }
-        tokenBalance = sharedPreferencesHelper.getSharedPreference("tokenBalance","0").toString();
+        tokenBalance = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "tokenBalance","0").toString();
         Runnable getBalanceRunnable = new Runnable() {
             @Override
             public void run() {
                 tokenBalance = Wallet.getInstance().getAccountBUBalance(currentWalletAddress);
                 if(!CommonUtil.isNull(tokenBalance)){
-                    sharedPreferencesHelper.put("tokenBalance",tokenBalance);
+                    sharedPreferencesHelper.put(currentWalletAddress + "tokenBalance",tokenBalance);
                 }
             }
         };
@@ -115,10 +118,10 @@ public class BPAddressBookFragment extends BaseFragment {
     private void initUI() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
-        initListView();
     }
 
     private void initListView() {
+        refreshLayout.setNoMoreData(false);
         mAddressEv.show(true);
         refreshLayout.setEnableLoadMore(false);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -157,12 +160,11 @@ public class BPAddressBookFragment extends BaseFragment {
                 }, 500);
             }
         });
-        refreshData();
     }
 
     private void refreshData() {
         pageStart = 1;
-        addressBookListBeanList.clear();
+        addressList.clear();
         loadAddressList();
     }
 
@@ -211,26 +213,25 @@ public class BPAddressBookFragment extends BaseFragment {
     }
 
     private void handleAddressList(GetAddressBookRespDto getAddressBookRespDto) {
+        refreshLayout.setEnableLoadMore(true);
         page = getAddressBookRespDto.getPage();
-        addressBookListBeanList = getAddressBookRespDto.getAddressBookList();
-        addressAdapter = new AddressAdapter(addressBookListBeanList,getContext());
-        addressAdapter.setPage(page);
-        mAddressBookLv.setAdapter(addressAdapter);
+        addressList.addAll(getAddressBookRespDto.getAddressBookList());
+        if(addressAdapter == null || pageStart == 1){
+            addressAdapter = new AddressAdapter(addressList,getContext());
+            addressAdapter.setPage(page);
+            mAddressBookLv.setAdapter(addressAdapter);
+        }else {
+            addressAdapter.loadMore(getAddressBookRespDto.getAddressBookList());
+        }
         if(AddressClickEventEnum.CHOOSE.getCode().equals(flag)){
             mAddressBookLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     GetAddressBookRespDto.AddressBookListBean currentItem = (GetAddressBookRespDto.AddressBookListBean)addressAdapter.getItem(position);
-                    Bundle argz = new Bundle();
-                    argz.putString("destAddress",currentItem.getLinkmanAddress());
-                    argz.putString("tokenCode",tokenCode);
-                    argz.putString("tokenDecimals",tokenDecimals);
-                    argz.putString("tokenIssuer",tokenIssuer);
-                    argz.putString("tokenBalance",tokenBalance);
-                    argz.putString("tokenType",tokenType);
-                    BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
-                    sendTokenFragment.setArguments(argz);
-                    startFragment(sendTokenFragment);
+                    Intent intent = new Intent();
+                    intent.putExtra("destAddress",currentItem.getLinkmanAddress());
+                    setFragmentResult(RESULT_OK, intent);
+                    popBackStack();
                 }
             });
         }else if(AddressClickEventEnum.EDIT.getCode().equals(flag)){

@@ -23,7 +23,7 @@
     <string name="wallet_create_form_input_password_empty">Please enter your password</string>
     <string name="wallet_create_form_input_rePassword_empty">Please confirm your password</string>
     <string name="wallet_create_form_error1">Passwords do not match</string>
-    <string name="wallet_create_form_error2">The password consists of letters and numerals, the length of which is 8~20 characters</string>
+    <string name="wallet_create_form_error2">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
     <string name="wallet_create_form_error4">The identity name is only allowed to enter letters, characters, numbers, underscores, and it cannot  exceed 20 characters in length</string>
 
     <string name="wallet_create_creating_txt">Creating</string>
@@ -37,7 +37,7 @@
     <string name="view_title_create_wallet_identity">Create an identity</string>
     <string name="create_wallet_prompt_dialog_title">Tips</string>
     <string name="create_wallet_prompt_txt1">The password must be strong as it is used to encrypt and protect the private key, transfer coins, call contracts, etc. Please bear in mind that BU Pocket does not store passwords, and can\'t help you retrieve passwords.</string>
-    <string name="create_wallet_prompt_txt2">The length is 8~20 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
+    <string name="create_wallet_prompt_txt2">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
     <string name="backup_wallet_txt1">Token security cannot be guaranteed without proper backup. After deleting the  program or wallet, you need to back up the file to restore the wallet.</string>
     <string name="backup_wallet_txt2">Make sure to back up in a safe environment with no people around and no cameras</string>
     <string name="backup_wallet_btn_txt">Back up mnemonic words</string>
@@ -52,7 +52,7 @@
     <string name="confirm_mneonic_code_btn_txt">Done</string>
     <string name="wallet_password_confirm_title">Confirm password</string>
     <string name="wallet_password_confirm_txt1">Please fill in the identity password to confirm the backup</string>
-    <string name="hint_wallet_password_confirm_txt1">8~20 letters and numbers</string>
+    <string name="hint_wallet_password_confirm_txt1">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
     <string name="hint_wallet_password_confirm_submit_btn">Confirm</string>
     <string name="wallet_send_txt">Transfer</string>
     <string name="wallet_scan_txt">Scan</string>
@@ -76,7 +76,7 @@
     <string name="recover_edit_new_wallet_name_hint">Please enter a new identity name</string>
     <string name="recover_input_wallet_name_error">Only letters, numerals, and underscores are allowed and it cannot exceed 20 characters</string>
     <string name="recover_set_pwd_hint">Please set a password</string>
-    <string name="recover_set_pwd_error">8-20 characters composed of letters and numbers</string>
+    <string name="recover_set_pwd_error">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
     <string name="recover_confirm_pwd_hint">Confirm password</string>
     <string name="recover_confirm_pwd_error">Passwords do not match</string>
     <string name="recover_wallet_next_btn">Restore</string>
@@ -173,10 +173,10 @@
     <string name="change_pwd_err4">Please enter the old password</string>
     <string name="change_pwd_err5">Please enter the old password</string>
     <string name="change_pwd_form_error1">Passwords entered are inconsistent, please enter again</string>
-    <string name="change_pwd_form_error2">The password consists of letters and numerals, the length of which is 8~20 characters</string>
-    <string name="change_pwd_form_error3">The password consists of letters and numerals, the length of which is 8~20 characters</string>
+    <string name="change_pwd_form_error2">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
+    <string name="change_pwd_form_error3">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
     <string name="change_pwd_form_error4">Identity format is wrong</string>
-    <string name="change_pwd_form_error5">The password consists of letters and numerals, the length of which is 8~20 characters</string>
+    <string name="change_pwd_form_error5">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
     <string name="change_pwd_form_error6">Old password error</string>
     <string name="change_pwd_changing_txt">Resetting password...</string>
     <string name="change_pwd_change_success_txt">Password reset successfully</string>
@@ -375,11 +375,11 @@
     <string name="delete_wallet_success_message_txt">The wallet is deleted successfully</string>
     <string name="error_import_wallet_name_message_txt">The wallet names is only allowed to enter letters, characters, numbers, underscores, and it cannot exceed 20 characters in length.</string>
 
-    <string name="address_book_txt">Address list</string>
+    <string name="address_book_txt">Address book</string>
     <string name="add_address_title">New contact</string>
     <string name="edit_address_title">Edit contact</string>
     <string name="add_address_name">Name</string>
-    <string name="add_address_name_hint">Enter a name which corresponds to the account address to identify the account</string>
+    <string name="add_address_name_hint">Enter a name that corresponds to the account address</string>
     <string name="add_address_describe">Description</string>
     <string name="optional">(Optional)</string>
     <string name="add_address_describe_hint">Description of the account address</string>

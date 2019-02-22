@@ -75,6 +75,7 @@ public class BPSendTokenFragment extends BaseFragment {
     @BindView(R.id.sendTokenAmountLable)
     TextView mSendTokenAmountLable;
 
+    private static final int CHOOSE_ADDRESS_CODE = 1;
 
     private String hash;
     private String tokenCode;
@@ -110,7 +111,7 @@ public class BPSendTokenFragment extends BaseFragment {
                 argz.putString("tokenIssuer",tokenIssuer);
                 BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
                 bpAddressBookFragment.setArguments(argz);
-                startFragment(bpAddressBookFragment);
+                startFragmentForResult(bpAddressBookFragment,CHOOSE_ADDRESS_CODE);
             }
         });
         buildWatcher();
@@ -135,9 +136,9 @@ public class BPSendTokenFragment extends BaseFragment {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void afterTextChanged(Editable s) {
-                boolean signAccountAddress = destAccountAddressEt.getText().length() > 0;
-                boolean signAmount = sendAmountET.getText().length() > 0;
-                boolean signTxFee = sendFormTxFeeEt.getText().length() > 0;
+                boolean signAccountAddress = destAccountAddressEt.getText().toString().trim().length() > 0;
+                boolean signAmount = sendAmountET.getText().toString().trim().length() > 0;
+                boolean signTxFee = sendFormTxFeeEt.getText().toString().trim().length() > 0;
                 if(signAccountAddress && signAmount && signTxFee){
                     mConfirmSendBtn.setEnabled(true);
                     mConfirmSendBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
@@ -611,6 +612,20 @@ public class BPSendTokenFragment extends BaseFragment {
         }
     }
 
+    @Override
+    protected void onFragmentResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case CHOOSE_ADDRESS_CODE: {
+                if (resultCode == RESULT_OK) {
+                    if(null != data){
+                        String destAddress = data.getStringExtra("destAddress");
+                        destAccountAddressEt.setText(destAddress);
+                    }
+                }
+                break;
+            }
+        }
+    }
 
     private int timerTimes = 0;
     private final Timer timer = new Timer();

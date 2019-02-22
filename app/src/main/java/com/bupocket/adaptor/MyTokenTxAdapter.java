@@ -15,10 +15,15 @@ import com.bupocket.enums.OutinTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.dto.resp.GetMyTxsRespDto;
 import com.bupocket.model.TokenTxInfo;
+import com.bupocket.utils.AddressUtil;
+import com.bupocket.utils.TimeUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MyTokenTxAdapter extends BaseAdapter {
+    private Map<String, TokenTxInfo> tokenTxInfoMap = new HashMap<>();
     private List<TokenTxInfo> datas;
     private GetMyTxsRespDto.PageBean page;
     private Context mContext;
@@ -81,6 +86,37 @@ public class MyTokenTxAdapter extends BaseAdapter {
             }
         }
         return convertView;
+    }
+
+    public void loadMore(List<GetMyTxsRespDto.TxRecordBean> txRecord,Map<String, TokenTxInfo> tokenTxInfoMap) {
+        this.tokenTxInfoMap = tokenTxInfoMap;
+        for (GetMyTxsRespDto.TxRecordBean obj : txRecord) {
+
+            String txAccountAddress = AddressUtil.anonymous((obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())) ? obj.getToAddress() : obj.getFromAddress());
+            String amountStr = null;
+            String txStartStr = null;
+            if(obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())){
+                amountStr = "-" + obj.getAmount();
+            }else {
+                amountStr = "+" + obj.getAmount();
+            }
+
+            if(TxStatusEnum.SUCCESS.getCode().equals(obj.getTxStatus())){
+                txStartStr = TxStatusEnum.SUCCESS.getName();
+            }else{
+                txStartStr = TxStatusEnum.FAIL.getName();
+            }
+            long optNo = obj.getOptNo();
+
+            if(!tokenTxInfoMap.containsKey(String.valueOf(obj.getOptNo()))){
+                TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime(),mContext), amountStr, txStartStr, String.valueOf(optNo));
+                tokenTxInfo.setTxHash(obj.getTxHash());
+                tokenTxInfo.setOutinType(obj.getOutinType());
+                tokenTxInfoMap.put(String.valueOf(obj.getOptNo()), tokenTxInfo);
+                datas.add(tokenTxInfo);
+            }
+        }
+        notifyDataSetChanged();
     }
 
     class ViewHolder {

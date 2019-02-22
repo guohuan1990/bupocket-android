@@ -45,7 +45,8 @@ public class CommonUtil {
 
     public static final Pattern NICKNAME_PATTERN = Pattern.compile("^((?!\\d{21})[\\u4E00-\\u9FBF(.|·)|0-9A-Za-z_]){1,20}$");
 
-    public static final Pattern PASSWORD_PATTERN = Pattern.compile("[^ \\f\\n\\r\\t\\v]{6,30}$");
+//    public static final Pattern PASSWORD_PATTERN = Pattern.compile("[^ \\f\\n\\r\\t\\v]{6,30}$");
+    public static final Pattern PASSWORD_PATTERN = Pattern.compile(".{6,30}$");
 
     public static final Pattern CODE_PATTERN = Pattern.compile("^0\\d{2,4}$");
 

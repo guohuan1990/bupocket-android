@@ -100,10 +100,10 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                boolean signMneonicCode = mMneonicCodeEt.getText().length() > 0;
-                boolean signWalleName = mWalletNameEt.getText().length() > 0;
-                boolean signPwd = mPwdEt.getText().length() > 0;
-                boolean signConfirm = mConfirmPwdEt.getText().length() > 0;
+                boolean signMneonicCode = mMneonicCodeEt.getText().toString().trim().length() > 0;
+                boolean signWalleName = mWalletNameEt.getText().toString().trim().length() > 0;
+                boolean signPwd = mPwdEt.getText().toString().trim().length() > 0;
+                boolean signConfirm = mConfirmPwdEt.getText().toString().trim().length() > 0;
                 if (signMneonicCode && signWalleName && signPwd && signConfirm) {
                     recoverSubmit.setEnabled(true);
                     recoverSubmit.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));

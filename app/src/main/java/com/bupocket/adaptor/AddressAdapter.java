@@ -1,6 +1,7 @@
 package com.bupocket.adaptor;
 
 import android.content.Context;
+import android.database.DataSetObservable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,14 @@ import com.bupocket.R;
 import com.bupocket.http.api.dto.resp.GetAddressBookRespDto;
 import com.bupocket.utils.AddressUtil;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AddressAdapter extends BaseAdapter {
-    private List<GetAddressBookRespDto.AddressBookListBean> datas;
+    private Map<String, GetAddressBookRespDto.AddressBookListBean> addressMap = new HashMap<>();
+    private List<GetAddressBookRespDto.AddressBookListBean> mData;
     private GetAddressBookRespDto.PageBean page;
     private Context mContext;
 
@@ -25,21 +30,31 @@ public class AddressAdapter extends BaseAdapter {
     public void setPage(GetAddressBookRespDto.PageBean page) {
         this.page = page;
     }
+    private final DataSetObservable mDataSetObservable = new DataSetObservable();
 
-    public AddressAdapter(List<GetAddressBookRespDto.AddressBookListBean> datas,Context mContext){
-        this.datas = datas;
-        this.mContext = mContext;
+    public AddressAdapter(List<GetAddressBookRespDto.AddressBookListBean> data,Context Context){
+        mData = data;
+        mContext = Context;
     }
 
+    public void loadMore(List<GetAddressBookRespDto.AddressBookListBean> data){
+        for(GetAddressBookRespDto.AddressBookListBean addressBookListBean : data){
+            if(addressMap.containsKey(addressBookListBean.getLinkmanAddress())){
+                addressMap.put(addressBookListBean.getLinkmanAddress(),addressBookListBean);
+                mData.add(addressBookListBean);
+            }
+        }
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getCount() {
-        return datas.size();
+        return mData.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return datas.get(position);
+        return mData.get(position);
     }
 
     @Override
@@ -61,11 +76,11 @@ public class AddressAdapter extends BaseAdapter {
             holder = (AddressAdapter.ViewHolder) convertView.getTag();
         }
 
-        if(datas.size() != 0){
-            holder.addressNameTv.setText(datas.get(position).getNickName());
-            holder.addressTv.setText(AddressUtil.anonymous(datas.get(position).getLinkmanAddress()));
-            holder.addressDescribeTv.setText(datas.get(position).getRemark());
-            if(datas.get(position).getRemark().length() == 0){
+        if(mData.size() != 0){
+            holder.addressNameTv.setText(mData.get(position).getNickName());
+            holder.addressTv.setText(AddressUtil.anonymous(mData.get(position).getLinkmanAddress()));
+            holder.addressDescribeTv.setText(mData.get(position).getRemark());
+            if(mData.get(position).getRemark().length() == 0){
                 holder.addressDescribeTv.setVisibility(View.GONE);
             }
         }

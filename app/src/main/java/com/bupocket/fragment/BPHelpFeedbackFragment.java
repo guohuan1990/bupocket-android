@@ -71,8 +71,8 @@ public class BPHelpFeedbackFragment extends BaseFragment{
 
             @Override
             public void afterTextChanged(Editable s) {
-                boolean signContent = mFeedbackContentET.getText().length() > 0;
-                boolean signContact = mContactET.getText().length() > 0;
+                boolean signContent = mFeedbackContentET.getText().toString().trim().length() > 0;
+                boolean signContact = mContactET.getText().toString().trim().length() > 0;
                 if(signContent && signContact){
                     mNextHelpFeedbackBtn.setEnabled(true);
                     mNextHelpFeedbackBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));

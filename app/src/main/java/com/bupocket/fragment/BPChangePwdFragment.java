@@ -188,9 +188,9 @@ public class BPChangePwdFragment extends BaseFragment{
 
             @Override
             public void afterTextChanged(Editable s) {
-                boolean signOldPassword = mOldPasswordET.getText().length() > 0;
-                boolean signNewPassword = mNewPasswordET.getText().length() > 0;
-                boolean signNewPasswordConfirm = mNewPasswordConfirmET.getText().length() > 0;
+                boolean signOldPassword = mOldPasswordET.getText().toString().trim().length() > 0;
+                boolean signNewPassword = mNewPasswordET.getText().toString().trim().length() > 0;
+                boolean signNewPasswordConfirm = mNewPasswordConfirmET.getText().toString().trim().length() > 0;
                 if(signOldPassword && signNewPassword && signNewPasswordConfirm){
                     mNextChangePwdBtn.setEnabled(true);
                     mNextChangePwdBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
@@ -245,32 +245,6 @@ public class BPChangePwdFragment extends BaseFragment{
             return false;
         }
 
-        if(newPwd.length() < 8){
-            tipDialog = new QMUITipDialog.Builder(getContext())
-                    .setTipWord(getResources().getString(R.string.change_pwd_form_error3))
-                    .create();
-            tipDialog.show();
-            mNewPasswordET.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    tipDialog.dismiss();
-                }
-            }, 1500);
-            return false;
-        }
-        if(newPwd.length() > 20){
-            tipDialog = new QMUITipDialog.Builder(getContext())
-                    .setTipWord(getResources().getString(R.string.change_pwd_form_error2))
-                    .create();
-            tipDialog.show();
-            mNewPasswordET.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    tipDialog.dismiss();
-                }
-            }, 1500);
-            return false;
-        }
         if(!CommonUtil.validatePassword(newPwd)){
             tipDialog = new QMUITipDialog.Builder(getContext())
                     .setTipWord(getResources().getString(R.string.change_pwd_form_error5))

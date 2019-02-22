@@ -271,9 +271,13 @@ public class BPAssetsDetailFragment extends BaseFragment {
             return;
         }
 
-        myTokenTxAdapter = new MyTokenTxAdapter(tokenTxInfoList, getContext());
-        myTokenTxAdapter.setPage(getMyTxsRespDto.getPage());
-        mMyTokenTxLv.setAdapter(myTokenTxAdapter);
+        if(myTokenTxAdapter == null){
+            myTokenTxAdapter = new MyTokenTxAdapter(tokenTxInfoList, getContext());
+            myTokenTxAdapter.setPage(getMyTxsRespDto.getPage());
+            mMyTokenTxLv.setAdapter(myTokenTxAdapter);
+        }else {
+            myTokenTxAdapter.loadMore(getMyTxsRespDto.getTxRecord(),tokenTxInfoMap);
+        }
         mMyTokenTxLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
