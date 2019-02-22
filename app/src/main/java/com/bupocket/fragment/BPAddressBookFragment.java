@@ -216,11 +216,12 @@ public class BPAddressBookFragment extends BaseFragment {
         refreshLayout.setEnableLoadMore(true);
         page = getAddressBookRespDto.getPage();
         addressList.addAll(getAddressBookRespDto.getAddressBookList());
-        if(addressAdapter == null){
+        if(addressAdapter == null || pageStart == 1){
             addressAdapter = new AddressAdapter(addressList,getContext());
             addressAdapter.setPage(page);
             mAddressBookLv.setAdapter(addressAdapter);
         }else {
+
             addressAdapter.loadMore(getAddressBookRespDto.getAddressBookList());
         }
         if(AddressClickEventEnum.CHOOSE.getCode().equals(flag)){
