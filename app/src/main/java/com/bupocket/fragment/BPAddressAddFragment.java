@@ -47,7 +47,6 @@ public class BPAddressAddFragment extends BaseFragment {
     @BindView(R.id.newAddressEt)
     DrawableEditText mNewAddressEt;
 
-    private String flag;
     private String identityAddress;
     private SharedPreferencesHelper sharedPreferencesHelper;
 
@@ -139,10 +138,6 @@ public class BPAddressAddFragment extends BaseFragment {
                 if(null != respDto){
                     if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                         Toast.makeText(getContext(),getString(R.string.save_address_success_message_txt),Toast.LENGTH_SHORT).show();
-//                        Bundle argz = new Bundle();
-//                        argz.putString("flag",flag);
-//                        BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
-//                        startFragmentAndDestroyCurrent(bpAddressBookFragment);
                         popBackStack();
                     }else if(ExceptionEnum.ADDRESS_ALREADY_EXISTED.getCode().equals(respDto.getErrCode())){
                         Toast.makeText(getContext(),getString(R.string.address_already_exist_message_txt),Toast.LENGTH_SHORT).show();
@@ -195,8 +190,6 @@ public class BPAddressAddFragment extends BaseFragment {
     }
 
     private void initData() {
-        Bundle bundle = getArguments();
-        flag = bundle.getString("flag");
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         identityAddress = sharedPreferencesHelper.getSharedPreference("identityId","").toString();
     }
@@ -232,11 +225,6 @@ public class BPAddressAddFragment extends BaseFragment {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Bundle argz = new Bundle();
-//                argz.putString("flag",flag);
-//                BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
-//                bpAddressBookFragment.setArguments(argz);
-//                startFragmentAndDestroyCurrent(bpAddressBookFragment);
                 popBackStack();
             }
         });

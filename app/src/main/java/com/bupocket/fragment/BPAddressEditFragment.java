@@ -56,7 +56,6 @@ public class BPAddressEditFragment extends BaseFragment {
     private String oldAddressName;
     private String oldLinkmanAddress;
     private String oldAddressDescribe;
-    private String flag;
 
     @Override
     protected View onCreateView() {
@@ -71,6 +70,23 @@ public class BPAddressEditFragment extends BaseFragment {
         initUI();
         buildWatcher();
         setListener();
+    }
+
+    private void initData() {
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+        identityAddress = sharedPreferencesHelper.getSharedPreference("identityId","").toString();
+        Bundle bundle = getArguments();
+        oldAddressName = bundle.getString("oldAddressName");
+        oldLinkmanAddress = bundle.getString("oldLinkmanAddress");
+        oldAddressDescribe = bundle.getString("oldAddressDescribe");
+    }
+
+    private void initUI() {
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
+        initTopBar();
+        mAddressNameEt.setText(oldAddressName);
+        mAddressDescribeEt.setText(oldAddressDescribe);
+        mNewAddressEt.setText(oldLinkmanAddress);
     }
 
     private void buildWatcher() {
@@ -174,10 +190,6 @@ public class BPAddressEditFragment extends BaseFragment {
                 if(null != respDto){
                     if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                         Toast.makeText(getContext(),getString(R.string.save_address_success_message_txt),Toast.LENGTH_SHORT).show();
-//                        Bundle argz = new Bundle();
-//                        argz.putString("flag",flag);
-//                        BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
-//                        startFragmentAndDestroyCurrent(bpAddressBookFragment);
                         popBackStack();
                     }else {
                         Toast.makeText(getContext(),getString(R.string.save_address_failure_message_txt),Toast.LENGTH_SHORT).show();
@@ -221,24 +233,6 @@ public class BPAddressEditFragment extends BaseFragment {
         return true;
     }
 
-    private void initUI() {
-        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
-        initTopBar();
-        mAddressNameEt.setText(oldAddressName);
-        mAddressDescribeEt.setText(oldAddressDescribe);
-        mNewAddressEt.setText(oldLinkmanAddress);
-    }
-
-    private void initData() {
-        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        identityAddress = sharedPreferencesHelper.getSharedPreference("identityId","").toString();
-        Bundle bundle = getArguments();
-        oldAddressName = bundle.getString("oldAddressName");
-        oldLinkmanAddress = bundle.getString("oldLinkmanAddress");
-        oldAddressDescribe = bundle.getString("oldAddressDescribe");
-        flag = bundle.getString("flag");
-    }
-
     private void startScan(){
         IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(this);
         intentIntegrator.setBeepEnabled(true);
@@ -279,10 +273,6 @@ public class BPAddressEditFragment extends BaseFragment {
                 if(null != respDto){
                     if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                         Toast.makeText(getContext(),getString(R.string.delete_address_success_message_txt),Toast.LENGTH_SHORT).show();
-//                        Bundle argz = new Bundle();
-//                        argz.putString("flag",flag);
-//                        BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
-//                        startFragmentAndDestroyCurrent(bpAddressBookFragment);
                         popBackStack();
                     }else {
                         Toast.makeText(getContext(),getString(R.string.delete_address_failure_message_txt),Toast.LENGTH_SHORT).show();
@@ -304,11 +294,6 @@ public class BPAddressEditFragment extends BaseFragment {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Bundle argz = new Bundle();
-//                argz.putString("flag",flag);
-//                BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
-//                bpAddressBookFragment.setArguments(argz);
-//                startFragmentAndDestroyCurrent(bpAddressBookFragment);
                 popBackStack();
             }
         });
