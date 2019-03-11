@@ -168,7 +168,7 @@ public class BPAddressAddFragment extends BaseFragment {
 
     private boolean describeFlag() {
         final String describe = mAddressDescribeEt.getText().toString().trim();
-        if(describe.length() > 30){
+        if(!CommonUtil.validateAddressDescribe(describe)){
             Toast.makeText(getActivity(), R.string.describe_format_error_message_txt, Toast.LENGTH_SHORT).show();
             return false;
         }

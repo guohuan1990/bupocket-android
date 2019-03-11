@@ -398,7 +398,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
         intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
         intentIntegrator.setPrompt(getResources().getString(R.string.wallet_scan_notice));
         intentIntegrator.setCaptureActivity(CaptureActivity.class);
-        // 开始扫描
         intentIntegrator.initiateScan();
     }
 

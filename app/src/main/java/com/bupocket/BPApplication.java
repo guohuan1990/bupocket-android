@@ -14,6 +14,7 @@ import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.SocketUtil;
 import com.bupocket.wallet.Wallet;
+import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 import com.squareup.leakcanary.LeakCanary;
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -41,6 +42,7 @@ public class BPApplication extends Application {
         }
         LeakCanary.install(this);
         LocaleUtil.changeAppLanguage(context);
+        QMUISwipeBackActivityManager.init(this);
         switchNetConfig(null);
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(context,"buPocket");
         sharedPreferencesHelper.put("backupTipsState",BackupTipsStateEnum.SHOW.getCode());

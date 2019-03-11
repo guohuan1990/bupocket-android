@@ -217,7 +217,7 @@ public class BPAddressEditFragment extends BaseFragment {
 
     private boolean describeFlag() {
         final String describe = mAddressDescribeEt.getText().toString().trim();
-        if(describe.length() > 30){
+        if(!CommonUtil.validateAddressDescribe(describe)){
             Toast.makeText(getActivity(), R.string.describe_format_error_message_txt, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -239,7 +239,6 @@ public class BPAddressEditFragment extends BaseFragment {
         intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
         intentIntegrator.setPrompt(getResources().getString(R.string.wallet_scan_notice));
         intentIntegrator.setCaptureActivity(CaptureActivity.class);
-        // 开始扫描
         intentIntegrator.initiateScan();
     }
 
