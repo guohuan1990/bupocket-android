@@ -18,7 +18,7 @@
             android:text="@string/card_package_buy_request_title_txt"
             android:theme="@style/BPViewTitle" />
 
-        <com.bupocket.view.DrawableEditText
+        <com.assetMarket.view.DrawableEditText
             android:id="@+id/searchCardEt"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"

@@ -18,7 +18,7 @@
             android:text="@string/assets_add_txt"
             android:theme="@style/BPViewTitle" />
 
-        <com.bupocket.view.DrawableEditText
+        <com.assetMarket.view.DrawableEditText
             android:id="@+id/searchTokenEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

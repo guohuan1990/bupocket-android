@@ -262,7 +262,7 @@
                         android:background="@color/app_bg_color_gray_4"
                         android:fitsSystemWindows="true">
 
-                        <com.bupocket.fragment.components.AssetsListView
+                        <com.assetMarket.fragment.components.AssetsListView
                             android:id="@+id/tokenListLv"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -270,7 +270,7 @@
                             android:dividerHeight="10dp"
                             android:fadeScrollbars="false"
                             android:scrollbars="none">
-                        </com.bupocket.fragment.components.AssetsListView>
+                        </com.assetMarket.fragment.components.AssetsListView>
 
                     </com.qmuiteam.qmui.widget.QMUIEmptyView>
 

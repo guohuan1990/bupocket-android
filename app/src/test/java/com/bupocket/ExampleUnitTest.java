@@ -1,7 +1,7 @@
 package com.bupocket;
 
 import com.alibaba.fastjson.JSON;
-import com.bupocket.common.Constants;
+import com.assetMarket.common.Constants;
 
 import org.junit.Test;
 

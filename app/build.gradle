@@ -4,10 +4,9 @@ def gitVersion = 100 //cmd.execute().text.trim().toInteger()
 
 android {
     compileSdkVersion parent.ext.compileSdkVersion
-    buildToolsVersion parent.ext.buildToolsVersion
     defaultConfig {
         multiDexEnabled true
-        applicationId "com.bupocket"
+        applicationId "com.assetMarket"
         minSdkVersion parent.ext.minSdkVersion
         targetSdkVersion parent.ext.targetSdkVersion
         versionCode getVersionCode()
@@ -82,7 +81,7 @@ dependencies {
     implementation 'com.qianwen:okhttp-utils:3.8.0'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
-    implementation ('io.socket:socket.io-client:1.0.0') {
+    implementation('io.socket:socket.io-client:1.0.0') {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-package="com.bupocket"
+package="com.assetMarket"
 android:versionCode="150"
 android:versionName="v1.5.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
@@ -47,7 +47,7 @@ xmlns:tools="http://schemas.android.com/tools">
     </activity>
 
     <activity
-        android:name="com.bupocket.activity.CaptureActivity"
+        android:name="com.assetMarket.activity.CaptureActivity"
         android:label="@string/capture_activity_label"
         android:screenOrientation="portrait"/>
 </application>
