@@ -86,6 +86,7 @@ dependencies {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //leak
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'

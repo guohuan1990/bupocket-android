@@ -397,4 +397,6 @@
     <string name="delete_address_failure_message_txt">Failed to delete; please try again later</string>
     <string name="delete_address_success_message_txt">Deleted successfully</string>
     <string name="address_already_exist_message_txt">The contact is already existed</string>
+    <string name="capture_activity_cancel">close</string>
+    <string name="capture_activity_photo_album">Album</string>
 </resources>

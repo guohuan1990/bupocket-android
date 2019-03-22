@@ -399,5 +399,11 @@
     <string name="delete_address_failure_message_txt">删除失败，请稍后重试</string>
     <string name="delete_address_success_message_txt">删除成功</string>
     <string name="address_already_exist_message_txt">该联系人已存在</string>
+    
+    <string name="card_package_txt">卡包</string>
+    <string name="node_plan_txt">节点计划</string>
+    <string name="build_node_txt">节点共建</string>
+    <string name="information_txt">资讯</string>
+    <string name="xiaobu_youpin_txt">小布有品</string>
 
 </resources>
