@@ -78,6 +78,7 @@ dependencies {
     implementation 'commons-beanutils:commons-beanutils:1.9.3'
     implementation 'com.bupocket:update-app:3.5.2'
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
+    implementation 'cn.yipianfengye.android:zxing-library:2.2'
     implementation 'com.qianwen:okhttp-utils:3.8.0'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
@@ -90,4 +91,7 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     testImplementation 'junit:junit:4.12'
+    configurations{
+        all*.exclude group:'com.google.zxing'
+    }
 }

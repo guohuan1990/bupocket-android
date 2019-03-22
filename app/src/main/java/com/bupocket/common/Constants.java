@@ -25,6 +25,9 @@ public class Constants {
 
     public static final Integer TX_REQUEST_TIMEOUT_TIMES = 20;
 
+    public static final int REQUEST_READ_STORAGE_PERMISSION = 100;
+    public static final int REQUEST_IMAGE = 300;
+
     public static enum MainNetConfig {
         WEB_SERVER_DOMAIN("https://api-bp.bumo.io/"),
         BUMO_NODE_URL("http://wallet-node.bumo.io"),

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">小布口袋</string>
     <string name="tabbar_assets_txt">资产</string>
-    <string name="tabbar_discovery_txt">发现</string>
+    <string name="tabbar_discover_txt">发现</string>
     <string name="tabbar_profile_txt">我的</string>
 
     <string name="fragment_title_tx_detail_txt" >交易详情</string>
@@ -218,6 +218,8 @@
     <string name="network_error_msg" >您的网络好像不太给力，请稍后再试</string>
     <string name="capture_activity_label" >自定义扫描界面</string>
     <string name="capture_activity_title" >扫一扫</string>
+    <string name="capture_activity_cancel">关闭</string>
+    <string name="capture_activity_photo_album">相册</string>
     <string name="time_day_ago">天前</string>
     <string name="time_hour_ago">小时前</string>
     <string name="time_minute_ago">分钟前</string>

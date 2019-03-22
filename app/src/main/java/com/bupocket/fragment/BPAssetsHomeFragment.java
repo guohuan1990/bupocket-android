@@ -403,54 +403,66 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            if (result.getContents() == null) {
-                Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
-            } else {
-                if(!PublicKey.isAddressValid(result.getContents())){
-                    if(CommonUtil.checkIsBase64(result.getContents())){
-                        String jsonStr = null;
-                        try {
-                            jsonStr = new String(Base64.decode(result.getContents().getBytes("UTF-8"), Base64.DEFAULT));
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-                        Object object = JSON.parseObject(jsonStr);
-                        String action = ((JSONObject) object).getString("action");
-                        String uuID = ((JSONObject) object).getString("uuID");
-                        String tokenData = ((JSONObject) object).getString("data");
-                        Bundle argz = new Bundle();
-                        argz.putString("uuID",uuID);
-                        argz.putString("tokenData",tokenData);
-                        argz.putString("buBalance",tokenBalance);
-                        if(action.equals(TokenActionTypeEnum.ISSUE.getCode())){
-                            BPIssueTokenFragment bpIssueTokenFragment = new BPIssueTokenFragment();
-                            bpIssueTokenFragment.setArguments(argz);
-                            startFragment(bpIssueTokenFragment);
-                        }else if(action.equals(TokenActionTypeEnum.REGISTER.getCode())){
-                            BPRegisterTokenFragment bpRegisterTokenFragment = new BPRegisterTokenFragment();
-                            bpRegisterTokenFragment.setArguments(argz);
-                            startFragment(bpRegisterTokenFragment);
-                        }
-                    }else {
-                        Toast.makeText(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    Bundle argz = new Bundle();
-                    argz.putString("destAddress",result.getContents());
-                    argz.putString("tokenCode","BU");
-                    argz.putString("tokenDecimals","8");
-                    argz.putString("tokenIssuer","");
-                    argz.putString("tokenBalance",tokenBalance);
-                    argz.putString("tokenType","0");
-                    BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
-                    sendTokenFragment.setArguments(argz);
-                    startFragment(sendTokenFragment);
+        if(null != data){
+            if(Constants.REQUEST_IMAGE == resultCode){
+                if(null != data){
+                    String resultFromBitmap = data.getStringExtra("resultFromBitmap");
+                    handleResult(resultFromBitmap);
                 }
+            }else{
+                IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+                String resultContent = result.getContents();
+                handleResult(resultContent);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void handleResult(String resultContent) {
+        if (null == resultContent) {
+            Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
+        } else {
+            if (!PublicKey.isAddressValid(resultContent)) {
+                if (CommonUtil.checkIsBase64(resultContent)) {
+                    String jsonStr = null;
+                    try {
+                        jsonStr = new String(Base64.decode(resultContent.getBytes("UTF-8"), Base64.DEFAULT));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    Object object = JSON.parseObject(jsonStr);
+                    String action = ((JSONObject) object).getString("action");
+                    String uuID = ((JSONObject) object).getString("uuID");
+                    String tokenData = ((JSONObject) object).getString("data");
+                    Bundle argz = new Bundle();
+                    argz.putString("uuID", uuID);
+                    argz.putString("tokenData", tokenData);
+                    argz.putString("buBalance", tokenBalance);
+                    if (action.equals(TokenActionTypeEnum.ISSUE.getCode())) {
+                        BPIssueTokenFragment bpIssueTokenFragment = new BPIssueTokenFragment();
+                        bpIssueTokenFragment.setArguments(argz);
+                        startFragment(bpIssueTokenFragment);
+                    } else if (action.equals(TokenActionTypeEnum.REGISTER.getCode())) {
+                        BPRegisterTokenFragment bpRegisterTokenFragment = new BPRegisterTokenFragment();
+                        bpRegisterTokenFragment.setArguments(argz);
+                        startFragment(bpRegisterTokenFragment);
+                    }
+                } else {
+                    Toast.makeText(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Bundle argz = new Bundle();
+                argz.putString("destAddress", resultContent);
+                argz.putString("tokenCode", "BU");
+                argz.putString("tokenDecimals", "8");
+                argz.putString("tokenIssuer", "");
+                argz.putString("tokenBalance", tokenBalance);
+                argz.putString("tokenType", "0");
+                BPSendTokenFragment sendTokenFragment = new BPSendTokenFragment();
+                sendTokenFragment.setArguments(argz);
+                startFragment(sendTokenFragment);
+            }
         }
     }
 }
