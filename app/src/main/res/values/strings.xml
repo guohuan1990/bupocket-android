@@ -412,9 +412,29 @@
     <string name="confirm_transfer_title_txt">确认转出</string>
     <string name="vote_record_txt">投票记录</string>
     <string name="vote_txt">投</string>
-    <string name="cancel_vote_txt">撤</string>
+    <string name="withdraw_vote_txt">撤</string>
     <string name="amount_txt">数量</string>
     <string name="status_txt">状态</string>
     <string name="time_txt">时间</string>
+    <string name="withdraw_txt">撤销</string>
+    <string name="voted_txt">投票</string>
+    <string name="withdraw_vote_confirm_txt">确认撤票</string>
+    <string name="withdraw_vote_amount_edittext_hint">最多可撤销%1$s投票数量</string>
+    <string name="total_txt">全部</string>
+    <string name="more_txt">更多</string>
+    <string name="pack_up_txt">收起</string>
+    <string name="withdraw_vote_fee_txt">本次最多支付交易费用约%1$sBU</string>
+    <string name="withdraw_vote_refund_note_txt">撤票成功后，将冻结的BU退回至原钱包</string>
+    <string name="transaction_originator_txt">交易发起方</string>
+    <string name="contract_address_txt">合约方</string>
+    <string name="contract_code_txt">合约代码</string>
+
+    <string name="scan_qr_login_management_system_not_bound_txt">该钱包账户未在该平台绑定</string>
+    <string name="bound_address_note_txt">请联系该平台管理进行绑定</string>
+    <string name="node_plan_management_system_txt">节点计划运营管理系统</string>
+    <string name="scan_qr_login_management_system_note_txt">即将登录节点计划运营管理系统，请确认是本人操作。</string>
+    <string name="address_be_made_public_note_txt">您的账户地址将被公开</string>
+    <string name="confirm_login_txt">确认登录</string>
+
 
 </resources>

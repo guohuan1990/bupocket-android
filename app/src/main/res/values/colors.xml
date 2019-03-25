@@ -14,6 +14,7 @@
     <color name="app_bg_color_gray_3">#f8f8f8</color>
     <color name="app_bg_color_gray_4">#f4f3f4</color>
     <color name="app_bg_color_gray_5">#C2C2C2</color>
+    <color name="app_bg_color_gray_6">#EDEDED</color>
     <color name="app_bg_color_purple">#DADDF3</color>
     <color name="app_txt_color_purple">#9298BD</color>
     <color name="app_color_blue_disabled">#8000A8E1</color>
@@ -23,9 +24,11 @@
     <color name="app_txt_color_gray_3">#E3E3E3</color>
     <color name="app_txt_color_gray_4">#bababa</color>
     <color name="app_txt_color_gray_5">#888888</color>
+    <color name="app_txt_color_gray_6">#BBBBBB</color>
     <color name="app_txt_color_red">#FF7272</color>
     <color name="app_txt_color_red_2">#ff0000</color>
     <color name="app_txt_color_red_3">#e23b1b</color>
+    <color name="app_txt_color_red_4">#FF2424</color>
     <color name="app_txt_color_black">#2A2A2A</color>
     <color name="app_txt_color_black_2">#151515</color>
     <color name="app_txt_color_blue">#0598e2</color>
