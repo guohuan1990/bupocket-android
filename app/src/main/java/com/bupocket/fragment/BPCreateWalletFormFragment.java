@@ -221,7 +221,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
     private void initCreateWalletPromptView(){
         final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
         qmuiDialog.setCanceledOnTouchOutside(false);
-        qmuiDialog.setContentView(R.layout.create_wallet_prompt_layout);
+        qmuiDialog.setContentView(R.layout.view_create_wallet_prompt);
         qmuiDialog.show();
         QMUIRoundButton mreateWalletPromptConfirmBtn = qmuiDialog.findViewById(R.id.createWalletPromptConfirmBtn);
 

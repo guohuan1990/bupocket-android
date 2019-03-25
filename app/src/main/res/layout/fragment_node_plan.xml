@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:background="@color/app_bg_color_gray"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/node_plan_txt"
+            android:theme="@style/BPViewTitle" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10.5dp"
+            android:paddingRight="10.5dp"
+            android:layout_marginTop="13.5dp">
+
+            <CheckBox
+                android:id="@+id/myNodeCB"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/checkboxTheme"/>
+
+            <TextView
+                android:layout_toRightOf="@+id/myNodeCB"
+                android:id="@+id/myNodeTv"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="@color/app_txt_color_gray"
+                android:text="@string/node_associated_with_me_txt"/>
+
+            <ImageView
+                android:layout_toRightOf="@+id/myNodeTv"
+                android:layout_marginLeft="5dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_help_tips"/>
+
+            <LinearLayout
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_width="72.5dp"
+                android:layout_height="20dp"
+                android:background="@drawable/shape_square"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_search_gray"/>
+
+                <EditText
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/search_txt"
+                    android:textSize="11sp"
+                    android:background="@null"
+                    android:textColor="@color/multiline_edit_hint_color"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <ListView
+            android:layout_marginTop="13.5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+    </LinearLayout>
+
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true" />
+
+</android.support.design.widget.CoordinatorLayout>

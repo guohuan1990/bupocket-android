@@ -51,6 +51,12 @@ public class BPDiscoverHomeFragment extends BaseFragment {
     }
 
     private void setListener() {
+        mNodePlanRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPNodePlanFragment());
+            }
+        });
 
         // open https://m-news.bumo.io/
         mInformationRl.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +74,6 @@ public class BPDiscoverHomeFragment extends BaseFragment {
             public void onClick(View v) {
                 String appId = "wxaecf7ac4085fd34a";
                 IWXAPI api = WXAPIFactory.createWXAPI(getContext(), appId);
-
                 WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
                 req.userName = "gh_463781563a74";
                 req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;

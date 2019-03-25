@@ -16,8 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
@@ -137,7 +135,7 @@ public class BPIssueTokenFragment extends BaseFragment {
     private void showPasswordConfirmDialog() {
         final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
         qmuiDialog.setCanceledOnTouchOutside(false);
-        qmuiDialog.setContentView(R.layout.password_comfirm_layout);
+        qmuiDialog.setContentView(R.layout.view_password_comfirm);
         qmuiDialog.show();
         QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
         ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);

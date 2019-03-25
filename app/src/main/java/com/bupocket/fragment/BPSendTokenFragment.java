@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.alibaba.fastjson.JSON;
+
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.base.BaseFragment;
@@ -28,7 +28,6 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
-import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -425,7 +424,7 @@ public class BPSendTokenFragment extends BaseFragment {
 
                 final QMUIBottomSheet sheet = new QMUIBottomSheet(getContext());
 
-                sheet.setContentView(R.layout.send_confirm_layout);
+                sheet.setContentView(R.layout.view_send_confirm);
 
                 final TextView addressTxt = sheet.findViewById(R.id.sendTargetAddress);
                 addressTxt.setText(address);
@@ -454,7 +453,7 @@ public class BPSendTokenFragment extends BaseFragment {
                         sheet.dismiss();
                         final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
                         qmuiDialog.setCanceledOnTouchOutside(false);
-                        qmuiDialog.setContentView(R.layout.password_comfirm_layout);
+                        qmuiDialog.setContentView(R.layout.view_password_comfirm);
                         qmuiDialog.show();
 
                         QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);

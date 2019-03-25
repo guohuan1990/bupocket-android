@@ -405,5 +405,9 @@
     <string name="build_node_txt">节点共建</string>
     <string name="information_txt">资讯</string>
     <string name="xiaobu_youpin_txt">小布有品</string>
+    <string name="node_associated_with_me_txt">和我相关的节点</string>
+    <string name="search_txt">搜索</string>
+    <string name="number_have_votes">得票数</string>
+    <string name="my_votes_number">我的得票数</string>
 
 </resources>

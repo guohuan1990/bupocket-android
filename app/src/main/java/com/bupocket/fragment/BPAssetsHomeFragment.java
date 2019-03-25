@@ -180,7 +180,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
     private void showAccountAddressView() {
         final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
-        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.show_address_layout,null));
+        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_show_address,null));
         TextView accountAddressTv = qmuiBottomSheet.findViewById(R.id.printAccAddressTv);
         accountAddressTv.setText(currentWalletAddress);
 
