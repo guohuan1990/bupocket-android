@@ -5,17 +5,17 @@ import android.view.View;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.QMUITopBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BPNodePlanFragment extends BaseFragment {
+public class BPVoteRecordFragment extends BaseFragment {
     @BindView(R.id.topbar)
-    QMUITopBarLayout mTopBar;
+    QMUITopBar mTopBar;
     @Override
     protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_node_plan, null);
+        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_node_vote_record, null);
         ButterKnife.bind(this, root);
         init();
         return root;
@@ -37,11 +37,6 @@ public class BPNodePlanFragment extends BaseFragment {
                 popBackStack();
             }
         });
-        mTopBar.addRightImageButton(R.mipmap.icon_vote_record,R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startFragment(new BPVoteRecordFragment());
-            }
-        });
+        mTopBar.setTitle(getResources().getString(R.string.vote_record_txt));
     }
 }

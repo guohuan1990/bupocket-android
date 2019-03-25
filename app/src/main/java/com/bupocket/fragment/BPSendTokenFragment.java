@@ -424,7 +424,7 @@ public class BPSendTokenFragment extends BaseFragment {
 
                 final QMUIBottomSheet sheet = new QMUIBottomSheet(getContext());
 
-                sheet.setContentView(R.layout.view_send_confirm);
+                sheet.setContentView(R.layout.view_send_token_confirm);
 
                 final TextView addressTxt = sheet.findViewById(R.id.sendTargetAddress);
                 addressTxt.setText(address);

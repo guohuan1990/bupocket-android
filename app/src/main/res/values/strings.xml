@@ -409,5 +409,7 @@
     <string name="search_txt">搜索</string>
     <string name="number_have_votes">得票数</string>
     <string name="my_votes_number">我的得票数</string>
+    <string name="confirm_transfer_title_txt">确认转出</string>
+    <string name="vote_record_txt">投票记录</string>
 
 </resources>
