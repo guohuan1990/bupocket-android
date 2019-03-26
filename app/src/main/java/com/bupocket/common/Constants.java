@@ -28,6 +28,8 @@ public class Constants {
     public static final int REQUEST_READ_STORAGE_PERMISSION = 100;
     public static final int REQUEST_IMAGE = 300;
 
+    public static final String CONTRACT_ADDRESS = "buQqzdS9YSnokDjvzg4YaNatcFQfkgXqk6ss";
+
     public static enum MainNetConfig {
         WEB_SERVER_DOMAIN("https://api-bp.bumo.io/"),
         BUMO_NODE_URL("http://wallet-node.bumo.io"),

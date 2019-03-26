@@ -31,7 +31,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.math.BigDecimal;
-import java.security.Key;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -333,7 +332,6 @@ public class Wallet {
 
 
     private Long handleSendTokenAmount(String srcAmount, String decimals){
-
         return Long.parseLong(new BigDecimal(srcAmount).multiply(new BigDecimal(Math.pow(10, Integer.parseInt(decimals)))).setScale(0).toPlainString());
     }
 
@@ -608,7 +606,6 @@ public class Wallet {
         accountsBean.setSecret(JSON.toJSONString(keyStoreEntity));
         accountsBeans.add(accountsBean);
         walletBPData.setAccounts(accountsBeans);
-
         return walletBPData;
     }
 
@@ -622,7 +619,170 @@ public class Wallet {
         accountsBean.setSecret(JSON.toJSONString(keyStoreEntity));
         accountsBeans.add(accountsBean);
         walletBPData.setAccounts(accountsBeans);
-
         return walletBPData;
+    }
+
+    /**
+     * apply become a node
+     */
+    public TransactionBuildBlobResponse applyBuildBlob(String fromAccAddr, String role, String node, String amount ,String fee) throws Exception{
+        Long nonce = getAccountNonce(fromAccAddr) + 1;
+        Long gasPrice = 1000L;
+
+        Long feeLimit = ToBaseUnit.BU2MO(fee);
+        Long buAmount = ToBaseUnit.BU2MO(amount);
+        // init input
+        JSONObject input = new JSONObject();
+        input.put("method","apply");
+        JSONObject params = new JSONObject();
+        params.put("role",role);
+        params.put("node",node);
+        input.put("params", params);
+
+        return buildBlob(buAmount,input,fromAccAddr,nonce,feeLimit,gasPrice);
+    }
+
+    /**
+     * append guarantee deposit
+     */
+    public TransactionBuildBlobResponse appendBuildBlob(String fromAccAddr, String role, String amount, String fee) throws Exception{
+        Long nonce = getAccountNonce(fromAccAddr) + 1;
+        Long gasPrice = 1000L;
+
+        Long feeLimit = ToBaseUnit.BU2MO(fee);
+        Long buAmount = ToBaseUnit.BU2MO(amount);
+        // init input
+        JSONObject input = new JSONObject();
+        input.put("method","append");
+        JSONObject params = new JSONObject();
+        params.put("role",role);
+        input.put("params", params);
+
+        return buildBlob(buAmount,input,fromAccAddr,nonce,feeLimit,gasPrice);
+    }
+
+    /**
+     * switch node
+     */
+    public TransactionBuildBlobResponse switchNodeBuildBlob(String fromAccAddr, String nodeAddress, String fee) throws Exception{
+        Long nonce = getAccountNonce(fromAccAddr) + 1;
+        Long gasPrice = 1000L;
+
+        Long feeLimit = ToBaseUnit.BU2MO(fee);
+        Long buAmount = 0L;
+
+        // init input
+        JSONObject input = new JSONObject();
+        input.put("method","switchNode");
+        JSONObject params = new JSONObject();
+        params.put("address",nodeAddress);
+        input.put("params", params);
+
+        return buildBlob(buAmount,input,fromAccAddr,nonce,feeLimit,gasPrice);
+    }
+
+    /**
+     * vote for a node
+     */
+    public TransactionBuildBlobResponse voteBuildBlob(String fromAccAddr, String role, String amount, String address, String fee) throws Exception{
+        Long nonce = getAccountNonce(fromAccAddr) + 1;
+        Long gasPrice = 1000L;
+        Long feeLimit = ToBaseUnit.BU2MO(fee);
+        Long buAmount = ToBaseUnit.BU2MO(amount);
+
+        // init input
+        JSONObject input = new JSONObject();
+        input.put("method","vote");
+        JSONObject params = new JSONObject();
+        params.put("role",role);
+        params.put("address",address);
+        input.put("params", params);
+
+        return buildBlob(buAmount,input,fromAccAddr,nonce,feeLimit,gasPrice);
+    }
+
+    /**
+     * withdraw the vote
+     */
+    public TransactionBuildBlobResponse unVoteBuildBlob(String fromAccAddr, String role, String address, String fee) throws Exception{
+        Long nonce = getAccountNonce(fromAccAddr) + 1;
+        Long gasPrice = 1000L;
+        Long feeLimit = ToBaseUnit.BU2MO(fee);
+        Long buAmount = 0L;
+
+        // init input
+        JSONObject input = new JSONObject();
+        input.put("method","unVote");
+        JSONObject params = new JSONObject();
+        params.put("role",role);
+        params.put("address",address);
+        input.put("params", params);
+
+        return buildBlob(buAmount,input,fromAccAddr,nonce,feeLimit,gasPrice);
+    }
+
+    /**
+     * quit
+     */
+    public TransactionBuildBlobResponse withdrawBuildBlob(String fromAccAddr, String role, String fee) throws Exception{
+        Long nonce = getAccountNonce(fromAccAddr) + 1;
+        Long gasPrice = 1000L;
+        Long feeLimit = ToBaseUnit.BU2MO(fee);
+        Long buAmount = 0L;
+
+        // init input
+        JSONObject input = new JSONObject();
+        input.put("method","withdraw");
+        JSONObject params = new JSONObject();
+        params.put("role",role);
+        input.put("params", params);
+
+        return buildBlob(buAmount,input,fromAccAddr,nonce,feeLimit,gasPrice);
+    }
+
+    /**
+     * extract
+     */
+    public TransactionBuildBlobResponse extractBuildBlob(String fromAccAddr, String fee) throws Exception{
+        Long nonce = getAccountNonce(fromAccAddr) + 1;
+        Long gasPrice = 1000L;
+        Long feeLimit = ToBaseUnit.BU2MO(fee);
+        Long buAmount = 0L;
+
+        // init input
+        JSONObject input = new JSONObject();
+        input.put("method","extract");
+
+        return buildBlob(buAmount,input,fromAccAddr,nonce,feeLimit,gasPrice);
+    }
+
+    /**
+     * build blob
+     * @param buAmount
+     * @param input
+     * @param fromAccAddr
+     * @param nonce
+     * @param feeLimit
+     * @param gasPrice
+     * @return
+     */
+
+    private TransactionBuildBlobResponse buildBlob(Long buAmount, JSONObject input, String fromAccAddr, Long nonce, Long feeLimit, Long gasPrice) {
+        // build contractInvokeByBUOperation
+        ContractInvokeByBUOperation contractInvokeByBUOperation = new ContractInvokeByBUOperation();
+        contractInvokeByBUOperation.setContractAddress(Constants.CONTRACT_ADDRESS);
+        contractInvokeByBUOperation.setBuAmount(buAmount);
+        contractInvokeByBUOperation.setInput(input.toJSONString());
+
+        TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
+        transactionBuildBlobRequest.setSourceAddress(fromAccAddr);
+        transactionBuildBlobRequest.setNonce(nonce);
+        transactionBuildBlobRequest.setFeeLimit(feeLimit);
+        transactionBuildBlobRequest.setGasPrice(gasPrice);
+        transactionBuildBlobRequest.addOperation(contractInvokeByBUOperation);
+
+        String transactionBlob = null;
+        TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
+        return transactionBuildBlobResponse;
     }
 }
