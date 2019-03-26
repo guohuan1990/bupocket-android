@@ -30,6 +30,8 @@ public class Constants {
 
     public static final String CONTRACT_ADDRESS = "buQqzdS9YSnokDjvzg4YaNatcFQfkgXqk6ss";
 
+    public static final String QR_LOGIN_PREFIX = "bumo://login/";
+
     public static enum MainNetConfig {
         WEB_SERVER_DOMAIN("https://api-bp.bumo.io/"),
         BUMO_NODE_URL("http://wallet-node.bumo.io"),

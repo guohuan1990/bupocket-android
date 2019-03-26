@@ -448,7 +448,15 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         bpRegisterTokenFragment.setArguments(argz);
                         startFragment(bpRegisterTokenFragment);
                     }
-                } else {
+                } else if(resultContent.startsWith(Constants.QR_LOGIN_PREFIX)) {
+                    String uuid = resultContent.replace(Constants.QR_LOGIN_PREFIX,"");
+                    Bundle argz = new Bundle();
+                    argz.putString("uuid",uuid);
+                    BPNodePlanManagementSystemLoginFragment bpNodePlanManagementSystemLoginFragment = new BPNodePlanManagementSystemLoginFragment();
+                    bpNodePlanManagementSystemLoginFragment.setArguments(argz);
+                    startFragment(bpNodePlanManagementSystemLoginFragment);
+                }
+                else {
                     Toast.makeText(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT).show();
                 }
             } else {
