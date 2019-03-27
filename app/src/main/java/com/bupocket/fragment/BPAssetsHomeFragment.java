@@ -28,15 +28,19 @@ import com.bupocket.enums.CurrencyTypeEnum;
 import com.bupocket.enums.MnemonicWordBackupStateEnum;
 import com.bupocket.enums.TokenActionTypeEnum;
 import com.bupocket.fragment.components.AssetsListView;
+import com.bupocket.http.api.NodePlanManagementSystemService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TokenService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
+import com.bupocket.http.api.dto.resp.UserScanQrLoginDto;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.enums.ExceptionEnum;
+import com.google.protobuf.Api;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -101,6 +105,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     private String currentWalletAddress;
     private String currentWalletName;
     private String currentAccNick;
+    private String currentIdentityWalletAddress;
     private MaterialHeader mMaterialHeader;
     List<GetTokensRespDto.TokenListBean> mLocalTokenList = new ArrayList<>();
 
@@ -362,6 +367,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
 //        QMUIStatusBarHelper.translucent(getActivity());
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
+        currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
         currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
         if(CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString())){
             currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
@@ -449,12 +455,46 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         startFragment(bpRegisterTokenFragment);
                     }
                 } else if(resultContent.startsWith(Constants.QR_LOGIN_PREFIX)) {
-                    String uuid = resultContent.replace(Constants.QR_LOGIN_PREFIX,"");
-                    Bundle argz = new Bundle();
-                    argz.putString("uuid",uuid);
-                    BPNodePlanManagementSystemLoginFragment bpNodePlanManagementSystemLoginFragment = new BPNodePlanManagementSystemLoginFragment();
-                    bpNodePlanManagementSystemLoginFragment.setArguments(argz);
-                    startFragment(bpNodePlanManagementSystemLoginFragment);
+                    final String uuid = resultContent.replace(Constants.QR_LOGIN_PREFIX,"");
+
+                    NodePlanManagementSystemService nodePlanManagementSystemService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanManagementSystemService.class);
+                    Call<ApiResult<UserScanQrLoginDto>> call;
+                    Map<String, Object> paramsMap = new HashMap<>();
+                    paramsMap.put("uuid",uuid);
+                    paramsMap.put("address",currentIdentityWalletAddress);
+                    call = nodePlanManagementSystemService.userScanQrLogin(paramsMap);
+                    call.enqueue(new Callback<ApiResult<UserScanQrLoginDto>>() {
+                        @Override
+                        public void onResponse(Call<ApiResult<UserScanQrLoginDto>> call, Response<ApiResult<UserScanQrLoginDto>> response) {
+                            ApiResult<UserScanQrLoginDto> respDto = response.body();
+                            if(null != respDto){
+                                if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
+                                    UserScanQrLoginDto userScanQrLoginDto = respDto.getData();
+                                    String appId = userScanQrLoginDto.getAppId();
+                                    String appType = userScanQrLoginDto.getAppType();
+                                    Bundle argz = new Bundle();
+                                    argz.putString("appId",appId);
+                                    argz.putString("uuid",uuid);
+                                    argz.putString("address",currentIdentityWalletAddress);
+                                    BPNodePlanManagementSystemLoginFragment bpNodePlanManagementSystemLoginFragment = new BPNodePlanManagementSystemLoginFragment();
+                                    bpNodePlanManagementSystemLoginFragment.setArguments(argz);
+                                    startFragment(bpNodePlanManagementSystemLoginFragment);
+                                }else {
+                                    Bundle argz = new Bundle();
+                                    argz.putString("errorCode",respDto.getErrCode());
+                                    BPNodePlanManagementSystemLoginErrorFragment bpNodePlanManagementSystemLoginErrorFragment = new BPNodePlanManagementSystemLoginErrorFragment();
+                                    bpNodePlanManagementSystemLoginErrorFragment.setArguments(argz);
+                                    startFragment(bpNodePlanManagementSystemLoginErrorFragment);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResult<UserScanQrLoginDto>> call, Throwable t) {
+                            popBackStack();
+                            Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
                 else {
                     Toast.makeText(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT).show();
