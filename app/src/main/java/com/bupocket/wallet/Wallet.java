@@ -335,7 +335,7 @@ public class Wallet {
         return Long.parseLong(new BigDecimal(srcAmount).multiply(new BigDecimal(Math.pow(10, Integer.parseInt(decimals)))).setScale(0).toPlainString());
     }
 
-    private String submitTransaction(String senderPrivateKey, String senderAddresss, List<BaseOperation> operations, Long senderNonce, Long gasPrice, Long feeLimit, String transMetadata)throws Exception {
+    private String submitTransaction(String senderPrivateKey, String senderAddresss, List<BaseOperation> operations, Long senderNonce, Long gasPrice, Long feeLimit, String transMetadata) throws Exception {
         // 1. Build transaction
         TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
         transactionBuildBlobRequest.setSourceAddress(senderAddresss);
@@ -784,5 +784,61 @@ public class Wallet {
         String transactionBlob = null;
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
         return transactionBuildBlobResponse;
+    }
+
+    public TransactionBuildBlobResponse buildBlob(String amount, String input, String sourceAddress, String fee) throws Exception{
+        Long nonce = getAccountNonce(sourceAddress) + 1;
+        Long gasPrice = 1000L;
+        Long feeLimit = ToBaseUnit.BU2MO(fee);
+        Long buAmount = ToBaseUnit.BU2MO(amount);
+
+        ContractInvokeByBUOperation contractInvokeByBUOperation = new ContractInvokeByBUOperation();
+        contractInvokeByBUOperation.setContractAddress(Constants.CONTRACT_ADDRESS);
+        contractInvokeByBUOperation.setBuAmount(buAmount);
+        contractInvokeByBUOperation.setInput(input);
+
+        TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
+        transactionBuildBlobRequest.setSourceAddress(sourceAddress);
+        transactionBuildBlobRequest.setNonce(nonce);
+        transactionBuildBlobRequest.setFeeLimit(feeLimit);
+        transactionBuildBlobRequest.setGasPrice(gasPrice);
+        transactionBuildBlobRequest.addOperation(contractInvokeByBUOperation);
+
+        String transactionBlob = null;
+        TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
+        return transactionBuildBlobResponse;
+    }
+
+    public String submitTransaction(String password, String bPData, String sourceAddress, TransactionBuildBlobResponse transactionBuildBlobResponse) throws Exception{
+        String transactionBlob = transactionBuildBlobResponse.getResult().getTransactionBlob();
+        String senderPrivateKey = getPKBYAccountPassword(password, bPData, sourceAddress);
+
+        String[] signerPrivateKeyArr = {senderPrivateKey};
+        TransactionSignRequest transactionSignRequest = new TransactionSignRequest();
+        transactionSignRequest.setBlob(transactionBlob);
+        for (int i = 0; i < signerPrivateKeyArr.length; i++) {
+            transactionSignRequest.addPrivateKey(signerPrivateKeyArr[i]);
+        }
+        TransactionSignResponse transactionSignResponse = sdk.getTransactionService().sign(transactionSignRequest);
+
+        // 6. Broadcast transaction
+        TransactionSubmitRequest transactionSubmitRequest = new TransactionSubmitRequest();
+        transactionSubmitRequest.setTransactionBlob(transactionBlob);
+        transactionSubmitRequest.setSignatures(transactionSignResponse.getResult().getSignatures());
+        TransactionSubmitResponse transactionSubmitResponse = sdk.getTransactionService().submit(transactionSubmitRequest);
+        String txHash = null;
+        if (0 == transactionSubmitResponse.getErrorCode()) {
+            txHash = transactionSubmitResponse.getResult().getHash();
+            System.out.println("Success，hash=" + transactionSubmitResponse.getResult().getHash());
+        } else {
+            if(BUChainExceptionEnum.ERRCODE_FEE_NOT_ENOUGH.getCode().equals(transactionSubmitResponse.getErrorCode())){
+                throw new WalletException(ExceptionEnum.FEE_NOT_ENOUGH);
+            }else if(BUChainExceptionEnum.ERRCODE_ACCOUNT_LOW_RESERVE.getCode().equals(transactionSubmitResponse.getErrorCode())){
+                throw new WalletException(ExceptionEnum.BU_NOT_ENOUGH);
+            }
+            System.out.println("Failure，hash=" + transactionSubmitResponse.getResult().getHash() + "");
+            System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
+        }
+        return txHash;
     }
 }

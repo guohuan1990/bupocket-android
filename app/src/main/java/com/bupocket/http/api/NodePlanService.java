@@ -10,7 +10,8 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface NodePlanService {
-    @POST("/qr/v1/content")
+    @POST("nodeServer/qr/v1/content")
     Call<ApiResult<GetQRContentDto>> getQRContent(@Body Map<String,Object> map);
-
+    @POST("nodeServer/tx/v1/confirm")
+    Call<ApiResult> confirmTransaction(@Body Map<String,Object> map);
 }

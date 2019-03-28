@@ -471,7 +471,6 @@ public class BPSendTokenFragment extends BaseFragment {
 
                             @Override
                             public void onClick(View v) {
-                                // 检查合法性
                                 EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
                                 final String password = mPasswordConfirmEt.getText().toString().trim();
                                 txSendingTipDialog = new QMUITipDialog.Builder(getContext())

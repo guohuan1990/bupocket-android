@@ -49,7 +49,7 @@ public class Constants {
     public static enum TestNetConfig {
 //        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
 //        WEB_SERVER_DOMAIN("http://52.80.218.114:8081/"),
-        WEB_SERVER_DOMAIN("http://192.168.15.31:8080/"),
+        WEB_SERVER_DOMAIN("http://192.168.6.97:5648/"),
         BUMO_NODE_URL("http://wallet-node.bumotest.io"),
         PUSH_MESSAGE_SOCKET_URL("https://ws-tools.bumotest.io");
         private String value;

@@ -6,6 +6,7 @@ public class GetQRContentDto {
 
     /**
      * type : 1
+     * qrcodeSessionId : 5b3b1ccdf5e64cd590f24f3180ede161
      * destAddress : buQBvtJXGgdUdZka19ABSKpxfAUqUpyS2bZU
      * amount : 50000
      * script :
@@ -13,6 +14,7 @@ public class GetQRContentDto {
      */
 
     private String type;
+    private String qrcodeSessionId;
     private String destAddress;
     private String amount;
     private String script;
@@ -29,6 +31,14 @@ public class GetQRContentDto {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getQrcodeSessionId() {
+        return qrcodeSessionId;
+    }
+
+    public void setQrcodeSessionId(String qrcodeSessionId) {
+        this.qrcodeSessionId = qrcodeSessionId;
     }
 
     public String getDestAddress() {
