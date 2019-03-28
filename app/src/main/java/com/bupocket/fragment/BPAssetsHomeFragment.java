@@ -25,13 +25,16 @@ import com.bupocket.common.Constants;
 import com.bupocket.enums.BackupTipsStateEnum;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.CurrencyTypeEnum;
+import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.MnemonicWordBackupStateEnum;
 import com.bupocket.enums.TokenActionTypeEnum;
 import com.bupocket.fragment.components.AssetsListView;
 import com.bupocket.http.api.NodePlanManagementSystemService;
+import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TokenService;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.http.api.dto.resp.GetQRContentDto;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
 import com.bupocket.http.api.dto.resp.UserScanQrLoginDto;
 import com.bupocket.utils.AddressUtil;
@@ -39,8 +42,6 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
-import com.bupocket.wallet.enums.ExceptionEnum;
-import com.google.protobuf.Api;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -456,7 +457,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     }
                 } else if(resultContent.startsWith(Constants.QR_LOGIN_PREFIX)) {
                     final String uuid = resultContent.replace(Constants.QR_LOGIN_PREFIX,"");
-
                     NodePlanManagementSystemService nodePlanManagementSystemService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanManagementSystemService.class);
                     Call<ApiResult<UserScanQrLoginDto>> call;
                     Map<String, Object> paramsMap = new HashMap<>();
@@ -471,11 +471,14 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                 if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                                     UserScanQrLoginDto userScanQrLoginDto = respDto.getData();
                                     String appId = userScanQrLoginDto.getAppId();
-                                    String appType = userScanQrLoginDto.getAppType();
+                                    String appName = userScanQrLoginDto.getAppName();
+                                    String appPic = userScanQrLoginDto.getAppPic();
                                     Bundle argz = new Bundle();
                                     argz.putString("appId",appId);
                                     argz.putString("uuid",uuid);
                                     argz.putString("address",currentIdentityWalletAddress);
+                                    argz.putString("appName",appName);
+                                    argz.putString("appPic",appPic);
                                     BPNodePlanManagementSystemLoginFragment bpNodePlanManagementSystemLoginFragment = new BPNodePlanManagementSystemLoginFragment();
                                     bpNodePlanManagementSystemLoginFragment.setArguments(argz);
                                     startFragment(bpNodePlanManagementSystemLoginFragment);
@@ -486,15 +489,42 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                     bpNodePlanManagementSystemLoginErrorFragment.setArguments(argz);
                                     startFragment(bpNodePlanManagementSystemLoginErrorFragment);
                                 }
+                            }else {
+                                Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
                         public void onFailure(Call<ApiResult<UserScanQrLoginDto>> call, Throwable t) {
-                            popBackStack();
                             Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
                         }
                     });
+                } else if(resultContent.startsWith(Constants.QR_NODE_PLAN_PREFIX)) {
+                    String qrCodeSessionId = resultContent.replace(Constants.QR_NODE_PLAN_PREFIX,"");
+                    NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
+                    Call<ApiResult<GetQRContentDto>> call;
+                    Map<String, Object> paramsMap = new HashMap<>();
+                    paramsMap.put("qrcodeSessionId",qrCodeSessionId);
+                    call = nodePlanService.getQRContent(paramsMap);
+                    call.enqueue(new Callback<ApiResult<GetQRContentDto>>() {
+                        @Override
+                        public void onResponse(Call<ApiResult<GetQRContentDto>> call, Response<ApiResult<GetQRContentDto>> response) {
+                            ApiResult<GetQRContentDto> respDto = response.body();
+                            if(null != respDto){
+                                if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
+
+                                }else {
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResult<GetQRContentDto>> call, Throwable t) {
+                            Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                 }
                 else {
                     Toast.makeText(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT).show();

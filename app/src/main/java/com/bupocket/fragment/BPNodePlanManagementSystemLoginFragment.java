@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bupocket.R;
@@ -15,6 +16,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.UserScanQrLoginDto;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,14 +34,20 @@ public class BPNodePlanManagementSystemLoginFragment extends BaseFragment {
     QMUIRoundButton mLoginCancelBtn;
     @BindView(R.id.loginConfirmBtn)
     QMUIRoundButton mLoginConfirmBtn;
+    @BindView(R.id.appNameTv)
+    TextView mAppNameTv;
+    @BindView(R.id.appPicIv)
+    ImageView mAppPicIv;
 
     private String appId;
     private String uuid;
     private String address;
+    private String appName;
+    private String appPic;
 
     @Override
     protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_node_plan, null);
+        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_node_plan_management_system_login, null);
         ButterKnife.bind(this, root);
         init();
         return root;
@@ -47,6 +55,7 @@ public class BPNodePlanManagementSystemLoginFragment extends BaseFragment {
 
     private void init() {
         initData();
+        initUI();
         setListener();
     }
 
@@ -56,7 +65,14 @@ public class BPNodePlanManagementSystemLoginFragment extends BaseFragment {
             appId = bundle.getString("appId");
             uuid = bundle.getString("uuid");
             address = bundle.getString("address");
+            appName = bundle.getString("appName");
+            appPic = bundle.getString("appPic");
         }
+    }
+
+    private void initUI() {
+        mAppNameTv.setText(appName);
+        Picasso.get().load(appPic).into(mAppPicIv);
     }
 
     private void setListener() {
@@ -98,6 +114,8 @@ public class BPNodePlanManagementSystemLoginFragment extends BaseFragment {
                                 bpNodePlanManagementSystemLoginErrorFragment.setArguments(argz);
                                 startFragmentAndDestroyCurrent(bpNodePlanManagementSystemLoginErrorFragment);
                             }
+                        }else {
+                            Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
                         }
                     }
 

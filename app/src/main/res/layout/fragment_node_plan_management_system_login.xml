@@ -14,17 +14,18 @@
         android:src="@mipmap/icon_cancel_big"/>
 
     <ImageView
+        android:id="@+id/appPicIv"
         android:layout_marginTop="91.5dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:src="@mipmap/icon_login_logo" />
+        android:src="@mipmap/icon_token_default_icon" />
 
     <TextView
+        android:id="@+id/appNameTv"
         android:layout_marginTop="16.5dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
-        android:text="@string/node_plan_management_system_txt"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textColor="@color/app_color_black"/>

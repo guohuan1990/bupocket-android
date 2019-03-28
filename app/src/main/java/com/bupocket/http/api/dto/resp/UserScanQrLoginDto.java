@@ -1,8 +1,18 @@
 package com.bupocket.http.api.dto.resp;
 
 public class UserScanQrLoginDto {
+    private String uuid;
     private String appId;
-    private String appType;
+    private String appName;
+    private String appPic;
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     public String getAppId() {
         return appId;
@@ -12,11 +22,19 @@ public class UserScanQrLoginDto {
         this.appId = appId;
     }
 
-    public String getAppType() {
-        return appType;
+    public String getAppName() {
+        return appName;
     }
 
-    public void setAppType(String appType) {
-        this.appType = appType;
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
+
+    public String getAppPic() {
+        return appPic;
+    }
+
+    public void setAppPic(String appPic) {
+        this.appPic = appPic;
     }
 }

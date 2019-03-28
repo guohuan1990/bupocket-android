@@ -31,6 +31,7 @@ public class Constants {
     public static final String CONTRACT_ADDRESS = "buQqzdS9YSnokDjvzg4YaNatcFQfkgXqk6ss";
 
     public static final String QR_LOGIN_PREFIX = "bumo://login/";
+    public static final String QR_NODE_PLAN_PREFIX = "bumo://dpos/";
 
     public static enum MainNetConfig {
         WEB_SERVER_DOMAIN("https://api-bp.bumo.io/"),
@@ -47,7 +48,8 @@ public class Constants {
 
     public static enum TestNetConfig {
 //        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
-        WEB_SERVER_DOMAIN("http://52.80.218.114:8081/"),
+//        WEB_SERVER_DOMAIN("http://52.80.218.114:8081/"),
+        WEB_SERVER_DOMAIN("http://192.168.15.31:8080/"),
         BUMO_NODE_URL("http://wallet-node.bumotest.io"),
         PUSH_MESSAGE_SOCKET_URL("https://ws-tools.bumotest.io");
         private String value;
