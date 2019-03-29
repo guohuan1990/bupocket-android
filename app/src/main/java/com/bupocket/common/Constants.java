@@ -14,7 +14,7 @@ public class Constants {
     public static final double RESERVE_AMOUNT = 0.02;
     public static final Double ACTIVE_AMOUNT_FEE = 0.02;
     public static final double MIN_SEND_AMOUNT = 0.00000001;
-    public static final double MAX_SEND_AMOUNT = 1000000;
+    public static final double MAX_SEND_AMOUNT = 100000000;
     public static final String REGISTER_TOKEN_FEE = "0.02";
     public static final String ISSUE_TOKEN_FEE = "50.01";
     public static final String ACCOUNT_NOT_ACTIVATED_SEND_FEE = "0.03";
@@ -50,7 +50,8 @@ public class Constants {
 //        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
 //        WEB_SERVER_DOMAIN("http://52.80.218.114:8081/"),
         WEB_SERVER_DOMAIN("http://192.168.6.97:5648/"),
-        BUMO_NODE_URL("http://wallet-node.bumotest.io"),
+//        BUMO_NODE_URL("http://wallet-node.bumotest.io"),
+        BUMO_NODE_URL("http://192.168.21.35:36002"),
         PUSH_MESSAGE_SOCKET_URL("https://ws-tools.bumotest.io");
         private String value;
         TestNetConfig(String value){

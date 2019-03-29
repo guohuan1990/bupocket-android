@@ -521,9 +521,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     String qrCodeSessionId = resultContent.replace(Constants.QR_NODE_PLAN_PREFIX,"");
                     NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
                     Call<ApiResult<GetQRContentDto>> call;
-                    Map<String, Object> paramsMap = new HashMap<>();
-                    paramsMap.put("qrcodeSessionId",qrCodeSessionId);
-                    call = nodePlanService.getQRContent(paramsMap);
+//                    Map<String, Object> paramsMap = new HashMap<>();
+//                    paramsMap.put("qrcodeSessionId",qrCodeSessionId);
+                    call = nodePlanService.getQRContent("891cc86cbac9421ebb1bafc0a92b0c95");
                     call.enqueue(new Callback<ApiResult<GetQRContentDto>>() {
                         @Override
                         public void onResponse(Call<ApiResult<GetQRContentDto>> call, Response<ApiResult<GetQRContentDto>> response) {
@@ -532,10 +532,10 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                 if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                                     showTransactionConfirmView(respDto.getData());
                                 }else {
-                                    Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(),respDto.getErrCode(),Toast.LENGTH_SHORT).show();
                                 }
                             }else {
-                                Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(),"response is null",Toast.LENGTH_SHORT).show();
                             }
                         }
 
