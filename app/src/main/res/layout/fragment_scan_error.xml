@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -21,22 +22,24 @@
         android:src="@mipmap/icon_login_error" />
 
     <TextView
+        android:id="@+id/errorTypeTv"
         android:layout_marginTop="26dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
-        android:text="@string/scan_qr_login_management_system_not_bound_txt"
+        tools:text="@string/scan_qr_login_management_system_not_bound_txt"
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:textColor="@color/app_color_black"/>
 
     <TextView
+        android:id="@+id/errorMessageTv"
         android:layout_marginTop="15.5dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="13sp"
         android:textColor="@color/app_txt_color_gray"
-        android:text="@string/bound_address_note_txt"/>
+        tools:text="@string/bound_address_note_txt"/>
 
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
         android:layout_marginLeft="40dp"

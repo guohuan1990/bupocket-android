@@ -503,9 +503,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                 }else {
                                     Bundle argz = new Bundle();
                                     argz.putString("errorCode",respDto.getErrCode());
-                                    BPNodePlanManagementSystemLoginErrorFragment bpNodePlanManagementSystemLoginErrorFragment = new BPNodePlanManagementSystemLoginErrorFragment();
-                                    bpNodePlanManagementSystemLoginErrorFragment.setArguments(argz);
-                                    startFragment(bpNodePlanManagementSystemLoginErrorFragment);
+                                    BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
+                                    bpScanErrorFragment.setArguments(argz);
+                                    startFragment(bpScanErrorFragment);
                                 }
                             }else {
                                 Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
@@ -521,7 +521,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     String qrCodeSessionId = resultContent.replace(Constants.QR_NODE_PLAN_PREFIX,"");
                     NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
                     Call<ApiResult<GetQRContentDto>> call;
-                    call = nodePlanService.getQRContent(qrCodeSessionId);
+                    Map<String, Object> paramsMap = new HashMap<>();
+                    paramsMap.put("qrcodeSessionId",qrCodeSessionId);
+                    call = nodePlanService.getQRContent(paramsMap);
                     call.enqueue(new Callback<ApiResult<GetQRContentDto>>() {
                         @Override
                         public void onResponse(Call<ApiResult<GetQRContentDto>> call, Response<ApiResult<GetQRContentDto>> response) {
@@ -530,7 +532,11 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                 if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                                     showTransactionConfirmView(respDto.getData());
                                 }else {
-                                    Toast.makeText(getContext(),respDto.getErrCode(),Toast.LENGTH_SHORT).show();
+                                    Bundle argz = new Bundle();
+                                    argz.putString("errorCode",respDto.getErrCode());
+                                    BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
+                                    bpScanErrorFragment.setArguments(argz);
+                                    startFragment(bpScanErrorFragment);
                                 }
                             }else {
                                 Toast.makeText(getContext(),"response is null",Toast.LENGTH_SHORT).show();
@@ -539,6 +545,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
                         @Override
                         public void onFailure(Call<ApiResult<GetQRContentDto>> call, Throwable t) {
+                            System.out.print(t.getMessage());
+                            t.printStackTrace();
                             Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -631,35 +639,50 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
     private void confirmTransaction(GetQRContentDto contentDto) {
-        String qrCodeSessionID = contentDto.getQrcodeSessionId();
-        String input = contentDto.getScript();
-        String amount = contentDto.getAmount();
+        final String qrCodeSessionID = contentDto.getQrcodeSessionId();
+        final String input = contentDto.getScript();
+        final String amount = contentDto.getAmount();
 
-        try {
-            final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount,input,currentWalletAddress,String.valueOf(Constants.MIN_FEE));
-            String txHash = buildBlobResponse.getResult().getHash();
-
-            NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
-            Call<ApiResult> call;
-            Map<String, Object> paramsMap = new HashMap<>();
-            paramsMap.put("qrcodeSessionId",qrCodeSessionID);
-            paramsMap.put("txHash",txHash);
-            paramsMap.put("initiatorAddress",currentWalletAddress);
-            call = nodePlanService.confirmTransaction(paramsMap);
-            call.enqueue(new Callback<ApiResult>() {
-                @Override
-                public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
-                    submitTransaction(buildBlobResponse);
-                }
-
-                @Override
-                public void onFailure(Call<ApiResult> call, Throwable t) {
-                    Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(Double.valueOf(tokenBalance) < Double.valueOf(amount)){
+            Toast.makeText(getContext(),getString(R.string.send_tx_bu_not_enough),Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input, currentWalletAddress, String.valueOf(Constants.MIN_FEE));
+                    String txHash = buildBlobResponse.getResult().getHash();
+                    System.out.print(txHash);
+                    NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
+                    Call<ApiResult> call;
+                    Map<String, Object> paramsMap = new HashMap<>();
+                    paramsMap.put("qrcodeSessionId",qrCodeSessionID);
+                    paramsMap.put("txHash",txHash);
+                    paramsMap.put("initiatorAddress",currentWalletAddress);
+                    call = nodePlanService.confirmTransaction(paramsMap);
+                    call.enqueue(new Callback<ApiResult>() {
+                        @Override
+                        public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+                            ApiResult respDto = response.body();
+                            if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
+                                submitTransaction(buildBlobResponse);
+                            }else {
+                                Toast.makeText(getContext(),respDto.getErrCode(),Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResult> call, Throwable t) {
+                            Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     private void submitTransaction(final TransactionBuildBlobResponse buildBlobResponse) {
@@ -731,7 +754,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         }
                     }
                 }).start();
-
+                qmuiDialog.dismiss();
 
             }
         });

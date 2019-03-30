@@ -13,8 +13,6 @@ import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.NodePlanManagementSystemService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
-import com.bupocket.http.api.dto.resp.UserScanQrLoginDto;
-import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.squareup.picasso.Picasso;
 
@@ -110,7 +108,7 @@ public class BPNodePlanManagementSystemLoginFragment extends BaseFragment {
                             }else{
                                 Bundle argz = new Bundle();
                                 argz.putString("errorCode",respDto.getErrCode());
-                                BPNodePlanManagementSystemLoginErrorFragment bpNodePlanManagementSystemLoginErrorFragment = new BPNodePlanManagementSystemLoginErrorFragment();
+                                BPScanErrorFragment bpNodePlanManagementSystemLoginErrorFragment = new BPScanErrorFragment();
                                 bpNodePlanManagementSystemLoginErrorFragment.setArguments(argz);
                                 startFragmentAndDestroyCurrent(bpNodePlanManagementSystemLoginErrorFragment);
                             }
