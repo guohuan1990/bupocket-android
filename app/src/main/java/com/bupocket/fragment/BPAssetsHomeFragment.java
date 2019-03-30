@@ -521,9 +521,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     String qrCodeSessionId = resultContent.replace(Constants.QR_NODE_PLAN_PREFIX,"");
                     NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
                     Call<ApiResult<GetQRContentDto>> call;
-//                    Map<String, Object> paramsMap = new HashMap<>();
-//                    paramsMap.put("qrcodeSessionId",qrCodeSessionId);
-                    call = nodePlanService.getQRContent("891cc86cbac9421ebb1bafc0a92b0c95");
+                    call = nodePlanService.getQRContent(qrCodeSessionId);
                     call.enqueue(new Callback<ApiResult<GetQRContentDto>>() {
                         @Override
                         public void onResponse(Call<ApiResult<GetQRContentDto>> call, Response<ApiResult<GetQRContentDto>> response) {

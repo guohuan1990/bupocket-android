@@ -34,7 +34,7 @@ allprojects {
         minSdkVersion = 15
         targetSdkVersion = 28
         compileSdkVersion = 28
-        supportVersion = "27.1.1"
+        supportVersion = "27.1.0"
     }
 }
 
